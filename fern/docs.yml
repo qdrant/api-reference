@@ -21,7 +21,7 @@ layout:
   searchbar-placement: header
 favicon: assets/favicon.ico
 navbar-links:
-  - type: outlined
+  - type: primary
     text: Cloud
     url: https://qdrant.to/cloud
   - type: primary
