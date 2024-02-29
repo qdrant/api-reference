@@ -22,5 +22,8 @@ layout:
 favicon: assets/favicon.ico
 navbar-links:
   - type: outlined
+    text: Cloud
+    url: https://qdrant.to/cloud
+  - type: primary
     text: GitHub
     url: https://github.com/qdrant/qdrant
