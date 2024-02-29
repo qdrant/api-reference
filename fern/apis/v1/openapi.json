@@ -2653,7 +2653,7 @@
           {
             "name": "shard_id",
             "in": "path",
-            "description": "Id of the shard",
+            "description": "Id of the shard for which to list snapshots",
             "required": true,
             "schema": {
               "type": "integer"
