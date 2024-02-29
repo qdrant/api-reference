@@ -1,0 +1,24 @@
+instances:
+  - url: https://qdrant.docs.buildwithfern.com
+title: Qdrant | API Reference
+versions: 
+  - display-name: "v0.x "
+    path: ./versions/v0.yml 
+  - display-name: "v1.x "
+    path: ./versions/v1.yml
+colors:
+  accentPrimary: 
+    light: '#283768'
+  background: 
+    light: '#ffffff'
+logo:   
+  light: assets/logo.svg
+  height: 39
+  href: https://qdrant.tech/
+layout:
+  page-width: 1504px
+  header-height: 83px
+navbar-links:
+  - type: filled
+    text: GitHub
+    url: https://github.com/qdrant/qdrant
