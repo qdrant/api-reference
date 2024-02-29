@@ -1,6 +1,6 @@
 # QDrant API Documentation
 
-This repo contains the configuration files for the Astronomer's API documentation. 
+This repo contains the configuration files for the Qdrant's API documentation. 
 The documentation is built using Fern. 
 
 Click [here](https://qdrant.docs.buildwithfern.com/api-reference) to see the generated website. 
