@@ -16,7 +16,7 @@ logo:
   height: 39
   href: https://qdrant.tech/
 layout:
-  page-width: 1482px
+  page-width: 1474px
   header-height: 73px
   searchbar-placement: header
 favicon: assets/favicon.ico
