@@ -44,31 +44,61 @@ export function Footer() {
                 <ul className="main-footer__list">
                   <li>
                     <a href="https://github.com/qdrant/qdrant" target="_blank">
-                      <i className="fab fa-github"></i>&nbsp;
+                      <span
+                        className="fa-icon"
+                        style={{
+                          WebkitMaskImage: `url("https://fontawesome-cdn.vercel.app/brands/github.svg")`,
+                        }}
+                      />
+                      &nbsp;
                       <span>Github</span>
                     </a>
                   </li>
                   <li>
                     <a href="https://qdrant.to/discord" target="_blank">
-                      <i className="fab fa-discord"></i>&nbsp;
+                      <span
+                        className="fa-icon"
+                        style={{
+                          WebkitMaskImage: `url("https://fontawesome-cdn.vercel.app/brands/discord.svg")`,
+                        }}
+                      />
+                      &nbsp;
                       <span>Discord</span>
                     </a>
                   </li>
                   <li>
                     <a href="https://qdrant.to/twitter" target="_blank">
-                      <i className="fab fa-twitter"></i>&nbsp;
+                      <span
+                        className="fa-icon"
+                        style={{
+                          WebkitMaskImage: `url("https://fontawesome-cdn.vercel.app/brands/twitter.svg")`,
+                        }}
+                      />
+                      &nbsp;
                       <span>Twitter</span>
                     </a>
                   </li>
                   <li>
                     <a href="https://qdrant.tech/subscribe/">
-                      <i className="fas fa-mail-bulk"></i>&nbsp;
+                      <span
+                        className="fa-icon"
+                        style={{
+                          WebkitMaskImage: `url("https://fontawesome-cdn.vercel.app/solid/mail-bulk.svg")`,
+                        }}
+                      />
+                      &nbsp;
                       <span>Newsletter</span>
                     </a>
                   </li>
                   <li>
                     <a href="https://qdrant.to/contact-us" target="_blank">
-                      <i className="fas fa-envelope"></i>&nbsp;
+                      <span
+                        className="fa-icon"
+                        style={{
+                          WebkitMaskImage: `url("https://fontawesome-cdn.vercel.app/solid/envelope.svg")`,
+                        }}
+                      />
+                      &nbsp;
                       <span>Contact us</span>
                     </a>
                   </li>
@@ -165,35 +195,60 @@ export function Footer() {
             </div>
           </div>
         </div>
-        {/* <ul className="social-box">
+        <ul className="social-box">
           <li>
             <a href="https://github.com/qdrant/qdrant" target="_blank">
-              <i className="fab fa-github"></i>
+              <span
+                className="fa-icon"
+                style={{
+                  WebkitMaskImage: `url("https://fontawesome-cdn.vercel.app/brands/github.svg")`,
+                }}
+              />
             </a>
           </li>
           <li>
             <a href="https://qdrant.to/linkedin" target="_blank">
-              <i className="fab fa-linkedin"></i>
+              <span
+                className="fa-icon"
+                style={{
+                  WebkitMaskImage: `url("https://fontawesome-cdn.vercel.app/brands/linkedin.svg")`,
+                }}
+              />
             </a>
           </li>
           <li>
             <a href="https://qdrant.to/twitter" target="_blank">
-              <i className="fab fa-twitter"></i>
+              <span
+                className="fa-icon"
+                style={{
+                  WebkitMaskImage: `url("https://fontawesome-cdn.vercel.app/brands/twitter.svg")`,
+                }}
+              />
             </a>
           </li>
           <li>
             <a href="https://qdrant.to/discord" target="_blank">
-              <i className="fab fa-discord"></i>
+              <span
+                className="fa-icon"
+                style={{
+                  WebkitMaskImage: `url("https://fontawesome-cdn.vercel.app/brands/discord.svg")`,
+                }}
+              />
             </a>
           </li>
           <li>
             <a
               href="https://www.youtube.com/channel/UC6ftm8PwH1RU_LM1jwG0LQA"
               target="_blank">
-              <i className="fab fa-youtube"></i>
+              <span
+                className="fa-icon"
+                style={{
+                  WebkitMaskImage: `url("https://fontawesome-cdn.vercel.app/brands/youtube.svg")`,
+                }}
+              />
             </a>
           </li>
-        </ul> */}
+        </ul>
       </div>
       <div className="footer-bottom">
         <div className="auto-container">

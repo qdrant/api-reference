@@ -197,14 +197,22 @@
     margin-right: 32px
 }
 
-.main-footer .social-box li a {
-    color: #fff;
-    font-size: 32px
+.fa-icon {
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    width: 20px;
+    height: 20px;
+    background-color: #FFF;
+    display: inline-block;
 }
 
-.main-footer .social-box li a:hover {
-    color: #fff;
-    color: #DC244C
+.main-footer .social-box li .fa-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.main-footer .social-box li a:hover .fa-icon {
+    background-color: #DC244C;
 }
 
 .main-footer .footer-bottom {
