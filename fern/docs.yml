@@ -8,7 +8,7 @@ versions:
     path: ./versions/v1.yml
 colors:
   accentPrimary: 
-    light: '#283768'
+    light: '#DC244C'
   background: 
     light: '#ffffff'
 logo:   
@@ -16,10 +16,11 @@ logo:
   height: 39
   href: https://qdrant.tech/
 layout:
-  page-width: 1504px
-  header-height: 83px
+  page-width: 1446px
+  header-height: 73px
+  searchbar-placement: header
 favicon: assets/favicon.ico
 navbar-links:
-  - type: filled
+  - type: outlined
     text: GitHub
     url: https://github.com/qdrant/qdrant
