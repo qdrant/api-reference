@@ -27,3 +27,10 @@ navbar-links:
   - type: outlined
     text: GitHub
     url: https://github.com/qdrant/qdrant
+
+css:
+  - ./dist/output.css
+
+js:
+  - path: ./dist/output.js
+    strategy: beforeInteractive
