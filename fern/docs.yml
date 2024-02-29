@@ -18,6 +18,7 @@ logo:
 layout:
   page-width: 1504px
   header-height: 83px
+favicon: assets/favicon.ico
 navbar-links:
   - type: filled
     text: GitHub
