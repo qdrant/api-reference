@@ -3,3 +3,24 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
+paths: 
+  /collections/{collection_name}: 
+    put: 
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from '@qdrant/qdrant-js';
+
+                const client = new QdrantClient({url: 'http://127.0.0.1:6333'});
+
+                await client.createCollection('test_collection', {
+                  vectors: {
+                      size: 4,
+                      distance: 'Cosine',
+                  },
+                  optimizers_config: {
+                      default_segment_number: 2,
+                  },
+                  replication_factor: 2,
+                });
