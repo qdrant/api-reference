@@ -8,6 +8,13 @@ paths:
     put:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.create_shard_key("{collection_name}", "{shard_key}")
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -25,6 +32,13 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.delete_shard_key("{collection_name}", "{shard_key}")
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -42,47 +56,81 @@ paths:
     get:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.get_collections()
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-                await client.getCollections();
+                client.getCollections();
 
   /collections/{collection_name}:
     get:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.get_collection("{collection_name}")
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-                await client.getCollection("{collection_name}");
+                client.getCollection("{collection_name}");
     put:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.create_collection(
+                    collection_name="{collection_name}",
+                    vectors_config=models.VectorParams(size=100, distance=models.Distance.COSINE),
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-                await client.createCollection("{collection_name}", {
+                client.createCollection("{collection_name}", {
                   vectors: { size: 100, distance: "Cosine" },
                 });
     patch:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.update_collection(
+                    collection_name="{collection_name}",
+                    optimizer_config=models.OptimizersConfigDiff(indexing_threshold=10000),
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-                await client.updateCollection("{collection_name}", {
+                client.updateCollection("{collection_name}", {
                   optimizers_config: {
                     indexing_threshold: 10000,
                   },
@@ -90,25 +138,55 @@ paths:
     delete:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.delete_collection(collection_name="{collection_name}")
             - sdk: typescript
               code: >-
                 import { QdrantClient } from '@qdrant/qdrant-js';
 
                 const client = new QdrantClient({url: 'http://127.0.0.1:6333'});
 
-                await client.deleteCollection("{collection_name}");
+                client.deleteCollection("{collection_name}");
 
   /collections/aliases:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.update_collection_aliases(
+                    change_aliases_operations=[
+                        models.CreateAliasOperation(
+                            create_alias=models.CreateAlias(
+                                collection_name="example_collection", alias_name="production_collection"
+                            )
+                        )
+                    ]
+                )
+
+                client.update_collection_aliases(
+                    change_aliases_operations=[
+                        models.DeleteAliasOperation(
+                            delete_alias=models.DeleteAlias(alias_name="production_collection")
+                        ),
+                    ]
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-                await client.updateCollectionAliases({
+                client.updateCollectionAliases({
                   actions: [
                     {
                       create_alias: {
@@ -119,7 +197,7 @@ paths:
                   ],
                 });
 
-                await client.updateCollectionAliases({
+                client.updateCollectionAliases({
                   actions: [
                     {
                       delete_alias: {
@@ -133,13 +211,24 @@ paths:
     put:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.create_payload_index(
+                    collection_name="{collection_name}",
+                    field_name="name_of_the_field_to_index",
+                    field_schema="keyword",
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-                await client.createPayloadIndex("{collection_name}", {
+                client.createPayloadIndex("{collection_name}", {
                   field_name: "{field_name}",
                   field_schema: "keyword",
                 });
@@ -148,42 +237,73 @@ paths:
     delete:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.delete_payload_index("{collection_name}", "{field_name}");
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-                await client.deletePayloadIndex("{collection_name}", "{field_name}");
+                client.deletePayloadIndex("{collection_name}", "{field_name}");
 
   /collections/{collection_name}/aliases:
     get:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.get_collection_aliases("{collection_name}")
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-                await client.getCollectionAliases("{collection_name}");
+                client.getCollectionAliases("{collection_name}");
 
   /aliases:
     get:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.get_aliases()
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-                await client.getAliases();
+                client.getAliases();
 
   /collections/{collection_name}/snapshots/recover:
     put:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.recover_snapshot(
+                    "{collection_name}",
+                    "http://example.com/path/to/snapshot.shapshot",
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -191,13 +311,20 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.recoverSnapshot("{collection_name}", {
-                  location: "http://qdrant-node-1:6333/collections/{collection_name}/snapshots/snapshot-2022-10-10.shapshot",
+                  location: "http://example.com/path/to/snapshot.shapshot",
                 });
 
   /collections/{collection_name}/snapshots:
     get:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.list_snapshots(collection_name="{collection_name}")
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -209,6 +336,13 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.create_snapshot(collection_name="{collection_name}")
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -221,6 +355,15 @@ paths:
     delete:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.delete_snapshot(
+                    collection_name="{collection_name}", snapshot_name="{snapshot_name}"
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -233,6 +376,13 @@ paths:
     get:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.list_full_snapshots()
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -244,6 +394,13 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.create_full_snapshot()
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -256,6 +413,13 @@ paths:
     delete:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.delete_full_snapshot(snapshot_name="{snapshot_name}")
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -268,6 +432,16 @@ paths:
     get:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.retrieve(
+                    collection_name="{collection_name}",
+                    ids=["{id}"],
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -282,6 +456,16 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.retrieve(
+                    collection_name="{collection_name}",
+                    ids=[0, 3, 100],
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -295,6 +479,38 @@ paths:
     put:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.upsert(
+                    collection_name="{collection_name}",
+                    points=[
+                        models.PointStruct(
+                            id=1,
+                            payload={
+                                "color": "red",
+                            },
+                            vector=[0.9, 0.1, 0.1],
+                        ),
+                        models.PointStruct(
+                            id=2,
+                            payload={
+                                "color": "green",
+                            },
+                            vector=[0.1, 0.9, 0.1],
+                        ),
+                        models.PointStruct(
+                            id=3,
+                            payload={
+                                "color": "blue",
+                            },
+                            vector=[0.1, 0.1, 0.9],
+                        ),
+                    ],
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -325,6 +541,32 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.delete(
+                    collection_name="{collection_name}",
+                    points_selector=models.PointIdsList(
+                        points=[0, 3, 100],
+                    ),
+                )
+
+                client.delete(
+                    collection_name="{collection_name}",
+                    points_selector=models.FilterSelector(
+                        filter=models.Filter(
+                            must=[
+                                models.FieldCondition(
+                                    key="color",
+                                    match=models.MatchValue(value="red"),
+                                ),
+                            ],
+                        )
+                    ),
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -352,6 +594,29 @@ paths:
     put:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.update_vectors(
+                    collection_name="{collection_name}",
+                    points=[
+                        models.PointVectors(
+                            id=1,
+                            vector={
+                                "image": [0.1, 0.2, 0.3, 0.4],
+                            },
+                        ),
+                        models.PointVectors(
+                            id=2,
+                            vector={
+                                "text": [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],
+                            },
+                        ),
+                    ],
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -379,6 +644,17 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.delete_vectors(
+                    collection_name="{collection_name}",
+                    points=[0, 3, 100],
+                    vectors=["text", "image"],
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -394,6 +670,20 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.set_payload(
+                    collection_name="{collection_name}",
+                    payload={
+                        "property1": "string",
+                        "property2": "string",
+                    },
+                    points=[0, 3, 10],
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -411,6 +701,20 @@ paths:
     put:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.overwrite_payload(
+                    collection_name="{collection_name}",
+                    payload={
+                        "property1": "string",
+                        "property2": "string",
+                    },
+                    points=[0, 3, 10],
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -429,6 +733,17 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.delete_payload(
+                    collection_name="{collection_name}",
+                    keys=["color", "price"],
+                    points=[0, 3, 100],
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -444,6 +759,16 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.clear_payload(
+                    collection_name="{collection_name}",
+                    points_selector=[0, 3, 100],
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -458,6 +783,47 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.batch_update_points(
+                    collection_name="{collection_name}",
+                    update_operations=[
+                        models.UpsertOperation(
+                            upsert=models.PointsList(
+                                points=[
+                                    models.PointStruct(
+                                        id=1,
+                                        vector=[1.0, 2.0, 3.0, 4.0],
+                                        payload={},
+                                    ),
+                                ]
+                            )
+                        ),
+                        models.UpdateVectorsOperation(
+                            update_vectors=models.UpdateVectors(
+                                points=[
+                                    models.PointVectors(
+                                        id=1,
+                                        vector=[1.0, 2.0, 3.0, 4.0],
+                                    )
+                                ]
+                            )
+                        ),
+                        models.SetPayloadOperation(
+                            set_payload=models.SetPayload(
+                                payload={
+                                    "test_payload_2": 2,
+                                    "test_payload_3": 3,
+                                },
+                                points=[1],
+                            )
+                        ),
+                    ],
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -503,6 +869,23 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.scroll(
+                    collection_name="{collection_name}",
+                    scroll_filter=models.Filter(
+                        must=[
+                            models.FieldCondition(key="color", match=models.MatchValue(value="red")),
+                        ]
+                    ),
+                    limit=1,
+                    with_payload=True,
+                    with_vectors=False,
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -529,6 +912,27 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.search(
+                    collection_name="{collection_name}",
+                    query_filter=models.Filter(
+                        must=[
+                            models.FieldCondition(
+                                key="city",
+                                match=models.MatchValue(
+                                    value="London",
+                                ),
+                            )
+                        ]
+                    ),
+                    query_vector=[0.2, 0.1, 0.9, 0.7],
+                    limit=3,
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -554,6 +958,29 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                filter_ = models.Filter(
+                    must=[
+                        models.FieldCondition(
+                            key="city",
+                            match=models.MatchValue(
+                                value="London",
+                            ),
+                        )
+                    ]
+                )
+
+                search_queries = [
+                    models.SearchRequest(vector=[0.2, 0.1, 0.9, 0.7], filter=filter_, limit=3),
+                    models.SearchRequest(vector=[0.5, 0.3, 0.2, 0.3], filter=filter_, limit=3),
+                ]
+
+                client.search_batch(collection_name="{collection_name}", requests=search_queries)
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -592,6 +1019,19 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.search_groups(
+                    collection_name="{collection_name}",
+                    query_vector=[1.1],
+                    group_by="document_id",
+                    limit=4,
+                    group_size=2,
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -609,6 +1049,29 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.recommend(
+                    collection_name="{collection_name}",
+                    positive=[100, 231],
+                    negative=[718, [0.2, 0.3, 0.4, 0.5]],
+                    strategy=models.RecommendStrategy.AVERAGE_VECTOR,
+                    query_filter=models.Filter(
+                        must=[
+                            models.FieldCondition(
+                                key="city",
+                                match=models.MatchValue(
+                                    value="London",
+                                ),
+                            )
+                        ]
+                    ),
+                    limit=3,
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -636,6 +1099,20 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                recommend_queries = [
+                    models.RecommendRequest(
+                        positive=[100, 231], negative=[718], filter=filter_, limit=3
+                    ),
+                    models.RecommendRequest(positive=[200, 67], negative=[300], limit=3),
+                ]
+
+                client.recommend_batch(collection_name="{collection_name}", requests=recommend_queries)
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -663,6 +1140,20 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.recommend_groups(
+                    collection_name="{collection_name}",
+                    positive=[100, 231],
+                    negative=[718],
+                    group_by="document_id",
+                    limit=3,
+                    group_size=2,
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -681,6 +1172,21 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.discover(
+                    "{collection_name}",
+                    target=[0.2, 0.1, 0.9, 0.7],
+                    context=[
+                        models.ContextExamplePair(positive=100, negative=718),
+                        models.ContextExamplePair(positive=200, negative=300),
+                    ],
+                    limit=10,
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -706,6 +1212,44 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient, models
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                discover_queries = [
+                    models.DiscoverRequest(
+                        target=[0.2, 0.1, 0.9, 0.7],
+                        context=[
+                            models.ContextExamplePair(
+                                positive=100,
+                                negative=718,
+                            ),
+                            models.ContextExamplePair(
+                                positive=200,
+                                negative=300,
+                            ),
+                        ],
+                        limit=10,
+                    ),
+                    models.DiscoverRequest(
+                        target=[0.5, 0.3, 0.2, 0.3],
+                        context=[
+                            models.ContextExamplePair(
+                                positive=342,
+                                negative=213,
+                            ),
+                            models.ContextExamplePair(
+                                positive=100,
+                                negative=200,
+                            ),
+                        ],
+                        limit=5,
+                    ),
+                ]
+
+                client.discover_batch("{collection_name}", discover_queries)
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
@@ -731,15 +1275,15 @@ paths:
                         target: [0.5, 0.3, 0.2, 0.3],
                         context: [
                             {
-                                positive: 100,
-                                negative: 718,
+                                positive: 342,
+                                negative: 213,
                             },
                             {
-                                positive: 200,
-                                negative: 300,
+                                positive: 100,
+                                negative: 200,
                             },
                         ],
-                        limit: 10,
+                        limit: 5,
                     },
                 ];
 
@@ -751,6 +1295,21 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - sdk: python
+              code: >-
+                from qdrant_client import QdrantClient
+
+                client = QdrantClient(url="http://localhost:6333")
+
+                client.count(
+                    collection_name="{collection_name}",
+                    count_filter=models.Filter(
+                        must=[
+                            models.FieldCondition(key="color", match=models.MatchValue(value="red")),
+                        ]
+                    ),
+                    exact=True,
+                )
             - sdk: typescript
               code: >-
                 import { QdrantClient } from "@qdrant/js-client-rest";
