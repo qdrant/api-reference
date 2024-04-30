@@ -63,6 +63,17 @@ paths:
                                                 .setShardKey(shardKey("{shard_key}"))
                                                 .build())
                                 .build()).get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.CreateShardKeyAsync(
+                    "{collection_name}",
+                    new CreateShardKey { ShardKey = new ShardKey { Keyword = "{shard_key}", } }
+                );
 
   /collections/{collection_name}/shards/delete:
     post:
@@ -117,6 +128,17 @@ paths:
                                                 .setShardKey(shardKey("{shard_key}"))
                                                 .build())
                                 .build()).get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.DeleteShardKeyAsync(
+                    "{collection_name}",
+                    new DeleteShardKey { ShardKey = new ShardKey { Keyword = "shard_key", } }
+                );
 
   /collections:
     get:
@@ -153,6 +175,13 @@ paths:
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.listCollectionsAsync().get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.ListCollectionsAsync();
 
   /collections/{collection_name}:
     get:
@@ -189,6 +218,14 @@ paths:
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.getCollectionInfoAsync("{collection_name}").get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.GetCollectionInfoAsync("{collection_name}");
+
     put:
       x-fern-examples:
         - code-samples:
@@ -248,6 +285,8 @@ paths:
 
                 client.createCollectionAsync("{collection_name}",
                         VectorParams.newBuilder().setDistance(Distance.Cosine).setSize(100).build()).get();
+            - sdk: csharp
+              code: >-
     patch:
       x-fern-examples:
         - code-samples:
@@ -313,6 +352,8 @@ paths:
                         .setOptimizersConfig(
                             OptimizersConfigDiff.newBuilder().setIndexingThreshold(10000).build())
                         .build());
+            - sdk: csharp
+              code: >-
     delete:
       x-fern-examples:
         - code-samples:
@@ -347,6 +388,8 @@ paths:
                     new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.deleteCollectionAsync("{collection_name}").get();
+            - sdk: csharp
+              code: >-
 
   /collections/aliases:
     post:
@@ -428,6 +471,15 @@ paths:
                 client.createAliasAsync("production_collection", "example_collection").get();
 
                 client.deleteAliasAsync("production_collection").get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.CreateAliasAsync(aliasName: "production_collection", collectionName: "example_collection");
+
+                await client.DeleteAliasAsync("production_collection");
 
   /collections/{collection_name}/index:
     put:
@@ -488,6 +540,16 @@ paths:
                                 true,
                                 null,
                                 null);
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.CreatePayloadIndexAsync(
+                  collectionName: "{collection_name}",
+                  fieldName: "name_of_the_field_to_index"
+                );
 
   /collections/{collection_name}/index/{field_name}:
     delete:
@@ -526,6 +588,16 @@ paths:
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.deletePayloadIndexAsync("{collection_name}", "{field_name}", true, null, null).get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.DeletePayloadIndexAsync(
+                  collectionName: "{collection_name}",
+                  fieldName: "name_of_the_field_to_index"
+                );
 
   /collections/{collection_name}/aliases:
     get:
@@ -562,6 +634,13 @@ paths:
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.listCollectionAliasesAsync("{collection_name}").get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.ListCollectionAliasesAsync("{collection_name}");
 
   /aliases:
     get:
@@ -598,6 +677,13 @@ paths:
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.listAliasesAsync().get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.ListAliasesAsync();
 
   /collections/{collection_name}/snapshots/recover:
     put:
@@ -658,6 +744,13 @@ paths:
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.listSnapshotAsync("{collection_name}").get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.ListSnapshotsAsync("{collection_name}");
 
     post:
       x-fern-examples:
@@ -686,13 +779,20 @@ paths:
             - sdk: java
               code: >-
                 import io.qdrant.client.QdrantClient;
-                
+
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.createSnapshotAsync("{collection_name}").get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.CreateSnapshotAsync("{collection_name}");
 
   /collections/{collection_name}/snapshots/{snapshot_name}:
     delete:
@@ -733,6 +833,13 @@ paths:
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.deleteSnapshotAsync("{collection_name}", "{snapshot_name}").get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.DeleteSnapshotAsync("{collection_name}", "{snapshot_name}");
 
   /snapshots:
     get:
@@ -769,6 +876,13 @@ paths:
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.listFullSnapshotAsync().get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.ListFullSnapshotsAsync();
 
     post:
       x-fern-examples:
@@ -804,6 +918,13 @@ paths:
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.createFullSnapshotAsync().get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.CreateFullSnapshotAsync();
 
   /snapshots/{snapshot_name}:
     delete:
@@ -840,8 +961,13 @@ paths:
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
                 client.deleteFullSnapshotAsync("{snapshot_name}").get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
 
-  /collections/{collection_name}/points/{id}:
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.DeleteFullSnapshotAsync("{snapshot_name}");
 
   /collections/{collection_name}/points:
     post:
@@ -891,6 +1017,18 @@ paths:
                 client
                     .retrieveAsync("{collection_name}", List.of(id(0), id(30), id(100)), false, false, null)
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.RetrieveAsync(
+                  collectionName: "{collection_name}",
+                  ids: [0, 30, 100],
+                  withPayload: false,
+                  withVectors: false
+                );
 
     put:
       x-fern-examples:
@@ -1001,7 +1139,7 @@ paths:
                 import static io.qdrant.client.PointIdFactory.id;
 
                 import static io.qdrant.client.VectorFactory.vector;
-                
+
                 import static io.qdrant.client.VectorsFactory.namedVectors;
 
                 import java.util.List;
@@ -1042,6 +1180,37 @@ paths:
                                             List.of(0.5f, 0.2f, 0.7f, 0.4f, 0.7f, 0.2f, 0.3f, 0.9f))))
                                 .build()))
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.UpsertAsync(
+                  collectionName: "{collection_name}",
+                  points: new List<PointStruct>
+                  {
+                    new()
+                    {
+                      Id = 1,
+                      Vectors = new[] { 0.9f, 0.1f, 0.1f },
+                      Payload = { ["city"] = "red" }
+                    },
+                    new()
+                    {
+                      Id = 2,
+                      Vectors = new[] { 0.1f, 0.9f, 0.1f },
+                      Payload = { ["city"] = "green" }
+                    },
+                    new()
+                    {
+                      Id = 3,
+                      Vectors = new[] { 0.1f, 0.1f, 0.9f },
+                      Payload = { ["city"] = "blue" }
+                    }
+                  }
+                );
 
   /collections/{collection_name}/points/delete:
     post:
@@ -1150,6 +1319,15 @@ paths:
                         "{collection_name}",
                         Filter.newBuilder().addMust(matchKeyword("color", "red")).build())
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.DeleteAsync(collectionName: "{collection_name}", ids: [0, 3, 100]);
+
+                await client.DeleteAsync(collectionName: "{collection_name}", filter: MatchKeyword("color", "red"));
 
   /collections/{collection_name}/points/vectors:
     put:
@@ -1265,6 +1443,25 @@ paths:
                                             "text", vector(List.of(0.9f, 0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.3f, 0.2f)))))
                                 .build()))
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.UpdateVectorsAsync(
+                  collectionName: "{collection_name}",
+                  points: new List<PointVectors>
+                  {
+                    new() { Id = 1, Vectors = ("image", new float[] { 0.1f, 0.2f, 0.3f, 0.4f }) },
+                    new()
+                    {
+                      Id = 2,
+                      Vectors = ("text", new float[] { 0.9f, 0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.3f, 0.2f })
+                    }
+                  }
+                );
 
   /collections/{collection_name}/points/vectors/delete:
     post:
@@ -1331,6 +1528,13 @@ paths:
                     .deleteVectorsAsync(
                         "{collection_name}", List.of("text", "image"), List.of(id(0), id(3), id(10)))
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.DeleteVectorsAsync("{collection_name}", ["text", "image"], [0, 3, 10]);
 
   /collections/{collection_name}/points/payload:
     post:
@@ -1415,6 +1619,18 @@ paths:
                         null,
                         null)
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.SetPayloadAsync(
+                  collectionName: "{collection_name}",
+                  payload: new Dictionary<string, Value> { { "property1", "string" }, { "property2", "string" } },
+                  ids: new ulong[] { 0, 3, 10 }
+                );
 
     put:
       x-fern-examples:
@@ -1496,6 +1712,18 @@ paths:
                         null,
                         null)
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.OverwritePayloadAsync(
+                  collectionName: "{collection_name}",
+                  payload: new Dictionary<string, Value> { { "property1", "string" }, { "property2", "string" } },
+                  ids: new ulong[] { 0, 3, 10 }
+                );
 
   /collections/{collection_name}/points/payload/delete:
     post:
@@ -1565,6 +1793,13 @@ paths:
                         null,
                         null)
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.DeletePayloadAsync("{collection_name}", ["color", "price"], [0, 3, 10]);
 
   /collections/{collection_name}/points/payload/clear:
     post:
@@ -1624,6 +1859,13 @@ paths:
 
                 client.clearPayloadAsync("{collection_name}", List.of(id(0), id(3), id(100)), null, null, null)
                                 .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.ClearPayloadAsync("{collection_name}", [0, 3, 10]);
 
   /collections/{collection_name}/points/batch:
     post:
@@ -1850,6 +2092,46 @@ paths:
                                 .build())
                             .build()))
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.UpdateBatchAsync(
+                    "{collection_name}",
+                    [
+                        new()
+                        {
+                            Upsert = new()
+                            {
+                                Points =
+                                {
+                                    new PointStruct { Id = 1, Vectors = new[] { 0.9f, 0.1f, 0.1f } },
+                                }
+                            }
+                        },
+                        new()
+                        {
+                            UpdateVectors = new()
+                            {
+                                Points =
+                                {
+                                    new PointVectors { Id = 1, Vectors = new[] { 0.9f, 0.1f, 0.1f } },
+                                }
+                            }
+                        },
+                        new()
+                        {
+                            SetPayload = new()
+                            {
+                                PointsSelector = new PointsSelector { Points = new PointsIdsList { Ids = { 1 } } },
+                                Payload = { ["test_payload_2"] = 2, ["test_payload_3"] = 3 }
+                            }
+                        }
+                    ]
+                );
 
   /collections/{collection_name}/points/scroll:
     post:
@@ -1938,6 +2220,19 @@ paths:
                             .setWithPayload(enable(true))
                             .build())
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using static Qdrant.Client.Grpc.Conditions;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.ScrollAsync(
+                  collectionName: "{collection_name}",
+                  filter: MatchKeyword("color", "red"),
+                  limit: 1,
+                  payloadSelector: true
+                );
 
   /collections/{collection_name}/points/search:
     post:
@@ -2034,7 +2329,19 @@ paths:
                             .setLimit(3)
                             .build())
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using static Qdrant.Client.Grpc.Conditions;
 
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.SearchAsync(
+                  collectionName: "{collection_name}",
+                  vector: new float[] { 0.2f, 0.1f, 0.9f, 0.7f },
+                  filter: MatchKeyword("city", "London"),
+                  limit: 3
+                );
 
   /collections/{collection_name}/points/search/batch:
     post:
@@ -2163,6 +2470,33 @@ paths:
                             .setLimit(3)
                             .build());
                 client.searchBatchAsync("{collection_name}", searches, null).get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+                using static Qdrant.Client.Grpc.Conditions;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                var filter = MatchKeyword("city", "London");
+
+                var searches = new List<SearchPoints>
+                {
+                  new()
+                  {
+                    Vector = { new float[] { 0.2f, 0.1f, 0.9f, 0.7f } },
+                    Filter = filter,
+                    Limit = 3
+                  },
+                  new()
+                  {
+                    Vector = { new float[] { 0.5f, 0.3f, 0.2f, 0.3f } },
+                    Filter = filter,
+                    Limit = 3
+                  }
+                };
+
+                await client.SearchBatchAsync(collectionName: "{collection_name}", searches: searches);
 
   /collections/{collection_name}/points/search/groups:
     post:
@@ -2235,6 +2569,19 @@ paths:
                             .setGroupSize(2)
                             .build())
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.SearchGroupsAsync(
+                  collectionName: "{collection_name}",
+                  vector: new float[] { 1.1f },
+                  groupBy: "document_id",
+                  limit: 4,
+                  groupSize: 2
+                );
 
   /collections/{collection_name}/points/recommend:
     post:
@@ -2346,7 +2693,21 @@ paths:
                             .setLimit(3)
                             .build())
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+                using static Qdrant.Client.Grpc.Conditions;
 
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.RecommendAsync(
+                    "{collection_name}",
+                    positive: new ulong[] { 100, 231 },
+                    negative: new ulong[] { 718 },
+                    filter: MatchKeyword("city", "London"),
+                    limit: 3
+                );
 
   /collections/{collection_name}/points/recommend/batch:
     post:
@@ -2462,6 +2823,38 @@ paths:
                             .build());
 
                 client.recommendBatchAsync("{collection_name}", recommendQueries, null).get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+                using static Qdrant.Client.Grpc.Conditions;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                var filter = MatchKeyword("city", "london");
+
+                await client.RecommendBatchAsync(
+                  collectionName: "{collection_name}",
+                  recommendSearches:
+                  [
+                    new()
+                    {
+                      CollectionName = "{collection_name}",
+                      Positive = { new PointId[] { 100, 231 } },
+                      Negative = { new PointId[] { 718 } },
+                      Limit = 3,
+                      Filter = filter,
+                    },
+                    new()
+                    {
+                      CollectionName = "{collection_name}",
+                      Positive = { new PointId[] { 200, 67 } },
+                      Negative = { new PointId[] { 300 } },
+                      Limit = 3,
+                      Filter = filter,
+                    }
+                  ]
+                );
 
   /collections/{collection_name}/points/recommend/groups:
     post:
@@ -2541,6 +2934,22 @@ paths:
                                 .setStrategy(RecommendStrategy.AverageVector)
                                 .setLimit(3)
                                 .build());
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using static Qdrant.Client.Grpc.Conditions;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.RecommendGroupsAsync(
+                    "{collection_name}",
+                    "document_id",
+                    groupSize: 3,
+                    positive: new ulong[] { 100, 231 },
+                    negative: new ulong[] { 718 },
+                    filter: MatchKeyword("city", "London"),
+                    limit: 3
+                );
 
   /collections/{collection_name}/points/discover:
     post:
@@ -2669,6 +3078,34 @@ paths:
                             .setLimit(10)
                             .build())
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.DiscoverAsync(
+                  collectionName: "{collection_name}",
+                  target: new TargetVector
+                  {
+                    Single = new VectorExample { Vector = new float[] { 0.2f, 0.1f, 0.9f, 0.7f }, }
+                  },
+                  context:
+                  [
+                    new()
+                    {
+                      Positive = new VectorExample { Id = 100 },
+                      Negative = new VectorExample { Id = 718 }
+                    },
+                    new()
+                    {
+                      Positive = new VectorExample { Id = 200 },
+                      Negative = new VectorExample { Id = 300 }
+                    }
+                  ],
+                  limit: 10
+                );
 
   /collections/{collection_name}/points/discover/batch:
     post:
@@ -2915,6 +3352,61 @@ paths:
                     .setLimit(10)
                     .build());
                 client.discoverBatchAsync("{collection_name}", discoverPoints, null);
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using Qdrant.Client.Grpc;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                var discoverPoints = new List<DiscoverPoints>
+                {
+                    new DiscoverPoints
+                    {
+                        CollectionName = "{collection_name}",
+                        Target = new TargetVector
+                        {
+                            Single = new VectorExample { Vector = new float[] { 0.2f, 0.1f, 0.9f, 0.7f }, }
+                        },
+                        Context =
+                        {
+                            new ContextExamplePair()
+                            {
+                                Positive = new VectorExample { Id = 100 },
+                                Negative = new VectorExample { Id = 718 }
+                            },
+                            new ContextExamplePair()
+                            {
+                                Positive = new VectorExample { Id = 200 },
+                                Negative = new VectorExample { Id = 300 }
+                            }
+                        },
+                        Limit = 10
+                    },
+                    new DiscoverPoints
+                    {
+                        CollectionName = "{collection_name}",
+                        Target = new TargetVector
+                        {
+                            Single = new VectorExample { Vector = new float[] { 0.5f, 0.3f, 0.2f, 0.3f }, }
+                        },
+                        Context =
+                        {
+                            new ContextExamplePair()
+                            {
+                                Positive = new VectorExample { Id = 342 },
+                                Negative = new VectorExample { Id = 213 }
+                            },
+                            new ContextExamplePair()
+                            {
+                                Positive = new VectorExample { Id = 100 },
+                                Negative = new VectorExample { Id = 200 }
+                            }
+                        },
+                        Limit = 10
+                    }
+                };
+                await client.DiscoverBatchAsync("{collection_name}", discoverPoints);
 
   /collections/{collection_name}/points/count:
     post:
@@ -2978,7 +3470,7 @@ paths:
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
-                
+
                 import io.qdrant.client.grpc.Points.Filter;
 
                 QdrantClient client = new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
@@ -2989,3 +3481,15 @@ paths:
                         Filter.newBuilder().addMust(matchKeyword("color", "red")).build(),
                         true)
                     .get();
+            - sdk: csharp
+              code: >-
+                using Qdrant.Client;
+                using static Qdrant.Client.Grpc.Conditions;
+
+                var client = new QdrantClient("localhost", 6334);
+
+                await client.CountAsync(
+                  collectionName: "{collection_name}",
+                  filter: MatchKeyword("color", "red"),
+                  exact: true
+                );
