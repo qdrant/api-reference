@@ -9,7 +9,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -33,7 +33,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -57,7 +57,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -76,7 +76,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -93,7 +93,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -115,7 +115,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -139,7 +139,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -158,7 +158,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -212,7 +212,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -238,7 +238,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -257,7 +257,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -276,7 +276,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -295,7 +295,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -319,7 +319,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -337,7 +337,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -356,7 +356,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -377,7 +377,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -395,7 +395,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -414,7 +414,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -433,7 +433,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -457,7 +457,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -480,7 +480,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -542,7 +542,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -595,7 +595,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -645,7 +645,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -671,7 +671,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -702,7 +702,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -734,7 +734,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -760,7 +760,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -784,7 +784,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -870,7 +870,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -913,7 +913,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -959,7 +959,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1020,7 +1020,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1050,7 +1050,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1100,7 +1100,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1141,7 +1141,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1173,7 +1173,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1213,7 +1213,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1296,7 +1296,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
