@@ -47,11 +47,9 @@ paths:
                 import static io.qdrant.client.ShardKeyFactory.shardKey;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Collections.CreateShardKey;
-
                 import io.qdrant.client.grpc.Collections.CreateShardKeyRequest;
 
                 QdrantClient client = new QdrantClient(
@@ -101,11 +99,9 @@ paths:
                 import static io.qdrant.client.ShardKeyFactory.shardKey;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Collections.DeleteShardKey;
-
                 import io.qdrant.client.grpc.Collections.DeleteShardKeyRequest;
 
                 QdrantClient client = new QdrantClient(
@@ -146,7 +142,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -182,7 +177,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -235,13 +229,11 @@ paths:
             #         .await?;
             - sdk: java
               code: |
-                import io.qdrant.client.grpc.Collections.Distance;
-
-                import io.qdrant.client.grpc.Collections.VectorParams;
-
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Collections.Distance;
+                import io.qdrant.client.grpc.Collections.VectorParams;
 
                 QdrantClient client = new QdrantClient(
                     QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
@@ -297,11 +289,9 @@ paths:
                 import static io.qdrant.client.ShardKeyFactory.shardKey;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Collections.OptimizersConfigDiff;
-
                 import io.qdrant.client.grpc.Collections.UpdateCollection;
 
                 QdrantClient client = new QdrantClient(
@@ -340,7 +330,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client =
@@ -415,11 +404,9 @@ paths:
                 import static io.qdrant.client.ShardKeyFactory.shardKey;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Collections.DeleteShardKey;
-
                 import io.qdrant.client.grpc.Collections.DeleteShardKeyRequest;
 
                 QdrantClient client = new QdrantClient(
@@ -472,7 +459,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Collections.PayloadSchemaType;
@@ -519,7 +505,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -555,7 +540,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -591,7 +575,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -651,7 +634,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -686,7 +668,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-                
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -726,7 +707,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -762,7 +742,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -797,7 +776,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -833,7 +811,6 @@ paths:
             - sdk: java
               code: |
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -884,9 +861,9 @@ paths:
             #         .await?;
             - sdk: java
               code: |
-                import java.util.List;
-
                 import static io.qdrant.client.PointIdFactory.id;
+
+                import java.util.List;
 
                 client
                     .retrieveAsync("{collection_name}", List.of(id(0), id(30), id(100)), false, false, null)
@@ -999,17 +976,13 @@ paths:
             - sdk: java
               code: |
                 import static io.qdrant.client.PointIdFactory.id;
-
                 import static io.qdrant.client.VectorFactory.vector;
-                
                 import static io.qdrant.client.VectorsFactory.namedVectors;
 
                 import java.util.List;
-
                 import java.util.Map;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.PointStruct;
@@ -1128,14 +1101,12 @@ paths:
             #             .await?;
             - sdk: java
               code: |
-                import java.util.List;
-
                 import static io.qdrant.client.PointIdFactory.id;
-
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
 
-                import io.qdrant.client.QdrantClient;
+                import java.util.List;
 
+                import io.qdrant.client.QdrantClient;
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.Filter;
@@ -1232,18 +1203,14 @@ paths:
             #         .await?;
             - sdk: java
               code: |
-                import java.util.List;
-
-                import java.util.Map;
-
                 import static io.qdrant.client.PointIdFactory.id;
-
                 import static io.qdrant.client.VectorFactory.vector;
-
                 import static io.qdrant.client.VectorsFactory.namedVectors;
 
-                import io.qdrant.client.QdrantClient;
+                import java.util.List;
+                import java.util.Map;
 
+                import io.qdrant.client.QdrantClient;
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -1316,12 +1283,11 @@ paths:
             #         .await?;
             - sdk: java
               code: |
-                import java.util.List;
-
                 import static io.qdrant.client.PointIdFactory.id;
 
-                import io.qdrant.client.QdrantClient;
+                import java.util.List;
 
+                import io.qdrant.client.QdrantClient;
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -1391,16 +1357,13 @@ paths:
             #         .await?;
             - sdk: java
               code: |
-                import java.util.List;
-
-                import java.util.Map;
-
                 import static io.qdrant.client.PointIdFactory.id;
-
                 import static io.qdrant.client.ValueFactory.value;
 
-                import io.qdrant.client.QdrantClient;
+                import java.util.List;
+                import java.util.Map;
 
+                import io.qdrant.client.QdrantClient;
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -1477,11 +1440,9 @@ paths:
                 import java.util.List;
 
                 import static io.qdrant.client.PointIdFactory.id;
-
                 import static io.qdrant.client.ValueFactory.value;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -1550,7 +1511,6 @@ paths:
                 import static io.qdrant.client.PointIdFactory.id;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -1616,7 +1576,6 @@ paths:
                 import static io.qdrant.client.PointIdFactory.id;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 QdrantClient client = new QdrantClient(
@@ -1765,37 +1724,23 @@ paths:
             - sdk: java
               code: |
                 import java.util.List;
-
-                import static io.qdrant.client.PointIdFactory.id;
-
-                import static io.qdrant.client.ValueFactory.value;
-
-                import static io.qdrant.client.VectorsFactory.vectors;
-
-                import java.util.List;
-
                 import java.util.Map;
 
-                import io.qdrant.client.QdrantClient;
+                import static io.qdrant.client.PointIdFactory.id;
+                import static io.qdrant.client.ValueFactory.value;
+                import static io.qdrant.client.VectorsFactory.vectors;
 
+                import io.qdrant.client.QdrantClient;
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.PointStruct;
-
                 import io.qdrant.client.grpc.Points.PointVectors;
-
                 import io.qdrant.client.grpc.Points.PointsIdsList;
-
                 import io.qdrant.client.grpc.Points.PointsSelector;
-
                 import io.qdrant.client.grpc.Points.PointsUpdateOperation;
-
                 import io.qdrant.client.grpc.Points.PointsUpdateOperation.PointStructList;
-
                 import io.qdrant.client.grpc.Points.PointsUpdateOperation.SetPayload;
-
                 import io.qdrant.client.grpc.Points.PointsUpdateOperation.UpdateVectors;
-
 
                 QdrantClient client = new QdrantClient(
                                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
@@ -1915,15 +1860,12 @@ paths:
             - sdk: java
               code: |
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
-
                 import static io.qdrant.client.WithPayloadSelectorFactory.enable;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.Filter;
-
                 import io.qdrant.client.grpc.Points.ScrollPoints;
 
                 QdrantClient client = new QdrantClient(
@@ -2015,11 +1957,9 @@ paths:
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.Filter;
-
                 import io.qdrant.client.grpc.Points.SearchPoints;
 
                 QdrantClient client = new QdrantClient(
@@ -2034,7 +1974,6 @@ paths:
                             .setLimit(3)
                             .build())
                     .get();
-
 
   /collections/{collection_name}/points/search/batch:
     post:
@@ -2139,11 +2078,9 @@ paths:
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.Filter;
-
                 import io.qdrant.client.grpc.Points.SearchPoints;
 
                 QdrantClient client =
@@ -2217,7 +2154,6 @@ paths:
                 import java.util.List;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.SearchPointGroups;
@@ -2315,19 +2251,14 @@ paths:
                 import java.util.List;
 
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
-
                 import static io.qdrant.client.PointIdFactory.id;
-
                 import static io.qdrant.client.VectorFactory.vector;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.Filter;
-
                 import io.qdrant.client.grpc.Points.RecommendPoints;
-
                 import io.qdrant.client.grpc.Points.RecommendStrategy;
 
                 QdrantClient client =
@@ -2346,7 +2277,6 @@ paths:
                             .setLimit(3)
                             .build())
                     .get();
-
 
   /collections/{collection_name}/points/recommend/batch:
     post:
@@ -2430,15 +2360,12 @@ paths:
                 import java.util.List;
 
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
-
                 import static io.qdrant.client.PointIdFactory.id;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.Filter;
-
                 import io.qdrant.client.grpc.Points.RecommendPoints;
 
                 QdrantClient client =
@@ -2522,11 +2449,9 @@ paths:
                 import java.util.List;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.RecommendPointGroups;
-
                 import io.qdrant.client.grpc.Points.RecommendStrategy;
 
                 QdrantClient client =
@@ -2628,19 +2553,14 @@ paths:
                 import java.util.List;
 
                 import static io.qdrant.client.PointIdFactory.id;
-
                 import static io.qdrant.client.VectorFactory.vector;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.ContextExamplePair;
-
                 import io.qdrant.client.grpc.Points.DiscoverPoints;
-
                 import io.qdrant.client.grpc.Points.TargetVector;
-
                 import io.qdrant.client.grpc.Points.VectorExample;
 
                 QdrantClient client =
@@ -2831,23 +2751,17 @@ paths:
             - sdk: java
               code: |
                 import static io.qdrant.client.PointIdFactory.id;
-
                 import static io.qdrant.client.VectorFactory.vector;
 
                 import java.util.Arrays;
-
                 import java.util.List;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
 
                 import io.qdrant.client.grpc.Points.ContextExamplePair;
-
                 import io.qdrant.client.grpc.Points.DiscoverPoints;
-
                 import io.qdrant.client.grpc.Points.TargetVector;
-
                 import io.qdrant.client.grpc.Points.VectorExample;
 
                 QdrantClient client = new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
@@ -2976,9 +2890,8 @@ paths:
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
 
                 import io.qdrant.client.QdrantClient;
-
                 import io.qdrant.client.QdrantGrpcClient;
-                
+
                 import io.qdrant.client.grpc.Points.Filter;
 
                 QdrantClient client = new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
