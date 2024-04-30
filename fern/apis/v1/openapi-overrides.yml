@@ -9,14 +9,14 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.create_shard_key("{collection_name}", "{shard_key}")
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({
@@ -28,7 +28,7 @@ paths:
                     shard_key: "{shard_key}"
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::shard_key::Key};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -69,14 +69,14 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.delete_shard_key("{collection_name}", "{shard_key}")
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({
@@ -88,7 +88,7 @@ paths:
                     shard_key: "{shard_key}"
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::shard_key::Key};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -123,21 +123,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.get_collections()
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.getCollections();
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -159,21 +159,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.get_collection("{collection_name}")
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.getCollection("{collection_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -193,7 +193,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -203,7 +203,7 @@ paths:
                     vectors_config=models.VectorParams(size=100, distance=models.Distance.COSINE),
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -212,7 +212,7 @@ paths:
                   vectors: { size: 100, distance: "Cosine" },
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{vectors_config::Config, CreateCollection, Distance, VectorParams, VectorsConfig},
@@ -252,7 +252,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -262,7 +262,7 @@ paths:
                     optimizer_config=models.OptimizersConfigDiff(indexing_threshold=10000),
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -273,7 +273,7 @@ paths:
                   },
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::OptimizersConfigDiff};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -317,21 +317,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.delete_collection(collection_name="{collection_name}")
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from '@qdrant/qdrant-js';
 
                 const client = new QdrantClient({url: 'http://127.0.0.1:6333'});
 
                 client.deleteCollection("{collection_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -353,7 +353,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -376,7 +376,7 @@ paths:
                     ]
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -402,7 +402,7 @@ paths:
                   ],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -434,7 +434,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -445,7 +445,7 @@ paths:
                     field_schema="keyword",
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -455,7 +455,7 @@ paths:
                   field_schema: "keyword",
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::FieldType};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -494,21 +494,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.delete_payload_index("{collection_name}", "{field_name}");
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.deletePayloadIndex("{collection_name}", "{field_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -532,21 +532,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.get_collection_aliases("{collection_name}")
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.getCollectionAliases("{collection_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -568,21 +568,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.get_aliases()
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.getAliases();
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -604,7 +604,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -614,7 +614,7 @@ paths:
                     "http://example.com/path/to/snapshot.shapshot",
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -628,21 +628,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.list_snapshots(collection_name="{collection_name}")
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.listSnapshots("{collection_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -663,21 +663,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.create_snapshot(collection_name="{collection_name}")
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.createSnapshot("{collection_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -699,7 +699,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -708,14 +708,14 @@ paths:
                     collection_name="{collection_name}", snapshot_name="{snapshot_name}"
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.deleteSnapshot("{collection_name}", "{snapshot_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -739,21 +739,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.list_full_snapshots()
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.listFullSnapshots();
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -774,21 +774,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.create_full_snapshot()
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.createFullSnapshot();
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -810,21 +810,21 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
 
                 client.delete_full_snapshot(snapshot_name="{snapshot_name}")
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.deleteFullSnapshot("{snapshot_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -848,7 +848,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -858,7 +858,7 @@ paths:
                     ids=[0, 3, 100],
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -867,7 +867,7 @@ paths:
                   ids: [0, 3, 100],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -896,7 +896,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -928,7 +928,7 @@ paths:
                     ],
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -953,7 +953,7 @@ paths:
                   ],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::PointStruct};
             #     use serde_json::json;
 
@@ -1048,7 +1048,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1074,7 +1074,7 @@ paths:
                     ),
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -1096,7 +1096,7 @@ paths:
                     },
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{points_selector::PointsSelectorOneOf, Condition, Filter, PointsIdsList, PointsSelector}};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -1156,7 +1156,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1179,7 +1179,7 @@ paths:
                     ],
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -1201,7 +1201,7 @@ paths:
                     ],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::qdrant::PointVectors;
             #     use std::collections::HashMap;
 
@@ -1271,7 +1271,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1282,7 +1282,7 @@ paths:
                     vectors=["text", "image"],
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -1292,7 +1292,7 @@ paths:
                   vectors: ["text", "image"],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{
             #         points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector, VectorsSelector,
             #     }};
@@ -1337,7 +1337,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1351,7 +1351,7 @@ paths:
                     points=[0, 3, 10],
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -1364,7 +1364,7 @@ paths:
                   points: [0, 3, 10],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{
             #         points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
             #     }};
@@ -1420,7 +1420,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1434,7 +1434,7 @@ paths:
                     points=[0, 3, 10],
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -1447,7 +1447,7 @@ paths:
                   points: [0, 3, 10],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{
             #         points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
             #     }};
@@ -1502,7 +1502,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1513,7 +1513,7 @@ paths:
                     points=[0, 3, 100],
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -1523,7 +1523,7 @@ paths:
                   points: [0, 3, 100],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{
             #         points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
             #     }};
@@ -1571,7 +1571,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1581,7 +1581,7 @@ paths:
                     points_selector=[0, 3, 100],
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -1590,7 +1590,7 @@ paths:
                   points: [0, 3, 100],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{
             #         points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
             #     }};
@@ -1630,7 +1630,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1671,7 +1671,7 @@ paths:
                     ],
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -1711,7 +1711,7 @@ paths:
                     ],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::qdrant::{
             #         points_selector::PointsSelectorOneOf,
             #         points_update_operation::{
@@ -1856,7 +1856,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1873,7 +1873,7 @@ paths:
                     with_vectors=False,
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -1894,7 +1894,7 @@ paths:
                     with_vector: false,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{Condition, Filter, ScrollPoints}};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -1944,7 +1944,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -1965,7 +1965,7 @@ paths:
                     limit=3,
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -1985,7 +1985,7 @@ paths:
                     limit: 3,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{Condition, Filter, SearchParams, SearchPoints},
@@ -2041,7 +2041,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -2064,7 +2064,7 @@ paths:
 
                 client.search_batch(collection_name="{collection_name}", requests=search_queries)
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -2097,7 +2097,7 @@ paths:
                     searches,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{Condition, Filter, SearchBatchPoints, SearchPoints},
@@ -2169,7 +2169,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -2182,7 +2182,7 @@ paths:
                     group_size=2,
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -2194,7 +2194,7 @@ paths:
                     group_size: 2,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::SearchPointGroups,
@@ -2241,7 +2241,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -2264,7 +2264,7 @@ paths:
                     limit=3,
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -2286,7 +2286,7 @@ paths:
                     limit: 3,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{Condition, Filter, RecommendPoints, RecommendStrategy},
@@ -2353,7 +2353,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -2367,7 +2367,7 @@ paths:
 
                 client.recommend_batch(collection_name="{collection_name}", requests=recommend_queries)
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -2389,7 +2389,7 @@ paths:
                     searches,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{Condition, Filter, RecommendBatchPoints, RecommendPoints},
@@ -2468,7 +2468,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -2482,7 +2482,7 @@ paths:
                     group_size=2,
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -2495,7 +2495,7 @@ paths:
                     group_size: 2,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{RecommendPointGroups, RecommendStrategy},
@@ -2547,7 +2547,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -2562,7 +2562,7 @@ paths:
                     limit=10,
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -2582,7 +2582,7 @@ paths:
                     limit: 10,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{
@@ -2675,7 +2675,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient, models
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -2713,7 +2713,7 @@ paths:
 
                 client.discover_batch("{collection_name}", discover_queries)
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -2753,7 +2753,7 @@ paths:
                     searches,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{
@@ -2921,7 +2921,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: python
-              code: >-
+              code: |
                 from qdrant_client import QdrantClient
 
                 client = QdrantClient(url="http://localhost:6333")
@@ -2936,7 +2936,7 @@ paths:
                     exact=True,
                 )
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -2955,7 +2955,7 @@ paths:
                     exact: true,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{Condition, CountPoints, Filter}};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
