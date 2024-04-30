@@ -9,7 +9,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({
@@ -26,7 +26,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({
@@ -43,7 +43,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -55,7 +55,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -65,7 +65,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -77,7 +77,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -91,7 +91,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from '@qdrant/qdrant-js';
 
                 const client = new QdrantClient({url: 'http://127.0.0.1:6333'});
@@ -103,7 +103,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -134,7 +134,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -149,7 +149,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -161,7 +161,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -173,7 +173,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -185,7 +185,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -199,7 +199,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -210,7 +210,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -222,7 +222,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -234,7 +234,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -245,7 +245,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -257,7 +257,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -269,7 +269,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -283,7 +283,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -296,7 +296,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -326,7 +326,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -353,7 +353,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -380,7 +380,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -395,7 +395,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -412,7 +412,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -430,7 +430,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -445,7 +445,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -459,7 +459,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -504,7 +504,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -530,7 +530,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -555,7 +555,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -593,7 +593,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -610,7 +610,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -637,7 +637,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -664,7 +664,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -682,7 +682,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -707,7 +707,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
@@ -752,7 +752,7 @@ paths:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
-              code: >-
+              code: |
                 import { QdrantClient } from "@qdrant/js-client-rest";
 
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
