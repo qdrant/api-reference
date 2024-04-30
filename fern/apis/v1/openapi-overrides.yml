@@ -43,7 +43,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import static io.qdrant.client.ShardKeyFactory.shardKey;
 
                 import io.qdrant.client.QdrantClient;
@@ -97,7 +97,7 @@ paths:
             #         .delete_shard_key("{collection_name}", &Key::Keyword("{shard_key".to_string()))
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import static io.qdrant.client.ShardKeyFactory.shardKey;
 
                 import io.qdrant.client.QdrantClient;
@@ -144,7 +144,7 @@ paths:
 
             #     client.list_collections().await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -180,7 +180,7 @@ paths:
 
             #     client.collection_info("{collection_name}").await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -234,7 +234,7 @@ paths:
             #         })
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.grpc.Collections.Distance;
 
                 import io.qdrant.client.grpc.Collections.VectorParams;
@@ -293,7 +293,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import static io.qdrant.client.ShardKeyFactory.shardKey;
 
                 import io.qdrant.client.QdrantClient;
@@ -338,7 +338,7 @@ paths:
 
             #     client.delete_collection("{collection_name}").await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -411,7 +411,7 @@ paths:
 
             #     client.delete_alias("production_collection").await?;
             - sdk: java
-              code: >-
+              code: |
                 import static io.qdrant.client.ShardKeyFactory.shardKey;
 
                 import io.qdrant.client.QdrantClient;
@@ -470,7 +470,7 @@ paths:
             #     )
             #     .await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -517,7 +517,7 @@ paths:
             #         .delete_field_index("{collection_name}", "{field_name}", None)
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -553,7 +553,7 @@ paths:
 
             #     client.list_collection_aliases("{collection_name}").await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -589,7 +589,7 @@ paths:
 
             #     client.list_aliases().await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -649,7 +649,7 @@ paths:
 
             #     client.list_snapshots("{collection_name}").await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -684,7 +684,7 @@ paths:
 
             #     client.create_snapshot("{collection_name}").await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
                 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -724,7 +724,7 @@ paths:
             #         .delete_snapshot("{collection_name}", "{snapshot_name}")
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -760,7 +760,7 @@ paths:
 
             #     client.list_full_snapshots().await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -795,7 +795,7 @@ paths:
 
             #     client.create_full_snapshot().await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -831,7 +831,7 @@ paths:
 
             #     client.delete_full_snapshot("{snapshot_name}").await?;
             - sdk: java
-              code: >-
+              code: |
                 import io.qdrant.client.QdrantClient;
 
                 import io.qdrant.client.QdrantGrpcClient;
@@ -883,7 +883,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.PointIdFactory.id;
@@ -997,7 +997,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import static io.qdrant.client.PointIdFactory.id;
 
                 import static io.qdrant.client.VectorFactory.vector;
@@ -1127,7 +1127,7 @@ paths:
             #             )
             #             .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.PointIdFactory.id;
@@ -1231,7 +1231,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import java.util.Map;
@@ -1315,7 +1315,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.PointIdFactory.id;
@@ -1390,7 +1390,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import java.util.Map;
@@ -1473,7 +1473,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.PointIdFactory.id;
@@ -1544,7 +1544,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.PointIdFactory.id;
@@ -1610,7 +1610,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.PointIdFactory.id;
@@ -1763,7 +1763,7 @@ paths:
             #         )
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.PointIdFactory.id;
@@ -1913,7 +1913,7 @@ paths:
             #         })
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
 
                 import static io.qdrant.client.WithPayloadSelectorFactory.enable;
@@ -2011,7 +2011,7 @@ paths:
             #         })
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
 
                 import io.qdrant.client.QdrantClient;
@@ -2133,7 +2133,7 @@ paths:
             #         })
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
@@ -2213,7 +2213,7 @@ paths:
             #         })
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import io.qdrant.client.QdrantClient;
@@ -2311,7 +2311,7 @@ paths:
             #         })
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
@@ -2426,7 +2426,7 @@ paths:
             #         })
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
@@ -2516,7 +2516,7 @@ paths:
             #         })
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import static io.qdrant.client.PointIdFactory.id;
 
                 import java.util.List;
@@ -2624,7 +2624,7 @@ paths:
             #         })
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import java.util.List;
 
                 import static io.qdrant.client.PointIdFactory.id;
@@ -2829,7 +2829,7 @@ paths:
 
             #     client.discover_batch(discover_points).await?;
             - sdk: java
-              code: >-
+              code: |
                 import static io.qdrant.client.PointIdFactory.id;
 
                 import static io.qdrant.client.VectorFactory.vector;
@@ -2972,7 +2972,7 @@ paths:
             #         })
             #         .await?;
             - sdk: java
-              code: >-
+              code: |
                 import static io.qdrant.client.ConditionFactory.matchKeyword;
 
                 import io.qdrant.client.QdrantClient;
