@@ -27,6 +27,21 @@ paths:
                 client.createShardKey("{collection_name}", {
                     shard_key: "{shard_key}"
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::shard_key::Key};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .create_shard_key(
+                        "{collection_name}",
+                        &Key::Keyword("{shard_key".to_string()),
+                        None,
+                        None,
+                        &[],
+                    )
+                    .await?;
 
   /collections/{collection_name}/shards/delete:
     post:
@@ -51,6 +66,15 @@ paths:
                 client.deleteShardKey("{collection_name}", {
                     shard_key: "{shard_key}"
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::shard_key::Key};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .delete_shard_key("{collection_name}", &Key::Keyword("{shard_key".to_string()))
+                    .await?;
 
   /collections:
     get:
@@ -70,6 +94,13 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.getCollections();
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.list_collections().await?;
 
   /collections/{collection_name}:
     get:
@@ -89,6 +120,13 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.getCollection("{collection_name}");
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.collection_info("{collection_name}").await?;
     put:
       x-fern-examples:
         - code-samples:
@@ -111,6 +149,28 @@ paths:
                 client.createCollection("{collection_name}", {
                   vectors: { size: 100, distance: "Cosine" },
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{
+                    client::QdrantClient,
+                    qdrant::{vectors_config::Config, CreateCollection, Distance, VectorParams, VectorsConfig},
+                };
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .create_collection(&CreateCollection {
+                        collection_name: "{collection_name}".to_string(),
+                        vectors_config: Some(VectorsConfig {
+                            config: Some(Config::Params(VectorParams {
+                                size: 100,
+                                distance: Distance::Cosine.into(),
+                                ..Default::default()
+                            })),
+                        }),
+                        ..Default::default()
+                    })
+                    .await?;
     patch:
       x-fern-examples:
         - code-samples:
@@ -135,6 +195,26 @@ paths:
                     indexing_threshold: 10000,
                   },
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::OptimizersConfigDiff};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .update_collection(
+                        "{collection_name}",
+                        Some(&OptimizersConfigDiff {
+                            indexing_threshold: Some(10000),
+                            ..Default::default()
+                        }),
+                        None,
+                        None,
+                        None,
+                        None,
+                        None,
+                    )
+                    .await?;
     delete:
       x-fern-examples:
         - code-samples:
@@ -152,6 +232,13 @@ paths:
                 const client = new QdrantClient({url: 'http://127.0.0.1:6333'});
 
                 client.deleteCollection("{collection_name}");
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.delete_collection("{collection_name}").await?;
 
   /collections/aliases:
     post:
@@ -206,6 +293,15 @@ paths:
                     },
                   ],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.create_alias("example_collection", "production_collection").await?;
+
+                client.delete_alias("production_collection").await?;
 
   /collections/{collection_name}/index:
     put:
@@ -232,6 +328,21 @@ paths:
                   field_name: "{field_name}",
                   field_schema: "keyword",
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::FieldType};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                .create_field_index(
+                    "{collection_name}",
+                    "{field_name}",
+                    FieldType::Keyword,
+                    None,
+                    None,
+                )
+                .await?;
 
   /collections/{collection_name}/index/{field_name}:
     delete:
@@ -251,6 +362,15 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.deletePayloadIndex("{collection_name}", "{field_name}");
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .delete_field_index("{collection_name}", "{field_name}", None)
+                    .await?;
 
   /collections/{collection_name}/aliases:
     get:
@@ -270,6 +390,13 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.getCollectionAliases("{collection_name}");
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.list_collection_aliases("{collection_name}").await?;
 
   /aliases:
     get:
@@ -289,6 +416,13 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.getAliases();
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.list_aliases().await?;
 
   /collections/{collection_name}/snapshots/recover:
     put:
@@ -332,6 +466,13 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.listSnapshots("{collection_name}");
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.list_snapshots("{collection_name}").await?;
 
     post:
       x-fern-examples:
@@ -350,6 +491,13 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.createSnapshot("{collection_name}");
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.create_snapshot("{collection_name}").await?;
 
   /collections/{collection_name}/snapshots/{snapshot_name}:
     delete:
@@ -371,6 +519,15 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.deleteSnapshot("{collection_name}", "{snapshot_name}");
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .delete_snapshot("{collection_name}", "{snapshot_name}")
+                    .await?;
 
   /snapshots:
     get:
@@ -390,6 +547,13 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.listFullSnapshots();
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.list_full_snapshots().await?;
 
     post:
       x-fern-examples:
@@ -408,6 +572,13 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.createFullSnapshot();
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.create_full_snapshot().await?;
 
   /snapshots/{snapshot_name}:
     delete:
@@ -427,6 +598,13 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.deleteFullSnapshot("{snapshot_name}");
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client.delete_full_snapshot("{snapshot_name}").await?;
 
   /collections/{collection_name}/points/{id}:
     get:
@@ -440,7 +618,7 @@ paths:
 
                 client.retrieve(
                     collection_name="{collection_name}",
-                    ids=["{id}"],
+                    ids=[1],
                 )
             - sdk: typescript
               code: >-
@@ -449,8 +627,24 @@ paths:
                 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
                 client.retrieve("{collection_name}", {
-                  ids: ["{id}"],
+                  ids: [1],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .get_points(
+                        "{collection_name}",
+                        None,
+                        &[1.into()],
+                        Some(false),
+                        Some(false),
+                        None,
+                    )
+                    .await?;
 
   /collections/{collection_name}/points:
     post:
@@ -475,6 +669,22 @@ paths:
                 client.retrieve("{collection_name}", {
                   ids: [0, 3, 100],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::client::QdrantClient;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .get_points(
+                        "{collection_name}",
+                        None,
+                        &[0.into(), 30.into(), 100.into()],
+                        Some(false),
+                        Some(false),
+                        None,
+                    )
+                    .await?;
 
     put:
       x-fern-examples:
@@ -536,6 +746,50 @@ paths:
                     },
                   ],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::PointStruct};
+                use serde_json::json;
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .upsert_points_batch_blocking(
+                        "{collection_name}".to_string(),
+                        None,
+                        vec![
+                            PointStruct::new(
+                                1,
+                                vec![0.9, 0.1, 0.1],
+                                json!(
+                                    {"color": "red"}
+                                )
+                                .try_into()
+                                .unwrap(),
+                            ),
+                            PointStruct::new(
+                                2,
+                                vec![0.1, 0.9, 0.1],
+                                json!(
+                                    {"color": "green"}
+                                )
+                                .try_into()
+                                .unwrap(),
+                            ),
+                            PointStruct::new(
+                                3,
+                                vec![0.1, 0.1, 0.9],
+                                json!(
+                                    {"color": "blue"}
+                                )
+                                .try_into()
+                                .unwrap(),
+                            ),
+                        ],
+                        None,
+                        100,
+                    )
+                    .await?;
 
   /collections/{collection_name}/points/delete:
     post:
@@ -589,6 +843,37 @@ paths:
                         ],
                     },
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::{points_selector::PointsSelectorOneOf, Condition, Filter, PointsIdsList, PointsSelector}};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .delete_points_blocking(
+                        "{collection_name}",
+                        None,
+                        &PointsSelector {
+                            points_selector_one_of: Some(PointsSelectorOneOf::Points(PointsIdsList {
+                                ids: vec![0.into(), 3.into(), 100.into()],
+                            })),
+                        },
+                        None,
+                    )
+                    .await?;
+
+                    client
+                        .delete_points_blocking(
+                            "{collection_name}",
+                            None,
+                            &PointsSelector {
+                                points_selector_one_of: Some(PointsSelectorOneOf::Filter(Filter::must([
+                                    Condition::matches("color", "red".to_string()),
+                                ]))),
+                            },
+                            None,
+                        )
+                        .await?;
 
   /collections/{collection_name}/points/vectors:
     put:
@@ -639,6 +924,36 @@ paths:
                         },
                     ],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::qdrant::PointVectors;
+                use std::collections::HashMap;
+
+                client
+                    .update_vectors_blocking(
+                        "{collection_name}",
+                        None,
+                        &[
+                            PointVectors {
+                                id: Some(1.into()),
+                                vectors: Some(
+                                    HashMap::from([("image".to_string(), vec![0.1, 0.2, 0.3, 0.4])]).into(),
+                                ),
+                            },
+                            PointVectors {
+                                id: Some(2.into()),
+                                vectors: Some(
+                                    HashMap::from([(
+                                        "text".to_string(),
+                                        vec![0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],
+                                    )])
+                                    .into(),
+                                ),
+                            },
+                        ],
+                        None,
+                    )
+                    .await?;
 
   /collections/{collection_name}/points/vectors/delete:
     post:
@@ -665,6 +980,29 @@ paths:
                   points: [0, 3, 10],
                   vectors: ["text", "image"],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::{
+                    points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector, VectorsSelector,
+                }};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .delete_vectors_blocking(
+                        "{collection_name}",
+                        None,
+                        &PointsSelector {
+                            points_selector_one_of: Some(PointsSelectorOneOf::Points(PointsIdsList {
+                                ids: vec![0.into(), 3.into(), 10.into()],
+                            })),
+                        },
+                        &VectorsSelector {
+                            names: vec!["text".into(), "image".into()],
+                        },
+                        None,
+                    )
+                    .await?;
 
   /collections/{collection_name}/points/payload:
     post:
@@ -697,6 +1035,32 @@ paths:
                   },
                   points: [0, 3, 10],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::{
+                    points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
+                }};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .set_payload_blocking(
+                        "{collection_name}",
+                        None,
+                        &PointsSelector {
+                            points_selector_one_of: Some(PointsSelectorOneOf::Points(PointsIdsList {
+                                ids: vec![0.into(), 3.into(), 10.into()],
+                            })),
+                        },
+                        json!({
+                            "property1": "string",
+                            "property2": "string",
+                        })
+                        .try_into()
+                        .unwrap(),
+                        None,
+                    )
+                    .await?;
 
     put:
       x-fern-examples:
@@ -728,6 +1092,32 @@ paths:
                   },
                   points: [0, 3, 10],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::{
+                    points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
+                }};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .overwrite_payload_blocking(
+                        "{collection_name}",
+                        None,
+                        &PointsSelector {
+                            points_selector_one_of: Some(PointsSelectorOneOf::Points(PointsIdsList {
+                                ids: vec![0.into(), 3.into(), 10.into()],
+                            })),
+                        },
+                        json!({
+                            "property1": "string",
+                            "property2": "string",
+                        })
+                        .try_into()
+                        .unwrap(),
+                        None,
+                    )
+                    .await?;
 
   /collections/{collection_name}/points/payload/delete:
     post:
@@ -754,6 +1144,27 @@ paths:
                   keys: ["color", "price"],
                   points: [0, 3, 100],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::{
+                    points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
+                }};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .delete_payload_blocking(
+                        "{collection_name}",
+                        None,
+                        &PointsSelector {
+                            points_selector_one_of: Some(PointsSelectorOneOf::Points(PointsIdsList {
+                                ids: vec![0.into(), 3.into(), 100.into()],
+                            })),
+                        },
+                        vec!["color".to_string(), "price".to_string()],
+                        None,
+                    )
+                    .await?;
 
   /collections/{collection_name}/points/payload/clear:
     post:
@@ -778,6 +1189,26 @@ paths:
                 client.clearPayload("{collection_name}", {
                   points: [0, 3, 100],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::{
+                    points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
+                }};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .clear_payload(
+                        "{collection_name}",
+                        None,
+                        Some(PointsSelector {
+                            points_selector_one_of: Some(PointsSelectorOneOf::Points(PointsIdsList {
+                                ids: vec![0.into(), 3.into(), 100.into()],
+                            })),
+                        }),
+                        None,
+                    )
+                    .await?;
 
   /collections/{collection_name}/points/batch:
     post:
@@ -864,6 +1295,58 @@ paths:
                         },
                     ],
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::qdrant::{
+                    points_selector::PointsSelectorOneOf,
+                    points_update_operation::{
+                        Operation, PointStructList, SetPayload, UpdateVectors,
+                    },
+                    PointStruct, PointVectors, PointsIdsList, PointsSelector, PointsUpdateOperation,
+                };
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .batch_updates_blocking(
+                        "{collection_name}",
+                        &[
+                            PointsUpdateOperation {
+                                operation: Some(Operation::Upsert(PointStructList {
+                                    points: vec![PointStruct::new(
+                                        1,
+                                        vec![1.0, 2.0, 3.0, 4.0],
+                                        json!({}).try_into().unwrap(),
+                                    )],
+                                    ..Default::default()
+                                })),
+                            },
+                            PointsUpdateOperation {
+                                operation: Some(Operation::UpdateVectors(UpdateVectors {
+                                    points: vec![PointVectors {
+                                        id: Some(1.into()),
+                                        vectors: Some(vec![1.0, 2.0, 3.0, 4.0].into()),
+                                    }],
+                                    ..Default::default()
+                                })),
+                            },
+                            PointsUpdateOperation {
+                                operation: Some(Operation::OverwritePayload(SetPayload {
+                                    points_selector: Some(PointsSelector {
+                                        points_selector_one_of: Some(PointsSelectorOneOf::Points(
+                                            PointsIdsList {
+                                                ids: vec![1.into()],
+                                            },
+                                        )),
+                                    }),
+                                    payload: HashMap::from([("test_payload".to_string(), 1.into())]),
+                                    ..Default::default()
+                                })),
+                            },
+                        ],
+                        None,
+                    )
+                    .await?;
 
   /collections/{collection_name}/points/scroll:
     post:
@@ -907,6 +1390,25 @@ paths:
                     with_payload: true,
                     with_vector: false,
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::{Condition, Filter, ScrollPoints}};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .scroll(&ScrollPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        filter: Some(Filter::must([Condition::matches(
+                            "color",
+                            "red".to_string(),
+                        )])),
+                        limit: Some(1),
+                        with_payload: Some(true.into()),
+                        with_vectors: Some(false.into()),
+                        ..Default::default()
+                    })
+                    .await?;
 
   /collections/{collection_name}/points/search:
     post:
@@ -953,6 +1455,32 @@ paths:
                     vector: [0.2, 0.1, 0.9, 0.7],
                     limit: 3,
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{
+                    client::QdrantClient,
+                    qdrant::{Condition, Filter, SearchParams, SearchPoints},
+                };
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .search_points(&SearchPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        filter: Some(Filter::must([Condition::matches(
+                            "city",
+                            "London".to_string(),
+                        )])),
+                        params: Some(SearchParams {
+                            hnsw_ef: Some(128),
+                            exact: Some(false),
+                            ..Default::default()
+                        }),
+                        vector: vec![0.2, 0.1, 0.9, 0.7],
+                        limit: 3,
+                        ..Default::default()
+                    })
+                    .await?;
 
   /collections/{collection_name}/points/search/batch:
     post:
@@ -1014,6 +1542,42 @@ paths:
                 client.searchBatch("{collection_name}", {
                     searches,
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{
+                    client::QdrantClient,
+                    qdrant::{Condition, Filter, SearchBatchPoints, SearchPoints},
+                };
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                let filter = Filter::must([Condition::matches("city", "London".to_string())]);
+
+                let searches = vec![
+                    SearchPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        vector: vec![0.2, 0.1, 0.9, 0.7],
+                        filter: Some(filter.clone()),
+                        limit: 3,
+                        ..Default::default()
+                    },
+                    SearchPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        vector: vec![0.5, 0.3, 0.2, 0.3],
+                        filter: Some(filter),
+                        limit: 3,
+                        ..Default::default()
+                    },
+                ];
+
+                client
+                    .search_batch_points(&SearchBatchPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        search_points: searches,
+                        read_consistency: None,
+                        ..Default::default()
+                    })
+                    .await?;
 
   /collections/{collection_name}/points/search/groups:
     post:
@@ -1044,6 +1608,25 @@ paths:
                     limit: 4,
                     group_size: 2,
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{
+                    client::QdrantClient,
+                    qdrant::SearchPointGroups,
+                };
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .search_groups(&SearchPointGroups {
+                        collection_name: "{collection_name}".to_string(),
+                        vector: vec![1.1],
+                        group_by: "document_id".to_string(),
+                        limit: 4,
+                        group_size: 2,
+                        ..Default::default()
+                    })
+                    .await?;
 
   /collections/{collection_name}/points/recommend:
     post:
@@ -1094,6 +1677,31 @@ paths:
                     },
                     limit: 3,
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{
+                    client::QdrantClient,
+                    qdrant::{Condition, Filter, RecommendPoints, RecommendStrategy},
+                };
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .recommend(&RecommendPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        positive: vec![100.into(), 200.into()],
+                        positive_vectors: vec![vec![100.0, 231.0].into()],
+                        negative: vec![718.into()],
+                        negative_vectors: vec![vec![0.2, 0.3, 0.4, 0.5].into()],
+                        strategy: Some(RecommendStrategy::AverageVector.into()),
+                        filter: Some(Filter::must([Condition::matches(
+                            "city",
+                            "London".to_string(),
+                        )])),
+                        limit: 3,
+                        ..Default::default()
+                    })
+                    .await?;
 
   /collections/{collection_name}/points/recommend/batch:
     post:
@@ -1135,6 +1743,43 @@ paths:
                 client.recommend_batch("{collection_name}", {
                     searches,
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{
+                    client::QdrantClient,
+                    qdrant::{Condition, Filter, RecommendBatchPoints, RecommendPoints},
+                };
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                let filter = Filter::must([Condition::matches("city", "London".to_string())]);
+
+                let recommend_queries = vec![
+                    RecommendPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        positive: vec![100.into(), 231.into()],
+                        negative: vec![718.into()],
+                        filter: Some(filter.clone()),
+                        limit: 3,
+                        ..Default::default()
+                    },
+                    RecommendPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        positive: vec![200.into(), 67.into()],
+                        negative: vec![300.into()],
+                        filter: Some(filter),
+                        limit: 3,
+                        ..Default::default()
+                    },
+                ];
+
+                client
+                    .recommend_batch(&RecommendBatchPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        recommend_points: recommend_queries,
+                        ..Default::default()
+                    })
+                    .await?;
 
   /collections/{collection_name}/points/recommend/groups:
     post:
@@ -1167,6 +1812,27 @@ paths:
                     limit: 3,
                     group_size: 2,
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{
+                    client::QdrantClient,
+                    qdrant::{RecommendPointGroups, RecommendStrategy},
+                };
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .recommend_groups(&RecommendPointGroups {
+                        collection_name: "{collection_name}".to_string(),
+                        group_by: "document_id".to_string(),
+                        group_size: 2,
+                        positive: vec![100.into(), 200.into()],
+                        negative: vec![718.into()],
+                        strategy: Some(RecommendStrategy::AverageVector.into()),
+                        limit: 3,
+                        ..Default::default()
+                    })
+                    .await?;
 
   /collections/{collection_name}/points/discover:
     post:
@@ -1207,6 +1873,48 @@ paths:
                     ],
                     limit: 10,
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{
+                    client::QdrantClient,
+                    qdrant::{
+                        target_vector::Target, vector_example::Example, ContextExamplePair, DiscoverPoints,
+                        TargetVector, VectorExample,
+                    },
+                };
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .discover(&DiscoverPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        target: Some(TargetVector {
+                            target: Some(Target::Single(VectorExample {
+                                example: Some(Example::Vector(vec![0.2, 0.1, 0.9, 0.7].into())),
+                            })),
+                        }),
+                        context: vec![
+                            ContextExamplePair {
+                                positive: Some(VectorExample {
+                                    example: Some(Example::Id(100.into())),
+                                }),
+                                negative: Some(VectorExample {
+                                    example: Some(Example::Id(718.into())),
+                                }),
+                            },
+                            ContextExamplePair {
+                                positive: Some(VectorExample {
+                                    example: Some(Example::Id(200.into())),
+                                }),
+                                negative: Some(VectorExample {
+                                    example: Some(Example::Id(300.into())),
+                                }),
+                            },
+                        ],
+                        limit: 10,
+                        ..Default::default()
+                    })
+                    .await?;
 
   /collections/{collection_name}/points/discover/batch:
     post:
@@ -1290,6 +1998,82 @@ paths:
                 client.discoverBatchPoints("{collection_name}", {
                     searches,
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{
+                    client::QdrantClient,
+                    qdrant::{
+                        target_vector::Target, vector_example::Example, ContextExamplePair, DiscoverBatchPoints,
+                        DiscoverPoints, TargetVector, VectorExample,
+                    },
+                };
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                let discover_points = &DiscoverBatchPoints {
+                    collection_name: "{collection_name}".to_string(),
+                    discover_points: vec![
+                        DiscoverPoints {
+                            collection_name: "{collection_name}".to_string(),
+                            target: Some(TargetVector {
+                                target: Some(Target::Single(VectorExample {
+                                    example: Some(Example::Vector(vec![0.2, 0.1, 0.9, 0.7].into())),
+                                })),
+                            }),
+                            context: vec![
+                                ContextExamplePair {
+                                    positive: Some(VectorExample {
+                                        example: Some(Example::Id(100.into())),
+                                    }),
+                                    negative: Some(VectorExample {
+                                        example: Some(Example::Id(718.into())),
+                                    }),
+                                },
+                                ContextExamplePair {
+                                    positive: Some(VectorExample {
+                                        example: Some(Example::Id(200.into())),
+                                    }),
+                                    negative: Some(VectorExample {
+                                        example: Some(Example::Id(300.into())),
+                                    }),
+                                },
+                            ],
+                            limit: 10,
+                            ..Default::default()
+                        },
+                        DiscoverPoints {
+                            collection_name: "{collection_name}".to_string(),
+                            target: Some(TargetVector {
+                                target: Some(Target::Single(VectorExample {
+                                    example: Some(Example::Vector(vec![0.5, 0.3, 0.2, 0.3].into())),
+                                })),
+                            }),
+                            context: vec![
+                                ContextExamplePair {
+                                    positive: Some(VectorExample {
+                                        example: Some(Example::Id(342.into())),
+                                    }),
+                                    negative: Some(VectorExample {
+                                        example: Some(Example::Id(213.into())),
+                                    }),
+                                },
+                                ContextExamplePair {
+                                    positive: Some(VectorExample {
+                                        example: Some(Example::Id(100.into())),
+                                    }),
+                                    negative: Some(VectorExample {
+                                        example: Some(Example::Id(200.into())),
+                                    }),
+                                },
+                            ],
+                            limit: 10,
+                            ..Default::default()
+                        },
+                    ],
+                    ..Default::default()
+                };
+
+                client.discover_batch(discover_points).await?;
 
   /collections/{collection_name}/points/count:
     post:
@@ -1329,3 +2113,20 @@ paths:
                     },
                     exact: true,
                 });
+            - sdk: rust
+              code: >-
+                use qdrant_client::{client::QdrantClient, qdrant::{Condition, CountPoints, Filter}};
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+                client
+                    .count(&CountPoints {
+                        collection_name: "{collection_name}".to_string(),
+                        filter: Some(Filter::must([Condition::matches(
+                            "color",
+                            "red".to_string(),
+                        )])),
+                        exact: Some(true),
+                        ..Default::default()
+                    })
+                    .await?;
