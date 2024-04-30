@@ -28,7 +28,7 @@ paths:
                     shard_key: "{shard_key}"
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::shard_key::Key};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -67,7 +67,7 @@ paths:
                     shard_key: "{shard_key}"
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::shard_key::Key};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -95,7 +95,7 @@ paths:
 
                 client.getCollections();
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -121,7 +121,7 @@ paths:
 
                 client.getCollection("{collection_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -150,7 +150,7 @@ paths:
                   vectors: { size: 100, distance: "Cosine" },
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{vectors_config::Config, CreateCollection, Distance, VectorParams, VectorsConfig},
@@ -196,7 +196,7 @@ paths:
                   },
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::OptimizersConfigDiff};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -233,7 +233,7 @@ paths:
 
                 client.deleteCollection("{collection_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -294,7 +294,7 @@ paths:
                   ],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -329,7 +329,7 @@ paths:
                   field_schema: "keyword",
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::FieldType};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -363,7 +363,7 @@ paths:
 
                 client.deletePayloadIndex("{collection_name}", "{field_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -391,7 +391,7 @@ paths:
 
                 client.getCollectionAliases("{collection_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -417,7 +417,7 @@ paths:
 
                 client.getAliases();
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -467,7 +467,7 @@ paths:
 
                 client.listSnapshots("{collection_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -492,7 +492,7 @@ paths:
 
                 client.createSnapshot("{collection_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -520,7 +520,7 @@ paths:
 
                 client.deleteSnapshot("{collection_name}", "{snapshot_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -548,7 +548,7 @@ paths:
 
                 client.listFullSnapshots();
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -573,7 +573,7 @@ paths:
 
                 client.createFullSnapshot();
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -599,7 +599,7 @@ paths:
 
                 client.deleteFullSnapshot("{snapshot_name}");
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -630,7 +630,7 @@ paths:
                   ids: [1],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -670,7 +670,7 @@ paths:
                   ids: [0, 3, 100],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::client::QdrantClient;
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -747,7 +747,7 @@ paths:
                   ],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::PointStruct};
             #     use serde_json::json;
 
@@ -844,7 +844,7 @@ paths:
                     },
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{points_selector::PointsSelectorOneOf, Condition, Filter, PointsIdsList, PointsSelector}};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -925,7 +925,7 @@ paths:
                     ],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::qdrant::PointVectors;
             #     use std::collections::HashMap;
 
@@ -981,7 +981,7 @@ paths:
                   vectors: ["text", "image"],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{
             #         points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector, VectorsSelector,
             #     }};
@@ -1036,7 +1036,7 @@ paths:
                   points: [0, 3, 10],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{
             #         points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
             #     }};
@@ -1093,7 +1093,7 @@ paths:
                   points: [0, 3, 10],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{
             #         points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
             #     }};
@@ -1145,7 +1145,7 @@ paths:
                   points: [0, 3, 100],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{
             #         points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
             #     }};
@@ -1190,7 +1190,7 @@ paths:
                   points: [0, 3, 100],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{
             #         points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
             #     }};
@@ -1296,7 +1296,7 @@ paths:
                     ],
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::qdrant::{
             #         points_selector::PointsSelectorOneOf,
             #         points_update_operation::{
@@ -1391,7 +1391,7 @@ paths:
                     with_vector: false,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{Condition, Filter, ScrollPoints}};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -1456,7 +1456,7 @@ paths:
                     limit: 3,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{Condition, Filter, SearchParams, SearchPoints},
@@ -1543,7 +1543,7 @@ paths:
                     searches,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{Condition, Filter, SearchBatchPoints, SearchPoints},
@@ -1609,7 +1609,7 @@ paths:
                     group_size: 2,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::SearchPointGroups,
@@ -1678,7 +1678,7 @@ paths:
                     limit: 3,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{Condition, Filter, RecommendPoints, RecommendStrategy},
@@ -1744,7 +1744,7 @@ paths:
                     searches,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{Condition, Filter, RecommendBatchPoints, RecommendPoints},
@@ -1813,7 +1813,7 @@ paths:
                     group_size: 2,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{RecommendPointGroups, RecommendStrategy},
@@ -1874,7 +1874,7 @@ paths:
                     limit: 10,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{
@@ -1999,7 +1999,7 @@ paths:
                     searches,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{
             #         client::QdrantClient,
             #         qdrant::{
@@ -2114,7 +2114,7 @@ paths:
                     exact: true,
                 });
             # - sdk: rust
-            #   code: >-
+            #   code: |
             #     use qdrant_client::{client::QdrantClient, qdrant::{Condition, CountPoints, Filter}};
 
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
