@@ -64,7 +64,7 @@ paths:
                                                 .build())
                                 .build()).get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
 
@@ -129,7 +129,7 @@ paths:
                                                 .build())
                                 .build()).get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
 
@@ -176,7 +176,7 @@ paths:
 
                 client.listCollectionsAsync().get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -219,7 +219,7 @@ paths:
 
                 client.getCollectionInfoAsync("{collection_name}").get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -286,7 +286,7 @@ paths:
                 client.createCollectionAsync("{collection_name}",
                         VectorParams.newBuilder().setDistance(Distance.Cosine).setSize(100).build()).get();
             - sdk: csharp
-              code: >-
+              code: |
     patch:
       x-fern-examples:
         - code-samples:
@@ -353,7 +353,7 @@ paths:
                             OptimizersConfigDiff.newBuilder().setIndexingThreshold(10000).build())
                         .build());
             - sdk: csharp
-              code: >-
+              code: |
     delete:
       x-fern-examples:
         - code-samples:
@@ -389,7 +389,7 @@ paths:
 
                 client.deleteCollectionAsync("{collection_name}").get();
             - sdk: csharp
-              code: >-
+              code: |
 
   /collections/aliases:
     post:
@@ -472,7 +472,7 @@ paths:
 
                 client.deleteAliasAsync("production_collection").get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -541,7 +541,7 @@ paths:
                                 null,
                                 null);
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -589,7 +589,7 @@ paths:
 
                 client.deletePayloadIndexAsync("{collection_name}", "{field_name}", true, null, null).get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -635,7 +635,7 @@ paths:
 
                 client.listCollectionAliasesAsync("{collection_name}").get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -678,7 +678,7 @@ paths:
 
                 client.listAliasesAsync().get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -745,7 +745,7 @@ paths:
 
                 client.listSnapshotAsync("{collection_name}").get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -787,7 +787,7 @@ paths:
 
                 client.createSnapshotAsync("{collection_name}").get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -834,7 +834,7 @@ paths:
 
                 client.deleteSnapshotAsync("{collection_name}", "{snapshot_name}").get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -877,7 +877,7 @@ paths:
 
                 client.listFullSnapshotAsync().get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -919,7 +919,7 @@ paths:
 
                 client.createFullSnapshotAsync().get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -962,7 +962,7 @@ paths:
 
                 client.deleteFullSnapshotAsync("{snapshot_name}").get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -1018,7 +1018,7 @@ paths:
                     .retrieveAsync("{collection_name}", List.of(id(0), id(30), id(100)), false, false, null)
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -1181,7 +1181,7 @@ paths:
                                 .build()))
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
 
@@ -1320,7 +1320,7 @@ paths:
                         Filter.newBuilder().addMust(matchKeyword("color", "red")).build())
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -1444,7 +1444,7 @@ paths:
                                 .build()))
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
 
@@ -1529,7 +1529,7 @@ paths:
                         "{collection_name}", List.of("text", "image"), List.of(id(0), id(3), id(10)))
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -1620,7 +1620,7 @@ paths:
                         null)
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
 
@@ -1713,7 +1713,7 @@ paths:
                         null)
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
 
@@ -1794,7 +1794,7 @@ paths:
                         null)
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -1860,7 +1860,7 @@ paths:
                 client.clearPayloadAsync("{collection_name}", List.of(id(0), id(3), id(100)), null, null, null)
                                 .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -2093,7 +2093,7 @@ paths:
                             .build()))
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
 
@@ -2221,7 +2221,7 @@ paths:
                             .build())
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using static Qdrant.Client.Grpc.Conditions;
 
@@ -2330,7 +2330,7 @@ paths:
                             .build())
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using static Qdrant.Client.Grpc.Conditions;
 
@@ -2471,7 +2471,7 @@ paths:
                             .build());
                 client.searchBatchAsync("{collection_name}", searches, null).get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
                 using static Qdrant.Client.Grpc.Conditions;
@@ -2570,7 +2570,7 @@ paths:
                             .build())
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
 
                 var client = new QdrantClient("localhost", 6334);
@@ -2694,7 +2694,7 @@ paths:
                             .build())
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
                 using static Qdrant.Client.Grpc.Conditions;
@@ -2824,7 +2824,7 @@ paths:
 
                 client.recommendBatchAsync("{collection_name}", recommendQueries, null).get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
                 using static Qdrant.Client.Grpc.Conditions;
@@ -2935,7 +2935,7 @@ paths:
                                 .setLimit(3)
                                 .build());
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using static Qdrant.Client.Grpc.Conditions;
 
@@ -3079,7 +3079,7 @@ paths:
                             .build())
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
 
@@ -3353,7 +3353,7 @@ paths:
                     .build());
                 client.discoverBatchAsync("{collection_name}", discoverPoints, null);
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using Qdrant.Client.Grpc;
 
@@ -3482,7 +3482,7 @@ paths:
                         true)
                     .get();
             - sdk: csharp
-              code: >-
+              code: |
                 using Qdrant.Client;
                 using static Qdrant.Client.Grpc.Conditions;
 
