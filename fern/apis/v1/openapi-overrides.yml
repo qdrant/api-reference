@@ -3,9 +3,91 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
-paths: 
-  /collections/{collection_name}: 
-    put: 
+paths:
+  /collections/{collection_name}/shards:
+    put:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({
+                    host: "localhost",
+                    port: 6333
+                });
+
+                client.createShardKey("{collection_name}", {
+                    shard_key: "{shard_key}"
+                });
+
+  /collections/{collection_name}/shards/delete:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({
+                    host: "localhost",
+                    port: 6333
+                });
+
+                client.deleteShardKey("{collection_name}", {
+                    shard_key: "{shard_key}"
+                });
+
+  /collections:
+    get:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                await client.getCollections();
+
+  /collections/{collection_name}:
+    get:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                await client.getCollection("{collection_name}");
+    put:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                await client.createCollection("{collection_name}", {
+                  vectors: { size: 100, distance: "Cosine" },
+                });
+    patch:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                await client.updateCollection("{collection_name}", {
+                  optimizers_config: {
+                    indexing_threshold: 10000,
+                  },
+                });
+    delete:
       x-fern-examples:
         - code-samples:
             - sdk: typescript
@@ -14,13 +96,677 @@ paths:
 
                 const client = new QdrantClient({url: 'http://127.0.0.1:6333'});
 
-                await client.createCollection('test_collection', {
-                  vectors: {
-                      size: 4,
-                      distance: 'Cosine',
+                await client.deleteCollection("{collection_name}");
+
+  /collections/aliases:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                await client.updateCollectionAliases({
+                  actions: [
+                    {
+                      create_alias: {
+                        collection_name: "example_collection",
+                        alias_name: "production_collection",
+                      },
+                    },
+                  ],
+                });
+
+                await client.updateCollectionAliases({
+                  actions: [
+                    {
+                      delete_alias: {
+                        alias_name: "production_collection",
+                      },
+                    },
+                  ],
+                });
+
+  /collections/{collection_name}/index:
+    put:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                await client.createPayloadIndex("{collection_name}", {
+                  field_name: "{field_name}",
+                  field_schema: "keyword",
+                });
+
+  /collections/{collection_name}/index/{field_name}:
+    delete:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                await client.deletePayloadIndex("{collection_name}", "{field_name}");
+
+  /collections/{collection_name}/aliases:
+    get:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                await client.getCollectionAliases("{collection_name}");
+
+  /aliases:
+    get:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                await client.getAliases();
+
+  /collections/{collection_name}/snapshots/recover:
+    put:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.recoverSnapshot("{collection_name}", {
+                  location: "http://qdrant-node-1:6333/collections/{collection_name}/snapshots/snapshot-2022-10-10.shapshot",
+                });
+
+  /collections/{collection_name}/snapshots:
+    get:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.listSnapshots("{collection_name}");
+
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.createSnapshot("{collection_name}");
+
+  /collections/{collection_name}/snapshots/{snapshot_name}:
+    delete:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.deleteSnapshot("{collection_name}", "{snapshot_name}");
+
+  /snapshots:
+    get:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.listFullSnapshots();
+
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.createFullSnapshot();
+
+  /snapshots/{snapshot_name}:
+    delete:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.deleteFullSnapshot("{snapshot_name}");
+
+  /collections/{collection_name}/points/{id}:
+    get:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.retrieve("{collection_name}", {
+                  ids: ["{id}"],
+                });
+
+  /collections/{collection_name}/points:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.retrieve("{collection_name}", {
+                  ids: [0, 3, 100],
+                });
+
+    put:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.upsert("{collection_name}", {
+                  points: [
+                    {
+                      id: 1,
+                      payload: { color: "red" },
+                      vector: [0.9, 0.1, 0.1],
+                    },
+                    {
+                      id: 2,
+                      payload: { color: "green" },
+                      vector: [0.1, 0.9, 0.1],
+                    },
+                    {
+                      id: 3,
+                      payload: { color: "blue" },
+                      vector: [0.1, 0.1, 0.9],
+                    },
+                  ],
+                });
+
+  /collections/{collection_name}/points/delete:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.delete("{collection_name}", {
+                  points: [0, 3, 100],
+                });
+
+                client.delete("{collection_name}", {
+                    filter: {
+                        must: [
+                            {
+                                key: "color",
+                                match: {
+                                    value: "red",
+                                },
+                            },
+                        ],
+                    },
+                });
+
+  /collections/{collection_name}/points/vectors:
+    put:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.updateVectors("{collection_name}", {
+                    points: [
+                        {
+                            id: 1,
+                            vector: {
+                                image: [0.1, 0.2, 0.3, 0.4],
+                            },
+                        },
+                        {
+                            id: 2,
+                            vector: {
+                                text: [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],
+                            },
+                        },
+                    ],
+                });
+
+  /collections/{collection_name}/points/vectors/delete:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.deleteVectors("{collection_name}", {
+                  points: [0, 3, 10],
+                  vectors: ["text", "image"],
+                });
+
+  /collections/{collection_name}/points/payload:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.setPayload("{collection_name}", {
+                  payload: {
+                    property1: "string",
+                    property2: "string",
                   },
-                  optimizers_config: {
-                      default_segment_number: 2,
+                  points: [0, 3, 10],
+                });
+
+    put:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.overwritePayload("{collection_name}", {
+                  payload: {
+                    property1: "string",
+                    property2: "string",
                   },
-                  replication_factor: 2,
+                  points: [0, 3, 10],
+                });
+
+  /collections/{collection_name}/points/payload/delete:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.deletePayload("{collection_name}", {
+                  keys: ["color", "price"],
+                  points: [0, 3, 100],
+                });
+
+  /collections/{collection_name}/points/payload/clear:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.clearPayload("{collection_name}", {
+                  points: [0, 3, 100],
+                });
+
+  /collections/{collection_name}/points/batch:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.batchUpdate("{collection_name}", {
+                    operations: [
+                        {
+                            upsert: {
+                                points: [
+                                    {
+                                        id: 1,
+                                        vector: [1.0, 2.0, 3.0, 4.0],
+                                        payload: {},
+                                    },
+                                ],
+                            },
+                        },
+                        {
+                            update_vectors: {
+                                points: [
+                                    {
+                                        id: 1,
+                                        vector: [1.0, 2.0, 3.0, 4.0],
+                                    },
+                                ],
+                            },
+                        },
+                        {
+                            set_payload: {
+                                payload: {
+                                    test_payload_2: 2,
+                                    test_payload_3: 3,
+                                },
+                                points: [1],
+                            },
+                        },
+                    ],
+                });
+
+  /collections/{collection_name}/points/scroll:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.scroll("{collection_name}", {
+                    filter: {
+                        must: [
+                            {
+                                key: "color",
+                                match: {
+                                    value: "red",
+                                },
+                            },
+                        ],
+                    },
+                    limit: 1,
+                    with_payload: true,
+                    with_vector: false,
+                });
+
+  /collections/{collection_name}/points/search:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.search("{collection_name}", {
+                    filter: {
+                        must: [
+                            {
+                                key: "city",
+                                match: {
+                                    value: "London",
+                                },
+                            },
+                        ],
+                    },
+                    vector: [0.2, 0.1, 0.9, 0.7],
+                    limit: 3,
+                });
+
+  /collections/{collection_name}/points/search/batch:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                const filter = {
+                    must: [
+                        {
+                            key: "city",
+                            match: {
+                                value: "London",
+                            },
+                        },
+                    ],
+                };
+
+                const searches = [
+                    {
+                        vector: [0.2, 0.1, 0.9, 0.7],
+                        filter,
+                        limit: 3,
+                    },
+                    {
+                        vector: [0.5, 0.3, 0.2, 0.3],
+                        filter,
+                        limit: 3,
+                    },
+                ];
+
+                client.searchBatch("{collection_name}", {
+                    searches,
+                });
+
+  /collections/{collection_name}/points/search/groups:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.searchPointGroups("{collection_name}", {
+                    vector: [1.1],
+                    group_by: "document_id",
+                    limit: 4,
+                    group_size: 2,
+                });
+
+  /collections/{collection_name}/points/recommend:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.recommend("{collection_name}", {
+                    positive: [100, 231],
+                    negative: [718, [0.2, 0.3, 0.4, 0.5]],
+                    strategy: "average_vector",
+                    filter: {
+                        must: [
+                            {
+                                key: "city",
+                                match: {
+                                    value: "London",
+                                },
+                            },
+                        ],
+                    },
+                    limit: 3,
+                });
+
+  /collections/{collection_name}/points/recommend/batch:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                const searches = [
+                    {
+                        positive: [100, 231],
+                        negative: [718],
+                        limit: 3,
+                    },
+                    {
+                        positive: [200, 67],
+                        negative: [300],
+                        limit: 3,
+                    },
+                ];
+
+                client.recommend_batch("{collection_name}", {
+                    searches,
+                });
+
+  /collections/{collection_name}/points/recommend/groups:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.recommendPointGroups("{collection_name}", {
+                    positive: [100, 231],
+                    negative: [718],
+                    group_by: "document_id",
+                    limit: 3,
+                    group_size: 2,
+                });
+
+  /collections/{collection_name}/points/discover:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.discover("{collection_name}", {
+                    target: [0.2, 0.1, 0.9, 0.7],
+                    context: [
+                        {
+                            positive: 100,
+                            negative: 718,
+                        },
+                        {
+                            positive: 200,
+                            negative: 300,
+                        },
+                    ],
+                    limit: 10,
+                });
+
+  /collections/{collection_name}/points/discover/batch:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                const searches = [
+                    {
+                        target: [0.2, 0.1, 0.9, 0.7],
+                        context: [
+                            {
+                                positive: 100,
+                                negative: 718,
+                            },
+                            {
+                                positive: 200,
+                                negative: 300,
+                            },
+                        ],
+                        limit: 10,
+                    },
+                    {
+                        target: [0.5, 0.3, 0.2, 0.3],
+                        context: [
+                            {
+                                positive: 100,
+                                negative: 718,
+                            },
+                            {
+                                positive: 200,
+                                negative: 300,
+                            },
+                        ],
+                        limit: 10,
+                    },
+                ];
+
+                client.discoverBatchPoints("{collection_name}", {
+                    searches,
+                });
+
+  /collections/{collection_name}/points/count:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - sdk: typescript
+              code: >-
+                import { QdrantClient } from "@qdrant/js-client-rest";
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+                client.count("{collection_name}", {
+                    filter: {
+                        must: [
+                            {
+                                key: "color",
+                                match: {
+                                    value: "red",
+                                },
+                            },
+                        ],
+                    },
+                    exact: true,
                 });
