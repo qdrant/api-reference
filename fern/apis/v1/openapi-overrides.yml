@@ -42,6 +42,25 @@ paths:
             #             &[],
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.ShardKeyFactory.shardKey;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Collections.CreateShardKey;
+                import io.qdrant.client.grpc.Collections.CreateShardKeyRequest;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.createShardKeyAsync(CreateShardKeyRequest.newBuilder()
+                                .setCollectionName("{collection_name}")
+                                .setRequest(CreateShardKey.newBuilder()
+                                                .setShardKey(shardKey("{shard_key}"))
+                                                .build())
+                                .build()).get();
 
   /collections/{collection_name}/shards/delete:
     post:
@@ -75,6 +94,25 @@ paths:
             #     client
             #         .delete_shard_key("{collection_name}", &Key::Keyword("{shard_key".to_string()))
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.ShardKeyFactory.shardKey;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Collections.DeleteShardKey;
+                import io.qdrant.client.grpc.Collections.DeleteShardKeyRequest;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.deleteShardKeyAsync(DeleteShardKeyRequest.newBuilder()
+                                .setCollectionName("{collection_name}")
+                                .setRequest(DeleteShardKey.newBuilder()
+                                                .setShardKey(shardKey("{shard_key}"))
+                                                .build())
+                                .build()).get();
 
   /collections:
     get:
@@ -101,6 +139,15 @@ paths:
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
             #     client.list_collections().await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.listCollectionsAsync().get();
 
   /collections/{collection_name}:
     get:
@@ -127,6 +174,15 @@ paths:
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
             #     client.collection_info("{collection_name}").await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.getCollectionInfoAsync("{collection_name}").get();
     put:
       x-fern-examples:
         - code-samples:
@@ -171,6 +227,19 @@ paths:
             #             ..Default::default()
             #         })
             #         .await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Collections.Distance;
+                import io.qdrant.client.grpc.Collections.VectorParams;
+
+                QdrantClient client = new QdrantClient(
+                    QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.createCollectionAsync("{collection_name}",
+                        VectorParams.newBuilder().setDistance(Distance.Cosine).setSize(100).build()).get();
     patch:
       x-fern-examples:
         - code-samples:
@@ -215,6 +284,25 @@ paths:
             #             None,
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.ShardKeyFactory.shardKey;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Collections.OptimizersConfigDiff;
+                import io.qdrant.client.grpc.Collections.UpdateCollection;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.updateCollectionAsync(
+                    UpdateCollection.newBuilder()
+                        .setCollectionName("{collection_name}")
+                        .setOptimizersConfig(
+                            OptimizersConfigDiff.newBuilder().setIndexingThreshold(10000).build())
+                        .build());
     delete:
       x-fern-examples:
         - code-samples:
@@ -239,6 +327,15 @@ paths:
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
             #     client.delete_collection("{collection_name}").await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client =
+                    new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.deleteCollectionAsync("{collection_name}").get();
 
   /collections/aliases:
     post:
@@ -302,6 +399,22 @@ paths:
             #     client.create_alias("example_collection", "production_collection").await?;
 
             #     client.delete_alias("production_collection").await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.ShardKeyFactory.shardKey;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Collections.DeleteShardKey;
+                import io.qdrant.client.grpc.Collections.DeleteShardKeyRequest;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.createAliasAsync("production_collection", "example_collection").get();
+
+                client.deleteAliasAsync("production_collection").get();
 
   /collections/{collection_name}/index:
     put:
@@ -343,6 +456,24 @@ paths:
             #         None,
             #     )
             #     .await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Collections.PayloadSchemaType;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.createPayloadIndexAsync(
+                                "{collection_name}",
+                                "{field_name}",
+                                PayloadSchemaType.Keyword,
+                                null,
+                                true,
+                                null,
+                                null);
 
   /collections/{collection_name}/index/{field_name}:
     delete:
@@ -371,6 +502,15 @@ paths:
             #     client
             #         .delete_field_index("{collection_name}", "{field_name}", None)
             #         .await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.deletePayloadIndexAsync("{collection_name}", "{field_name}", true, null, null).get();
 
   /collections/{collection_name}/aliases:
     get:
@@ -397,6 +537,15 @@ paths:
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
             #     client.list_collection_aliases("{collection_name}").await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.listCollectionAliasesAsync("{collection_name}").get();
 
   /aliases:
     get:
@@ -423,6 +572,15 @@ paths:
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
             #     client.list_aliases().await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.listAliasesAsync().get();
 
   /collections/{collection_name}/snapshots/recover:
     put:
@@ -473,6 +631,15 @@ paths:
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
             #     client.list_snapshots("{collection_name}").await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.listSnapshotAsync("{collection_name}").get();
 
     post:
       x-fern-examples:
@@ -498,6 +665,15 @@ paths:
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
             #     client.create_snapshot("{collection_name}").await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.createSnapshotAsync("{collection_name}").get();
 
   /collections/{collection_name}/snapshots/{snapshot_name}:
     delete:
@@ -528,6 +704,15 @@ paths:
             #     client
             #         .delete_snapshot("{collection_name}", "{snapshot_name}")
             #         .await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.deleteSnapshotAsync("{collection_name}", "{snapshot_name}").get();
 
   /snapshots:
     get:
@@ -554,6 +739,15 @@ paths:
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
             #     client.list_full_snapshots().await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.listFullSnapshotAsync().get();
 
     post:
       x-fern-examples:
@@ -579,6 +773,15 @@ paths:
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
             #     client.create_full_snapshot().await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.createFullSnapshotAsync().get();
 
   /snapshots/{snapshot_name}:
     delete:
@@ -605,46 +808,17 @@ paths:
             #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
             #     client.delete_full_snapshot("{snapshot_name}").await?;
+            - sdk: java
+              code: |
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.deleteFullSnapshotAsync("{snapshot_name}").get();
 
   /collections/{collection_name}/points/{id}:
-    get:
-      x-fern-examples:
-        - code-samples:
-            - sdk: python
-              code: |
-                from qdrant_client import QdrantClient
-
-                client = QdrantClient(url="http://localhost:6333")
-
-                client.retrieve(
-                    collection_name="{collection_name}",
-                    ids=[1],
-                )
-            - sdk: typescript
-              code: |
-                import { QdrantClient } from "@qdrant/js-client-rest";
-
-                const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-                client.retrieve("{collection_name}", {
-                  ids: [1],
-                });
-            # - sdk: rust
-            #   code: |
-            #     use qdrant_client::client::QdrantClient;
-
-            #     let client = QdrantClient::from_url("http://localhost:6334").build()?;
-
-            #     client
-            #         .get_points(
-            #             "{collection_name}",
-            #             None,
-            #             &[1.into()],
-            #             Some(false),
-            #             Some(false),
-            #             None,
-            #         )
-            #         .await?;
 
   /collections/{collection_name}/points:
     post:
@@ -685,6 +859,15 @@ paths:
             #             None,
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.PointIdFactory.id;
+
+                import java.util.List;
+
+                client
+                    .retrieveAsync("{collection_name}", List.of(id(0), id(30), id(100)), false, false, null)
+                    .get();
 
     put:
       x-fern-examples:
@@ -790,6 +973,48 @@ paths:
             #             100,
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.PointIdFactory.id;
+                import static io.qdrant.client.VectorFactory.vector;
+                import static io.qdrant.client.VectorsFactory.namedVectors;
+
+                import java.util.List;
+                import java.util.Map;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.PointStruct;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .upsertAsync(
+                        "{collection_name}",
+                        List.of(
+                            PointStruct.newBuilder()
+                                .setId(id(1))
+                                .setVectors(
+                                    namedVectors(
+                                        Map.of(
+                                            "image",
+                                            vector(List.of(0.9f, 0.1f, 0.1f, 0.2f)),
+                                            "text",
+                                            vector(List.of(0.4f, 0.7f, 0.1f, 0.8f, 0.1f, 0.1f, 0.9f, 0.2f)))))
+                                .build(),
+                            PointStruct.newBuilder()
+                                .setId(id(2))
+                                .setVectors(
+                                    namedVectors(
+                                        Map.of(
+                                            "image",
+                                            List.of(0.2f, 0.1f, 0.3f, 0.9f),
+                                            "text",
+                                            List.of(0.5f, 0.2f, 0.7f, 0.4f, 0.7f, 0.2f, 0.3f, 0.9f))))
+                                .build()))
+                    .get();
 
   /collections/{collection_name}/points/delete:
     post:
@@ -874,6 +1099,28 @@ paths:
             #                 None,
             #             )
             #             .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.PointIdFactory.id;
+                import static io.qdrant.client.ConditionFactory.matchKeyword;
+
+                import java.util.List;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.Filter;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.deleteAsync("{collection_name}", List.of(id(0), id(3), id(100)));
+
+                client
+                    .deleteAsync(
+                        "{collection_name}",
+                        Filter.newBuilder().addMust(matchKeyword("color", "red")).build())
+                    .get();
 
   /collections/{collection_name}/points/vectors:
     put:
@@ -954,6 +1201,37 @@ paths:
             #             None,
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.PointIdFactory.id;
+                import static io.qdrant.client.VectorFactory.vector;
+                import static io.qdrant.client.VectorsFactory.namedVectors;
+
+                import java.util.List;
+                import java.util.Map;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .updateVectorsAsync(
+                        "{collection_name}",
+                        List.of(
+                            PointVectors.newBuilder()
+                                .setId(id(1))
+                                .setVectors(namedVectors(Map.of("image", vector(List.of(0.1f, 0.2f, 0.3f, 0.4f)))))
+                                .build(),
+                            PointVectors.newBuilder()
+                                .setId(id(2))
+                                .setVectors(
+                                    namedVectors(
+                                        Map.of(
+                                            "text", vector(List.of(0.9f, 0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.3f, 0.2f)))))
+                                .build()))
+                    .get();
 
   /collections/{collection_name}/points/vectors/delete:
     post:
@@ -1003,6 +1281,22 @@ paths:
             #             None,
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.PointIdFactory.id;
+
+                import java.util.List;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .deleteVectorsAsync(
+                        "{collection_name}", List.of("text", "image"), List.of(id(0), id(3), id(10)))
+                    .get();
 
   /collections/{collection_name}/points/payload:
     post:
@@ -1061,6 +1355,29 @@ paths:
             #             None,
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.PointIdFactory.id;
+                import static io.qdrant.client.ValueFactory.value;
+
+                import java.util.List;
+                import java.util.Map;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .setPayloadAsync(
+                        "{collection_name}",
+                        Map.of("property1", value("string"), "property2", value("string")),
+                        List.of(id(0), id(3), id(10)),
+                        true,
+                        null,
+                        null)
+                    .get();
 
     put:
       x-fern-examples:
@@ -1118,6 +1435,28 @@ paths:
             #             None,
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import java.util.List;
+
+                import static io.qdrant.client.PointIdFactory.id;
+                import static io.qdrant.client.ValueFactory.value;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .overwritePayloadAsync(
+                        "{collection_name}",
+                        Map.of("property1", value("string"), "property2", value("string")),
+                        List.of(id(0), id(3), id(10)),
+                        true,
+                        null,
+                        null)
+                    .get();
 
   /collections/{collection_name}/points/payload/delete:
     post:
@@ -1165,6 +1504,27 @@ paths:
             #             None,
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import java.util.List;
+
+                import static io.qdrant.client.PointIdFactory.id;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .deletePayloadAsync(
+                        "{collection_name}",
+                        List.of("color", "price"),
+                        List.of(id(0), id(3), id(100)),
+                        true,
+                        null,
+                        null)
+                    .get();
 
   /collections/{collection_name}/points/payload/clear:
     post:
@@ -1209,6 +1569,20 @@ paths:
             #             None,
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import java.util.List;
+
+                import static io.qdrant.client.PointIdFactory.id;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.clearPayloadAsync("{collection_name}", List.of(id(0), id(3), id(100)), null, null, null)
+                                .get();
 
   /collections/{collection_name}/points/batch:
     post:
@@ -1347,6 +1721,80 @@ paths:
             #             None,
             #         )
             #         .await?;
+            - sdk: java
+              code: |
+                import java.util.List;
+                import java.util.Map;
+
+                import static io.qdrant.client.PointIdFactory.id;
+                import static io.qdrant.client.ValueFactory.value;
+                import static io.qdrant.client.VectorsFactory.vectors;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.PointStruct;
+                import io.qdrant.client.grpc.Points.PointVectors;
+                import io.qdrant.client.grpc.Points.PointsIdsList;
+                import io.qdrant.client.grpc.Points.PointsSelector;
+                import io.qdrant.client.grpc.Points.PointsUpdateOperation;
+                import io.qdrant.client.grpc.Points.PointsUpdateOperation.PointStructList;
+                import io.qdrant.client.grpc.Points.PointsUpdateOperation.SetPayload;
+                import io.qdrant.client.grpc.Points.PointsUpdateOperation.UpdateVectors;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .batchUpdateAsync(
+                        "{collection_name}",
+                        List.of(
+                            PointsUpdateOperation.newBuilder()
+                            .setUpsert(
+                                PointStructList.newBuilder()
+                                .addPoints(
+                                    PointStruct.newBuilder()
+                                    .setId(id(1))
+                                    .setVectors(vectors(
+                                        1.0 f,
+                                        2.0 f,
+                                        3.0 f,
+                                        4.0 f))
+                                    .build())
+                                .build())
+                            .build(),
+                            PointsUpdateOperation.newBuilder()
+                            .setUpdateVectors(
+                                UpdateVectors.newBuilder()
+                                .addPoints(
+                                    PointVectors.newBuilder()
+                                    .setId(id(1))
+                                    .setVectors(vectors(
+                                        1.0 f,
+                                        2.0 f,
+                                        3.0 f,
+                                        4.0 f))
+                                    .build())
+                                .build())
+                            .build(),
+                            PointsUpdateOperation.newBuilder()
+                            .setSetPayload(
+                                SetPayload.newBuilder()
+                                .setPointsSelector(
+                                    PointsSelector.newBuilder()
+                                    .setPoints(PointsIdsList
+                                        .newBuilder()
+                                        .addIds(id(1))
+                                        .build())
+                                    .build())
+                                .putAllPayload(
+                                    Map.of("test_payload_2",
+                                        value(2),
+                                        "test_payload_3",
+                                        value(3)))
+                                .build())
+                            .build()))
+                    .get();
 
   /collections/{collection_name}/points/scroll:
     post:
@@ -1409,6 +1857,29 @@ paths:
             #             ..Default::default()
             #         })
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.ConditionFactory.matchKeyword;
+                import static io.qdrant.client.WithPayloadSelectorFactory.enable;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.Filter;
+                import io.qdrant.client.grpc.Points.ScrollPoints;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .scrollAsync(
+                        ScrollPoints.newBuilder()
+                            .setCollectionName("{collection_name}")
+                            .setFilter(Filter.newBuilder().addMust(matchKeyword("color", "red")).build())
+                            .setLimit(1)
+                            .setWithPayload(enable(true))
+                            .build())
+                    .get();
 
   /collections/{collection_name}/points/search:
     post:
@@ -1481,6 +1952,28 @@ paths:
             #             ..Default::default()
             #         })
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.ConditionFactory.matchKeyword;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.Filter;
+                import io.qdrant.client.grpc.Points.SearchPoints;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .searchAsync(
+                        SearchPoints.newBuilder()
+                            .setCollectionName("{collection_name}")
+                            .setFilter(Filter.newBuilder().addMust(matchKeyword("city", "London")).build())
+                            .addAllVector(List.of(0.2f, 0.1f, 0.9f, 0.7f))
+                            .setLimit(3)
+                            .build())
+                    .get();
 
   /collections/{collection_name}/points/search/batch:
     post:
@@ -1578,6 +2071,35 @@ paths:
             #             ..Default::default()
             #         })
             #         .await?;
+            - sdk: java
+              code: |
+                import java.util.List;
+
+                import static io.qdrant.client.ConditionFactory.matchKeyword;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.Filter;
+                import io.qdrant.client.grpc.Points.SearchPoints;
+
+                QdrantClient client =
+                    new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                Filter filter = Filter.newBuilder().addMust(matchKeyword("city", "London")).build();
+                List<SearchPoints> searches =
+                    List.of(
+                        SearchPoints.newBuilder()
+                            .addAllVector(List.of(0.2f, 0.1f, 0.9f, 0.7f))
+                            .setFilter(filter)
+                            .setLimit(3)
+                            .build(),
+                        SearchPoints.newBuilder()
+                            .addAllVector(List.of(0.5f, 0.3f, 0.2f, 0.3f))
+                            .setFilter(filter)
+                            .setLimit(3)
+                            .build());
+                client.searchBatchAsync("{collection_name}", searches, null).get();
 
   /collections/{collection_name}/points/search/groups:
     post:
@@ -1627,6 +2149,28 @@ paths:
             #             ..Default::default()
             #         })
             #         .await?;
+            - sdk: java
+              code: |
+                import java.util.List;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.SearchPointGroups;
+
+                QdrantClient client = new QdrantClient(
+                                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .searchGroupsAsync(
+                        SearchPointGroups.newBuilder()
+                            .setCollectionName("{collection_name}")
+                            .addAllVector(List.of(1.1f))
+                            .setGroupBy("document_id")
+                            .setLimit(4)
+                            .setGroupSize(2)
+                            .build())
+                    .get();
 
   /collections/{collection_name}/points/recommend:
     post:
@@ -1702,6 +2246,37 @@ paths:
             #             ..Default::default()
             #         })
             #         .await?;
+            - sdk: java
+              code: |
+                import java.util.List;
+
+                import static io.qdrant.client.ConditionFactory.matchKeyword;
+                import static io.qdrant.client.PointIdFactory.id;
+                import static io.qdrant.client.VectorFactory.vector;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.Filter;
+                import io.qdrant.client.grpc.Points.RecommendPoints;
+                import io.qdrant.client.grpc.Points.RecommendStrategy;
+
+                QdrantClient client =
+                    new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .recommendAsync(
+                        RecommendPoints.newBuilder()
+                            .setCollectionName("{collection_name}")
+                            .addAllPositive(List.of(id(100), id(200)))
+                            .addAllPositiveVectors(List.of(vector(100.0f, 231.0f)))
+                            .addAllNegative(List.of(id(718)))
+                            .addAllPositiveVectors(List.of(vector(0.2f, 0.3f, 0.4f, 0.5f)))
+                            .setStrategy(RecommendStrategy.AverageVector)
+                            .setFilter(Filter.newBuilder().addMust(matchKeyword("city", "London")))
+                            .setLimit(3)
+                            .build())
+                    .get();
 
   /collections/{collection_name}/points/recommend/batch:
     post:
@@ -1780,6 +2355,40 @@ paths:
             #             ..Default::default()
             #         })
             #         .await?;
+            - sdk: java
+              code: |
+                import java.util.List;
+
+                import static io.qdrant.client.ConditionFactory.matchKeyword;
+                import static io.qdrant.client.PointIdFactory.id;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.Filter;
+                import io.qdrant.client.grpc.Points.RecommendPoints;
+
+                QdrantClient client =
+                    new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                Filter filter = Filter.newBuilder().addMust(matchKeyword("city", "London")).build();
+
+                List<RecommendPoints> recommendQueries =
+                    List.of(
+                        RecommendPoints.newBuilder()
+                            .addAllPositive(List.of(id(100), id(231)))
+                            .addAllNegative(List.of(id(718)))
+                            .setFilter(filter)
+                            .setLimit(3)
+                            .build(),
+                        RecommendPoints.newBuilder()
+                            .addAllPositive(List.of(id(200), id(67)))
+                            .addAllNegative(List.of(id(300)))
+                            .setFilter(filter)
+                            .setLimit(3)
+                            .build());
+
+                client.recommendBatchAsync("{collection_name}", recommendQueries, null).get();
 
   /collections/{collection_name}/points/recommend/groups:
     post:
@@ -1833,6 +2442,30 @@ paths:
             #             ..Default::default()
             #         })
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.PointIdFactory.id;
+
+                import java.util.List;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.RecommendPointGroups;
+                import io.qdrant.client.grpc.Points.RecommendStrategy;
+
+                QdrantClient client =
+                    new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client.recommendGroupsAsync(RecommendPointGroups.newBuilder()
+                                .setCollectionName("{collection_name}")
+                                .setGroupBy("document_id")
+                                .setGroupSize(2)
+                                .addAllPositive(List.of(id(100), id(200)))
+                                .addAllNegative(List.of(id(718)))
+                                .setStrategy(RecommendStrategy.AverageVector)
+                                .setLimit(3)
+                                .build());
 
   /collections/{collection_name}/points/discover:
     post:
@@ -1915,6 +2548,47 @@ paths:
             #             ..Default::default()
             #         })
             #         .await?;
+            - sdk: java
+              code: |
+                import java.util.List;
+
+                import static io.qdrant.client.PointIdFactory.id;
+                import static io.qdrant.client.VectorFactory.vector;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.ContextExamplePair;
+                import io.qdrant.client.grpc.Points.DiscoverPoints;
+                import io.qdrant.client.grpc.Points.TargetVector;
+                import io.qdrant.client.grpc.Points.VectorExample;
+
+                QdrantClient client =
+                    new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .discoverAsync(
+                        DiscoverPoints.newBuilder()
+                            .setCollectionName("{collection_name}")
+                            .setTarget(
+                                TargetVector.newBuilder()
+                                    .setSingle(
+                                        VectorExample.newBuilder()
+                                            .setVector(vector(0.2f, 0.1f, 0.9f, 0.7f))
+                                            .build()))
+                            .addAllContext(
+                                List.of(
+                                    ContextExamplePair.newBuilder()
+                                        .setPositive(VectorExample.newBuilder().setId(id(100)))
+                                        .setNegative(VectorExample.newBuilder().setId(id(718)))
+                                        .build(),
+                                    ContextExamplePair.newBuilder()
+                                        .setPositive(VectorExample.newBuilder().setId(id(200)))
+                                        .setNegative(VectorExample.newBuilder().setId(id(300)))
+                                        .build()))
+                            .setLimit(10)
+                            .build())
+                    .get();
 
   /collections/{collection_name}/points/discover/batch:
     post:
@@ -2074,6 +2748,87 @@ paths:
             #     };
 
             #     client.discover_batch(discover_points).await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.PointIdFactory.id;
+                import static io.qdrant.client.VectorFactory.vector;
+
+                import java.util.Arrays;
+                import java.util.List;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.ContextExamplePair;
+                import io.qdrant.client.grpc.Points.DiscoverPoints;
+                import io.qdrant.client.grpc.Points.TargetVector;
+                import io.qdrant.client.grpc.Points.VectorExample;
+
+                QdrantClient client = new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                List <DiscoverPoints> discoverPoints = Arrays.asList(
+                    DiscoverPoints.newBuilder()
+                    .setCollectionName("{collection_name}")
+                    .setTarget(
+                        TargetVector.newBuilder()
+                        .setSingle(
+                            VectorExample.newBuilder()
+                            .setVector(vector(
+                                0.2 f,
+                                0.1 f,
+                                0.9 f,
+                                0.7 f))
+                            .build()))
+                    .addAllContext(
+                        List.of(
+                            ContextExamplePair.newBuilder()
+                            .setPositive(VectorExample
+                                .newBuilder()
+                                .setId(id(100)))
+                            .setNegative(VectorExample
+                                .newBuilder()
+                                .setId(id(718)))
+                            .build(),
+                            ContextExamplePair.newBuilder()
+                            .setPositive(VectorExample
+                                .newBuilder()
+                                .setId(id(200)))
+                            .setNegative(VectorExample
+                                .newBuilder()
+                                .setId(id(300)))
+                            .build()))
+                    .setLimit(10)
+                    .build(),
+                    DiscoverPoints.newBuilder()
+                    .setCollectionName("{collection_name}")
+                    .setTarget(
+                        TargetVector.newBuilder()
+                        .setSingle(
+                            VectorExample.newBuilder()
+                            .setVector(vector(
+                                0.5 f, 0.3 f, 0.2 f, 0.3 f))
+                            .build()))
+                    .addAllContext(
+                        List.of(
+                            ContextExamplePair.newBuilder()
+                            .setPositive(VectorExample
+                                .newBuilder()
+                                .setId(id(342)))
+                            .setNegative(VectorExample
+                                .newBuilder()
+                                .setId(id(213)))
+                            .build(),
+                            ContextExamplePair.newBuilder()
+                            .setPositive(VectorExample
+                                .newBuilder()
+                                .setId(id(100)))
+                            .setNegative(VectorExample
+                                .newBuilder()
+                                .setId(id(200)))
+                            .build()))
+                    .setLimit(10)
+                    .build());
+                client.discoverBatchAsync("{collection_name}", discoverPoints, null);
 
   /collections/{collection_name}/points/count:
     post:
@@ -2130,3 +2885,20 @@ paths:
             #             ..Default::default()
             #         })
             #         .await?;
+            - sdk: java
+              code: |
+                import static io.qdrant.client.ConditionFactory.matchKeyword;
+
+                import io.qdrant.client.QdrantClient;
+                import io.qdrant.client.QdrantGrpcClient;
+
+                import io.qdrant.client.grpc.Points.Filter;
+
+                QdrantClient client = new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+                client
+                    .countAsync(
+                        "{collection_name}",
+                        Filter.newBuilder().addMust(matchKeyword("color", "red")).build(),
+                        true)
+                    .get();
