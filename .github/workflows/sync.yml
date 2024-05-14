@@ -6,10 +6,12 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    with:
-      python-version: '3.10.x'
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10.x'
       - name: Install yq
         run: |
           YQ_VERSION=v4.44.1
