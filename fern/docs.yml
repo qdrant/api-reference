@@ -10,8 +10,10 @@ versions:
 colors:
   accentPrimary:
     light: '#DC244C'
+    dark: '#DC244C'
   background:
     light: '#ffffff'
+    dark: '#161E33'
 logo:
   light: assets/logo.svg
   height: 39
