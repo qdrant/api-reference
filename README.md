@@ -21,7 +21,7 @@ bash -x tools/sync-openapi.sh
 
 WARN: This script requires `yq` and `python` to be present in the system.
 
-Or automatically, triggering the GitHub Action `sync-openapi` from the Actions tab.
+Or automatically, just create a PR, and preview action will automatically try to sync and re-generate all the docs it can.
 
 ## How to update snippets?
 
