@@ -1,0 +1,36 @@
+name: sync-openapi
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install yq
+        run: |
+          YQ_VERSION=v4.44.1
+          wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -O yq
+          chmod +x yq
+      - name: Sync Docs
+        run: |
+          bash -x tools/sync-openapi.sh
+      - name: Commit and push changes
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            # Changes
+            echo "Changes detected"
+          else
+            # No changes
+            echo "No changes detected"
+            exit 0
+          fi
+          git config --global user.name 'qdrant'
+          git config --global user.email 'qdrant@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout $GITHUB_HEAD_REF
+          git add fern/apis
+          git add fern/versions
+          git add fern/docs.yml
+          git commit -am "auto-sync openapi with qdrant core" && git push || true
