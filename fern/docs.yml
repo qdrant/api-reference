@@ -2,17 +2,17 @@ instances:
   - url: https://qdrant.docs.buildwithfern.com
     custom-domain: api.qdrant.tech
 title: Qdrant | API Reference
-versions: 
-  - display-name: v1.x
-    path: ./versions/v1.yml
-  - display-name: v0.x
-    path: ./versions/v0.yml 
+versions:
+  - display-name: master
+    path: ./versions/master.yml
+  - display-name: v1.9.x
+    path: ./versions/v1.9.x.yml
 colors:
-  accentPrimary: 
+  accentPrimary:
     light: '#DC244C'
-  background: 
+  background:
     light: '#ffffff'
-logo:   
+logo:
   light: assets/logo.svg
   height: 39
   href: https://qdrant.tech/
@@ -27,4 +27,4 @@ navbar-links:
     url: https://qdrant.to/cloud
   - type: outlined
     text: GitHub
-    url: https://github.com/qdrant/qdrant 
+    url: https://github.com/qdrant/qdrant
