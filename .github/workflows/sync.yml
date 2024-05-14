@@ -15,6 +15,7 @@ jobs:
           YQ_VERSION=v4.44.1
           wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -O yq
           chmod +x yq
+          mv yq /usr/local/bin
       - name: Sync Docs
         run: |
           bash -x tools/sync-openapi.sh

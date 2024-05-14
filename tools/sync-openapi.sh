@@ -29,7 +29,7 @@ python tools/generate_snippet_overwrites.py --openapi qdrant/docs/redoc/master/o
 
 # Merge the overwrites with the template
 
-./yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' fern/openapi-overrides-template.yml overwrite-snippets.yml > $PROJECT_ROOT/fern/apis/master/openapi-overrides.yml
+yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' fern/openapi-overrides-template.yml overwrite-snippets.yml > $PROJECT_ROOT/fern/apis/master/openapi-overrides.yml
 
 # Find latest version inside the repository `docs/redoc` starting with `v*`
 
@@ -80,6 +80,6 @@ done
 
 # Join the versions with the existing docs.yml using `yq`
 
-./yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' $PROJECT_ROOT/fern/docs.yml $VERSIONS_TMP_YAML > $PROJECT_ROOT/fern/docs.tmp.yml
+yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' $PROJECT_ROOT/fern/docs.yml $VERSIONS_TMP_YAML > $PROJECT_ROOT/fern/docs.tmp.yml
 
 mv $PROJECT_ROOT/fern/docs.tmp.yml $PROJECT_ROOT/fern/docs.yml

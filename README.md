@@ -11,7 +11,26 @@ Click [here](https://qdrant.docs.buildwithfern.com/api-reference) to see the gen
 - [Docs Configuration](./fern/docs.yml)
 - [GitHub Workflows](./.github/workflows)
 
-## How to update documentation?
+## How to sync OpenAPI specs?
+
+Either manually, by rinning the script:
+
+```bash
+bash -x tools/sync-openapi.sh
+```
+
+WARN: This script requires `yq` and `python` to be present in the system.
+
+Or automatically, triggering the GitHub Action `sync-openapi` from the Actions tab.
+
+## How to update snippets?
+
+The source of truth for the snippets is located in `snippets` folder, edit it there.
+File names should match the `operationId` of the OpenAPI spec.
+
+After edited, follow the `How to sync OpenAPI specs?` steps and it will be automatically updated for the latest version of the API. 
+
+## How to deploy documentation live?
 
 To update your documentation, run 
 
