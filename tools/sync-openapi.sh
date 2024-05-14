@@ -23,6 +23,13 @@ cd $PROJECT_ROOT
 
 cp qdrant/docs/redoc/master/openapi.json $PROJECT_ROOT/fern/apis/master/openapi.json
 
+# Generate fern overwrites from the snippets
+
+python tools/generate_snippet_overwrites.py --openapi qdrant/docs/redoc/master/openapi.json --output overwrite-snippets.yml
+
+# Merge the overwrites with the template
+
+./yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' fern/openapi-overrides-template.yml overwrite-snippets.yml > $PROJECT_ROOT/fern/apis/master/openapi-overrides.yml
 
 # Find latest version inside the repository `docs/redoc` starting with `v*`
 
@@ -76,6 +83,3 @@ done
 ./yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' $PROJECT_ROOT/fern/docs.yml $VERSIONS_TMP_YAML > $PROJECT_ROOT/fern/docs.tmp.yml
 
 mv $PROJECT_ROOT/fern/docs.tmp.yml $PROJECT_ROOT/fern/docs.yml
-
-
-
