@@ -23,7 +23,8 @@ FILE_EXTENSION_BY_SDK = {
     'dart': '.dart',
     'bash': '.sh',
     'txt': '.txt',
-    'plaintext': '.txt'
+    'plaintext': '.txt',
+    'curl': '.sh',
 }
 
 

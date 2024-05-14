@@ -272,6 +272,9 @@ paths:
             - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\nimport io.qdrant.client.grpc.Collections.Distance;\nimport io.qdrant.client.grpc.Collections.VectorParams;\n\nQdrantClient client = new QdrantClient(\n    QdrantGrpcClient.newBuilder(\"localhost\", 6334, false).build());\n\nclient.createCollectionAsync(\"{collection_name}\",\n        VectorParams.newBuilder().setDistance(Distance.Cosine).setSize(100).build()).get();\n"
               language: java
         - code-samples:
+            - code: "curl -X PUT http://localhost:6333/collections/collection_name \\\n     -H \"api-key: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n            \"vectors\": {\n                \"size\": 300,\n                \"distance\": \"Cosine\"\n            } \n        }'\n"
+              language: curl
+        - code-samples:
             - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\nclient.createCollection(\"{collection_name}\", {\n  vectors: { size: 100, distance: \"Cosine\" },\n});\n"
               language: typescript
         - code-samples:
