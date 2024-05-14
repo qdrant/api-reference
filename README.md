@@ -1,4 +1,4 @@
-# QDrant API Documentation
+# Qdrant API Documentation
 
 This repo contains the configuration files for the Qdrant's API documentation. 
 The documentation is built using Fern. 
