@@ -35,4 +35,4 @@ jobs:
           commit_message: "Sync OpenAPI"
           commit_user_name: "GitHub Actions"
           commit_user_email: "team@qdrant.com"
-          file_pattern: '*.yml'
+          file_pattern: 'fern/*.yml'

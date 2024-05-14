@@ -4,6 +4,7 @@ on: pull_request
 
 jobs:
   run:
+    needs: sync-openapi
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
