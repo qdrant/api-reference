@@ -16,7 +16,7 @@ colors:
     dark: '#161E33'
 logo:
   light: assets/logo.svg
-  dark: assets/logo.svg
+  dark: assets/logo-dark.svg
   height: 39
   href: https://qdrant.tech/
 layout:
