@@ -2,10 +2,15 @@ name: sync-openapi
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  pull_request:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python
@@ -25,21 +30,8 @@ jobs:
       - name: Sync Docs
         run: |
           bash -x tools/sync-openapi.sh
-      - name: Commit and push changes
-        run: |
-          if [[ `git status --porcelain` ]]; then
-            # Changes
-            echo "Changes detected"
-          else
-            # No changes
-            echo "No changes detected"
-            exit 0
-          fi
-          git config --global user.name 'qdrant'
-          git config --global user.email 'qdrant@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          git checkout $GITHUB_HEAD_REF
-          git add fern/apis
-          git add fern/versions
-          git add fern/docs.yml
-          git commit -am "auto-sync openapi with qdrant core" && git push || true
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Sync OpenAPI"
+          commit_user_name: "GitHub Actions"
+          commit_user_email: "team@qdrant.com"

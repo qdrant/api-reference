@@ -17,7 +17,7 @@ curl -X PUT http://localhost:6333/collections/collection_name \
      -H "Content-Type: application/json" \
      -d '{
             "vectors": {
-                "size": 300,
+                "size": 1536,
                 "distance": "Cosine"
             },
             "sparse_vectors": {

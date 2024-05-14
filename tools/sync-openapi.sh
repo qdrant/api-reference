@@ -31,6 +31,8 @@ python tools/generate_snippet_overwrites.py --openapi qdrant/docs/redoc/master/o
 
 yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' fern/openapi-overrides-template.yml overwrite-snippets.yml > $PROJECT_ROOT/fern/apis/master/openapi-overrides.yml
 
+rm overwrite-snippets.yml
+
 # Find latest version inside the repository `docs/redoc` starting with `v*`
 
 latest_version=$(ls qdrant/docs/redoc | grep -oP 'v\d.*' | sort -V | tail -n 1)
