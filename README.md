@@ -1,9 +1,9 @@
 # Qdrant API Documentation
 
-This repo contains the configuration files for the Qdrant's API documentation. 
+This repo contains the configuration files for Qdrant's API documentation. 
 The documentation is built using Fern. 
 
-Click [here](https://qdrant.docs.buildwithfern.com/api-reference) to see the generated website. 
+The website is available at [api.qdrant.tech](https://api.qdrant.tech/).
 
 ## What does this repo contain?
 
@@ -13,13 +13,14 @@ Click [here](https://qdrant.docs.buildwithfern.com/api-reference) to see the gen
 
 ## How to sync OpenAPI specs?
 
-Either manually, by rinning the script:
+Either manually, by running the script:
 
 ```bash
 bash -x tools/sync-openapi.sh
 ```
 
-WARN: This script requires `yq` and `python` to be present in the system.
+> [!NOTE]  
+> This script requires `yq` and `python` to be present in the system.
 
 Or automatically, just create a PR, and preview action will automatically try to sync and re-generate all the docs it can.
 
@@ -28,9 +29,9 @@ Or automatically, just create a PR, and preview action will automatically try to
 The source of truth for the snippets is located in `snippets` folder, edit it there.
 File names should match the `operationId` of the OpenAPI spec.
 
-After edited, follow the `How to sync OpenAPI specs?` steps and it will be automatically updated for the latest version of the API. 
+After editing, follow the `How to sync OpenAPI specs?` steps to automatically reflect the changes for the latest version of the API. 
 
-## How to deploy documentation live?
+## How to deploy the documentation?
 
 To update your documentation, run 
 

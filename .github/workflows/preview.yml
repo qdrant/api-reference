@@ -12,6 +12,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Comment Generation Update in PR
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          message: |
+            Generating preview for the latest commit ⌛
+          comment_tag: execution
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -53,3 +60,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2.4.3
         with:
           filePath: preview_url.txt
+          comment_tag: execution
