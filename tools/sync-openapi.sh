@@ -29,7 +29,11 @@ python tools/generate_snippet_overwrites.py --openapi qdrant/docs/redoc/master/o
 
 # Merge the overwrites with the template
 
-yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' fern/openapi-overrides-template.yml overwrite-snippets.yml > $PROJECT_ROOT/fern/apis/master/openapi-overrides.yml
+yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1) * select(fileIndex == 2)' \
+    fern/openapi-overrides-template.yml \
+    overwrite-snippets.yml \
+    fern/api-description-overwrites.yml \
+     > $PROJECT_ROOT/fern/apis/master/openapi-overrides.yml
 
 rm overwrite-snippets.yml
 
