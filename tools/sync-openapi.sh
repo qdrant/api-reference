@@ -22,6 +22,9 @@ cd $PROJECT_ROOT
 # Update master API
 
 cp qdrant/docs/redoc/master/openapi.json $PROJECT_ROOT/fern/apis/master/openapi.json
+# Make sure that methods in OpenAPI schema are ordered as we want
+python tools/order_openapi_file.py --openapi $PROJECT_ROOT/fern/apis/master/openapi.json --output $PROJECT_ROOT/fern/apis/master/openapi-orderred.json
+mv $PROJECT_ROOT/fern/apis/master/openapi-orderred.json $PROJECT_ROOT/fern/apis/master/openapi.json
 
 # Generate fern overwrites from the snippets
 
@@ -29,7 +32,11 @@ python tools/generate_snippet_overwrites.py --openapi qdrant/docs/redoc/master/o
 
 # Merge the overwrites with the template
 
-yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' fern/openapi-overrides-template.yml overwrite-snippets.yml > $PROJECT_ROOT/fern/apis/master/openapi-overrides.yml
+yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1) * select(fileIndex == 2)' \
+    fern/openapi-overrides-template.yml \
+    overwrite-snippets.yml \
+    fern/api-description-overwrites.yml \
+     > $PROJECT_ROOT/fern/apis/master/openapi-overrides.yml
 
 rm overwrite-snippets.yml
 
@@ -46,7 +53,9 @@ rm -rf $PROJECT_ROOT/fern/apis/$latest_version
 cp -r $PROJECT_ROOT/fern/apis/master $PROJECT_ROOT/fern/apis/$latest_version
 
 cp qdrant/docs/redoc/$latest_version/openapi.json $PROJECT_ROOT/fern/apis/$latest_version/openapi.json
-
+# Make sure that methods in OpenAPI schema are ordered as we want
+python tools/order_openapi_file.py --openapi $PROJECT_ROOT/fern/apis/$latest_version/openapi.json --output $PROJECT_ROOT/fern/apis/$latest_version/openapi-orderred.json
+mv $PROJECT_ROOT/fern/apis/$latest_version/openapi-orderred.json $PROJECT_ROOT/fern/apis/$latest_version/openapi.json
 
 
 # Create version file in `fern/versions` by replacing master with the latest version

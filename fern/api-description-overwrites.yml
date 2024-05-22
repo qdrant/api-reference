@@ -1,0 +1,435 @@
+paths:
+  /:
+    get:
+      description: Returns details about the running Qdrant instance.
+      summary: Returns information about the running Qdrant instance
+      tags:
+      - Service
+  /aliases:
+    get:
+      description: Get list of all existing collections aliases
+      summary: List collections aliases
+      tags:
+      - Aliases
+  /cluster:
+    get:
+      description: Get information about the current state and composition of the
+        cluster
+      summary: Get cluster status info
+      tags:
+      - Distributed
+  /cluster/peer/{peer_id}:
+    delete:
+      description: Tries to remove peer from the cluster. Will return an error if
+        peer has shards on it.
+      summary: Remove peer from the cluster
+      tags:
+      - Distributed
+  /cluster/recover:
+    post:
+      summary: Tries to recover current peer Raft state.
+      tags:
+      - Distributed
+  /collections:
+    get:
+      description: Get list name of all existing collections
+      summary: List collections
+      tags:
+      - Collections
+  /collections/aliases:
+    post:
+      summary: Update aliases of the collections
+      tags:
+      - Aliases
+  /collections/{collection_name}:
+    delete:
+      description: Drop collection and all associated data
+      summary: Delete collection
+      tags:
+      - Collections
+    get:
+      description: Get detailed information about specified existing collection
+      summary: Collection info
+      tags:
+      - Collections
+    patch:
+      description: Update parameters of the existing collection
+      summary: Update collection parameters
+      tags:
+      - Collections
+    put:
+      description: Create new collection with given parameters
+      summary: Create collection
+      tags:
+      - Collections
+  /collections/{collection_name}/aliases:
+    get:
+      description: Get list of all aliases for a collection
+      summary: List aliases for collection
+      tags:
+      - Aliases
+  /collections/{collection_name}/cluster:
+    get:
+      description: Get cluster information for a collection
+      summary: Collection cluster info
+      tags:
+      - Distributed
+    post:
+      summary: Update collection cluster setup
+      tags:
+      - Distributed
+  /collections/{collection_name}/exists:
+    get:
+      description: Returns "true" if the given collection name exists, and "false"
+        otherwise
+      summary: Check the existence of a collection
+      tags:
+      - Collections
+  /collections/{collection_name}/index:
+    put:
+      description: Create index for field in collection
+      summary: Create index for field in collection
+      tags:
+      - Indexes
+  /collections/{collection_name}/index/{field_name}:
+    delete:
+      description: Delete field index for collection
+      summary: Delete index for field in collection
+      tags:
+      - Indexes
+  /collections/{collection_name}/points:
+    post:
+      description: Retrieve multiple points by specified IDs
+      summary: Get points
+      tags:
+      - Points
+    put:
+      description: Perform insert + updates on points. If point with given ID already
+        exists - it will be overwritten.
+      summary: Upsert points
+      tags:
+      - Points
+  /collections/{collection_name}/points/batch:
+    post:
+      description: Apply a series of update operations for points, vectors and payloads
+      summary: Batch update points
+      tags:
+      - Points
+  /collections/{collection_name}/points/count:
+    post:
+      description: Count points which matches given filtering condition
+      summary: Count points
+      tags:
+      - Points
+  /collections/{collection_name}/points/delete:
+    post:
+      description: Delete points
+      summary: Delete points
+      tags:
+      - Points
+  /collections/{collection_name}/points/discover:
+    post:
+      description: 'Retrieves the most similar points to a given target, constrained
+        by the provided context.
+
+
+        Context Search: When only the context is provided (without a target),
+
+        pairs of points are used to generate a loss that guides the search towards
+        the area where most positive examples overlap.
+
+        The score minimizes finding points closer to a negative example than to a
+        positive example.
+
+        The maximum score a point can achieve is 0.0, meaning many points may have
+        a score of 0.0.
+
+
+        Target Search: When a target is provided (with or without context), the score
+        consists of two parts:
+
+        the integer part represents the rank with respect to the context, and the
+        decimal part relates to the distance to the target.
+
+        The context score for each pair is +1 if the point is closer to a positive
+        example than to a negative example, and -1 otherwise."
+
+        '
+      summary: Discover points
+      tags:
+      - Search
+  /collections/{collection_name}/points/discover/batch:
+    post:
+      description: Retrieves points in batches based on the target and/or positive
+        and negative example pairs.
+      summary: Discover batch points
+      tags:
+      - Search
+  /collections/{collection_name}/points/payload:
+    post:
+      description: Set payload values for points
+      summary: Set payload
+      tags:
+      - Points
+    put:
+      description: Replace full payload of points with new one
+      summary: Overwrite payload
+      tags:
+      - Points
+  /collections/{collection_name}/points/payload/clear:
+    post:
+      description: Remove all payload for specified points
+      summary: Clear payload
+      tags:
+      - Points
+  /collections/{collection_name}/points/payload/delete:
+    post:
+      description: Delete specified key payload for points
+      summary: Delete payload
+      tags:
+      - Points
+  /collections/{collection_name}/points/recommend:
+    post:
+      description: Retrieves points that are closer to stored positive examples and
+        further from negative examples.
+      summary: Recommend points
+      tags:
+      - Points
+  /collections/{collection_name}/points/recommend/batch:
+    post:
+      description: Retrieves points in batches that are closer to stored positive
+        examples and further from negative examples.
+      summary: Recommend batch points
+      tags:
+      - Search
+  /collections/{collection_name}/points/recommend/groups:
+    post:
+      description: 'Retrieves points that are closer to stored positive examples and
+        further from negative examples.
+
+        Results are grouped by the specified payload field.
+
+        '
+      summary: Recommend point groups
+      tags:
+      - Search
+  /collections/{collection_name}/points/scroll:
+    post:
+      description: 'Returns all points in a page-by-page manner.
+
+        By default, all resulting points are sorted by {id}.
+
+        To query the next page specify the last {id} in the offset field.
+
+        Additionally, you can specify filters and sorting options.
+
+        '
+      summary: Scroll points
+      tags:
+      - Search
+  /collections/{collection_name}/points/search:
+    post:
+      description: Retrieves the closest points based on vector similarity and given
+        filtering conditions.
+      summary: Search points
+      tags:
+      - Search
+  /collections/{collection_name}/points/search/batch:
+    post:
+      description: Retrieves the closest points in batches based on vector similarity
+        and given filtering conditions
+      summary: Search batch points
+      tags:
+      - Search
+  /collections/{collection_name}/points/search/groups:
+    post:
+      description: Retrieves the closest points based on vector similarity and given
+        filtering conditions, grouped by a given payload field.
+      summary: Search point groups
+      tags:
+      - Search
+  /collections/{collection_name}/points/vectors:
+    put:
+      description: Update specified named vectors on points, keep unspecified vectors
+        intact.
+      summary: Update vectors
+      tags:
+      - Points
+  /collections/{collection_name}/points/vectors/delete:
+    post:
+      description: Delete named vectors from the given points.
+      summary: Delete vectors
+      tags:
+      - Points
+  /collections/{collection_name}/points/{id}:
+    get:
+      description: Retrieve full information of single point by id
+      summary: Get point
+      tags:
+      - Points
+  /collections/{collection_name}/shards:
+    put:
+      summary: Create shard key
+      tags:
+      - Distributed
+  /collections/{collection_name}/shards/delete:
+    post:
+      summary: Delete shard key
+      tags:
+      - Distributed
+  /collections/{collection_name}/shards/{shard_id}/snapshots:
+    get:
+      description: Get list of snapshots for a shard of a collection
+      summary: List shards snapshots for a collection
+      tags:
+      - Snapshots
+    post:
+      description: Create new snapshot of a shard for a collection
+      summary: Create shard snapshot
+      tags:
+      - Snapshots
+  /collections/{collection_name}/shards/{shard_id}/snapshots/recover:
+    put:
+      description: Recover shard of a local collection data from a snapshot. This
+        will overwrite any data, stored in this shard, for the collection.
+      summary: Recover from a snapshot
+      tags:
+      - Snapshots
+  /collections/{collection_name}/shards/{shard_id}/snapshots/upload:
+    post:
+      description: Recover shard of a local collection from an uploaded snapshot.
+        This will overwrite any data, stored on this node, for the collection shard.
+      summary: Recover shard from an uploaded snapshot
+      tags:
+      - Snapshots
+  /collections/{collection_name}/shards/{shard_id}/snapshots/{snapshot_name}:
+    delete:
+      description: Delete snapshot of a shard for a collection
+      summary: Delete shard snapshot
+      tags:
+      - Snapshots
+    get:
+      description: Download specified snapshot of a shard from a collection as a file
+      summary: Download collection snapshot
+      tags:
+      - Snapshots
+  /collections/{collection_name}/snapshots:
+    get:
+      description: Get list of snapshots for a collection
+      summary: List collection snapshots
+      tags:
+      - Snapshots
+    post:
+      description: Create new snapshot for a collection
+      summary: Create collection snapshot
+      tags:
+      - Snapshots
+  /collections/{collection_name}/snapshots/recover:
+    put:
+      description: Recover local collection data from a snapshot. This will overwrite
+        any data, stored on this node, for the collection. If collection does not
+        exist - it will be created.
+      summary: Recover from a snapshot
+      tags:
+      - Snapshots
+  /collections/{collection_name}/snapshots/upload:
+    post:
+      description: Recover local collection data from an uploaded snapshot. This will
+        overwrite any data, stored on this node, for the collection. If collection
+        does not exist - it will be created.
+      summary: Recover from an uploaded snapshot
+      tags:
+      - Snapshots
+  /collections/{collection_name}/snapshots/{snapshot_name}:
+    delete:
+      description: Delete snapshot for a collection
+      summary: Delete collection snapshot
+      tags:
+      - Snapshots
+    get:
+      description: Download specified snapshot from a collection as a file
+      summary: Download collection snapshot
+      tags:
+      - Snapshots
+  /healthz:
+    get:
+      description: Checks the health of individual service instance.
+      summary: Kubernetes healthz endpoint
+      tags:
+      - Service
+  /issues:
+    delete:
+      description: Removes all issues reported so far
+      summary: Clear issues
+      tags:
+      - Beta
+    get:
+      description: Get a report of performance issues and configuration suggestions
+      summary: Get issues
+      tags:
+      - Beta
+  /livez:
+    get:
+      description: Checks the health of individual service instance.
+      summary: Kubernetes livez endpoint
+      tags:
+      - Service
+  /locks:
+    get:
+      description: Retrieves the current lock setting. If write is false, all write
+        operations and collection creation are restricted.
+      summary: Get lock options
+      tags:
+      - Service
+    post:
+      description: Restricts all write operations and forbids collection creation.
+        This endpoint also returns previous lock options.
+      summary: Set lock options
+      tags:
+      - Service
+  /metrics:
+    get:
+      description: 'Collect metrics data, such as: application info, collection info,
+        cluster info and statistics.
+
+        '
+      summary: Collect Prometheus metrics data
+      tags:
+      - Service
+  /readyz:
+    get:
+      description: Checks the service to see when it can start accepting traffic.
+      summary: Kubernetes readyz endpoint
+      tags:
+      - Service
+  /snapshots:
+    get:
+      description: Get list of snapshots of the whole storage
+      summary: List of storage snapshots
+      tags:
+      - Snapshots
+    post:
+      description: Create new snapshot of the whole storage
+      summary: Create storage snapshot
+      tags:
+      - Snapshots
+  /snapshots/{snapshot_name}:
+    delete:
+      description: Delete snapshot of the whole storage
+      summary: Delete storage snapshot
+      tags:
+      - Snapshots
+    get:
+      description: Download specified snapshot of the whole storage as a file
+      summary: Download storage snapshot
+      tags:
+      - Snapshots
+  /telemetry:
+    get:
+      description: 'Collects telemetry data, such as: application info, system info,
+        collection info, cluster info, configs and statistics."
+
+        '
+      summary: Collect telemetry data
+      tags:
+      - Service

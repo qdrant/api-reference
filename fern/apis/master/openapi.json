@@ -1,814 +1,5 @@
 {
   "paths": {
-    "/collections/{collection_name}/shards": {
-      "put": {
-        "tags": [
-          "collections",
-          "cluster"
-        ],
-        "summary": "Create shard key",
-        "operationId": "create_shard_key",
-        "requestBody": {
-          "description": "Shard key configuration",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateShardingKey"
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "collection_name",
-            "in": "path",
-            "description": "Name of the collection to create shards for",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "timeout",
-            "in": "query",
-            "description": "Wait for operation commit timeout in seconds. \nIf timeout is reached - request will return with service error.\n",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/collections/{collection_name}/shards/delete": {
-      "post": {
-        "tags": [
-          "collections",
-          "cluster"
-        ],
-        "summary": "Delete shard key",
-        "operationId": "delete_shard_key",
-        "requestBody": {
-          "description": "Select shard key to delete",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DropShardingKey"
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "collection_name",
-            "in": "path",
-            "description": "Name of the collection to create shards for",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "timeout",
-            "in": "query",
-            "description": "Wait for operation commit timeout in seconds. \nIf timeout is reached - request will return with service error.\n",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/": {
-      "get": {
-        "summary": "Returns information about the running Qdrant instance",
-        "description": "Returns information about the running Qdrant instance like version and commit id",
-        "operationId": "root",
-        "tags": [
-          "service"
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "$ref": "#/components/schemas/VersionInfo"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/telemetry": {
-      "get": {
-        "summary": "Collect telemetry data",
-        "description": "Collect telemetry data including app info, system info, collections info, cluster info, configs and statistics",
-        "operationId": "telemetry",
-        "tags": [
-          "service"
-        ],
-        "parameters": [
-          {
-            "name": "anonymize",
-            "in": "query",
-            "description": "If true, anonymize result",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "$ref": "#/components/schemas/TelemetryData"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/metrics": {
-      "get": {
-        "summary": "Collect Prometheus metrics data",
-        "description": "Collect metrics data including app info, collections info, cluster info and statistics",
-        "operationId": "metrics",
-        "tags": [
-          "service"
-        ],
-        "parameters": [
-          {
-            "name": "anonymize",
-            "in": "query",
-            "description": "If true, anonymize result",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Metrics data in Prometheus format",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "# HELP app_info information about qdrant server\n# TYPE app_info counter\napp_info{name=\"qdrant\",version=\"0.11.1\"} 1\n# HELP cluster_enabled is cluster support enabled\n# TYPE cluster_enabled gauge\ncluster_enabled 0\n# HELP collections_total number of collections\n# TYPE collections_total gauge\ncollections_total 1\n"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error"
-          }
-        }
-      }
-    },
-    "/locks": {
-      "post": {
-        "summary": "Set lock options",
-        "description": "Set lock options. If write is locked, all write operations and collection creation are forbidden. Returns previous lock options",
-        "operationId": "post_locks",
-        "tags": [
-          "service"
-        ],
-        "requestBody": {
-          "description": "Lock options and optional error message",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LocksOption"
-              }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "$ref": "#/components/schemas/LocksOption"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get lock options",
-        "description": "Get lock options. If write is locked, all write operations and collection creation are forbidden",
-        "operationId": "get_locks",
-        "tags": [
-          "service"
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "$ref": "#/components/schemas/LocksOption"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/healthz": {
-      "get": {
-        "summary": "Kubernetes healthz endpoint",
-        "description": "An endpoint for health checking used in Kubernetes.",
-        "operationId": "healthz",
-        "tags": [
-          "service"
-        ],
-        "responses": {
-          "200": {
-            "description": "Healthz response",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "healthz check passed"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error"
-          }
-        }
-      }
-    },
-    "/livez": {
-      "get": {
-        "summary": "Kubernetes livez endpoint",
-        "description": "An endpoint for health checking used in Kubernetes.",
-        "operationId": "livez",
-        "tags": [
-          "service"
-        ],
-        "responses": {
-          "200": {
-            "description": "Healthz response",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "healthz check passed"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error"
-          }
-        }
-      }
-    },
-    "/readyz": {
-      "get": {
-        "summary": "Kubernetes readyz endpoint",
-        "description": "An endpoint for health checking used in Kubernetes.",
-        "operationId": "readyz",
-        "tags": [
-          "service"
-        ],
-        "responses": {
-          "200": {
-            "description": "Healthz response",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": "healthz check passed"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error"
-          }
-        }
-      }
-    },
-    "/issues": {
-      "get": {
-        "summary": "Get issues",
-        "description": "Get a report of performance issues and configuration suggestions",
-        "operationId": "get_issues",
-        "tags": [
-          "beta"
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Clear issues",
-        "description": "Removes all issues reported so far",
-        "operationId": "clear_issues",
-        "tags": [
-          "beta"
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error"
-          }
-        }
-      }
-    },
-    "/cluster": {
-      "get": {
-        "tags": [
-          "cluster"
-        ],
-        "summary": "Get cluster status info",
-        "description": "Get information about the current state and composition of the cluster",
-        "operationId": "cluster_status",
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "$ref": "#/components/schemas/ClusterStatus"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/cluster/recover": {
-      "post": {
-        "tags": [
-          "cluster"
-        ],
-        "summary": "Tries to recover current peer Raft state.",
-        "operationId": "recover_current_peer",
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/cluster/peer/{peer_id}": {
-      "delete": {
-        "tags": [
-          "cluster"
-        ],
-        "summary": "Remove peer from the cluster",
-        "description": "Tries to remove peer from the cluster. Will return an error if peer has shards on it.",
-        "operationId": "remove_peer",
-        "parameters": [
-          {
-            "name": "peer_id",
-            "in": "path",
-            "description": "Id of the peer",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "force",
-            "in": "query",
-            "description": "If true - removes peer even if it has shards/replicas on it.",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/collections": {
-      "get": {
-        "tags": [
-          "collections"
-        ],
-        "summary": "List collections",
-        "description": "Get list name of all existing collections",
-        "operationId": "get_collections",
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "$ref": "#/components/schemas/CollectionsResponse"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/collections/{collection_name}": {
       "get": {
         "tags": [
@@ -1111,30 +302,41 @@
         }
       }
     },
-    "/collections/aliases": {
+    "/collections/{collection_name}/points": {
       "post": {
         "tags": [
-          "collections"
+          "points"
         ],
-        "summary": "Update aliases of the collections",
-        "operationId": "update_aliases",
+        "summary": "Get points",
+        "description": "Retrieve multiple points by specified IDs",
+        "operationId": "get_points",
         "requestBody": {
-          "description": "Alias update operations",
+          "description": "List of points to retrieve",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChangeAliasesOperation"
+                "$ref": "#/components/schemas/PointRequest"
               }
             }
           }
         },
         "parameters": [
           {
-            "name": "timeout",
-            "in": "query",
-            "description": "Wait for operation commit timeout in seconds. \nIf timeout is reached - request will return with service error.\n",
+            "name": "collection_name",
+            "in": "path",
+            "description": "Name of the collection to retrieve from",
+            "required": true,
             "schema": {
-              "type": "integer"
+              "type": "string"
+            }
+          },
+          {
+            "name": "consistency",
+            "in": "query",
+            "description": "Define read consistency guarantees for the operation",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ReadConsistency"
             }
           }
         ],
@@ -1175,7 +377,200 @@
                       "type": "string"
                     },
                     "result": {
-                      "type": "boolean"
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Record"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "points"
+        ],
+        "summary": "Upsert points",
+        "description": "Perform insert + updates on points. If point with given ID already exists - it will be overwritten.",
+        "operationId": "upsert_points",
+        "requestBody": {
+          "description": "Operation to perform on points",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PointInsertOperations"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "collection_name",
+            "in": "path",
+            "description": "Name of the collection to update from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wait",
+            "in": "query",
+            "description": "If true, wait for changes to actually happen",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "ordering",
+            "in": "query",
+            "description": "define ordering guarantees for the operation",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/WriteOrdering"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/UpdateResult"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collections/{collection_name}/points/search": {
+      "post": {
+        "tags": [
+          "points"
+        ],
+        "summary": "Search points",
+        "description": "Retrieve closest points based on vector similarity and given filtering conditions",
+        "operationId": "search_points",
+        "requestBody": {
+          "description": "Search request with optional filtering",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "collection_name",
+            "in": "path",
+            "description": "Name of the collection to search in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "consistency",
+            "in": "query",
+            "description": "Define read consistency guarantees for the operation",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ReadConsistency"
+            }
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "description": "If set, overrides global timeout for this request. Unit is seconds.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ScoredPoint"
+                      }
                     }
                   }
                 }
@@ -1270,6 +665,1053 @@
                     },
                     "result": {
                       "$ref": "#/components/schemas/UpdateResult"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collections/{collection_name}/snapshots": {
+      "get": {
+        "tags": [
+          "snapshots",
+          "collections"
+        ],
+        "summary": "List collection snapshots",
+        "description": "Get list of snapshots for a collection",
+        "operationId": "list_snapshots",
+        "parameters": [
+          {
+            "name": "collection_name",
+            "in": "path",
+            "description": "Name of the collection",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SnapshotDescription"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "snapshots",
+          "collections"
+        ],
+        "summary": "Create collection snapshot",
+        "description": "Create new snapshot for a collection",
+        "operationId": "create_snapshot",
+        "parameters": [
+          {
+            "name": "collection_name",
+            "in": "path",
+            "description": "Name of the collection for which to create a snapshot",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wait",
+            "in": "query",
+            "description": "If true, wait for changes to actually happen. If false - let changes happen in background. Default is true.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/SnapshotDescription"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "operation is accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collections/aliases": {
+      "post": {
+        "tags": [
+          "collections"
+        ],
+        "summary": "Update aliases of the collections",
+        "operationId": "update_aliases",
+        "requestBody": {
+          "description": "Alias update operations",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeAliasesOperation"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "timeout",
+            "in": "query",
+            "description": "Wait for operation commit timeout in seconds. \nIf timeout is reached - request will return with service error.\n",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cluster": {
+      "get": {
+        "tags": [
+          "cluster"
+        ],
+        "summary": "Get cluster status info",
+        "description": "Get information about the current state and composition of the cluster",
+        "operationId": "cluster_status",
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/ClusterStatus"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/telemetry": {
+      "get": {
+        "summary": "Collect telemetry data",
+        "description": "Collect telemetry data including app info, system info, collections info, cluster info, configs and statistics",
+        "operationId": "telemetry",
+        "tags": [
+          "service"
+        ],
+        "parameters": [
+          {
+            "name": "anonymize",
+            "in": "query",
+            "description": "If true, anonymize result",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/TelemetryData"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collections/{collection_name}/shards": {
+      "put": {
+        "tags": [
+          "collections",
+          "cluster"
+        ],
+        "summary": "Create shard key",
+        "operationId": "create_shard_key",
+        "requestBody": {
+          "description": "Shard key configuration",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateShardingKey"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "collection_name",
+            "in": "path",
+            "description": "Name of the collection to create shards for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "description": "Wait for operation commit timeout in seconds. \nIf timeout is reached - request will return with service error.\n",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collections/{collection_name}/shards/delete": {
+      "post": {
+        "tags": [
+          "collections",
+          "cluster"
+        ],
+        "summary": "Delete shard key",
+        "operationId": "delete_shard_key",
+        "requestBody": {
+          "description": "Select shard key to delete",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DropShardingKey"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "collection_name",
+            "in": "path",
+            "description": "Name of the collection to create shards for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "description": "Wait for operation commit timeout in seconds. \nIf timeout is reached - request will return with service error.\n",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Returns information about the running Qdrant instance",
+        "description": "Returns information about the running Qdrant instance like version and commit id",
+        "operationId": "root",
+        "tags": [
+          "service"
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/VersionInfo"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "summary": "Collect Prometheus metrics data",
+        "description": "Collect metrics data including app info, collections info, cluster info and statistics",
+        "operationId": "metrics",
+        "tags": [
+          "service"
+        ],
+        "parameters": [
+          {
+            "name": "anonymize",
+            "in": "query",
+            "description": "If true, anonymize result",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metrics data in Prometheus format",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "# HELP app_info information about qdrant server\n# TYPE app_info counter\napp_info{name=\"qdrant\",version=\"0.11.1\"} 1\n# HELP cluster_enabled is cluster support enabled\n# TYPE cluster_enabled gauge\ncluster_enabled 0\n# HELP collections_total number of collections\n# TYPE collections_total gauge\ncollections_total 1\n"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error"
+          }
+        }
+      }
+    },
+    "/locks": {
+      "post": {
+        "summary": "Set lock options",
+        "description": "Set lock options. If write is locked, all write operations and collection creation are forbidden. Returns previous lock options",
+        "operationId": "post_locks",
+        "tags": [
+          "service"
+        ],
+        "requestBody": {
+          "description": "Lock options and optional error message",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocksOption"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/LocksOption"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get lock options",
+        "description": "Get lock options. If write is locked, all write operations and collection creation are forbidden",
+        "operationId": "get_locks",
+        "tags": [
+          "service"
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/LocksOption"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthz": {
+      "get": {
+        "summary": "Kubernetes healthz endpoint",
+        "description": "An endpoint for health checking used in Kubernetes.",
+        "operationId": "healthz",
+        "tags": [
+          "service"
+        ],
+        "responses": {
+          "200": {
+            "description": "Healthz response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "healthz check passed"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error"
+          }
+        }
+      }
+    },
+    "/livez": {
+      "get": {
+        "summary": "Kubernetes livez endpoint",
+        "description": "An endpoint for health checking used in Kubernetes.",
+        "operationId": "livez",
+        "tags": [
+          "service"
+        ],
+        "responses": {
+          "200": {
+            "description": "Healthz response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "healthz check passed"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error"
+          }
+        }
+      }
+    },
+    "/readyz": {
+      "get": {
+        "summary": "Kubernetes readyz endpoint",
+        "description": "An endpoint for health checking used in Kubernetes.",
+        "operationId": "readyz",
+        "tags": [
+          "service"
+        ],
+        "responses": {
+          "200": {
+            "description": "Healthz response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "healthz check passed"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error"
+          }
+        }
+      }
+    },
+    "/issues": {
+      "get": {
+        "summary": "Get issues",
+        "description": "Get a report of performance issues and configuration suggestions",
+        "operationId": "get_issues",
+        "tags": [
+          "beta"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Clear issues",
+        "description": "Removes all issues reported so far",
+        "operationId": "clear_issues",
+        "tags": [
+          "beta"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error"
+          }
+        }
+      }
+    },
+    "/cluster/recover": {
+      "post": {
+        "tags": [
+          "cluster"
+        ],
+        "summary": "Tries to recover current peer Raft state.",
+        "operationId": "recover_current_peer",
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cluster/peer/{peer_id}": {
+      "delete": {
+        "tags": [
+          "cluster"
+        ],
+        "summary": "Remove peer from the cluster",
+        "description": "Tries to remove peer from the cluster. Will return an error if peer has shards on it.",
+        "operationId": "remove_peer",
+        "parameters": [
+          {
+            "name": "peer_id",
+            "in": "path",
+            "description": "Id of the peer",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "description": "If true - removes peer even if it has shards/replicas on it.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collections": {
+      "get": {
+        "tags": [
+          "collections"
+        ],
+        "summary": "List collections",
+        "description": "Get list name of all existing collections",
+        "operationId": "get_collections",
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/CollectionsResponse"
                     }
                   }
                 }
@@ -1915,170 +2357,6 @@
                     },
                     "result": {
                       "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "202": {
-            "description": "operation is accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/collections/{collection_name}/snapshots": {
-      "get": {
-        "tags": [
-          "snapshots",
-          "collections"
-        ],
-        "summary": "List collection snapshots",
-        "description": "Get list of snapshots for a collection",
-        "operationId": "list_snapshots",
-        "parameters": [
-          {
-            "name": "collection_name",
-            "in": "path",
-            "description": "Name of the collection",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SnapshotDescription"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "snapshots",
-          "collections"
-        ],
-        "summary": "Create collection snapshot",
-        "description": "Create new snapshot for a collection",
-        "operationId": "create_snapshot",
-        "parameters": [
-          {
-            "name": "collection_name",
-            "in": "path",
-            "description": "Name of the collection for which to create a snapshot",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "wait",
-            "in": "query",
-            "description": "If true, wait for changes to actually happen. If false - let changes happen in background. Default is true.",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "$ref": "#/components/schemas/SnapshotDescription"
                     }
                   }
                 }
@@ -3269,186 +3547,6 @@
         }
       }
     },
-    "/collections/{collection_name}/points": {
-      "post": {
-        "tags": [
-          "points"
-        ],
-        "summary": "Get points",
-        "description": "Retrieve multiple points by specified IDs",
-        "operationId": "get_points",
-        "requestBody": {
-          "description": "List of points to retrieve",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PointRequest"
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "collection_name",
-            "in": "path",
-            "description": "Name of the collection to retrieve from",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "consistency",
-            "in": "query",
-            "description": "Define read consistency guarantees for the operation",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/ReadConsistency"
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Record"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "points"
-        ],
-        "summary": "Upsert points",
-        "description": "Perform insert + updates on points. If point with given ID already exists - it will be overwritten.",
-        "operationId": "upsert_points",
-        "requestBody": {
-          "description": "Operation to perform on points",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PointInsertOperations"
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "collection_name",
-            "in": "path",
-            "description": "Name of the collection to update from",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "wait",
-            "in": "query",
-            "description": "If true, wait for changes to actually happen",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "ordering",
-            "in": "query",
-            "description": "define ordering guarantees for the operation",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/WriteOrdering"
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "$ref": "#/components/schemas/UpdateResult"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/collections/{collection_name}/points/delete": {
       "post": {
         "tags": [
@@ -4278,104 +4376,6 @@
                     },
                     "result": {
                       "$ref": "#/components/schemas/ScrollResult"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/collections/{collection_name}/points/search": {
-      "post": {
-        "tags": [
-          "points"
-        ],
-        "summary": "Search points",
-        "description": "Retrieve closest points based on vector similarity and given filtering conditions",
-        "operationId": "search_points",
-        "requestBody": {
-          "description": "Search request with optional filtering",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SearchRequest"
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "collection_name",
-            "in": "path",
-            "description": "Name of the collection to search in",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "consistency",
-            "in": "query",
-            "description": "Define read consistency guarantees for the operation",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/ReadConsistency"
-            }
-          },
-          {
-            "name": "timeout",
-            "in": "query",
-            "description": "If set, overrides global timeout for this request. Unit is seconds.",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "description": "error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "time": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Time spent to process this request"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ScoredPoint"
-                      }
                     }
                   }
                 }
