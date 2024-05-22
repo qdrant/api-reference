@@ -22,6 +22,9 @@ cd $PROJECT_ROOT
 # Update master API
 
 cp qdrant/docs/redoc/master/openapi.json $PROJECT_ROOT/fern/apis/master/openapi.json
+# Make sure that methods in OpenAPI schema are ordered as we want
+python tools/order_openapi_file.py --openapi $PROJECT_ROOT/fern/apis/master/openapi.json --output $PROJECT_ROOT/fern/apis/master/openapi-orderred.json
+mv $PROJECT_ROOT/fern/apis/master/openapi-orderred.json $PROJECT_ROOT/fern/apis/master/openapi.json
 
 # Generate fern overwrites from the snippets
 
@@ -50,7 +53,9 @@ rm -rf $PROJECT_ROOT/fern/apis/$latest_version
 cp -r $PROJECT_ROOT/fern/apis/master $PROJECT_ROOT/fern/apis/$latest_version
 
 cp qdrant/docs/redoc/$latest_version/openapi.json $PROJECT_ROOT/fern/apis/$latest_version/openapi.json
-
+# Make sure that methods in OpenAPI schema are ordered as we want
+python tools/order_openapi_file.py --openapi $PROJECT_ROOT/fern/apis/$latest_version/openapi.json --output $PROJECT_ROOT/fern/apis/$latest_version/openapi-orderred.json
+mv $PROJECT_ROOT/fern/apis/$latest_version/openapi-orderred.json $PROJECT_ROOT/fern/apis/$latest_version/openapi.json
 
 
 # Create version file in `fern/versions` by replacing master with the latest version
