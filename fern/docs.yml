@@ -31,3 +31,6 @@ navbar-links:
   - type: outlined
     text: GitHub
     url: https://github.com/qdrant/qdrant
+navigation:
+  - api: API Reference
+    summary: ./pages/api-summary.mdx
