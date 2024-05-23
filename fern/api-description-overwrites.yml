@@ -48,8 +48,8 @@ paths:
       tags:
       - Collections
     get:
-      description: Retrieves details about the specified collection.
-      summary: Get collection parameters
+      description: Retrieves parameters from the specified collection.
+      summary: Get collection details
       tags:
       - Collections
     patch:
