@@ -1360,13 +1360,13 @@ paths:
   /collections/{collection_name}/shards/{shard_id}/snapshots/recover:
     put:
       description: Recovers the shard of a local collection from a snapshot. This will overwrite any collection data, which is stored in this shard.
-      summary: Recover from snapshot (shard)
+      summary: Recover from a snapshot (shard)
       tags:
         - Snapshots
   /collections/{collection_name}/shards/{shard_id}/snapshots/upload:
     post:
       description: Recovers the shard of a local collection from an uploaded snapshot. This will overwrite any collection data, which is stored in this shard.
-      summary: Recover from uploaded snapshot (shard)
+      summary: Recover from an uploaded snapshot (shard)
       tags:
         - Snapshots
   /collections/{collection_name}/shards/{shard_id}/snapshots/{snapshot_name}:
