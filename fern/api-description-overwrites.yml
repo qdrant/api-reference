@@ -355,7 +355,7 @@ Target Search: When a target is provided (with or without context), the score co
       - Service
   /readyz:
     get:
-      description: Monitors the container to see when it can start accepting traffic.
+      description: Checks the instance to see when it can start accepting traffic.
       summary: Kubernetes readiness probe
       tags:
       - Service
