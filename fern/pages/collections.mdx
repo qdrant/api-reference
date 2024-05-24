@@ -1,0 +1,20 @@
+A collection is a logical grouping for related [points](https://qdrant.tech/documentation/concepts/points/). Each collection can be thought of as a dataset within the database, where you can store, organize, and manage points that share a common purpose or are related in some way.
+Each point in a collection consists of one or more vectors with a [payload](https://qdrant.tech/documentation/concepts/payload/).
+
+When querying a vector database, you need to specify the collection you want to [search](https://qdrant.tech/documentation/concepts/search/) within. 
+
+Each Qdrant collection has configurable parameters for optimization, index construction, and vacuum.
+
+Read more: [Collections](https://qdrant.tech/documentation/concepts/collections/)
+
+<Aside>
+|Endpoints||
+|-:|-|
+|GET| [Get collection details](/api-reference/collections/delete-collection)| 
+|GET| [List all collections](/api-reference/collections/get-collections)| 
+|GET| [Check collection existence](/api-reference/collections/collection-exists)| 
+|PUT| [Create a collection](/api-reference/collections/create-collection)| 
+|PATCH| [Update collection parameters](/api-reference/collections/update-collection)| 
+|DEL| [Delete a collection](/api-reference/collections/delete-collection)| 
+
+</Aside>
