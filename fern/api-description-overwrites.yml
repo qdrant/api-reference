@@ -315,7 +315,7 @@ Target Search: When a target is provided (with or without context), the score co
       - Snapshots
   /healthz:
     get:
-      description: Monitors the health of individual containers.
+      description: Checks the health of individual instance.
       summary: Kubernetes health check
       tags:
       - Service
