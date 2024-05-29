@@ -57,8 +57,8 @@ paths:
 
 '
               language: python
-      description: Get list of all existing collections aliases
-      summary: List collections aliases
+      description: Retrieves a list of all existing aliases.
+      summary: List all aliases
       tags:
         - Aliases
   /collections:
@@ -111,8 +111,8 @@ paths:
 
 '
               language: python
-      description: Get list name of all existing collections
-      summary: List collections
+      description: Returns a list of all existing collections.
+      summary: List all collections
       tags:
         - Collections
   /collections/aliases:
@@ -155,7 +155,8 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.update_collection_aliases(\n    change_aliases_operations=[\n        models.CreateAliasOperation(\n            create_alias=models.CreateAlias(\n                collection_name=\"example_collection\", alias_name=\"production_collection\"\n            )\n        )\n    ]\n)\n\nclient.update_collection_aliases(\n    change_aliases_operations=[\n        models.DeleteAliasOperation(\n            delete_alias=models.DeleteAlias(alias_name=\"production_collection\")\n        ),\n    ]\n)\n"
               language: python
-      summary: Update aliases of the collections
+      description: Updates aliases for the specified collections.
+      summary: Update collection aliases
       tags:
         - Aliases
   /collections/{collection_name}:
@@ -208,8 +209,8 @@ paths:
 
 '
               language: python
-      description: Drop collection and all associated data
-      summary: Delete collection
+      description: Drops the specified collection and all associated data in it.
+      summary: Delete a collection
       tags:
         - Collections
     get:
@@ -261,8 +262,8 @@ paths:
 
 '
               language: python
-      description: Get detailed information about specified existing collection
-      summary: Collection info
+      description: Retrieves parameters from the specified collection.
+      summary: Get collection details
       tags:
         - Collections
     patch:
@@ -282,7 +283,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.update_collection(\n    collection_name=\"{collection_name}\",\n    optimizer_config=models.OptimizersConfigDiff(indexing_threshold=10000),\n)\n"
               language: python
-      description: Update parameters of the existing collection
+      description: Updates the parameters of the specified collection.
       summary: Update collection parameters
       tags:
         - Collections
@@ -306,8 +307,8 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.create_collection(\n    collection_name=\"{collection_name}\",\n    vectors_config=models.VectorParams(size=100, distance=models.Distance.COSINE),\n)\n"
               language: python
-      description: Create new collection with given parameters
-      summary: Create collection
+      description: Creates a new collection with the given parameters.
+      summary: Create a collection
       tags:
         - Collections
   /collections/{collection_name}/aliases:
@@ -360,8 +361,8 @@ paths:
 
 '
               language: python
-      description: Get list of all aliases for a collection
-      summary: List aliases for collection
+      description: Retrieves a list of all aliases for the specified collection.
+      summary: List collection aliases
       tags:
         - Aliases
   /collections/{collection_name}/index:
@@ -382,8 +383,8 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.create_payload_index(\n    collection_name=\"{collection_name}\",\n    field_name=\"name_of_the_field_to_index\",\n    field_schema=\"keyword\",\n)\n"
               language: python
-      description: Create index for field in collection
-      summary: Create index for field in collection
+      description: Creates a payload index for a field in the specified collection.
+      summary: Create payload index
       tags:
         - Indexes
   /collections/{collection_name}/index/{field_name}:
@@ -420,8 +421,8 @@ paths:
 
 '
               language: python
-      description: Delete field index for collection
-      summary: Delete index for field in collection
+      description: Deletes a payload index for a field in the specified collection.
+      summary: Delete payload index
       tags:
         - Indexes
   /collections/{collection_name}/points:
@@ -442,8 +443,8 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.retrieve(\n    collection_name=\"{collection_name}\",\n    ids=[0, 3, 100],\n)\n"
               language: python
-      description: Retrieve multiple points by specified IDs
-      summary: Get points
+      description: Retrieves all details from multiple points.
+      summary: Retrieve points
       tags:
         - Points
     put:
@@ -463,7 +464,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.upsert(\n    collection_name=\"{collection_name}\",\n    points=[\n        models.PointStruct(\n            id=1,\n            payload={\n                \"color\": \"red\",\n            },\n            vector=[0.9, 0.1, 0.1],\n        ),\n        models.PointStruct(\n            id=2,\n            payload={\n                \"color\": \"green\",\n            },\n            vector=[0.1, 0.9, 0.1],\n        ),\n        models.PointStruct(\n            id=3,\n            payload={\n                \"color\": \"blue\",\n            },\n            vector=[0.1, 0.1, 0.9],\n        ),\n    ],\n)\n"
               language: python
-      description: Perform insert + updates on points. If point with given ID already exists - it will be overwritten.
+      description: Performs the insert + update action on specified points. Any point with an existing {id} will be overwritten.
       summary: Upsert points
       tags:
         - Points
@@ -485,7 +486,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.batch_update_points(\n    collection_name=\"{collection_name}\",\n    update_operations=[\n        models.UpsertOperation(\n            upsert=models.PointsList(\n                points=[\n                    models.PointStruct(\n                        id=1,\n                        vector=[1.0, 2.0, 3.0, 4.0],\n                        payload={},\n                    ),\n                ]\n            )\n        ),\n        models.UpdateVectorsOperation(\n            update_vectors=models.UpdateVectors(\n                points=[\n                    models.PointVectors(\n                        id=1,\n                        vector=[1.0, 2.0, 3.0, 4.0],\n                    )\n                ]\n            )\n        ),\n        models.SetPayloadOperation(\n            set_payload=models.SetPayload(\n                payload={\n                    \"test_payload_2\": 2,\n                    \"test_payload_3\": 3,\n                },\n                points=[1],\n            )\n        ),\n    ],\n)\n"
               language: python
-      description: Apply a series of update operations for points, vectors and payloads
+      description: Batch updates points, including their respective vectors and payloads.
       summary: Batch update points
       tags:
         - Points
@@ -507,7 +508,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.count(\n    collection_name=\"{collection_name}\",\n    count_filter=models.Filter(\n        must=[\n            models.FieldCondition(key=\"color\", match=models.MatchValue(value=\"red\")),\n        ]\n    ),\n    exact=True,\n)\n"
               language: python
-      description: Count points which matches given filtering condition
+      description: Counts the number of points that match a specified filtering condition.
       summary: Count points
       tags:
         - Points
@@ -540,7 +541,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.delete(\n    collection_name=\"{collection_name}\",\n    points_selector=models.PointIdsList(\n        points=[0, 3, 100],\n    ),\n)\n\nclient.delete(\n    collection_name=\"{collection_name}\",\n    points_selector=models.FilterSelector(\n        filter=models.Filter(\n            must=[\n                models.FieldCondition(\n                    key=\"color\",\n                    match=models.MatchValue(value=\"red\"),\n                ),\n            ],\n        )\n    ),\n)\n"
               language: python
-      description: Delete points
+      description: Deletes specified points from the collection.
       summary: Delete points
       tags:
         - Points
@@ -564,23 +565,9 @@ paths:
               language: python
       description: 'Retrieves the most similar points to a given target, constrained by the provided context.
 
+        Context Search: When only the context is provided (without a target), pairs of points are used to generate a loss that guides the search towards the area where most positive examples overlap. The score minimizes finding points closer to a negative example than to a positive example. The maximum score a point can achieve is 0.0, meaning many points may have a score of 0.0.
 
-        Context Search: When only the context is provided (without a target),
-
-        pairs of points are used to generate a loss that guides the search towards the area where most positive examples overlap.
-
-        The score minimizes finding points closer to a negative example than to a positive example.
-
-        The maximum score a point can achieve is 0.0, meaning many points may have a score of 0.0.
-
-
-        Target Search: When a target is provided (with or without context), the score consists of two parts:
-
-        the integer part represents the rank with respect to the context, and the decimal part relates to the distance to the target.
-
-        The context score for each pair is +1 if the point is closer to a positive example than to a negative example, and -1 otherwise."
-
-'
+        Target Search: When a target is provided (with or without context), the score consists of two parts: the integer part represents the rank with respect to the context, and the decimal part relates to the distance to the target. The context score for each pair is +1 if the point is closer to a positive example than to a negative example, and -1 otherwise.'
       summary: Discover points
       tags:
         - Search
@@ -624,7 +611,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.set_payload(\n    collection_name=\"{collection_name}\",\n    payload={\n        \"property1\": \"string\",\n        \"property2\": \"string\",\n    },\n    points=[0, 3, 10],\n)\n"
               language: python
-      description: Set payload values for points
+      description: Sets payload values for specified points.
       summary: Set payload
       tags:
         - Points
@@ -645,7 +632,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.overwrite_payload(\n    collection_name=\"{collection_name}\",\n    payload={\n        \"property1\": \"string\",\n        \"property2\": \"string\",\n    },\n    points=[0, 3, 10],\n)\n"
               language: python
-      description: Replace full payload of points with new one
+      description: Replaces the entire payload of a specified point with a new payload.
       summary: Overwrite payload
       tags:
         - Points
@@ -675,7 +662,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.clear_payload(\n    collection_name=\"{collection_name}\",\n    points_selector=[0, 3, 100],\n)\n"
               language: python
-      description: Remove all payload for specified points
+      description: Removes the entire payload for specified points.
       summary: Clear payload
       tags:
         - Points
@@ -705,7 +692,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.delete_payload(\n    collection_name=\"{collection_name}\",\n    keys=[\"color\", \"price\"],\n    points=[0, 3, 100],\n)\n"
               language: python
-      description: Delete specified key payload for points
+      description: Deletes a specified key payload for points.
       summary: Delete payload
       tags:
         - Points
@@ -730,7 +717,7 @@ paths:
       description: Retrieves points that are closer to stored positive examples and further from negative examples.
       summary: Recommend points
       tags:
-        - Points
+        - Search
   /collections/{collection_name}/points/recommend/batch:
     post:
       x-fern-examples:
@@ -771,11 +758,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.recommend_groups(\n    collection_name=\"{collection_name}\",\n    positive=[100, 231],\n    negative=[718],\n    group_by=\"document_id\",\n    limit=3,\n    group_size=2,\n)\n"
               language: python
-      description: 'Retrieves points that are closer to stored positive examples and further from negative examples.
-
-        Results are grouped by the specified payload field.
-
-'
+      description: Retrieves points that are closer to stored positive examples and further from negative examples. Results are grouped by the specified payload field.
       summary: Recommend point groups
       tags:
         - Search
@@ -849,7 +832,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nfilter_ = models.Filter(\n    must=[\n        models.FieldCondition(\n            key=\"city\",\n            match=models.MatchValue(\n                value=\"London\",\n            ),\n        )\n    ]\n)\n\nsearch_queries = [\n    models.SearchRequest(vector=[0.2, 0.1, 0.9, 0.7], filter=filter_, limit=3),\n    models.SearchRequest(vector=[0.5, 0.3, 0.2, 0.3], filter=filter_, limit=3),\n]\n\nclient.search_batch(collection_name=\"{collection_name}\", requests=search_queries)\n"
               language: python
-      description: Retrieves the closest points in batches based on vector similarity and given filtering conditions
+      description: Retrieves the closest points in batches based on vector similarity and given filtering conditions.
       summary: Search batch points
       tags:
         - Search
@@ -893,7 +876,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.update_vectors(\n    collection_name=\"{collection_name}\",\n    points=[\n        models.PointVectors(\n            id=1,\n            vector={\n                \"image\": [0.1, 0.2, 0.3, 0.4],\n            },\n        ),\n        models.PointVectors(\n            id=2,\n            vector={\n                \"text\": [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],\n            },\n        ),\n    ],\n)\n"
               language: python
-      description: Update specified named vectors on points, keep unspecified vectors intact.
+      description: Updates specified vectors on points. All other unspecified vectors will stay intact.
       summary: Update vectors
       tags:
         - Points
@@ -923,7 +906,7 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.delete_vectors(\n    collection_name=\"{collection_name}\",\n    points=[0, 3, 100],\n    vectors=[\"text\", \"image\"],\n)\n"
               language: python
-      description: Delete named vectors from the given points.
+      description: Deletes specified vectors from points. All other unspecified vectors will stay intact.
       summary: Delete vectors
       tags:
         - Points
@@ -953,7 +936,8 @@ paths:
 
 '
               language: python
-      summary: Create shard key
+      description: Creates one or more shard keys for a specified collection.
+      summary: Create a shard key
       tags:
         - Distributed
   /collections/{collection_name}/shards/delete:
@@ -982,7 +966,8 @@ paths:
 
 '
               language: python
-      summary: Delete shard key
+      description: Deletes one or more shard keys for a specified collection.
+      summary: Delete a shard key
       tags:
         - Distributed
   /collections/{collection_name}/snapshots:
@@ -1035,8 +1020,8 @@ paths:
 
 '
               language: python
-      description: Get list of snapshots for a collection
-      summary: List collection snapshots
+      description: Retrieves a list of all snapshots for a specified collection.
+      summary: List all snapshots (collection)
       tags:
         - Snapshots
     post:
@@ -1088,8 +1073,8 @@ paths:
 
 '
               language: python
-      description: Create new snapshot for a collection
-      summary: Create collection snapshot
+      description: Creates a new snapshot for a specified collection.
+      summary: Create a snapshot (collection)
       tags:
         - Snapshots
   /collections/{collection_name}/snapshots/recover:
@@ -1101,8 +1086,8 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.recover_snapshot(\n    \"{collection_name}\",\n    \"http://example.com/path/to/snapshot.shapshot\",\n)\n"
               language: python
-      description: Recover local collection data from a snapshot. This will overwrite any data, stored on this node, for the collection. If collection does not exist - it will be created.
-      summary: Recover from a snapshot
+      description: Recovers local collection data from a snapshot. This will overwrite any collection data stored on the node. If the collection does not exist, it will be created.
+      summary: Recover from a snapshot (collection)
       tags:
         - Snapshots
   /collections/{collection_name}/snapshots/{snapshot_name}:
@@ -1139,13 +1124,13 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.delete_snapshot(\n    collection_name=\"{collection_name}\", snapshot_name=\"{snapshot_name}\"\n)\n"
               language: python
-      description: Delete snapshot for a collection
-      summary: Delete collection snapshot
+      description: Deletes the specified snapshot for a collection.
+      summary: Delete a snapshot (collection)
       tags:
         - Snapshots
     get:
-      description: Download specified snapshot from a collection as a file
-      summary: Download collection snapshot
+      description: Downloads the specified snapshot file from a collection.
+      summary: Download a snapshot (collection)
       tags:
         - Snapshots
   /snapshots:
@@ -1198,8 +1183,8 @@ paths:
 
 '
               language: python
-      description: Get list of snapshots of the whole storage
-      summary: List of storage snapshots
+      description: Returns a list of all snapshots for the entire storage.
+      summary: List all snapshots (storage)
       tags:
         - Snapshots
     post:
@@ -1251,8 +1236,8 @@ paths:
 
 '
               language: python
-      description: Create new snapshot of the whole storage
-      summary: Create storage snapshot
+      description: Creates a new snapshot of the entire storage.
+      summary: Create a snapshot (storage)
       tags:
         - Snapshots
   /snapshots/{snapshot_name}:
@@ -1305,153 +1290,151 @@ paths:
 
 '
               language: python
-      description: Delete snapshot of the whole storage
-      summary: Delete storage snapshot
+      description: Deletes the specified snapshot of the entire storage.
+      summary: Delete a snapshot (storage)
       tags:
         - Snapshots
     get:
-      description: Download specified snapshot of the whole storage as a file
-      summary: Download storage snapshot
+      description: Downloads the specified snapshot of the entire storage as a file.
+      summary: Download a snapshot (storage)
       tags:
         - Snapshots
   /:
     get:
       description: Returns details about the running Qdrant instance.
-      summary: Returns information about the running Qdrant instance
+      summary: Retrieve instance details
       tags:
         - Service
   /cluster:
     get:
-      description: Get information about the current state and composition of the cluster
-      summary: Get cluster status info
+      description: Returns information about the cluster's current state and composition.
+      summary: Check cluster status
       tags:
         - Distributed
   /cluster/peer/{peer_id}:
     delete:
-      description: Tries to remove peer from the cluster. Will return an error if peer has shards on it.
-      summary: Remove peer from the cluster
+      description: Attempts to remove the node from the cluster. This endpoint returns an error if the node (peer) has shards on it.
+      summary: Remove peer from cluster
       tags:
         - Distributed
   /cluster/recover:
     post:
-      summary: Tries to recover current peer Raft state.
+      description: Attempts to restore or synchronize the node's current state with that of its peers.
+      summary: Recover cluster state
       tags:
         - Distributed
   /collections/{collection_name}/cluster:
     get:
-      description: Get cluster information for a collection
-      summary: Collection cluster info
+      description: Retrieves cluster details for a specified collection.
+      summary: Retrieve cluster details
       tags:
         - Distributed
     post:
-      summary: Update collection cluster setup
+      description: Updates the cluster configuration for a specified collection.
+      summary: Update cluster setup
       tags:
         - Distributed
   /collections/{collection_name}/exists:
     get:
-      description: Returns "true" if the given collection name exists, and "false" otherwise
-      summary: Check the existence of a collection
+      description: Checks whether the specified collection exists.
+      summary: Check collection existence
       tags:
         - Collections
   /collections/{collection_name}/points/{id}:
     get:
-      description: Retrieve full information of single point by id
-      summary: Get point
+      description: Retrieves all details from a single point.
+      summary: Retrieve a point
       tags:
         - Points
   /collections/{collection_name}/shards/{shard_id}/snapshots:
     get:
-      description: Get list of snapshots for a shard of a collection
-      summary: List shards snapshots for a collection
+      description: Returns a list of all snapshots for a shard from a collection.
+      summary: List all snapshots (shard)
       tags:
         - Snapshots
     post:
-      description: Create new snapshot of a shard for a collection
-      summary: Create shard snapshot
+      description: Creates a new snapshot of a shard from a collection.
+      summary: Create a snapshot (shard)
       tags:
         - Snapshots
   /collections/{collection_name}/shards/{shard_id}/snapshots/recover:
     put:
-      description: Recover shard of a local collection data from a snapshot. This will overwrite any data, stored in this shard, for the collection.
-      summary: Recover from a snapshot
+      description: Recovers the shard of a local collection from a snapshot. This will overwrite any collection data, which is stored in this shard.
+      summary: Recover from a snapshot (shard)
       tags:
         - Snapshots
   /collections/{collection_name}/shards/{shard_id}/snapshots/upload:
     post:
-      description: Recover shard of a local collection from an uploaded snapshot. This will overwrite any data, stored on this node, for the collection shard.
-      summary: Recover shard from an uploaded snapshot
+      description: Recovers the shard of a local collection from an uploaded snapshot. This will overwrite any collection data, which is stored in this shard.
+      summary: Recover from an uploaded snapshot (shard)
       tags:
         - Snapshots
   /collections/{collection_name}/shards/{shard_id}/snapshots/{snapshot_name}:
     delete:
-      description: Delete snapshot of a shard for a collection
-      summary: Delete shard snapshot
+      description: Deletes the specified snapshot of a shard from a collection.
+      summary: Delete a snapshot (shard)
       tags:
         - Snapshots
     get:
-      description: Download specified snapshot of a shard from a collection as a file
-      summary: Download collection snapshot
+      description: Downloads the specified snapshot of a shard from a collection as a file.
+      summary: Download a snapshot (shard)
       tags:
         - Snapshots
   /collections/{collection_name}/snapshots/upload:
     post:
-      description: Recover local collection data from an uploaded snapshot. This will overwrite any data, stored on this node, for the collection. If collection does not exist - it will be created.
-      summary: Recover from an uploaded snapshot
+      description: Recovers local collection data from an uploaded snapshot. This will overwrite any collection data stored on the node. If the collection does not exist, it will be created.
+      summary: Recover from an uploaded snapshot (collection)
       tags:
         - Snapshots
   /healthz:
     get:
-      description: Checks the health of individual service instance.
-      summary: Kubernetes healthz endpoint
+      description: Checks the health of individual instance.
+      summary: Kubernetes health check
       tags:
         - Service
   /issues:
     delete:
-      description: Removes all issues reported so far
+      description: Removes all issues reported so far.
       summary: Clear issues
       tags:
         - Beta
     get:
-      description: Get a report of performance issues and configuration suggestions
-      summary: Get issues
+      description: Retrieves a report of performance issues and configuration suggestions.
+      summary: Report issues
       tags:
         - Beta
   /livez:
     get:
-      description: Checks the health of individual service instance.
-      summary: Kubernetes livez endpoint
+      description: Monitors the container responsiveness and alerts in case of failure.
+      summary: Kubernetes liveness probe
       tags:
         - Service
   /locks:
     get:
       description: Retrieves the current lock setting. If write is false, all write operations and collection creation are restricted.
-      summary: Get lock options
+      summary: Check write protection
       tags:
         - Service
     post:
       description: Restricts all write operations and forbids collection creation. This endpoint also returns previous lock options.
-      summary: Set lock options
+      summary: Set write protection
       tags:
         - Service
   /metrics:
     get:
-      description: 'Collect metrics data, such as: application info, collection info, cluster info and statistics.
-
-'
+      description: 'Collect metrics data, such as: application info, collection info, cluster info and statistics.'
       summary: Collect Prometheus metrics data
       tags:
         - Service
   /readyz:
     get:
-      description: Checks the service to see when it can start accepting traffic.
-      summary: Kubernetes readyz endpoint
+      description: Checks the instance to see when it can start accepting traffic.
+      summary: Kubernetes readiness probe
       tags:
         - Service
   /telemetry:
     get:
-      description: 'Collects telemetry data, such as: application info, system info, collection info, cluster info, configs and statistics."
-
-'
+      description: 'Collects telemetry data, such as: application info, system info, collection info, cluster info, configs and statistics.'
       summary: Collect telemetry data
       tags:
         - Service
