@@ -2,10 +2,4 @@ navigation:
   - api: API Reference
     api-name: v1.9.x
     summary: ../pages/api-summary.mdx
-    layout:
-      - collections:
-          - page: The Collection object
-            path: ../pages/collections.mdx
-
-
           
