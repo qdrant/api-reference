@@ -717,7 +717,7 @@ paths:
       description: Retrieves points that are closer to stored positive examples and further from negative examples.
       summary: Recommend points
       tags:
-        - Points
+        - Search
   /collections/{collection_name}/points/recommend/batch:
     post:
       x-fern-examples:
@@ -1428,7 +1428,7 @@ paths:
         - Service
   /readyz:
     get:
-      description: Monitors the container to see when it can start accepting traffic.
+      description: Checks the instance to see when it can start accepting traffic.
       summary: Kubernetes readiness probe
       tags:
         - Service

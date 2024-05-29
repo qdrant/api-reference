@@ -5719,7 +5719,8 @@
         "type": "string",
         "enum": [
           "float32",
-          "uint8"
+          "uint8",
+          "float16"
         ]
       },
       "MultiVectorConfig": {
@@ -6316,7 +6317,7 @@
         ],
         "properties": {
           "indices": {
-            "description": "indices must be unique",
+            "description": "Indices must be unique",
             "type": "array",
             "items": {
               "type": "integer",
@@ -6325,7 +6326,7 @@
             }
           },
           "values": {
-            "description": "values and indices must be the same length",
+            "description": "Values and indices must be the same length",
             "type": "array",
             "items": {
               "type": "number",
@@ -6483,11 +6484,20 @@
         "properties": {
           "should": {
             "description": "At least one of those conditions should match",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Condition"
-            },
-            "nullable": true
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Condition"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Condition"
+                }
+              },
+              {
+                "nullable": true
+              }
+            ]
           },
           "min_should": {
             "description": "At least minimum amount of given conditions should match",
@@ -6502,19 +6512,37 @@
           },
           "must": {
             "description": "All conditions must match",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Condition"
-            },
-            "nullable": true
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Condition"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Condition"
+                }
+              },
+              {
+                "nullable": true
+              }
+            ]
           },
           "must_not": {
             "description": "All conditions must NOT match",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Condition"
-            },
-            "nullable": true
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Condition"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Condition"
+                }
+              },
+              {
+                "nullable": true
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -7121,8 +7149,31 @@
                 "nullable": true
               }
             ]
+          },
+          "order_value": {
+            "description": "Order-by value",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/OrderValue"
+              },
+              {
+                "nullable": true
+              }
+            ]
           }
         }
+      },
+      "OrderValue": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "type": "number",
+            "format": "double"
+          }
+        ]
       },
       "UpdateResult": {
         "type": "object",
@@ -9341,6 +9392,7 @@
         "type": "string",
         "enum": [
           "float32",
+          "float16",
           "uint8"
         ]
       },
