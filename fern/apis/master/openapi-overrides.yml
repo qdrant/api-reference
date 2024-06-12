@@ -365,6 +365,74 @@ paths:
       summary: List collection aliases
       tags:
         - Aliases
+  /collections/{collection_name}/exists:
+    get:
+      x-fern-examples:
+        - code-samples:
+            - code: 'import static io.qdrant.client.ConditionFactory.matchKeyword;
+
+
+                import io.qdrant.client.QdrantClient;
+
+                import io.qdrant.client.QdrantGrpcClient;
+
+
+                import io.qdrant.client.grpc.Points.Filter;
+
+
+                QdrantClient client = new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+
+
+                client.collectionExistsAsync("{collection_name}").get();
+
+'
+              language: java
+        - code-samples:
+            - code: 'using Qdrant.Client;
+
+
+                var client = new QdrantClient("localhost", 6334);
+
+
+                await client.CollectionExistsAsync("{collection_name}");
+
+'
+              language: csharp
+        - code-samples:
+            - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+                const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+                client.collectionExists("{collection_name}");
+
+'
+              language: typescript
+        - code-samples:
+            - code: 'use qdrant_client::{client::QdrantClient, qdrant::{Condition, CountPoints, Filter}};
+
+
+                let client = QdrantClient::from_url("http://localhost:6334").build()?;
+
+
+                client.collection_exists("{collection_name}").await?;
+
+'
+              language: rust
+        - code-samples:
+            - code: 'from qdrant_client import QdrantClient
+
+
+                client = QdrantClient(url="http://localhost:6333")
+
+
+                client.collection_exists(collection_name="{collection_name}")'
+              language: python
+      description: Checks whether the specified collection exists.
+      summary: Check collection existence
+      tags:
+        - Collections
   /collections/{collection_name}/index:
     put:
       x-fern-examples:
@@ -1334,12 +1402,6 @@ paths:
       summary: Update cluster setup
       tags:
         - Distributed
-  /collections/{collection_name}/exists:
-    get:
-      description: Checks whether the specified collection exists.
-      summary: Check collection existence
-      tags:
-        - Collections
   /collections/{collection_name}/points/{id}:
     get:
       description: Retrieves all details from a single point.
