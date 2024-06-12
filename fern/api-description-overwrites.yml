@@ -196,7 +196,7 @@ Target Search: When a target is provided (with or without context), the score co
         '
       summary: Scroll points
       tags:
-      - Search
+      - Points
   /collections/{collection_name}/points/search:
     post:
       description: Retrieves the closest points based on vector similarity and given filtering conditions.
