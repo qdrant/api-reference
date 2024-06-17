@@ -18,3 +18,22 @@ client
         ..Default::default()
     })
     .await?;
+
+//  Or with a sparse vector field
+
+client
+    .create_collection(&CreateCollection {
+        collection_name: "{collection_name}".to_string(),
+        sparse_vectors_config: Some(SparseVectorConfig {
+            map: [(
+                "text".to_string(),
+                SparseVectorParams {
+                    ..Default::default()
+                },
+            )]
+            .into(),
+            ..Default::default()
+        }),
+        ..Default::default()
+    })
+    .await?;
