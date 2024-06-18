@@ -78,9 +78,6 @@ VERSIONS_TMP_YAML=qdrant/versions.tmp.yml
 
 echo "versions:" > $VERSIONS_TMP_YAML
 
-echo "  - display-name: master" >> $VERSIONS_TMP_YAML
-echo "    path: ./versions/master.yml" >> $VERSIONS_TMP_YAML
-
 for version in $(ls $PROJECT_ROOT/fern/versions | grep -oP 'v\d.*' | sort -V); do
     # cut the .yml extension
     version=$(echo $version | sed 's/\.yml$//g')
@@ -88,6 +85,8 @@ for version in $(ls $PROJECT_ROOT/fern/versions | grep -oP 'v\d.*' | sort -V); d
     echo "    path: ./versions/$version.yml" >> $VERSIONS_TMP_YAML
 done
 
+echo "  - display-name: master" >> $VERSIONS_TMP_YAML
+echo "    path: ./versions/master.yml" >> $VERSIONS_TMP_YAML
 
 # Join the versions with the existing docs.yml using `yq`
 
