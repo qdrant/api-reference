@@ -1,7 +1,10 @@
+use serde_json::json;
+use qdrant_client::client::{ QdrantClient, Payload };
+use std::collections::HashMap;
 use qdrant_client::qdrant::{
     points_selector::PointsSelectorOneOf,
     points_update_operation::{
-        Operation, PointStructList, SetPayload, UpdateVectors,
+        Operation, PointStructList, UpdateVectors, OverwritePayload
     },
     PointStruct, PointVectors, PointsIdsList, PointsSelector, PointsUpdateOperation,
 };
@@ -17,7 +20,7 @@ client
                     points: vec![PointStruct::new(
                         1,
                         vec![1.0, 2.0, 3.0, 4.0],
-                        json!({}).try_into().unwrap(),
+                        Payload::try_from(json!({})).unwrap(),
                     )],
                     ..Default::default()
                 })),
@@ -32,7 +35,7 @@ client
                 })),
             },
             PointsUpdateOperation {
-                operation: Some(Operation::OverwritePayload(SetPayload {
+                operation: Some(Operation::OverwritePayload(OverwritePayload {
                     points_selector: Some(PointsSelector {
                         points_selector_one_of: Some(PointsSelectorOneOf::Points(
                             PointsIdsList {

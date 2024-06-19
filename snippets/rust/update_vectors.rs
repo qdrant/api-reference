@@ -1,5 +1,8 @@
+use qdrant_client::client::QdrantClient;
 use qdrant_client::qdrant::PointVectors;
 use std::collections::HashMap;
+
+let client = QdrantClient::from_url("http://localhost:6334").build()?;
 
 client
     .update_vectors_blocking(
