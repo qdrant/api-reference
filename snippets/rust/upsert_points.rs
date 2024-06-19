@@ -1,4 +1,4 @@
-use qdrant_client::{client::QdrantClient, qdrant::PointStruct};
+use qdrant_client::{client::QdrantClient, client::Payload, qdrant::PointStruct};
 use serde_json::json;
 
 let client = QdrantClient::from_url("http://localhost:6334").build()?;
@@ -11,29 +11,23 @@ client
             PointStruct::new(
                 1,
                 vec![0.9, 0.1, 0.1],
-                json!(
+                Payload::try_from(json!(
                     {"color": "red"}
-                )
-                .try_into()
-                .unwrap(),
+                )).unwrap(),
             ),
             PointStruct::new(
                 2,
                 vec![0.1, 0.9, 0.1],
-                json!(
+                Payload::try_from(json!(
                     {"color": "green"}
-                )
-                .try_into()
-                .unwrap(),
+                )).unwrap(),
             ),
             PointStruct::new(
                 3,
                 vec![0.1, 0.1, 0.9],
-                json!(
+                Payload::try_from(json!(
                     {"color": "blue"}
-                )
-                .try_into()
-                .unwrap(),
+                )).unwrap(),
             ),
         ],
         None,

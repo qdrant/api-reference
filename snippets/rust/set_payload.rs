@@ -1,3 +1,4 @@
+use serde_json::json;
 use qdrant_client::{client::QdrantClient, qdrant::{
     points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector,
 }};
@@ -19,6 +20,7 @@ client
         })
         .try_into()
         .unwrap(),
+        None,
         None,
     )
     .await?;
