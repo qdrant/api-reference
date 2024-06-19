@@ -3,10 +3,10 @@ instances:
     custom-domain: api.qdrant.tech
 title: Qdrant | API Reference
 versions:
-  - display-name: master
-    path: ./versions/master.yml
   - display-name: v1.9.x
     path: ./versions/v1.9.x.yml
+  - display-name: master
+    path: ./versions/master.yml
 colors:
   accentPrimary:
     light: '#DC244C'
