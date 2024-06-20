@@ -9,6 +9,8 @@ client.delete(
     ),
 )
 
+#  Delete all points with color = "red"
+
 client.delete(
     collection_name="{collection_name}",
     points_selector=models.FilterSelector(

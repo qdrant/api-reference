@@ -1,17 +1,16 @@
-import static io.qdrant.client.PointIdFactory.id;
-import static io.qdrant.client.VectorFactory.vector;
-import static io.qdrant.client.VectorsFactory.namedVectors;
-
 import java.util.List;
 import java.util.Map;
 
+import static io.qdrant.client.PointIdFactory.id;
+import static io.qdrant.client.ValueFactory.value;
+import static io.qdrant.client.VectorsFactory.vectors;
+
 import io.qdrant.client.QdrantClient;
 import io.qdrant.client.QdrantGrpcClient;
-
 import io.qdrant.client.grpc.Points.PointStruct;
 
-QdrantClient client = new QdrantClient(
-                QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
+QdrantClient client =
+    new QdrantClient(QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
 
 client
     .upsertAsync(
@@ -19,22 +18,17 @@ client
         List.of(
             PointStruct.newBuilder()
                 .setId(id(1))
-                .setVectors(
-                    namedVectors(
-                        Map.of(
-                            "image",
-                            vector(List.of(0.9f, 0.1f, 0.1f, 0.2f)),
-                            "text",
-                            vector(List.of(0.4f, 0.7f, 0.1f, 0.8f, 0.1f, 0.1f, 0.9f, 0.2f)))))
+                .setVectors(vectors(0.9f, 0.1f, 0.1f))
+                .putAllPayload(Map.of("color", value("red")))
                 .build(),
             PointStruct.newBuilder()
                 .setId(id(2))
-                .setVectors(
-                    namedVectors(
-                        Map.of(
-                            "image",
-                            List.of(0.2f, 0.1f, 0.3f, 0.9f),
-                            "text",
-                            List.of(0.5f, 0.2f, 0.7f, 0.4f, 0.7f, 0.2f, 0.3f, 0.9f))))
+                .setVectors(vectors(0.1f, 0.9f, 0.1f))
+                .putAllPayload(Map.of("color", value("green")))
+                .build(),
+            PointStruct.newBuilder()
+                .setId(id(3))
+                .setVectors(vectors(0.1f, 0.1f, 0.9f))
+                .putAllPayload(Map.of("color", value("blue")))
                 .build()))
     .get();

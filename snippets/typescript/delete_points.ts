@@ -6,6 +6,8 @@ client.delete("{collection_name}", {
   points: [0, 3, 100],
 });
 
+// Delete all points with color = "red"
+
 client.delete("{collection_name}", {
     filter: {
         must: [

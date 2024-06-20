@@ -13,6 +13,8 @@ QdrantClient client = new QdrantClient(
 
 client.deleteAsync("{collection_name}", List.of(id(0), id(3), id(100)));
 
+// Delete all points with color = "red"
+
 client
     .deleteAsync(
         "{collection_name}",
