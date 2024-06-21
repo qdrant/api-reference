@@ -6,11 +6,11 @@ let client = Qdrant::from_url("http://localhost:6334").build()?;
 client
     .recommend(
         RecommendPointsBuilder::new("{collection_name}", 3)
-            .positive(100)
-            .positive(200)
-            .positive(vec![100.0, 231.0])
-            .negative(718)
-            .negative(vec![0.2, 0.3, 0.4, 0.5])
+            .add_positive(100)
+            .add_positive(200)
+            .add_positive(vec![100.0, 231.0])
+            .add_negative(718)
+            .add_negative(vec![0.2, 0.3, 0.4, 0.5])
             .strategy(RecommendStrategy::AverageVector)
             .filter(Filter::must([Condition::matches(
                 "city",
