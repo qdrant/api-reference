@@ -6,6 +6,6 @@ let client = Qdrant::from_url("http://localhost:6334").build()?;
 client
     .create_field_index(
         CreateFieldIndexCollectionBuilder::new("{collection_name}", "{field_name}")
-            .field_type(FieldType::Keyword as i32),
+            .field_type(FieldType::Keyword),
     )
     .await?;

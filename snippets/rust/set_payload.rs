@@ -14,10 +14,10 @@ let payload: Payload = json!({
 
 client
     .set_payload(
-        SetPayloadPointsBuilder::new("{collection_name}", payload).points_selector(
-            PointsIdsList {
+        SetPayloadPointsBuilder::new("{collection_name}", payload)
+            .points_selector(PointsIdsList {
                 ids: vec![0.into(), 3.into(), 10.into()],
-            },
-        ),
+            })
+            .wait(true),
     )
     .await?;

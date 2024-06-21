@@ -17,9 +17,9 @@ let payload: Payload = json!({
 client
     .overwrite_payload(
         SetPayloadPointsBuilder::new("{collection_name}", payload)
-            .wait(true)
             .points_selector(PointsSelectorOneOf::Points(PointsIdsList {
                 ids: vec![0.into(), 3.into(), 10.into()],
-            })),
+            }))
+            .wait(true),
     )
     .await?;
