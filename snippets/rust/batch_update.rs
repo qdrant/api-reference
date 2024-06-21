@@ -1,20 +1,22 @@
-use serde_json::json;
-use qdrant_client::client::{ QdrantClient, Payload };
-use std::collections::HashMap;
+use qdrant_client::client::Payload;
 use qdrant_client::qdrant::{
     points_selector::PointsSelectorOneOf,
     points_update_operation::{
-        Operation, PointStructList, UpdateVectors, OverwritePayload
+        Operation, OverwritePayload, PointStructList, UpdateVectors,
     },
     PointStruct, PointVectors, PointsIdsList, PointsSelector, PointsUpdateOperation,
+    UpdateBatchPointsBuilder,
 };
+use qdrant_client::qdrant_client::Qdrant;
+use serde_json::json;
+use std::collections::HashMap;
 
-let client = QdrantClient::from_url("http://localhost:6334").build()?;
+let client = Qdrant::from_url("http://localhost:6334").build()?;
 
 client
-    .batch_updates_blocking(
+    .batch_updates(UpdateBatchPointsBuilder::new(
         "{collection_name}",
-        &[
+        vec![
             PointsUpdateOperation {
                 operation: Some(Operation::Upsert(PointStructList {
                     points: vec![PointStruct::new(
@@ -48,6 +50,5 @@ client
                 })),
             },
         ],
-        None,
-    )
+    ))
     .await?;

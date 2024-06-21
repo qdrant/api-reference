@@ -1,5 +1,5 @@
-use qdrant_client::client::QdrantClient;
+use qdrant_client::Qdrant;
 
-let client = QdrantClient::from_url("http://localhost:6334").build()?;
+let client = Qdrant::from_url("http://localhost:6334").build()?;
 
 client.list_aliases().await?;
