@@ -5186,6 +5186,111 @@
             "schema": {
               "$ref": "#/components/schemas/ReadConsistency"
             }
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "description": "If set, overrides global timeout for this request. Unit is seconds.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Time spent to process this request"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/QueryResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collections/{collection_name}/points/query/batch": {
+      "post": {
+        "tags": [
+          "points"
+        ],
+        "summary": "Query points in batch",
+        "description": "Universally query points in batch. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.",
+        "operationId": "query_batch_points",
+        "requestBody": {
+          "description": "Describes the queries to make to the collection",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryRequestBatch"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "collection_name",
+            "in": "path",
+            "description": "Name of the collection to query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "consistency",
+            "in": "query",
+            "description": "Define read consistency guarantees for the operation",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ReadConsistency"
+            }
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "description": "If set, overrides global timeout for this request. Unit is seconds.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
           }
         ],
         "responses": {
@@ -5227,7 +5332,7 @@
                     "result": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ScoredPoint"
+                        "$ref": "#/components/schemas/QueryResponse"
                       }
                     }
                   }
@@ -5617,6 +5722,7 @@
             "nullable": true
           },
           "datatype": {
+            "description": "Defines which datatype should be used to represent vectors in the storage. Choosing different datatypes allows to optimize memory usage and performance vs accuracy.\n\n- For `float32` datatype - vectors are stored as single-precision floating point numbers, 4 bytes. - For `float16` datatype - vectors are stored as half-precision floating point numbers, 2 bytes. - For `uint8` datatype - vectors are stored as unsigned 8-bit integers, 1 byte. It expects vector elements to be in range `[0, 255]`.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/Datatype"
@@ -5626,7 +5732,7 @@
               }
             ]
           },
-          "multivec_config": {
+          "multivector_config": {
             "anyOf": [
               {
                 "$ref": "#/components/schemas/MultiVectorConfig"
@@ -5804,7 +5910,6 @@
         }
       },
       "Datatype": {
-        "description": "Defines which datatype should be used to represent vectors in the storage. Choosing different datatypes allows to optimize memory usage and performance vs accuracy. - For `float32` datatype - vectors are stored as single-precision floating point numbers, 4bytes. - For `uint8` datatype - vectors are stored as unsigned 8-bit integers, 1byte. It expects vector elements to be in range `[0, 255]`.",
         "type": "string",
         "enum": [
           "float32",
@@ -5879,6 +5984,17 @@
             "description": "Store index on disk. If set to false, the index will be stored in RAM. Default: false",
             "type": "boolean",
             "nullable": true
+          },
+          "datatype": {
+            "description": "Defines which datatype should be used for the index. Choosing different datatypes allows to optimize memory usage and performance vs accuracy.\n\n- For `float32` datatype - vectors are stored as single-precision floating point numbers, 4 bytes. - For `float16` datatype - vectors are stored as half-precision floating point numbers, 2 bytes. - For `uint8` datatype - vectors are quantized to unsigned 8-bit integers, 1 byte. Quantization to fit byte range `[0, 255]` happens during indexing automatically, so the actual vector data does not need to conform to this range.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Datatype"
+              },
+              {
+                "nullable": true
+              }
+            ]
           }
         }
       },
@@ -6178,7 +6294,7 @@
             }
           },
           "with_payload": {
-            "description": "Select which payload to return with the response. Default: All",
+            "description": "Select which payload to return with the response. Default is true.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/WithPayloadInterface"
@@ -6352,6 +6468,16 @@
                 "nullable": true
               }
             ]
+          },
+          "order_value": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/OrderValue"
+              },
+              {
+                "nullable": true
+              }
+            ]
           }
         }
       },
@@ -6367,6 +6493,16 @@
             "items": {
               "type": "number",
               "format": "float"
+            }
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "format": "float"
+              }
             }
           },
           {
@@ -6428,6 +6564,18 @@
           }
         }
       },
+      "OrderValue": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "type": "number",
+            "format": "double"
+          }
+        ]
+      },
       "SearchRequest": {
         "description": "Search request. Holds all conditions and parameters for the search of most similar points by vector similarity given the filtering restrictions.",
         "type": "object",
@@ -6486,7 +6634,7 @@
             "nullable": true
           },
           "with_payload": {
-            "description": "Select which payload to return with the response. Default: None",
+            "description": "Select which payload to return with the response. Default is false.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/WithPayloadInterface"
@@ -6497,7 +6645,7 @@
             ]
           },
           "with_vector": {
-            "description": "Whether to return the point vector with the result?",
+            "description": "Options for specifying which vectors to include into response. Default is false.",
             "default": null,
             "anyOf": [
               {
@@ -7263,18 +7411,6 @@
           }
         }
       },
-      "OrderValue": {
-        "anyOf": [
-          {
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "type": "number",
-            "format": "double"
-          }
-        ]
-      },
       "UpdateResult": {
         "type": "object",
         "required": [
@@ -7382,7 +7518,7 @@
             "nullable": true
           },
           "with_payload": {
-            "description": "Select which payload to return with the response. Default: None",
+            "description": "Select which payload to return with the response. Default is false.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/WithPayloadInterface"
@@ -7393,7 +7529,7 @@
             ]
           },
           "with_vector": {
-            "description": "Whether to return the point vector with the result?",
+            "description": "Options for specifying which vectors to include into response. Default is false.",
             "default": null,
             "anyOf": [
               {
@@ -7543,7 +7679,7 @@
             ]
           },
           "with_payload": {
-            "description": "Select which payload to return with the response. Default: All",
+            "description": "Select which payload to return with the response. Default is true.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/WithPayloadInterface"
@@ -8308,6 +8444,19 @@
               "items": {
                 "type": "number",
                 "format": "float"
+              }
+            }
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "format": "float"
+                }
               }
             }
           },
@@ -9407,7 +9556,7 @@
               }
             ]
           },
-          "multivec_config": {
+          "multivector_config": {
             "description": "Vector specific configuration to enable multiple vectors per point",
             "anyOf": [
               {
@@ -9537,6 +9686,17 @@
           },
           "index_type": {
             "$ref": "#/components/schemas/SparseIndexType"
+          },
+          "datatype": {
+            "description": "Datatype used to store weights in the index.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/VectorStorageDatatype"
+              },
+              {
+                "nullable": true
+              }
+            ]
           }
         }
       },
@@ -10681,7 +10841,7 @@
             ]
           },
           "with_payload": {
-            "description": "Select which payload to return with the response. Default: None",
+            "description": "Select which payload to return with the response. Default is false.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/WithPayloadInterface"
@@ -10692,7 +10852,7 @@
             ]
           },
           "with_vector": {
-            "description": "Whether to return the point vector with the result?",
+            "description": "Options for specifying which vectors to include into response. Default is false.",
             "default": null,
             "anyOf": [
               {
@@ -10855,7 +11015,7 @@
             ]
           },
           "with_payload": {
-            "description": "Select which payload to return with the response. Default: None",
+            "description": "Select which payload to return with the response. Default is false.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/WithPayloadInterface"
@@ -10866,7 +11026,7 @@
             ]
           },
           "with_vector": {
-            "description": "Whether to return the point vector with the result?",
+            "description": "Options for specifying which vectors to include into response. Default is false.",
             "default": null,
             "anyOf": [
               {
@@ -11199,7 +11359,7 @@
             "nullable": true
           },
           "with_payload": {
-            "description": "Select which payload to return with the response. Default: None",
+            "description": "Select which payload to return with the response. Default is false.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/WithPayloadInterface"
@@ -11210,7 +11370,7 @@
             ]
           },
           "with_vector": {
-            "description": "Whether to return the point vector with the result?",
+            "description": "Options for specifying which vectors to include into response. Default is false.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/WithVector"
@@ -11385,7 +11545,7 @@
             "description": "Max number of points to return. Default is 10.",
             "type": "integer",
             "format": "uint",
-            "minimum": 0,
+            "minimum": 1,
             "nullable": true
           },
           "offset": {
@@ -11411,6 +11571,18 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/WithPayloadInterface"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "lookup_from": {
+            "description": "The location to use for IDs lookup, if not specified - use the current collection and the 'using' vector Note: the other collection vectors should have the same vector size as the 'using' vector in the current collection",
+            "default": null,
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LookupLocation"
               },
               {
                 "nullable": true
@@ -11488,8 +11660,20 @@
             "description": "Max number of points to return. Default is 10.",
             "type": "integer",
             "format": "uint",
-            "minimum": 0,
+            "minimum": 1,
             "nullable": true
+          },
+          "lookup_from": {
+            "description": "The location to use for IDs lookup, if not specified - use the current collection and the 'using' vector Note: the other collection vectors should have the same vector size as the 'using' vector in the current collection",
+            "default": null,
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LookupLocation"
+              },
+              {
+                "nullable": true
+              }
+            ]
           }
         }
       },
@@ -11531,86 +11715,48 @@
         ]
       },
       "Query": {
-        "oneOf": [
+        "anyOf": [
           {
-            "description": "Find the nearest neighbors to this vector.",
-            "type": "object",
-            "required": [
-              "nearest"
-            ],
-            "properties": {
-              "nearest": {
-                "$ref": "#/components/schemas/VectorInput"
-              }
-            },
-            "additionalProperties": false
+            "$ref": "#/components/schemas/NearestQuery"
           },
           {
-            "description": "Use multiple positive and negative vectors to find the results.",
-            "type": "object",
-            "required": [
-              "recommend"
-            ],
-            "properties": {
-              "recommend": {
-                "$ref": "#/components/schemas/RecommendInput"
-              }
-            },
-            "additionalProperties": false
+            "$ref": "#/components/schemas/RecommendQuery"
           },
           {
-            "description": "Search for nearest points, but constrain the search space with context",
-            "type": "object",
-            "required": [
-              "discover"
-            ],
-            "properties": {
-              "discover": {
-                "$ref": "#/components/schemas/DiscoverInput"
-              }
-            },
-            "additionalProperties": false
+            "$ref": "#/components/schemas/DiscoverQuery"
           },
           {
-            "description": "Return points that live in positive areas.",
-            "type": "object",
-            "required": [
-              "context"
-            ],
-            "properties": {
-              "context": {
-                "$ref": "#/components/schemas/ContextInput"
-              }
-            },
-            "additionalProperties": false
+            "$ref": "#/components/schemas/ContextQuery"
           },
           {
-            "description": "Order the points by a payload field.",
-            "type": "object",
-            "required": [
-              "order_by"
-            ],
-            "properties": {
-              "order_by": {
-                "$ref": "#/components/schemas/OrderByInterface"
-              }
-            },
-            "additionalProperties": false
+            "$ref": "#/components/schemas/OrderByQuery"
           },
           {
-            "description": "Fuse the results of multiple prefetches.",
-            "type": "object",
-            "required": [
-              "fusion"
-            ],
-            "properties": {
-              "fusion": {
-                "$ref": "#/components/schemas/Fusion"
-              }
-            },
-            "additionalProperties": false
+            "$ref": "#/components/schemas/FusionQuery"
           }
         ]
+      },
+      "NearestQuery": {
+        "type": "object",
+        "required": [
+          "nearest"
+        ],
+        "properties": {
+          "nearest": {
+            "$ref": "#/components/schemas/VectorInput"
+          }
+        }
+      },
+      "RecommendQuery": {
+        "type": "object",
+        "required": [
+          "recommend"
+        ],
+        "properties": {
+          "recommend": {
+            "$ref": "#/components/schemas/RecommendInput"
+          }
+        }
       },
       "RecommendInput": {
         "type": "object",
@@ -11641,6 +11787,17 @@
                 "nullable": true
               }
             ]
+          }
+        }
+      },
+      "DiscoverQuery": {
+        "type": "object",
+        "required": [
+          "discover"
+        ],
+        "properties": {
+          "discover": {
+            "$ref": "#/components/schemas/DiscoverInput"
           }
         }
       },
@@ -11688,6 +11845,17 @@
           }
         }
       },
+      "ContextQuery": {
+        "type": "object",
+        "required": [
+          "context"
+        ],
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/ContextInput"
+          }
+        }
+      },
       "ContextInput": {
         "anyOf": [
           {
@@ -11704,16 +11872,62 @@
           }
         ]
       },
-      "Fusion": {
-        "oneOf": [
-          {
-            "description": "Reciprocal rank fusion",
-            "type": "string",
-            "enum": [
-              "rrf"
-            ]
+      "OrderByQuery": {
+        "type": "object",
+        "required": [
+          "order_by"
+        ],
+        "properties": {
+          "order_by": {
+            "$ref": "#/components/schemas/OrderByInterface"
           }
+        }
+      },
+      "FusionQuery": {
+        "type": "object",
+        "required": [
+          "fusion"
+        ],
+        "properties": {
+          "fusion": {
+            "$ref": "#/components/schemas/Fusion"
+          }
+        }
+      },
+      "Fusion": {
+        "description": "Fusion algorithm allows to combine results of multiple prefetches. Available fusion algorithms: * `rrf` - Rank Reciprocal Fusion",
+        "type": "string",
+        "enum": [
+          "rrf"
         ]
+      },
+      "QueryRequestBatch": {
+        "type": "object",
+        "required": [
+          "searches"
+        ],
+        "properties": {
+          "searches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QueryRequest"
+            }
+          }
+        }
+      },
+      "QueryResponse": {
+        "type": "object",
+        "required": [
+          "points"
+        ],
+        "properties": {
+          "points": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScoredPoint"
+            }
+          }
+        }
       }
     }
   }

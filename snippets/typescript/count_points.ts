@@ -2,13 +2,13 @@ import { QdrantClient } from "@qdrant/js-client-rest";
 
 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-client.count("{collection_name}", {
+client.count("global_patient_data", {
     filter: {
         must: [
             {
-                key: "color",
+                key: "is_smoker",
                 match: {
-                    value: "red",
+                    value: true,
                 },
             },
         ],

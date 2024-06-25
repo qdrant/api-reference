@@ -14,16 +14,18 @@ client
         None,
     )
     .await?;
+    
+// Delete all points with color = "red"
 
-    client
-        .delete_points_blocking(
-            "{collection_name}",
-            None,
-            &PointsSelector {
-                points_selector_one_of: Some(PointsSelectorOneOf::Filter(Filter::must([
-                    Condition::matches("color", "red".to_string()),
-                ]))),
-            },
-            None,
-        )
-        .await?;
+client
+    .delete_points_blocking(
+        "{collection_name}",
+        None,
+        &PointsSelector {
+            points_selector_one_of: Some(PointsSelectorOneOf::Filter(Filter::must([
+                Condition::matches("color", "red".to_string()),
+            ]))),
+        },
+        None,
+    )
+    .await?;
