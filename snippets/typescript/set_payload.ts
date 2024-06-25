@@ -2,10 +2,10 @@ import { QdrantClient } from "@qdrant/js-client-rest";
 
 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
-client.setPayload("{collection_name}", {
+client.setPayload("global_patient_data", {
   payload: {
-    property1: "string",
-    property2: "string",
+    is_smoker: false,
+    gender: "Male",
   },
   points: [0, 3, 10],
 });

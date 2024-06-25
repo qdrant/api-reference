@@ -6,9 +6,9 @@ client.count("{collection_name}", {
     filter: {
         must: [
             {
-                key: "color",
+                key: "is_smoker",
                 match: {
-                    value: "red",
+                    value: true,
                 },
             },
         ],

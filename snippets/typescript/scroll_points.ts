@@ -6,9 +6,9 @@ client.scroll("{collection_name}", {
     filter: {
         must: [
             {
-                key: "color",
+                key: "country",
                 match: {
-                    value: "red",
+                    value: "Canada",
                 },
             },
         ],
