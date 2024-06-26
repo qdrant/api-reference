@@ -631,11 +631,13 @@ paths:
         - code-samples:
             - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.discover(\n    \"{collection_name}\",\n    target=[0.2, 0.1, 0.9, 0.7],\n    context=[\n        models.ContextExamplePair(positive=100, negative=718),\n        models.ContextExamplePair(positive=200, negative=300),\n    ],\n    limit=10,\n)\n"
               language: python
-      description: 'Retrieves the most similar points to a given target, constrained by the provided context.
+      description: >
+        Retrieves the most similar points to a given target, constrained by the provided context.
 
         Context Search: When only the context is provided (without a target), pairs of points are used to generate a loss that guides the search towards the area where most positive examples overlap. The score minimizes finding points closer to a negative example than to a positive example. The maximum score a point can achieve is 0.0, meaning many points may have a score of 0.0.
 
-        Target Search: When a target is provided (with or without context), the score consists of two parts: the integer part represents the rank with respect to the context, and the decimal part relates to the distance to the target. The context score for each pair is +1 if the point is closer to a positive example than to a negative example, and -1 otherwise.'
+        Target Search: When a target is provided (with or without context), the score consists of two parts: the integer part represents the rank with respect to the context, and the decimal part relates to the distance to the target. The context score for each pair is +1 if the point is closer to a positive example than to a negative example, and -1 otherwise.
+
       summary: Discover points
       tags:
         - Search
@@ -1402,6 +1404,18 @@ paths:
       summary: Update cluster setup
       tags:
         - Distributed
+  /collections/{collection_name}/points/query:
+    post:
+      description: Universally query points. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
+      summary: Query points
+      tags:
+        - Search
+  /collections/{collection_name}/points/query/batch:
+    post:
+      description: Universally query points in batch. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
+      summary: Query points in batch
+      tags:
+        - Search
   /collections/{collection_name}/points/{id}:
     get:
       description: Retrieves all details from a single point.
