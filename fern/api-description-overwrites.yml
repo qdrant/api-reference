@@ -128,11 +128,12 @@ paths:
       - Points
   /collections/{collection_name}/points/discover:
     post:
-      description: 'Retrieves the most similar points to a given target, constrained by the provided context.
+      description: >
+        Retrieves the most similar points to a given target, constrained by the provided context.
 
-Context Search: When only the context is provided (without a target), pairs of points are used to generate a loss that guides the search towards the area where most positive examples overlap. The score minimizes finding points closer to a negative example than to a positive example. The maximum score a point can achieve is 0.0, meaning many points may have a score of 0.0.
-
-Target Search: When a target is provided (with or without context), the score consists of two parts: the integer part represents the rank with respect to the context, and the decimal part relates to the distance to the target. The context score for each pair is +1 if the point is closer to a positive example than to a negative example, and -1 otherwise.'
+        Context Search: When only the context is provided (without a target), pairs of points are used to generate a loss that guides the search towards the area where most positive examples overlap. The score minimizes finding points closer to a negative example than to a positive example. The maximum score a point can achieve is 0.0, meaning many points may have a score of 0.0.
+        
+        Target Search: When a target is provided (with or without context), the score consists of two parts: the integer part represents the rank with respect to the context, and the decimal part relates to the distance to the target. The context score for each pair is +1 if the point is closer to a positive example than to a negative example, and -1 otherwise.
       summary: Discover points
       tags:
       - Search
@@ -181,6 +182,18 @@ Target Search: When a target is provided (with or without context), the score co
     post:
       description: Retrieves points that are closer to stored positive examples and further from negative examples. Results are grouped by the specified payload field.
       summary: Recommend point groups
+      tags:
+      - Search
+  /collections/{collection_name}/points/query:
+    post:
+      description: Universally query points. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
+      summary: Query points
+      tags:
+      - Search
+  /collections/{collection_name}/points/query/batch:
+    post:
+      description: Universally query points in batch. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
+      summary: Query points in batch
       tags:
       - Search
   /collections/{collection_name}/points/scroll:
