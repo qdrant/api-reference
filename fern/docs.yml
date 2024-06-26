@@ -5,6 +5,8 @@ title: Qdrant | API Reference
 versions:
   - display-name: v1.9.x
     path: ./versions/v1.9.x.yml
+  - display-name: v1.10.x
+    path: ./versions/v1.10.x.yml
   - display-name: master
     path: ./versions/master.yml
 colors:
