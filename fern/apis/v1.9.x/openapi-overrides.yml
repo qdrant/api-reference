@@ -766,6 +766,29 @@ paths:
       summary: Delete payload
       tags:
         - Points
+  /collections/{collection_name}/points/query:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - code: "use qdrant_client::Qdrant;\nuse qdrant_client::qdrant::{Condition, Filter, PointId, PrefetchQueryBuilder, Query, QueryPointsBuilder};\n\nlet client = Qdrant::from_url(\"http://localhost:6334\").build()?;\n\n// Query nearest by ID\nclient.query(\n    QueryPointsBuilder::new(\"{collection_name}\")\n        .query(Query::new_nearest(PointId::new(\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\")))\n).await?;\n\n// Recommend on the average of these vectors\nclient.query(\n    QueryPointsBuilder::new(\"{collection_name}\")\n        .query(Query::new_recommend(\n            RecommendInputBuilder::default()\n                .add_positive(vec![0.1; 8])\n                .add_negative(PointId::from(0))\n        ))\n).await?;\n\n// Fusion query\nclient.query(\n    QueryPointsBuilder::new(\"{collection_name}\")\n        .add_prefetch(PrefetchQueryBuilder::default()\n            .query(Query::new_nearest([(1, 0.22), (42, 0.8)].as_slice()))\n            .using(\"sparse\")\n            .limit(20u64)\n        )\n        .add_prefetch(PrefetchQueryBuilder::default()\n            .query(Query::new_nearest(vec![0.01, 0.45, 0.67]))\n            .using(\"dense\")\n            .limit(20u64)\n        )\n        .query(Query::new_fusion(Fusion::Rrf))\n).await?;\n\n// 2-stage query\nclient.query(\n    QueryPointsBuilder::new(\"{collection_name}\")\n        .add_prefetch(PrefetchQueryBuilder::default()\n            .query(Query::new_nearest(vec![0.01, 0.45, 0.67]))\n            .limit(100u64)\n        )\n        .query(Query::new_nearest(vec![\n            vec![0.1, 0.2],\n            vec![0.2, 0.1],\n            vec![0.8, 0.9],\n        ]))\n        .using(\"colbert\")\n        .limit(10u64)\n).await?;\n"
+              language: rust
+        - code-samples:
+            - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\n# Query nearest by ID\nnearest = client.query_points(\n    collection_name=\"{collection_name}\",\n    query=\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\",\n)\n\n# Recommend on the average of these vectors\nrecommended = client.query_points(\n    collection_name=\"{collection_name}\",\n    query=models.RecommendQuery(recommend=models.RecommendInput(\n        positive=[\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\", [0.11, 0.35, 0.6, ...]],\n        negative=[[0.01, 0.45, 0.67, ...]]\n    ))\n)\n\n# Fusion query\nfusion = client.query_points(\n    collection_name=\"{collection_name}\",\n    prefetch=[\n        models.Prefetch(\n            query=models.SparseVector(indices=[1, 42], values=[0.22, 0.8]),\n            using=\"sparse\",\n            limit=20,\n        ),\n        models.Prefetch(\n            query=[0.01, 0.45, 0.67, ...],  # <-- dense vector\n            using=\"dense\",\n            limit=20,\n        ),\n    ],\n    query=models.FusionQuery(fusion=models.Fusion.RRF),\n)\n\n# 2-stage query\nrefined = client.query_points(\n    collection_name=\"{collection_name}\",\n    prefetch=models.Prefetch(\n        query=[0.01, 0.45, 0.67, ...],  # <-- dense vector\n        limit=100,\n    ),\n    query=[\n        [0.1, 0.2, ...],  # <─┐\n        [0.2, 0.1, ...],  # < ├─ multi-vector\n        [0.8, 0.9, ...],  # < ┘\n    ],\n    using=\"colbert\",\n    limit=10,\n)"
+              language: python
+      description: Universally query points. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
+      summary: Query points
+      tags:
+        - Search
+  /collections/{collection_name}/points/query/batch:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nnearest = client.query_batch_points(\n    collection_name=\"{collection_name}\",\n    requests=[\n        models.QueryRequest(\n            query=[0.01, 0.45, 0.67, ...],\n        ),\n        models.QueryRequest(\n            query=[0.11, 0.35, 0.6, ...],\n        ),\n    ]\n)"
+              language: python
+      description: Universally query points in batch. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
+      summary: Query points in batch
+      tags:
+        - Search
   /collections/{collection_name}/points/recommend:
     post:
       x-fern-examples:
@@ -1404,18 +1427,6 @@ paths:
       summary: Update cluster setup
       tags:
         - Distributed
-  /collections/{collection_name}/points/query:
-    post:
-      description: Universally query points. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
-      summary: Query points
-      tags:
-        - Search
-  /collections/{collection_name}/points/query/batch:
-    post:
-      description: Universally query points in batch. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
-      summary: Query points in batch
-      tags:
-        - Search
   /collections/{collection_name}/points/{id}:
     get:
       description: Retrieves all details from a single point.
