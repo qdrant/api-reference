@@ -783,6 +783,9 @@ paths:
     post:
       x-fern-examples:
         - code-samples:
+            - code: "use qdrant_client::{Qdrant, QdrantError};\nuse qdrant_client::qdrant::{Query, QueryPointsBuilder, QueryBatchPointsBuilder};\n\nlet request = QueryBatchPointsBuilder::new(\"{collection_name}\", vec![\n    QueryPointsBuilder::new(\"\")\n        .query(Query::new_nearest(\n            vec![0.1; 8],\n        )).into(),\n    QueryPointsBuilder::new(\"\")\n        .query(Query::new_nearest(\n            vec![0.3; 8],\n        )).into(),\n]);\n\nlet response = client.query_batch(request).await?;"
+              language: rust
+        - code-samples:
             - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nnearest = client.query_batch_points(\n    collection_name=\"{collection_name}\",\n    requests=[\n        models.QueryRequest(\n            query=[0.01, 0.45, 0.67, ...],\n        ),\n        models.QueryRequest(\n            query=[0.11, 0.35, 0.6, ...],\n        ),\n    ]\n)"
               language: python
       description: Universally query points in batch. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
