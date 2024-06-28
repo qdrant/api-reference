@@ -12,7 +12,15 @@ await client.QueryAsync(
 // Recommend on the average of these vectors
 await client.QueryAsync(
 	collectionName: "{collection_name}",
-	query: new RecommendInput { Positive = { new float[] { 0.1f, 0.2f, 0.3f } }, Negative = { 0 } }
+	query: new RecommendInput
+	{
+		Positive =
+		{
+			Guid.Parse("43cf51e2-8777-4f52-bc74-c2cbde0c8b04"),
+			new float[] { 0.11f, 0.35f, 0.6f }
+		},
+		Negative = { new float[] { 0.01f, 0.45f, 0.67f } }
+	}
 );
 
 // Fusion query

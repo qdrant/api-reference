@@ -11,8 +11,8 @@ client.query("{collection_name", {
 client.query("{collection_name}", {
     query: {
         recommend: {
-            positive: [[0.11, 0.35, 0.6]],
-            negative: [0]
+            positive: ["43cf51e2-8777-4f52-bc74-c2cbde0c8b04", [0.11, 0.35, 0.6]],
+            negative: [0.01, 0.45, 0.67]
         }
     }
 });

@@ -32,8 +32,9 @@ client
             .setQuery(
                 recommend(
                     RecommendInput.newBuilder()
-                        .addPositive(vectorInput(0.1f, 0.2f, 0.3f))
-                        .addNegative(vectorInput(0))
+                        .addPositive(vectorInput(UUID.fromString("43cf51e2-8777-4f52-bc74-c2cbde0c8b04")))
+                        .addPositive(vectorInput(0.11f, 0.35f, 0.6f))
+                        .addNegative(vectorInput(0.01f, 0.45f, 0.67f))
                         .build()))
             .build())
     .get();
