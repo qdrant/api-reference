@@ -1,11 +1,21 @@
 components:
   securitySchemes:
     BearerAuth:
-      type: http
       scheme: bearer
+      type: http
 paths:
+  /:
+    get:
+      description: Returns details about the running Qdrant instance.
+      summary: Retrieve instance details
+      tags:
+      - Service
   /aliases:
     get:
+      description: Retrieves a list of all existing aliases.
+      summary: List all aliases
+      tags:
+      - Aliases
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -56,12 +66,32 @@ paths:
 
             '
           language: python
-      description: Retrieves a list of all existing aliases.
-      summary: List all aliases
+  /cluster:
+    get:
+      description: Returns information about the cluster's current state and composition.
+      summary: Check cluster status
       tags:
-      - Aliases
+      - Distributed
+  /cluster/peer/{peer_id}:
+    delete:
+      description: Attempts to remove the node from the cluster. This endpoint returns
+        an error if the node (peer) has shards on it.
+      summary: Remove peer from cluster
+      tags:
+      - Distributed
+  /cluster/recover:
+    post:
+      description: Attempts to restore or synchronize the node's current state with
+        that of its peers.
+      summary: Recover cluster state
+      tags:
+      - Distributed
   /collections:
     get:
+      description: Returns a list of all existing collections.
+      summary: List all collections
+      tags:
+      - Collections
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -112,12 +142,12 @@ paths:
 
             '
           language: python
-      description: Returns a list of all existing collections.
-      summary: List all collections
-      tags:
-      - Collections
   /collections/aliases:
     post:
+      description: Updates aliases for the specified collections.
+      summary: Update collection aliases
+      tags:
+      - Aliases
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -176,12 +206,12 @@ paths:
             \            delete_alias=models.DeleteAlias(alias_name=\"production_collection\"\
             )\n        ),\n    ]\n)\n"
           language: python
-      description: Updates aliases for the specified collections.
-      summary: Update collection aliases
-      tags:
-      - Aliases
   /collections/{collection_name}:
     delete:
+      description: Drops the specified collection and all associated data in it.
+      summary: Delete a collection
+      tags:
+      - Collections
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -233,11 +263,11 @@ paths:
 
             '
           language: python
-      description: Drops the specified collection and all associated data in it.
-      summary: Delete a collection
+    get:
+      description: Retrieves parameters from the specified collection.
+      summary: Get collection details
       tags:
       - Collections
-    get:
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -289,11 +319,11 @@ paths:
 
             '
           language: python
-      description: Retrieves parameters from the specified collection.
-      summary: Get collection details
+    patch:
+      description: Updates the parameters of the specified collection.
+      summary: Update collection parameters
       tags:
       - Collections
-    patch:
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -332,11 +362,11 @@ paths:
             {collection_name}\",\n    optimizer_config=models.OptimizersConfigDiff(indexing_threshold=10000),\n\
             )\n"
           language: python
-      description: Updates the parameters of the specified collection.
-      summary: Update collection parameters
+    put:
+      description: Creates a new collection with the given parameters.
+      summary: Create a collection
       tags:
       - Collections
-    put:
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -404,12 +434,12 @@ paths:
             {collection_name}\",\n    vectors_config=models.VectorParams(size=100,\
             \ distance=models.Distance.COSINE),\n)\n"
           language: python
-      description: Creates a new collection with the given parameters.
-      summary: Create a collection
-      tags:
-      - Collections
   /collections/{collection_name}/aliases:
     get:
+      description: Retrieves a list of all aliases for the specified collection.
+      summary: List collection aliases
+      tags:
+      - Aliases
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -461,12 +491,23 @@ paths:
 
             '
           language: python
-      description: Retrieves a list of all aliases for the specified collection.
-      summary: List collection aliases
+  /collections/{collection_name}/cluster:
+    get:
+      description: Retrieves cluster details for a specified collection.
+      summary: Retrieve cluster details
       tags:
-      - Aliases
+      - Distributed
+    post:
+      description: Updates the cluster configuration for a specified collection.
+      summary: Update cluster setup
+      tags:
+      - Distributed
   /collections/{collection_name}/exists:
     get:
+      description: Checks whether the specified collection exists.
+      summary: Check collection existence
+      tags:
+      - Collections
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -530,12 +571,12 @@ paths:
 
             client.collection_exists(collection_name="{collection_name}")'
           language: python
-      description: Checks whether the specified collection exists.
-      summary: Check collection existence
-      tags:
-      - Collections
   /collections/{collection_name}/index:
     put:
+      description: Creates a payload index for a field in the specified collection.
+      summary: Create payload index
+      tags:
+      - Indexes
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\n\nvar client = new QdrantClient(\"localhost\"\
@@ -569,12 +610,12 @@ paths:
             {collection_name}\",\n    field_name=\"name_of_the_field_to_index\",\n\
             \    field_schema=\"keyword\",\n)\n"
           language: python
-      description: Creates a payload index for a field in the specified collection.
-      summary: Create payload index
-      tags:
-      - Indexes
   /collections/{collection_name}/index/{field_name}:
     delete:
+      description: Deletes a payload index for a field in the specified collection.
+      summary: Delete payload index
+      tags:
+      - Indexes
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\n\nvar client = new QdrantClient(\"localhost\"\
@@ -614,12 +655,12 @@ paths:
 
             '
           language: python
-      description: Deletes a payload index for a field in the specified collection.
-      summary: Delete payload index
-      tags:
-      - Indexes
   /collections/{collection_name}/points:
     post:
+      description: Retrieves all details from multiple points.
+      summary: Retrieve points
+      tags:
+      - Points
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\n\nvar client = new QdrantClient(\"localhost\"\
@@ -651,11 +692,12 @@ paths:
             http://localhost:6333\")\n\nclient.retrieve(\n    collection_name=\"{collection_name}\"\
             ,\n    ids=[0, 3, 100],\n)\n"
           language: python
-      description: Retrieves all details from multiple points.
-      summary: Retrieve points
+    put:
+      description: Performs the insert + update action on specified points. Any point
+        with an existing {id} will be overwritten.
+      summary: Upsert points
       tags:
       - Points
-    put:
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -727,13 +769,12 @@ paths:
             \  payload={\n                \"color\": \"blue\",\n            },\n \
             \           vector=[0.1, 0.1, 0.9],\n        ),\n    ],\n)\n"
           language: python
-      description: Performs the insert + update action on specified points. Any point
-        with an existing {id} will be overwritten.
-      summary: Upsert points
-      tags:
-      - Points
   /collections/{collection_name}/points/batch:
     post:
+      description: Batch updates points, including their respective vectors and payloads.
+      summary: Batch update points
+      tags:
+      - Points
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -850,12 +891,12 @@ paths:
             : 3,\n                },\n                points=[1],\n            )\n\
             \        ),\n    ],\n)\n"
           language: python
-      description: Batch updates points, including their respective vectors and payloads.
-      summary: Batch update points
-      tags:
-      - Points
   /collections/{collection_name}/points/count:
     post:
+      description: Counts the number of points that match a specified filtering condition.
+      summary: Count points
+      tags:
+      - Points
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing static Qdrant.Client.Grpc.Conditions;\n\
@@ -895,12 +936,12 @@ paths:
             color\", match=models.MatchValue(value=\"red\")),\n        ]\n    ),\n\
             \    exact=True,\n)\n"
           language: python
-      description: Counts the number of points that match a specified filtering condition.
-      summary: Count points
-      tags:
-      - Points
   /collections/{collection_name}/points/delete:
     post:
+      description: Deletes specified points from the collection.
+      summary: Delete points
+      tags:
+      - Points
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -963,12 +1004,27 @@ paths:
             \            key=\"color\",\n                    match=models.MatchValue(value=\"\
             red\"),\n                ),\n            ],\n        )\n    ),\n)\n"
           language: python
-      description: Deletes specified points from the collection.
-      summary: Delete points
-      tags:
-      - Points
   /collections/{collection_name}/points/discover:
     post:
+      description: 'Retrieves the most similar points to a given target, constrained
+        by the provided context.
+
+        Context Search: When only the context is provided (without a target), pairs
+        of points are used to generate a loss that guides the search towards the area
+        where most positive examples overlap. The score minimizes finding points closer
+        to a negative example than to a positive example. The maximum score a point
+        can achieve is 0.0, meaning many points may have a score of 0.0.
+
+        Target Search: When a target is provided (with or without context), the score
+        consists of two parts: the integer part represents the rank with respect to
+        the context, and the decimal part relates to the distance to the target. The
+        context score for each pair is +1 if the point is closer to a positive example
+        than to a negative example, and -1 otherwise.
+
+        '
+      summary: Discover points
+      tags:
+      - Search
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -1039,27 +1095,13 @@ paths:
             \ negative=718),\n        models.ContextExamplePair(positive=200, negative=300),\n\
             \    ],\n    limit=10,\n)\n"
           language: python
-      description: 'Retrieves the most similar points to a given target, constrained
-        by the provided context.
-
-        Context Search: When only the context is provided (without a target), pairs
-        of points are used to generate a loss that guides the search towards the area
-        where most positive examples overlap. The score minimizes finding points closer
-        to a negative example than to a positive example. The maximum score a point
-        can achieve is 0.0, meaning many points may have a score of 0.0.
-
-        Target Search: When a target is provided (with or without context), the score
-        consists of two parts: the integer part represents the rank with respect to
-        the context, and the decimal part relates to the distance to the target. The
-        context score for each pair is +1 if the point is closer to a positive example
-        than to a negative example, and -1 otherwise.
-
-        '
-      summary: Discover points
-      tags:
-      - Search
   /collections/{collection_name}/points/discover/batch:
     post:
+      description: Retrieves points in batches based on the target and/or positive
+        and negative example pairs.
+      summary: Discover batch points
+      tags:
+      - Search
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -1192,13 +1234,12 @@ paths:
             \      ),\n        ],\n        limit=5,\n    ),\n]\n\nclient.discover_batch(\"\
             {collection_name}\", discover_queries)\n"
           language: python
-      description: Retrieves points in batches based on the target and/or positive
-        and negative example pairs.
-      summary: Discover batch points
-      tags:
-      - Search
   /collections/{collection_name}/points/payload:
     post:
+      description: Sets payload values for specified points.
+      summary: Set payload
+      tags:
+      - Points
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -1243,11 +1284,11 @@ paths:
             ,\n        \"property2\": \"string\",\n    },\n    points=[0, 3, 10],\n\
             )\n"
           language: python
-      description: Sets payload values for specified points.
-      summary: Set payload
+    put:
+      description: Replaces the entire payload of a specified point with a new payload.
+      summary: Overwrite payload
       tags:
       - Points
-    put:
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -1292,12 +1333,12 @@ paths:
             ,\n        \"property2\": \"string\",\n    },\n    points=[0, 3, 10],\n\
             )\n"
           language: python
-      description: Replaces the entire payload of a specified point with a new payload.
-      summary: Overwrite payload
-      tags:
-      - Points
   /collections/{collection_name}/points/payload/clear:
     post:
+      description: Removes the entire payload for specified points.
+      summary: Clear payload
+      tags:
+      - Points
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -1337,12 +1378,12 @@ paths:
             http://localhost:6333\")\n\nclient.clear_payload(\n    collection_name=\"\
             {collection_name}\",\n    points_selector=[0, 3, 100],\n)\n"
           language: python
-      description: Removes the entire payload for specified points.
-      summary: Clear payload
-      tags:
-      - Points
   /collections/{collection_name}/points/payload/delete:
     post:
+      description: Deletes a specified key payload for points.
+      summary: Delete payload
+      tags:
+      - Points
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -1387,14 +1428,15 @@ paths:
             {collection_name}\",\n    keys=[\"color\", \"price\"],\n    points=[0,\
             \ 3, 100],\n)\n"
           language: python
-      description: Deletes a specified key payload for points.
-      summary: Delete payload
-      tags:
-      - Points
   /collections/{collection_name}/points/query: {}
   /collections/{collection_name}/points/query/batch: {}
   /collections/{collection_name}/points/recommend:
     post:
+      description: Retrieves points that are closer to stored positive examples and
+        further from negative examples.
+      summary: Recommend points
+      tags:
+      - Search
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\nusing static Qdrant.Client.Grpc.Conditions;\n\
@@ -1452,13 +1494,13 @@ paths:
             \                    value=\"London\",\n                ),\n         \
             \   )\n        ]\n    ),\n    limit=3,\n)\n"
           language: python
-      description: Retrieves points that are closer to stored positive examples and
-        further from negative examples.
-      summary: Recommend points
-      tags:
-      - Search
   /collections/{collection_name}/points/recommend/batch:
     post:
+      description: Retrieves points in batches that are closer to stored positive
+        examples and further from negative examples.
+      summary: Recommend batch points
+      tags:
+      - Search
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\nusing static Qdrant.Client.Grpc.Conditions;\n\
@@ -1523,13 +1565,14 @@ paths:
             \ limit=3),\n]\n\nclient.recommend_batch(collection_name=\"{collection_name}\"\
             , requests=recommend_queries)\n"
           language: python
-      description: Retrieves points in batches that are closer to stored positive
-        examples and further from negative examples.
-      summary: Recommend batch points
-      tags:
-      - Search
   /collections/{collection_name}/points/recommend/groups:
     post:
+      description: Retrieves points that are closer to stored positive examples and
+        further from negative examples. Results are grouped by the specified payload
+        field.
+      summary: Recommend point groups
+      tags:
+      - Search
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing static Qdrant.Client.Grpc.Conditions;\n\
@@ -1574,14 +1617,20 @@ paths:
             {collection_name}\",\n    positive=[100, 231],\n    negative=[718],\n\
             \    group_by=\"document_id\",\n    limit=3,\n    group_size=2,\n)\n"
           language: python
-      description: Retrieves points that are closer to stored positive examples and
-        further from negative examples. Results are grouped by the specified payload
-        field.
-      summary: Recommend point groups
-      tags:
-      - Search
   /collections/{collection_name}/points/scroll:
     post:
+      description: 'Returns all points in a page-by-page manner.
+
+        By default, all resulting points are sorted by {id}.
+
+        To query the next page specify the last {id} in the offset field.
+
+        Additionally, you can specify filters and sorting options.
+
+        '
+      summary: Scroll points
+      tags:
+      - Points
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing static Qdrant.Client.Grpc.Conditions;\n\
@@ -1627,20 +1676,13 @@ paths:
             color\", match=models.MatchValue(value=\"red\")),\n        ]\n    ),\n\
             \    limit=1,\n    with_payload=True,\n    with_vectors=False,\n)\n"
           language: python
-      description: 'Returns all points in a page-by-page manner.
-
-        By default, all resulting points are sorted by {id}.
-
-        To query the next page specify the last {id} in the offset field.
-
-        Additionally, you can specify filters and sorting options.
-
-        '
-      summary: Scroll points
-      tags:
-      - Points
   /collections/{collection_name}/points/search:
     post:
+      description: Retrieves the closest points based on vector similarity and given
+        filtering conditions.
+      summary: Search points
+      tags:
+      - Search
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing static Qdrant.Client.Grpc.Conditions;\n\
@@ -1691,13 +1733,13 @@ paths:
             \   )\n        ]\n    ),\n    query_vector=[0.2, 0.1, 0.9, 0.7],\n   \
             \ limit=3,\n)\n"
           language: python
-      description: Retrieves the closest points based on vector similarity and given
-        filtering conditions.
-      summary: Search points
-      tags:
-      - Search
   /collections/{collection_name}/points/search/batch:
     post:
+      description: Retrieves the closest points in batches based on vector similarity
+        and given filtering conditions.
+      summary: Search batch points
+      tags:
+      - Search
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\nusing static Qdrant.Client.Grpc.Conditions;\n\
@@ -1760,13 +1802,13 @@ paths:
             \ 0.3, 0.2, 0.3], filter=filter_, limit=3),\n]\n\nclient.search_batch(collection_name=\"\
             {collection_name}\", requests=search_queries)\n"
           language: python
-      description: Retrieves the closest points in batches based on vector similarity
-        and given filtering conditions.
-      summary: Search batch points
-      tags:
-      - Search
   /collections/{collection_name}/points/search/groups:
     post:
+      description: Retrieves the closest points based on vector similarity and given
+        filtering conditions, grouped by a given payload field.
+      summary: Search point groups
+      tags:
+      - Search
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\n\nvar client = new QdrantClient(\"localhost\"\
@@ -1804,13 +1846,13 @@ paths:
             {collection_name}\",\n    query_vector=[1.1],\n    group_by=\"document_id\"\
             ,\n    limit=4,\n    group_size=2,\n)\n"
           language: python
-      description: Retrieves the closest points based on vector similarity and given
-        filtering conditions, grouped by a given payload field.
-      summary: Search point groups
-      tags:
-      - Search
   /collections/{collection_name}/points/vectors:
     put:
+      description: Updates specified vectors on points. All other unspecified vectors
+        will stay intact.
+      summary: Update vectors
+      tags:
+      - Points
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -1872,13 +1914,13 @@ paths:
             \ 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],\n            },\n        ),\n  \
             \  ],\n)\n"
           language: python
-      description: Updates specified vectors on points. All other unspecified vectors
-        will stay intact.
-      summary: Update vectors
-      tags:
-      - Points
   /collections/{collection_name}/points/vectors/delete:
     post:
+      description: Deletes specified vectors from points. All other unspecified vectors
+        will stay intact.
+      summary: Delete vectors
+      tags:
+      - Points
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -1923,13 +1965,18 @@ paths:
             {collection_name}\",\n    points=[0, 3, 100],\n    vectors=[\"text\",\
             \ \"image\"],\n)\n"
           language: python
-      description: Deletes specified vectors from points. All other unspecified vectors
-        will stay intact.
-      summary: Delete vectors
+  /collections/{collection_name}/points/{id}:
+    get:
+      description: Retrieves all details from a single point.
+      summary: Retrieve a point
       tags:
       - Points
   /collections/{collection_name}/shards:
     put:
+      description: Creates one or more shard keys for a specified collection.
+      summary: Create a shard key
+      tags:
+      - Distributed
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -1972,12 +2019,12 @@ paths:
 
             '
           language: python
-      description: Creates one or more shard keys for a specified collection.
-      summary: Create a shard key
-      tags:
-      - Distributed
   /collections/{collection_name}/shards/delete:
     post:
+      description: Deletes one or more shard keys for a specified collection.
+      summary: Delete a shard key
+      tags:
+      - Distributed
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new\
@@ -2019,12 +2066,49 @@ paths:
 
             '
           language: python
-      description: Deletes one or more shard keys for a specified collection.
-      summary: Delete a shard key
+  /collections/{collection_name}/shards/{shard_id}/snapshots:
+    get:
+      description: Returns a list of all snapshots for a shard from a collection.
+      summary: List all snapshots (shard)
       tags:
-      - Distributed
+      - Snapshots
+    post:
+      description: Creates a new snapshot of a shard from a collection.
+      summary: Create a snapshot (shard)
+      tags:
+      - Snapshots
+  /collections/{collection_name}/shards/{shard_id}/snapshots/recover:
+    put:
+      description: Recovers the shard of a local collection from a snapshot. This
+        will overwrite any collection data, which is stored in this shard.
+      summary: Recover from a snapshot (shard)
+      tags:
+      - Snapshots
+  /collections/{collection_name}/shards/{shard_id}/snapshots/upload:
+    post:
+      description: Recovers the shard of a local collection from an uploaded snapshot.
+        This will overwrite any collection data, which is stored in this shard.
+      summary: Recover from an uploaded snapshot (shard)
+      tags:
+      - Snapshots
+  /collections/{collection_name}/shards/{shard_id}/snapshots/{snapshot_name}:
+    delete:
+      description: Deletes the specified snapshot of a shard from a collection.
+      summary: Delete a snapshot (shard)
+      tags:
+      - Snapshots
+    get:
+      description: Downloads the specified snapshot of a shard from a collection as
+        a file.
+      summary: Download a snapshot (shard)
+      tags:
+      - Snapshots
   /collections/{collection_name}/snapshots:
     get:
+      description: Retrieves a list of all snapshots for a specified collection.
+      summary: List all snapshots (collection)
+      tags:
+      - Snapshots
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -2076,11 +2160,11 @@ paths:
 
             '
           language: python
-      description: Retrieves a list of all snapshots for a specified collection.
-      summary: List all snapshots (collection)
+    post:
+      description: Creates a new snapshot for a specified collection.
+      summary: Create a snapshot (collection)
       tags:
       - Snapshots
-    post:
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -2132,12 +2216,14 @@ paths:
 
             '
           language: python
-      description: Creates a new snapshot for a specified collection.
-      summary: Create a snapshot (collection)
-      tags:
-      - Snapshots
   /collections/{collection_name}/snapshots/recover:
     put:
+      description: Recovers local collection data from a snapshot. This will overwrite
+        any collection data stored on the node. If the collection does not exist,
+        it will be created.
+      summary: Recover from a snapshot (collection)
+      tags:
+      - Snapshots
       x-fern-examples:
       - code-samples:
         - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
@@ -2150,14 +2236,20 @@ paths:
             http://localhost:6333\")\n\nclient.recover_snapshot(\n    \"{collection_name}\"\
             ,\n    \"http://example.com/path/to/snapshot.shapshot\",\n)\n"
           language: python
-      description: Recovers local collection data from a snapshot. This will overwrite
-        any collection data stored on the node. If the collection does not exist,
-        it will be created.
-      summary: Recover from a snapshot (collection)
+  /collections/{collection_name}/snapshots/upload:
+    post:
+      description: Recovers local collection data from an uploaded snapshot. This
+        will overwrite any collection data stored on the node. If the collection does
+        not exist, it will be created.
+      summary: Recover from an uploaded snapshot (collection)
       tags:
       - Snapshots
   /collections/{collection_name}/snapshots/{snapshot_name}:
     delete:
+      description: Deletes the specified snapshot for a collection.
+      summary: Delete a snapshot (collection)
+      tags:
+      - Snapshots
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -2197,17 +2289,56 @@ paths:
             http://localhost:6333\")\n\nclient.delete_snapshot(\n    collection_name=\"\
             {collection_name}\", snapshot_name=\"{snapshot_name}\"\n)\n"
           language: python
-      description: Deletes the specified snapshot for a collection.
-      summary: Delete a snapshot (collection)
-      tags:
-      - Snapshots
     get:
       description: Downloads the specified snapshot file from a collection.
       summary: Download a snapshot (collection)
       tags:
       - Snapshots
+  /healthz:
+    get:
+      description: Checks the health of individual instance.
+      summary: Kubernetes health check
+      tags:
+      - Service
+  /issues: {}
+  /livez:
+    get:
+      description: Monitors the container responsiveness and alerts in case of failure.
+      summary: Kubernetes liveness probe
+      tags:
+      - Service
+  /locks:
+    get:
+      description: Retrieves the current lock setting. If write is false, all write
+        operations and collection creation are restricted.
+      summary: Check write protection
+      tags:
+      - Service
+    post:
+      description: Restricts all write operations and forbids collection creation.
+        This endpoint also returns previous lock options.
+      summary: Set write protection
+      tags:
+      - Service
+  /metrics:
+    get:
+      description: 'Collect metrics data, such as: application info, collection info,
+        cluster info and statistics.'
+      summary: Collect Prometheus metrics data
+      tags:
+      - Service
+  /readyz:
+    get:
+      description: Checks the instance to see when it can start accepting traffic.
+      summary: Kubernetes readiness probe
+      tags:
+      - Service
   /snapshots:
     get:
+      description: Returns a list of all snapshots for the entire storage.
+      summary: List all snapshots (storage)
+      tags:
+      - Snapshots
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -2258,11 +2389,11 @@ paths:
 
             '
           language: python
-      description: Returns a list of all snapshots for the entire storage.
-      summary: List all snapshots (storage)
+    post:
+      description: Creates a new snapshot of the entire storage.
+      summary: Create a snapshot (storage)
       tags:
       - Snapshots
-    post:
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -2313,12 +2444,12 @@ paths:
 
             '
           language: python
-      description: Creates a new snapshot of the entire storage.
-      summary: Create a snapshot (storage)
-      tags:
-      - Snapshots
   /snapshots/{snapshot_name}:
     delete:
+      description: Deletes the specified snapshot of the entire storage.
+      summary: Delete a snapshot (storage)
+      tags:
+      - Snapshots
       x-fern-examples:
       - code-samples:
         - code: 'using Qdrant.Client;
@@ -2370,142 +2501,11 @@ paths:
 
             '
           language: python
-      description: Deletes the specified snapshot of the entire storage.
-      summary: Delete a snapshot (storage)
-      tags:
-      - Snapshots
     get:
       description: Downloads the specified snapshot of the entire storage as a file.
       summary: Download a snapshot (storage)
       tags:
       - Snapshots
-  /:
-    get:
-      description: Returns details about the running Qdrant instance.
-      summary: Retrieve instance details
-      tags:
-      - Service
-  /cluster:
-    get:
-      description: Returns information about the cluster's current state and composition.
-      summary: Check cluster status
-      tags:
-      - Distributed
-  /cluster/peer/{peer_id}:
-    delete:
-      description: Attempts to remove the node from the cluster. This endpoint returns
-        an error if the node (peer) has shards on it.
-      summary: Remove peer from cluster
-      tags:
-      - Distributed
-  /cluster/recover:
-    post:
-      description: Attempts to restore or synchronize the node's current state with
-        that of its peers.
-      summary: Recover cluster state
-      tags:
-      - Distributed
-  /collections/{collection_name}/cluster:
-    get:
-      description: Retrieves cluster details for a specified collection.
-      summary: Retrieve cluster details
-      tags:
-      - Distributed
-    post:
-      description: Updates the cluster configuration for a specified collection.
-      summary: Update cluster setup
-      tags:
-      - Distributed
-  /collections/{collection_name}/points/{id}:
-    get:
-      description: Retrieves all details from a single point.
-      summary: Retrieve a point
-      tags:
-      - Points
-  /collections/{collection_name}/shards/{shard_id}/snapshots:
-    get:
-      description: Returns a list of all snapshots for a shard from a collection.
-      summary: List all snapshots (shard)
-      tags:
-      - Snapshots
-    post:
-      description: Creates a new snapshot of a shard from a collection.
-      summary: Create a snapshot (shard)
-      tags:
-      - Snapshots
-  /collections/{collection_name}/shards/{shard_id}/snapshots/recover:
-    put:
-      description: Recovers the shard of a local collection from a snapshot. This
-        will overwrite any collection data, which is stored in this shard.
-      summary: Recover from a snapshot (shard)
-      tags:
-      - Snapshots
-  /collections/{collection_name}/shards/{shard_id}/snapshots/upload:
-    post:
-      description: Recovers the shard of a local collection from an uploaded snapshot.
-        This will overwrite any collection data, which is stored in this shard.
-      summary: Recover from an uploaded snapshot (shard)
-      tags:
-      - Snapshots
-  /collections/{collection_name}/shards/{shard_id}/snapshots/{snapshot_name}:
-    delete:
-      description: Deletes the specified snapshot of a shard from a collection.
-      summary: Delete a snapshot (shard)
-      tags:
-      - Snapshots
-    get:
-      description: Downloads the specified snapshot of a shard from a collection as
-        a file.
-      summary: Download a snapshot (shard)
-      tags:
-      - Snapshots
-  /collections/{collection_name}/snapshots/upload:
-    post:
-      description: Recovers local collection data from an uploaded snapshot. This
-        will overwrite any collection data stored on the node. If the collection does
-        not exist, it will be created.
-      summary: Recover from an uploaded snapshot (collection)
-      tags:
-      - Snapshots
-  /healthz:
-    get:
-      description: Checks the health of individual instance.
-      summary: Kubernetes health check
-      tags:
-      - Service
-  /issues: {}
-  /livez:
-    get:
-      description: Monitors the container responsiveness and alerts in case of failure.
-      summary: Kubernetes liveness probe
-      tags:
-      - Service
-  /locks:
-    get:
-      description: Retrieves the current lock setting. If write is false, all write
-        operations and collection creation are restricted.
-      summary: Check write protection
-      tags:
-      - Service
-    post:
-      description: Restricts all write operations and forbids collection creation.
-        This endpoint also returns previous lock options.
-      summary: Set write protection
-      tags:
-      - Service
-  /metrics:
-    get:
-      description: 'Collect metrics data, such as: application info, collection info,
-        cluster info and statistics.'
-      summary: Collect Prometheus metrics data
-      tags:
-      - Service
-  /readyz:
-    get:
-      description: Checks the instance to see when it can start accepting traffic.
-      summary: Kubernetes readiness probe
-      tags:
-      - Service
   /telemetry:
     get:
       description: 'Collects telemetry data, such as: application info, system info,
