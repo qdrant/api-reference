@@ -57,6 +57,8 @@ cp qdrant/docs/redoc/$latest_version/openapi.json $PROJECT_ROOT/fern/apis/$lates
 python tools/order_openapi_file.py --openapi $PROJECT_ROOT/fern/apis/$latest_version/openapi.json --output $PROJECT_ROOT/fern/apis/$latest_version/openapi-orderred.json
 mv $PROJECT_ROOT/fern/apis/$latest_version/openapi-orderred.json $PROJECT_ROOT/fern/apis/$latest_version/openapi.json
 
+python tools/clear_overrides.py --openapi $PROJECT_ROOT/fern/apis/$latest_version/openapi.json --overrides $PROJECT_ROOT/fern/apis/$latest_version/openapi-overrides.yml
+
 
 # Create version file in `fern/versions` by replacing master with the latest version
 
