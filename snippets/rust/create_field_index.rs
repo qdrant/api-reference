@@ -1,13 +1,14 @@
-use qdrant_client::{client::QdrantClient, qdrant::FieldType};
+use qdrant_client::qdrant::{CreateFieldIndexCollectionBuilder, FieldType};
+use qdrant_client::Qdrant;
 
-let client = QdrantClient::from_url("http://localhost:6334").build()?;
+let client = Qdrant::from_url("http://localhost:6334").build()?;
 
 client
-.create_field_index(
-    "{collection_name}",
-    "{field_name}",
-    FieldType::Keyword,
-    None,
-    None,
-)
-.await?;
+    .create_field_index(
+        CreateFieldIndexCollectionBuilder::new(
+            "{collection_name}",
+            "{field_name}",
+            FieldType::Keyword,
+        ),
+    )
+    .await?;

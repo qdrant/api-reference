@@ -1,21 +1,17 @@
-use qdrant_client::{client::QdrantClient, qdrant::{
-    points_selector::PointsSelectorOneOf, PointsIdsList, PointsSelector, VectorsSelector,
-}};
+use qdrant_client::qdrant::{DeletePointVectorsBuilder, PointsIdsList, VectorsSelector};
+use qdrant_client::Qdrant;
 
-let client = QdrantClient::from_url("http://localhost:6334").build()?;
+let client = Qdrant::from_url("http://localhost:6334").build()?;
 
 client
-    .delete_vectors_blocking(
-        "{collection_name}",
-        None,
-        &PointsSelector {
-            points_selector_one_of: Some(PointsSelectorOneOf::Points(PointsIdsList {
+    .delete_vectors(
+        DeletePointVectorsBuilder::new("{collection_name}")
+            .points_selector(PointsIdsList {
                 ids: vec![0.into(), 3.into(), 10.into()],
-            })),
-        },
-        &VectorsSelector {
-            names: vec!["text".into(), "image".into()],
-        },
-        None,
+            })
+            .vectors(VectorsSelector {
+                names: vec!["text".into(), "image".into()],
+            })
+            .wait(true),
     )
     .await?;
