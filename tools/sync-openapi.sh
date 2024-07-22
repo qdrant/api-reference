@@ -12,7 +12,7 @@ PROJECT_ROOT="$(pwd)/$(dirname "$0")/.."
 
 rm -rf qdrant
 
-git clone --sparse --filter=blob:none --depth=1 -b master https://github.com/qdrant/qdrant.git
+git clone --sparse --filter=blob:none --depth=1 -b example-2 https://github.com/qdrant/qdrant.git
 
 cd qdrant
 git sparse-checkout add docs/redoc
