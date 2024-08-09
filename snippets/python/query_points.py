@@ -12,8 +12,8 @@ nearest = client.query_points(
 recommended = client.query_points(
     collection_name="{collection_name}",
     query=models.RecommendQuery(recommend=models.RecommendInput(
-        positive=["43cf51e2-8777-4f52-bc74-c2cbde0c8b04", [0.11, 0.35, 0.6, ...]],
-        negative=[[0.01, 0.45, 0.67, ...]]
+        positive=["43cf51e2-8777-4f52-bc74-c2cbde0c8b04", [0.11, 0.35, 0.6]],
+        negative=[[0.01, 0.45, 0.67]]
     ))
 )
 
@@ -27,7 +27,7 @@ fusion = client.query_points(
             limit=20,
         ),
         models.Prefetch(
-            query=[0.01, 0.45, 0.67, ...],  # <-- dense vector
+            query=[0.01, 0.45, 0.67],  # <-- dense vector
             using="dense",
             limit=20,
         ),
@@ -39,13 +39,13 @@ fusion = client.query_points(
 refined = client.query_points(
     collection_name="{collection_name}",
     prefetch=models.Prefetch(
-        query=[0.01, 0.45, 0.67, ...],  # <-- dense vector
+        query=[0.01, 0.45, 0.67],  # <-- dense vector
         limit=100,
     ),
     query=[
-        [0.1, 0.2, ...],  # <─┐
-        [0.2, 0.1, ...],  # < ├─ multi-vector
-        [0.8, 0.9, ...],  # < ┘
+        [0.1, 0.2],  # <─┐
+        [0.2, 0.1],  # < ├─ multi-vector
+        [0.8, 0.9],  # < ┘
     ],
     using="colbert",
     limit=10,
