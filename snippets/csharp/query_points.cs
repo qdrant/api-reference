@@ -41,7 +41,7 @@ await client.QueryAsync(
 			Limit = 20
 		}
 	},
-	query: new FusionQuery { Fusion = Fusion.Rrf }
+	query: Fusion.Rrf
 );
 
 // 2-stage query
