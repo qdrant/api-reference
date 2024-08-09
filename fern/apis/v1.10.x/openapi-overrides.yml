@@ -1450,7 +1450,7 @@ paths:
             \tquery: new float[][] { [0.1f, 0.2f], [0.2f, 0.1f], [0.8f, 0.9f] },\n\
             \tusingVector: \"colbert\",\n\tlimit: 10\n);\n\n// Random sampling (as\
             \ of 1.11.0)\nawait client.QueryAsync(\n    collectionName: \"{collection_name}\"\
-            ,\n    query: new SampleQuery { Sample=Sample.Random }\n);\n"
+            ,\n    query: Sample.Random\n);\n"
           language: csharp
       - code-samples:
         - code: "import static io.qdrant.client.QueryFactory.fusion;\nimport static\
