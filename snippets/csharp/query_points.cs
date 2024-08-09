@@ -41,7 +41,7 @@ await client.QueryAsync(
 			Limit = 20
 		}
 	},
-	query: Fusion.Rrf
+	query: new FusionQuery { Fusion = Fusion.Rrf }
 );
 
 // 2-stage query
@@ -54,4 +54,10 @@ await client.QueryAsync(
 	query: new float[][] { [0.1f, 0.2f], [0.2f, 0.1f], [0.8f, 0.9f] },
 	usingVector: "colbert",
 	limit: 10
+);
+
+// Random sampling (as of 1.11.0)
+await client.QueryAsync(
+    collectionName: "{collection_name}",
+    query: new SampleQuery { Sample=Sample.Random }
 );

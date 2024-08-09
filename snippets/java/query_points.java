@@ -81,3 +81,12 @@ client
             .setLimit(10)
             .build())
     .get();
+
+// Random sampling (as of 1.11.0)
+client
+    .queryAsync(
+        QueryPoints.newBuilder()
+            .setCollectionName("{collection_name}")
+            .setQuery(sample(Sample.Random))
+            .build())
+    .get();

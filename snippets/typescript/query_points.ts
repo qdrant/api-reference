@@ -3,12 +3,12 @@ import { QdrantClient } from "@qdrant/js-client-rest";
 const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 // Query nearest by ID
-client.query("{collection_name", {
+let _nearest = client.query("{collection_name", {
     query: "43cf51e2-8777-4f52-bc74-c2cbde0c8b04"
 });
 
 // Recommend on the average of these vectors
-client.query("{collection_name}", {
+let _recommendations = client.query("{collection_name}", {
     query: {
         recommend: {
             positive: ["43cf51e2-8777-4f52-bc74-c2cbde0c8b04", [0.11, 0.35, 0.6]],
@@ -18,7 +18,7 @@ client.query("{collection_name}", {
 });
 
 // Fusion query
-client.query("{collection_name}", {
+let _hybrid = client.query("{collection_name}", {
     prefetch: [
         {
             query: {
@@ -40,7 +40,7 @@ client.query("{collection_name}", {
 });
 
 // 2-stage query
-client.query("{collection_name}", {
+let _refined = client.query("{collection_name}", {
     prefetch: {
         query: [1, 23, 45, 67],
         limit: 100,
@@ -52,4 +52,9 @@ client.query("{collection_name}", {
     ],
     using: 'colbert',
     limit: 10,
+});
+
+// Random sampling (as of 1.11.0)
+let _sampled = client.query("{collection_name}", {
+  query: { sample: "random" },
 });
