@@ -31,6 +31,16 @@ File names should match the `operationId` of the OpenAPI spec.
 
 After editing, follow the `How to sync OpenAPI specs?` steps to automatically reflect the changes for the latest version of the API. 
 
+
+## How to preview changes?
+
+To check the changes locally with hot-reload, run 
+
+```sh
+# npm install -g fern-api 
+fern docs dev
+```
+
 ## How to deploy the documentation?
 
 To update your documentation, run 
@@ -50,3 +60,13 @@ The repository contains GitHub workflows that will automatically run
 these commands for you. For example, when you make a PR a preview link 
 will be auto-generated and when you merge to main the docs site
 will update. 
+
+## LSP support on snippets
+
+### Rust
+
+The rust snippets project is described at `Cargo.toml`, and each snippet is a unique module at `snippets/rust/lib.rs`
+
+### Python
+
+Just make sure to `$ pip install qdrant_client` in the current environment.
