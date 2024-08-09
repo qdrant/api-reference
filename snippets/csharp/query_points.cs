@@ -59,5 +59,5 @@ await client.QueryAsync(
 // Random sampling (as of 1.11.0)
 await client.QueryAsync(
     collectionName: "{collection_name}",
-    query: new SampleQuery { Sample=Sample.Random }
+    query: Sample.Random
 );
