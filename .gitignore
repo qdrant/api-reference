@@ -4,3 +4,4 @@ dist/
 qdrant/
 target/
 Cargo.lock
+package-lock.json

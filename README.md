@@ -65,8 +65,22 @@ will update.
 
 ### Rust
 
-The rust snippets project is described at `Cargo.toml`, and each snippet is a unique module at `snippets/rust/lib.rs`
+The rust snippets project is described at `Cargo.toml`, and each snippet is a unique module at `snippets/rust/lib.rs`.
+The language server `rust-analyzer` should pick it up automatically.
 
 ### Python
 
-Just make sure to `$ pip install qdrant_client` in the current environment.
+Create a virtual environment and install the dependencies:
+
+```sh
+cd snippets/python
+pip install -r requirements.txt
+```
+
+### Typescript
+
+Install the dependencies:
+```sh
+cd snippets/typescript
+npm install
+```
