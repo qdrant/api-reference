@@ -2,3 +2,6 @@ node_modules/
 .DS_Store
 dist/
 qdrant/
+target/
+Cargo.lock
+package-lock.json

@@ -1,12 +1,16 @@
-use qdrant_client::qdrant::{OptimizersConfigDiffBuilder, UpdateCollectionBuilder};
-use qdrant_client::Qdrant;
+async fn main() -> Result<(), qdrant_client::QdrantError> {
+    use qdrant_client::qdrant::{OptimizersConfigDiffBuilder, UpdateCollectionBuilder};
+    use qdrant_client::Qdrant;
 
-let client = Qdrant::from_url("http://localhost:6334").build()?;
+    let client = Qdrant::from_url("http://localhost:6334").build()?;
 
-client
-    .update_collection(
-        UpdateCollectionBuilder::new("{collection_name}").optimizers_config(
-            OptimizersConfigDiffBuilder::default().indexing_threshold(10_000),
-        ),
-    )
-    .await?;
+    client
+        .update_collection(
+            UpdateCollectionBuilder::new("{collection_name}").optimizers_config(
+                OptimizersConfigDiffBuilder::default().indexing_threshold(10_000),
+            ),
+        )
+        .await?;
+    
+    Ok(())
+}

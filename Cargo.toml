@@ -1,0 +1,12 @@
+[package]
+name = "rust-snippets"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "lib"
+path = "snippets/rust/lib.rs"
+
+[dependencies]
+qdrant-client = { git = "https://github.com/qdrant/rust-client.git", branch = "dev" }
+serde_json = "1.0.122"

@@ -1,11 +1,15 @@
-use qdrant_client::qdrant::GetPointsBuilder;
-use qdrant_client::Qdrant;
+async fn main() -> Result<(), qdrant_client::QdrantError> {
+    use qdrant_client::qdrant::GetPointsBuilder;
+    use qdrant_client::Qdrant;
 
-let client = Qdrant::from_url("http://localhost:6334").build()?;
+    let client = Qdrant::from_url("http://localhost:6334").build()?;
 
-client
-    .get_points(GetPointsBuilder::new(
-        "{collection_name}",
-        vec![0.into(), 30.into(), 100.into()],
-    ))
-    .await?;
+    client
+        .get_points(GetPointsBuilder::new(
+            "{collection_name}",
+            vec![0.into(), 30.into(), 100.into()],
+        ))
+        .await?;
+
+    Ok(())
+}
