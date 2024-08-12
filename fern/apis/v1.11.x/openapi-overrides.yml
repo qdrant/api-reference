@@ -1578,6 +1578,14 @@ paths:
             \            query=[0.01, 0.45, 0.67, ...],\n        ),\n        models.QueryRequest(\n\
             \            query=[0.11, 0.35, 0.6, ...],\n        ),\n    ]\n)"
           language: python
+  /collections/{collection_name}/points/query/groups:
+    post:
+      description: Universally query points and group results by a specified payload
+        field. This endpoint covers all capabilities of search, recommend, discover,
+        filters. But also enables hybrid and multi-stage queries.
+      summary: Query point groups
+      tags:
+      - Search
   /collections/{collection_name}/points/recommend:
     post:
       description: Retrieves points that are closer to stored positive examples and
