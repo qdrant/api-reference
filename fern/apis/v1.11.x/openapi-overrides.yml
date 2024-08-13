@@ -1619,7 +1619,7 @@ paths:
           language: typescript
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.query_point_groups(\n    collection_name=\"\
+            http://localhost:6333\")\n\nclient.query_points_groups(\n    collection_name=\"\
             {collection_name}\",\n    query=[0.01, 0.45, 0.67],\n    group_by=\"document_id\"\
             ,\n    limit=10,\n    group_size=5,\n)"
           language: python

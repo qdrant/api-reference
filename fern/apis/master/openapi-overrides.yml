@@ -815,7 +815,7 @@ paths:
             - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\nclient.queryGroups(\"{collection_name}\", {\n    query: [0.01, 0.45, 0.67],\n    group_by: \"document_id\",\n    limit: 10,\n    group_size: 5,\n});\n"
               language: typescript
         - code-samples:
-            - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.query_point_groups(\n    collection_name=\"{collection_name}\",\n    query=[0.01, 0.45, 0.67],\n    group_by=\"document_id\",\n    limit=10,\n    group_size=5,\n)"
+            - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.query_points_groups(\n    collection_name=\"{collection_name}\",\n    query=[0.01, 0.45, 0.67],\n    group_by=\"document_id\",\n    limit=10,\n    group_size=5,\n)"
               language: python
       description: Universally query points and group results by a specified payload field. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
       summary: Query point groups
