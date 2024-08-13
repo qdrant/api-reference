@@ -3,6 +3,8 @@ instances:
     custom-domain: api.qdrant.tech
 title: Qdrant | API Reference
 versions:
+  - display-name: v1.11.x
+    path: ./versions/v1.11.x.yml
   - display-name: v1.10.x
     path: ./versions/v1.10.x.yml
   - display-name: v1.9.x
