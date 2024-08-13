@@ -196,6 +196,12 @@ paths:
       summary: Query points in batch
       tags:
       - Search
+  /collections/{collection_name}/points/query/groups:
+    post:
+      description: Universally query points and group results by a specified payload field. This endpoint covers all capabilities of search, recommend, discover, filters. But also enables hybrid and multi-stage queries.
+      summary: Query point groups
+      tags:
+      - Search
   /collections/{collection_name}/points/scroll:
     post:
       description: 'Returns all points in a page-by-page manner.

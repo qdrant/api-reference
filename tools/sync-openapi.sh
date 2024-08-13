@@ -80,7 +80,7 @@ VERSIONS_TMP_YAML=qdrant/versions.tmp.yml
 
 echo "versions:" > $VERSIONS_TMP_YAML
 
-for version in $(ls $PROJECT_ROOT/fern/versions | grep -oP 'v\d.*' | sort -h); do
+for version in $(ls $PROJECT_ROOT/fern/versions | grep -oP 'v\d.*' | sort -rV); do
     # cut the .yml extension
     version=$(echo $version | sed 's/\.yml$//g')
     echo "  - display-name: $version" >> $VERSIONS_TMP_YAML
