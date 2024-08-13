@@ -1586,6 +1586,43 @@ paths:
       summary: Query point groups
       tags:
       - Search
+      x-fern-examples:
+      - code-samples:
+        - code: "use qdrant_client::Qdrant;\nuse qdrant_client::qdrant::{Query, QueryPointsBuilder};\n\
+            \nlet client = Qdrant::from_url(\"http://localhost:6334\").build()?;\n\
+            \nclient.query(\n    QueryPointGroupsBuilder::new(\"{collection_name}\"\
+            , \"document_id\")\n        .query(Query::from(vec![0.01, 0.45, 0.67]))\n\
+            \        .limit(10)\n        .group_size(5)\n).await?;\n"
+          language: rust
+      - code-samples:
+        - code: "using Qdrant.Client;\n\nvar client = new QdrantClient(\"localhost\"\
+            , 6334);\n\nawait client.QueryGroupsAsync(\n  collectionName: \"{collection_name}\"\
+            ,\n  groupBy: \"document_id\",\n  groupSize: 5,\n  limit: 10,\n  query:\
+            \ new float[] {\n    0.01f, 0.45f, 0.67f\n  }\n);\n"
+          language: csharp
+      - code-samples:
+        - code: "import java.util.List;\n\nimport static io.qdrant.client.QueryFactory.nearest;\n\
+            \nimport io.qdrant.client.grpc.Points.QueryPointGroups;\nimport io.qdrant.client.grpc.Points.QueryPoints;\n\
+            \n\nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .queryGroupsAsync(\n\
+            \        QueryPointGroups.newBuilder()\n            .setCollectionName(\"\
+            {collection_name}\")\n            .setGroupBy(\"document_id\")\n     \
+            \       .setGroupSize(5)\n            .setLimit(10)\n            .setQuery(nearest(List.of(0.01f,\
+            \ 0.45f, 0.67f)))\n            .build())\n    .get();\n"
+          language: java
+      - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.queryGroups(\"{collection_name}\", {\n    query: [0.01, 0.45, 0.67],\n\
+            \    group_by: \"document_id\",\n    limit: 10,\n    group_size: 5,\n\
+            });\n"
+          language: typescript
+      - code-samples:
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.query_point_groups(\n    collection_name=\"\
+            {collection_name}\",\n    query=[0.01, 0.45, 0.67],\n    group_by=\"document_id\"\
+            ,\n    limit=10,\n    group_size=5,\n)"
+          language: python
   /collections/{collection_name}/points/recommend:
     post:
       description: Retrieves points that are closer to stored positive examples and
