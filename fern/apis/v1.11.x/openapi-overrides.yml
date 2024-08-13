@@ -1588,11 +1588,11 @@ paths:
       - Search
       x-fern-examples:
       - code-samples:
-        - code: "use qdrant_client::Qdrant;\nuse qdrant_client::qdrant::{Query, QueryPointsBuilder};\n\
+        - code: "use qdrant_client::Qdrant;\nuse qdrant_client::qdrant::{Query, QueryPointGroupsBuilder};\n\
             \nlet client = Qdrant::from_url(\"http://localhost:6334\").build()?;\n\
-            \nclient.query(\n    QueryPointGroupsBuilder::new(\"{collection_name}\"\
+            \nclient.query_groups(\n    QueryPointGroupsBuilder::new(\"{collection_name}\"\
             , \"document_id\")\n        .query(Query::from(vec![0.01, 0.45, 0.67]))\n\
-            \        .limit(10)\n        .group_size(5)\n).await?;\n"
+            \        .limit(10u64)\n        .group_size(5u64)\n).await?;\n"
           language: rust
       - code-samples:
         - code: "using Qdrant.Client;\n\nvar client = new QdrantClient(\"localhost\"\
