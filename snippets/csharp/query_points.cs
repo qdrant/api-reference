@@ -55,3 +55,9 @@ await client.QueryAsync(
 	usingVector: "colbert",
 	limit: 10
 );
+
+// Random sampling (as of 1.11.0)
+await client.QueryAsync(
+    collectionName: "{collection_name}",
+    query: Sample.Random
+);

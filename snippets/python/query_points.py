@@ -18,7 +18,7 @@ recommended = client.query_points(
 )
 
 # Fusion query
-fusion = client.query_points(
+hybrid = client.query_points(
     collection_name="{collection_name}",
     prefetch=[
         models.Prefetch(
@@ -49,4 +49,10 @@ refined = client.query_points(
     ],
     using="colbert",
     limit=10,
+)
+
+# Random sampling (as of 1.11.0)
+sampled = client.query_points(
+    collection_name="{collection_name}",
+    query=models.SampleQuery(sample=models.Sample.Random)
 )
