@@ -7,10 +7,13 @@ import (
 )
 
 func recommendBatch() {
-	client, _ := qdrant.NewClient(&qdrant.Config{
+	client, err := qdrant.NewClient(&qdrant.Config{
 		Host: "localhost",
 		Port: 6334,
 	})
+	if err != nil {
+		panic(err)
+	}
 
 	client.QueryBatch(context.Background(), &qdrant.QueryBatchPoints{
 		CollectionName: "{collection_name}",

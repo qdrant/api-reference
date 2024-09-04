@@ -7,10 +7,13 @@ import (
 )
 
 func recommendGroups() {
-	client, _ := qdrant.NewClient(&qdrant.Config{
+	client, err := qdrant.NewClient(&qdrant.Config{
 		Host: "localhost",
 		Port: 6334,
 	})
+	if err != nil {
+		panic(err)
+	}
 
 	groupSize := uint64(5)
 	client.QueryGroups(context.Background(), &qdrant.QueryPointGroups{

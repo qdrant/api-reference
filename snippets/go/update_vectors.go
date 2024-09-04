@@ -7,10 +7,13 @@ import (
 )
 
 func updateVectors() {
-	client, _ := qdrant.NewClient(&qdrant.Config{
+	client, err := qdrant.NewClient(&qdrant.Config{
 		Host: "localhost",
 		Port: 6334,
 	})
+	if err != nil {
+		panic(err)
+	}
 
 	client.UpdateVectors(context.Background(), &qdrant.UpdatePointVectors{
 		CollectionName: "{collection_name}",

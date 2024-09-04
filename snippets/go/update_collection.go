@@ -7,10 +7,13 @@ import (
 )
 
 func updateCollection() {
-	client, _ := qdrant.NewClient(&qdrant.Config{
+	client, err := qdrant.NewClient(&qdrant.Config{
 		Host: "localhost",
 		Port: 6334,
 	})
+	if err != nil {
+		panic(err)
+	}
 
 	threshold := uint64(10000)
 	client.UpdateCollection(context.Background(), &qdrant.UpdateCollection{

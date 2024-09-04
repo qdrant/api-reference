@@ -7,10 +7,13 @@ import (
 )
 
 func query() {
-	client, _ := qdrant.NewClient(&qdrant.Config{
+	client, err := qdrant.NewClient(&qdrant.Config{
 		Host: "localhost",
 		Port: 6334,
 	})
+	if err != nil {
+		panic(err)
+	}
 
 	// Query nearest by ID
 	client.Query(context.Background(), &qdrant.QueryPoints{

@@ -7,10 +7,13 @@ import (
 )
 
 func search() {
-	client, _ := qdrant.NewClient(&qdrant.Config{
+	client, err := qdrant.NewClient(&qdrant.Config{
 		Host: "localhost",
 		Port: 6334,
 	})
+	if err != nil {
+		panic(err)
+	}
 
 	limit := uint64(3)
 	client.Query(context.Background(), &qdrant.QueryPoints{

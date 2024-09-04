@@ -7,10 +7,13 @@ import (
 )
 
 func scroll() {
-	client, _ := qdrant.NewClient(&qdrant.Config{
+	client, err := qdrant.NewClient(&qdrant.Config{
 		Host: "localhost",
 		Port: 6334,
 	})
+	if err != nil {
+		panic(err)
+	}
 
 	limit := uint32(1)
 	client.Scroll(context.Background(), &qdrant.ScrollPoints{
