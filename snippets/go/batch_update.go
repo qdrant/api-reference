@@ -15,7 +15,7 @@ func batchUpdate() {
 		panic(err)
 	}
 
-	client.UpdateBatch(context.Background(), &qdrant.UpdateBatchPoints{
+	_, err = client.UpdateBatch(context.Background(), &qdrant.UpdateBatchPoints{
 		CollectionName: "{collection_name}",
 		Operations: []*qdrant.PointsUpdateOperation{
 			qdrant.NewPointsUpdateUpsert(&qdrant.PointsUpdateOperation_PointStructList{
@@ -41,4 +41,7 @@ func batchUpdate() {
 			}),
 		},
 	})
+	if err != nil {
+		panic(err)
+	}
 }

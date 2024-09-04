@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -16,13 +17,17 @@ func query() {
 	}
 
 	// Query nearest by ID
-	client.Query(context.Background(), &qdrant.QueryPoints{
+	points, err := client.Query(context.Background(), &qdrant.QueryPoints{
 		CollectionName: "{collection_name}",
 		Query:          qdrant.NewQueryID(qdrant.NewID("43cf51e2-8777-4f52-bc74-c2cbde0c8b04")),
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Query results: ", points)
 
 	// Recommend on the average of these vectors
-	client.Query(context.Background(), &qdrant.QueryPoints{
+	points, err = client.Query(context.Background(), &qdrant.QueryPoints{
 		CollectionName: "{collection_name}",
 		Query: qdrant.NewQueryRecommend(&qdrant.RecommendInput{
 			Positive: []*qdrant.VectorInput{
@@ -34,9 +39,13 @@ func query() {
 			},
 		}),
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Query results: ", points)
 
 	// Fusion query
-	client.Query(context.Background(), &qdrant.QueryPoints{
+	points, err = client.Query(context.Background(), &qdrant.QueryPoints{
 		CollectionName: "{collection_name}",
 		Prefetch: []*qdrant.PrefetchQuery{
 			{
@@ -50,9 +59,13 @@ func query() {
 		},
 		Query: qdrant.NewQueryFusion(qdrant.Fusion_RRF),
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Query results: ", points)
 
 	// 2-stage query
-	client.Query(context.Background(), &qdrant.QueryPoints{
+	points, err = client.Query(context.Background(), &qdrant.QueryPoints{
 		CollectionName: "{collection_name}",
 		Prefetch: []*qdrant.PrefetchQuery{
 			{
@@ -66,10 +79,18 @@ func query() {
 		}),
 		Using: qdrant.PtrOf("colbert"),
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Query results: ", points)
 
 	// Random sampling (as of 1.11.0)
-	client.Query(context.Background(), &qdrant.QueryPoints{
+	points, err = client.Query(context.Background(), &qdrant.QueryPoints{
 		CollectionName: "{collection_name}",
 		Query:          qdrant.NewQuerySample(qdrant.Sample_Random),
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Query results: ", points)
 }

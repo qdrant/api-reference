@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -16,10 +17,14 @@ func searchGroups() {
 	}
 
 	groupSize := uint64(2)
-	client.QueryGroups(context.Background(), &qdrant.QueryPointGroups{
+	results, err := client.QueryGroups(context.Background(), &qdrant.QueryPointGroups{
 		CollectionName: "{collection_name}",
 		Query:          qdrant.NewQuery(0.01, 0.45, 0.67),
 		GroupBy:        "document_id",
 		GroupSize:      &groupSize,
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Query results: ", results)
 }

@@ -15,9 +15,18 @@ func updateAlias() {
 		panic(err)
 	}
 
-	client.CreateAlias(context.Background(), "production_collection", "example_collection")
+	err = client.CreateAlias(context.Background(), "production_collection", "example_collection")
+	if err != nil {
+		panic(err)
+	}
 
-	client.DeleteAlias(context.Background(), "production_collection")
+	err = client.DeleteAlias(context.Background(), "production_collection")
+	if err != nil {
+		panic(err)
+	}
 
-	client.RenameAlias(context.Background(), "production_collection", "legacy_collection")
+	err = client.RenameAlias(context.Background(), "production_collection", "legacy_collection")
+	if err != nil {
+		panic(err)
+	}
 }

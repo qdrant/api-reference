@@ -15,7 +15,7 @@ func updateVectors() {
 		panic(err)
 	}
 
-	client.UpdateVectors(context.Background(), &qdrant.UpdatePointVectors{
+	_, err = client.UpdateVectors(context.Background(), &qdrant.UpdatePointVectors{
 		CollectionName: "{collection_name}",
 		Points: []*qdrant.PointVectors{
 			{
@@ -32,4 +32,7 @@ func updateVectors() {
 			},
 		},
 	})
+	if err != nil {
+		panic(err)
+	}
 }

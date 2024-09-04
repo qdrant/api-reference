@@ -15,11 +15,14 @@ func createCollection() {
 		panic(err)
 	}
 
-	client.CreateCollection(context.Background(), &qdrant.CreateCollection{
+	err = client.CreateCollection(context.Background(), &qdrant.CreateCollection{
 		CollectionName: "{collection_name}",
 		VectorsConfig: qdrant.NewVectorsConfig(&qdrant.VectorParams{
 			Size:     100,
 			Distance: qdrant.Distance_Cosine,
 		}),
 	})
+	if err != nil {
+		panic(err)
+	}
 }

@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,5 +16,9 @@ func getCollection() {
 		panic(err)
 	}
 
-	client.GetCollection(context.Background(), "{collection_name}")
+	info, err := client.GetCollection(context.Background(), "{collection_name}")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Collection info: ", info)
 }

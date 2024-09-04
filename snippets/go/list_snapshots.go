@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,5 +16,9 @@ func listSnapshots() {
 		panic(err)
 	}
 
-	client.ListSnapshots(context.Background(), "{collection_name}")
+	snapshots, err := client.ListSnapshots(context.Background(), "{collection_name}")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Snapshots: ", snapshots)
 }

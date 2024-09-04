@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,7 +16,7 @@ func setPayload() {
 		panic(err)
 	}
 
-	client.SetPayload(context.Background(), &qdrant.SetPayloadPoints{
+	results, err := client.SetPayload(context.Background(), &qdrant.SetPayloadPoints{
 		CollectionName: "{collection_name}",
 		Payload: qdrant.NewValueMap(map[string]any{
 			"property1": "string",
@@ -23,4 +24,8 @@ func setPayload() {
 		}),
 		PointsSelector: qdrant.NewPointsSelector(qdrant.NewIDNum(0), qdrant.NewIDNum(3), qdrant.NewIDNum(10)),
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Results: ", results)
 }

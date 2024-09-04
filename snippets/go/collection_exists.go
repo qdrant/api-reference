@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,5 +16,9 @@ func collectionExists() {
 		panic(err)
 	}
 
-	client.CollectionExists(context.Background(), "{collection_name}")
+	exists, err := client.CollectionExists(context.Background(), "{collection_name}")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Collection exists: ", exists)
 }

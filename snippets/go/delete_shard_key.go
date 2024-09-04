@@ -15,7 +15,10 @@ func deleteShardKey() {
 		panic(err)
 	}
 
-	client.DeleteShardKey(context.Background(), "{collection_name}", &qdrant.DeleteShardKey{
+	err = client.DeleteShardKey(context.Background(), "{collection_name}", &qdrant.DeleteShardKey{
 		ShardKey: qdrant.NewShardKey("{shard_key}"),
 	})
+	if err != nil {
+		panic(err)
+	}
 }

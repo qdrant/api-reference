@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,7 +16,7 @@ func recommend() {
 		panic(err)
 	}
 
-	client.Query(context.Background(), &qdrant.QueryPoints{
+	results, err := client.Query(context.Background(), &qdrant.QueryPoints{
 		CollectionName: "{collection_name}",
 		Query: qdrant.NewQueryRecommend(&qdrant.RecommendInput{
 			Positive: []*qdrant.VectorInput{
@@ -34,4 +35,8 @@ func recommend() {
 			},
 		},
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Results: ", results)
 }

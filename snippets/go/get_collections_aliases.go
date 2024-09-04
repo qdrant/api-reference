@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,5 +16,9 @@ func listAliases() {
 		panic(err)
 	}
 
-	client.ListAliases(context.Background())
+	aliases, err := client.ListAliases(context.Background())
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Aliases: ", aliases)
 }

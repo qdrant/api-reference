@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -16,7 +17,7 @@ func recommendGroups() {
 	}
 
 	groupSize := uint64(5)
-	client.QueryGroups(context.Background(), &qdrant.QueryPointGroups{
+	results, err := client.QueryGroups(context.Background(), &qdrant.QueryPointGroups{
 		CollectionName: "{collection_name}",
 		Query: qdrant.NewQueryRecommend(&qdrant.RecommendInput{
 			Positive: []*qdrant.VectorInput{
@@ -30,4 +31,8 @@ func recommendGroups() {
 		GroupBy:   "document_id",
 		GroupSize: &groupSize,
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Results: ", results)
 }

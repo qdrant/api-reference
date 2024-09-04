@@ -15,5 +15,8 @@ func deleteCollection() {
 		panic(err)
 	}
 
-	client.DeleteCollection(context.Background(), "{collection_name}")
+	err = client.DeleteCollection(context.Background(), "{collection_name}")
+	if err != nil {
+		panic(err)
+	}
 }

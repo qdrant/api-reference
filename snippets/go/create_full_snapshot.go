@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,5 +16,9 @@ func createFullSnapshot() {
 		panic(err)
 	}
 
-	client.CreateFullSnapshot(context.Background())
+	snapshot, err := client.CreateFullSnapshot(context.Background())
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Snapshot created: ", snapshot.Name)
 }

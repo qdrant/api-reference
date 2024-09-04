@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,7 +16,7 @@ func queryBatch() {
 		panic(err)
 	}
 
-	client.QueryBatch(context.Background(), &qdrant.QueryBatchPoints{
+	results, err := client.QueryBatch(context.Background(), &qdrant.QueryBatchPoints{
 		CollectionName: "{collection_name}",
 		QueryPoints: []*qdrant.QueryPoints{
 			{
@@ -28,4 +29,8 @@ func queryBatch() {
 			},
 		},
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Query results: ", results)
 }

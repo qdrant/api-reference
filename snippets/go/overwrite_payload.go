@@ -15,7 +15,7 @@ func overwritePayload() {
 		panic(err)
 	}
 
-	client.OverwritePayload(context.Background(), &qdrant.SetPayloadPoints{
+	_, err = client.OverwritePayload(context.Background(), &qdrant.SetPayloadPoints{
 		CollectionName: "{collection_name}",
 		Payload: qdrant.NewValueMap(map[string]any{
 			"property1": "string",
@@ -23,4 +23,7 @@ func overwritePayload() {
 		}),
 		PointsSelector: qdrant.NewPointsSelector(qdrant.NewIDNum(0), qdrant.NewIDNum(3), qdrant.NewIDNum(10)),
 	})
+	if err != nil {
+		panic(err)
+	}
 }

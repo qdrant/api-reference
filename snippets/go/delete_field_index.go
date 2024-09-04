@@ -15,8 +15,11 @@ func deleteFieldIndex() {
 		panic(err)
 	}
 
-	client.DeleteFieldIndex(context.Background(), &qdrant.DeleteFieldIndexCollection{
+	_, err = client.DeleteFieldIndex(context.Background(), &qdrant.DeleteFieldIndexCollection{
 		CollectionName: "{collection_name}",
 		FieldName:      "{field_name}",
 	})
+	if err != nil {
+		panic(err)
+	}
 }

@@ -15,14 +15,17 @@ func delete() {
 		panic(err)
 	}
 
-	client.Delete(context.Background(), &qdrant.DeletePoints{
+	_, err = client.Delete(context.Background(), &qdrant.DeletePoints{
 		CollectionName: "{collection_name}",
 		Points: qdrant.NewPointsSelectorIDs([]*qdrant.PointId{
 			qdrant.NewIDNum(0), qdrant.NewIDNum(3), qdrant.NewIDNum(100),
 		}),
 	})
+	if err != nil {
+		panic(err)
+	}
 
-	client.Delete(context.Background(), &qdrant.DeletePoints{
+	_, err = client.Delete(context.Background(), &qdrant.DeletePoints{
 		CollectionName: "{collection_name}",
 		Points: qdrant.NewPointsSelectorFilter(&qdrant.Filter{
 			Must: []*qdrant.Condition{
@@ -30,4 +33,7 @@ func delete() {
 			},
 		}),
 	})
+	if err != nil {
+		panic(err)
+	}
 }

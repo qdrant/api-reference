@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -16,7 +17,7 @@ func scroll() {
 	}
 
 	limit := uint32(1)
-	client.Scroll(context.Background(), &qdrant.ScrollPoints{
+	results, err := client.Scroll(context.Background(), &qdrant.ScrollPoints{
 		CollectionName: "{collection_name}",
 		Filter: &qdrant.Filter{
 			Must: []*qdrant.Condition{
@@ -27,4 +28,8 @@ func scroll() {
 		WithPayload: qdrant.NewWithPayloadEnable(true),
 		WithVectors: qdrant.NewWithVectorsEnable(false),
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Results: ", results)
 }

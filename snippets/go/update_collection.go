@@ -16,10 +16,13 @@ func updateCollection() {
 	}
 
 	threshold := uint64(10000)
-	client.UpdateCollection(context.Background(), &qdrant.UpdateCollection{
+	err = client.UpdateCollection(context.Background(), &qdrant.UpdateCollection{
 		CollectionName: "{collection_name}",
 		OptimizersConfig: &qdrant.OptimizersConfigDiff{
 			IndexingThreshold: &threshold,
 		},
 	})
+	if err != nil {
+		panic(err)
+	}
 }

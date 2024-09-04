@@ -15,7 +15,10 @@ func createShardKey() {
 		panic(err)
 	}
 
-	client.CreateShardKey(context.Background(), "{collection_name}", &qdrant.CreateShardKey{
+	err = client.CreateShardKey(context.Background(), "{collection_name}", &qdrant.CreateShardKey{
 		ShardKey: qdrant.NewShardKey("{shard_key}"),
 	})
+	if err != nil {
+		panic(err)
+	}
 }

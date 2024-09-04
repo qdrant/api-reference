@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,7 +16,7 @@ func discover() {
 		panic(err)
 	}
 
-	client.Query(context.Background(), &qdrant.QueryPoints{
+	results, err := client.Query(context.Background(), &qdrant.QueryPoints{
 		CollectionName: "{collection_name}",
 		Query: qdrant.NewQueryDiscover(&qdrant.DiscoverInput{
 			Target: qdrant.NewVectorInput(0.2, 0.1, 0.9, 0.7),
@@ -30,4 +31,8 @@ func discover() {
 			},
 		}),
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Results: ", results)
 }

@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,7 +16,7 @@ func count() {
 		panic(err)
 	}
 
-	client.Count(context.Background(), &qdrant.CountPoints{
+	count, err := client.Count(context.Background(), &qdrant.CountPoints{
 		CollectionName: "{collection_name}",
 		Filter: &qdrant.Filter{
 			Must: []*qdrant.Condition{
@@ -23,4 +24,8 @@ func count() {
 			},
 		},
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Count:", count)
 }

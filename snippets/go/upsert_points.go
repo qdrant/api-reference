@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/qdrant/go-client/qdrant"
 )
@@ -15,7 +16,7 @@ func upsert() {
 		panic(err)
 	}
 
-	client.Upsert(context.Background(), &qdrant.UpsertPoints{
+	response, err := client.Upsert(context.Background(), &qdrant.UpsertPoints{
 		CollectionName: "{collection_name}",
 		Points: []*qdrant.PointStruct{
 			{
@@ -41,4 +42,8 @@ func upsert() {
 			},
 		},
 	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Upsert status: ", response.GetStatus())
 }

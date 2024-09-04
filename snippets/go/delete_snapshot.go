@@ -15,5 +15,8 @@ func deleteSnapshot() {
 		panic(err)
 	}
 
-	client.DeleteSnapshot(context.Background(), "{collection_name}", "{snapshot_name}")
+	err = client.DeleteSnapshot(context.Background(), "{collection_name}", "{snapshot_name}")
+	if err != nil {
+		panic(err)
+	}
 }
