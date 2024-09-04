@@ -68,9 +68,9 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc listAliases() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.ListAliases(context.Background())\n\
-            }\n"
+            \n)\n\nfunc listAliases() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.ListAliases(context.Background())\n}\n"
           language: go
   /cluster:
     get:
@@ -150,8 +150,9 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc listCollections() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.ListCollections(context.Background())\n\
+            \n)\n\nfunc listCollections() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.ListCollections(context.Background())\n\
             }\n"
           language: go
   /collections/aliases:
@@ -214,9 +215,10 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc updateAlias() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.CreateAlias(context.Background(),\
-            \ \"production_collection\", \"example_collection\")\n\n\tclient.DeleteAlias(context.Background(),\
+            \n)\n\nfunc updateAlias() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.CreateAlias(context.Background(), \"production_collection\"\
+            , \"example_collection\")\n\n\tclient.DeleteAlias(context.Background(),\
             \ \"production_collection\")\n\n\tclient.RenameAlias(context.Background(),\
             \ \"production_collection\", \"legacy_collection\")\n}\n"
           language: go
@@ -279,9 +281,10 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc deleteCollection() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.DeleteCollection(context.Background(),\
-            \ \"{collection_name}\")\n}\n"
+            \n)\n\nfunc deleteCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.DeleteCollection(context.Background(), \"\
+            {collection_name}\")\n}\n"
           language: go
     get:
       description: Retrieves parameters from the specified collection.
@@ -341,9 +344,10 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc getCollection() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.GetCollection(context.Background(),\
-            \ \"{collection_name}\")\n}\n"
+            \n)\n\nfunc getCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.GetCollection(context.Background(), \"{collection_name}\"\
+            )\n}\n"
           language: go
     patch:
       description: Updates the parameters of the specified collection.
@@ -389,11 +393,12 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc updateCollection() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tthreshold := uint64(10000)\n\
-            \tclient.UpdateCollection(context.Background(), &qdrant.UpdateCollection{\n\
-            \t\tCollectionName: \"{collection_name}\",\n\t\tOptimizersConfig: &qdrant.OptimizersConfigDiff{\n\
-            \t\t\tIndexingThreshold: &threshold,\n\t\t},\n\t})\n}\n"
+            \n)\n\nfunc updateCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tthreshold := uint64(10000)\n\tclient.UpdateCollection(context.Background(),\
+            \ &qdrant.UpdateCollection{\n\t\tCollectionName: \"{collection_name}\"\
+            ,\n\t\tOptimizersConfig: &qdrant.OptimizersConfigDiff{\n\t\t\tIndexingThreshold:\
+            \ &threshold,\n\t\t},\n\t})\n}\n"
           language: go
     put:
       description: Creates a new collection with the given parameters.
@@ -465,11 +470,11 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc createCollection() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.CreateCollection(context.Background(),\
-            \ &qdrant.CreateCollection{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tVectorsConfig: qdrant.NewVectorsConfig(&qdrant.VectorParams{\n\t\
-            \t\tSize:     100,\n\t\t\tDistance: qdrant.Distance_Cosine,\n\t\t}),\n\
+            \n)\n\nfunc createCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.CreateCollection(context.Background(), &qdrant.CreateCollection{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tVectorsConfig: qdrant.NewVectorsConfig(&qdrant.VectorParams{\n\
+            \t\t\tSize:     100,\n\t\t\tDistance: qdrant.Distance_Cosine,\n\t\t}),\n\
             \t})\n}\n"
           language: go
   /collections/{collection_name}/aliases:
@@ -531,8 +536,9 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc listCollectionAliases() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.ListCollectionAliases(context.Background(),\
+            \n)\n\nfunc listCollectionAliases() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.ListCollectionAliases(context.Background(),\
             \ \"{collection_name}\")\n}\n"
           language: go
   /collections/{collection_name}/cluster:
@@ -617,9 +623,10 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc collectionExists() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.CollectionExists(context.Background(),\
-            \ \"{collection_name}\")\n}\n"
+            \n)\n\nfunc collectionExists() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.CollectionExists(context.Background(), \"\
+            {collection_name}\")\n}\n"
           language: go
   /collections/{collection_name}/index:
     put:
@@ -663,11 +670,12 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc createFieldIndex() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.CreateFieldIndex(context.Background(),\
-            \ &qdrant.CreateFieldIndexCollection{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tFieldName:      \"name_of_the_field_to_index\",\n\t\tFieldType:\
-            \      qdrant.FieldType_FieldTypeKeyword.Enum(),\n\t})\n}\n"
+            \n)\n\nfunc createFieldIndex() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.CreateFieldIndex(context.Background(), &qdrant.CreateFieldIndexCollection{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tFieldName:      \"name_of_the_field_to_index\"\
+            ,\n\t\tFieldType:      qdrant.FieldType_FieldTypeKeyword.Enum(),\n\t})\n\
+            }\n"
           language: go
   /collections/{collection_name}/index/{field_name}:
     delete:
@@ -718,10 +726,11 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc deleteFieldIndex() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.DeleteFieldIndex(context.Background(),\
-            \ &qdrant.DeleteFieldIndexCollection{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tFieldName:      \"{field_name}\",\n\t})\n}\n"
+            \n)\n\nfunc deleteFieldIndex() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.DeleteFieldIndex(context.Background(), &qdrant.DeleteFieldIndexCollection{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tFieldName:      \"{field_name}\"\
+            ,\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points:
     post:
@@ -761,11 +770,12 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc getPoints() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.Get(context.Background(),\
-            \ &qdrant.GetPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\t\
-            Ids: []*qdrant.PointId{\n\t\t\tqdrant.NewIDNum(0), qdrant.NewID(\"3\"\
-            ), qdrant.NewIDNum(100),\n\t\t},\n\t})\n}\n"
+            \n)\n\nfunc getPoints() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.Get(context.Background(), &qdrant.GetPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tIds: []*qdrant.PointId{\n\
+            \t\t\tqdrant.NewIDNum(0), qdrant.NewID(\"3\"), qdrant.NewIDNum(100),\n\
+            \t\t},\n\t})\n}\n"
           language: go
     put:
       description: Performs the insert + update action on specified points. Any point
@@ -850,18 +860,19 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc upsert() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.Upsert(context.Background(),\
-            \ &qdrant.UpsertPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\
-            \tPoints: []*qdrant.PointStruct{\n\t\t\t{\n\t\t\t\tId:      qdrant.NewIDNum(1),\n\
-            \t\t\t\tVectors: qdrant.NewVectors(0.9, 0.1, 0.1),\n\t\t\t\tPayload: qdrant.NewValueMap(map[string]any{\n\
-            \t\t\t\t\t\"color\": \"red\",\n\t\t\t\t}),\n\t\t\t},\n\t\t\t{\n\t\t\t\t\
-            Id:      qdrant.NewIDNum(2),\n\t\t\t\tVectors: qdrant.NewVectors(0.1,\
-            \ 0.9, 0.1),\n\t\t\t\tPayload: qdrant.NewValueMap(map[string]any{\n\t\t\
-            \t\t\t\"color\": \"green\",\n\t\t\t\t}),\n\t\t\t},\n\t\t\t{\n\t\t\t\t\
-            Id:      qdrant.NewIDNum(3),\n\t\t\t\tVectors: qdrant.NewVectors(0.1,\
-            \ 0.1, 0.9),\n\t\t\t\tPayload: qdrant.NewValueMap(map[string]any{\n\t\t\
-            \t\t\t\"color\": \"blue\",\n\t\t\t\t}),\n\t\t\t},\n\t\t},\n\t})\n}\n"
+            \n)\n\nfunc upsert() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.Upsert(context.Background(), &qdrant.UpsertPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tPoints: []*qdrant.PointStruct{\n\
+            \t\t\t{\n\t\t\t\tId:      qdrant.NewIDNum(1),\n\t\t\t\tVectors: qdrant.NewVectors(0.9,\
+            \ 0.1, 0.1),\n\t\t\t\tPayload: qdrant.NewValueMap(map[string]any{\n\t\t\
+            \t\t\t\"color\": \"red\",\n\t\t\t\t}),\n\t\t\t},\n\t\t\t{\n\t\t\t\tId:\
+            \      qdrant.NewIDNum(2),\n\t\t\t\tVectors: qdrant.NewVectors(0.1, 0.9,\
+            \ 0.1),\n\t\t\t\tPayload: qdrant.NewValueMap(map[string]any{\n\t\t\t\t\
+            \t\"color\": \"green\",\n\t\t\t\t}),\n\t\t\t},\n\t\t\t{\n\t\t\t\tId: \
+            \     qdrant.NewIDNum(3),\n\t\t\t\tVectors: qdrant.NewVectors(0.1, 0.1,\
+            \ 0.9),\n\t\t\t\tPayload: qdrant.NewValueMap(map[string]any{\n\t\t\t\t\
+            \t\"color\": \"blue\",\n\t\t\t\t}),\n\t\t\t},\n\t\t},\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/batch:
     post:
@@ -989,10 +1000,11 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc batchUpdate() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.UpdateBatch(context.Background(),\
-            \ &qdrant.UpdateBatchPoints{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tOperations: []*qdrant.PointsUpdateOperation{\n\t\t\tqdrant.NewPointsUpdateUpsert(&qdrant.PointsUpdateOperation_PointStructList{\n\
+            \n)\n\nfunc batchUpdate() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.UpdateBatch(context.Background(), &qdrant.UpdateBatchPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tOperations: []*qdrant.PointsUpdateOperation{\n\
+            \t\t\tqdrant.NewPointsUpdateUpsert(&qdrant.PointsUpdateOperation_PointStructList{\n\
             \t\t\t\tPoints: []*qdrant.PointStruct{{\n\t\t\t\t\tId:      qdrant.NewIDNum(1),\n\
             \t\t\t\t\tVectors: qdrant.NewVectors(1.0, 2.0, 3.0, 4.0),\n\t\t\t\t}},\n\
             \t\t\t}),\n\t\t\tqdrant.NewPointsUpdateUpdateVectors(&qdrant.PointsUpdateOperation_UpdateVectors{\n\
@@ -1050,11 +1062,12 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc count() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.Count(context.Background(),\
-            \ &qdrant.CountPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\
-            \tFilter: &qdrant.Filter{\n\t\t\tMust: []*qdrant.Condition{\n\t\t\t\t\
-            qdrant.NewMatch(\"color\", \"red\"),\n\t\t\t},\n\t\t},\n\t})\n}\n"
+            \n)\n\nfunc count() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.Count(context.Background(), &qdrant.CountPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tFilter: &qdrant.Filter{\n\
+            \t\t\tMust: []*qdrant.Condition{\n\t\t\t\tqdrant.NewMatch(\"color\", \"\
+            red\"),\n\t\t\t},\n\t\t},\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/delete:
     post:
@@ -1123,15 +1136,15 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc delete() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.Delete(context.Background(),\
-            \ &qdrant.DeletePoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\
-            \tPoints: qdrant.NewPointsSelectorIDs([]*qdrant.PointId{\n\t\t\tqdrant.NewIDNum(0),\
-            \ qdrant.NewIDNum(3), qdrant.NewIDNum(100),\n\t\t}),\n\t})\n\n\tclient.Delete(context.Background(),\
-            \ &qdrant.DeletePoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\
-            \tPoints: qdrant.NewPointsSelectorFilter(&qdrant.Filter{\n\t\t\tMust:\
-            \ []*qdrant.Condition{\n\t\t\t\tqdrant.NewMatch(\"color\", \"red\"),\n\
-            \t\t\t},\n\t\t}),\n\t})\n}\n"
+            \n)\n\nfunc delete() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.Delete(context.Background(), &qdrant.DeletePoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tPoints: qdrant.NewPointsSelectorIDs([]*qdrant.PointId{\n\
+            \t\t\tqdrant.NewIDNum(0), qdrant.NewIDNum(3), qdrant.NewIDNum(100),\n\t\
+            \t}),\n\t})\n\n\tclient.Delete(context.Background(), &qdrant.DeletePoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tPoints: qdrant.NewPointsSelectorFilter(&qdrant.Filter{\n\
+            \t\t\tMust: []*qdrant.Condition{\n\t\t\t\tqdrant.NewMatch(\"color\", \"\
+            red\"),\n\t\t\t},\n\t\t}),\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/discover:
     post:
@@ -1220,14 +1233,15 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc discover() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.Query(context.Background(),\
-            \ &qdrant.QueryPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\
-            \tQuery: qdrant.NewQueryDiscover(&qdrant.DiscoverInput{\n\t\t\tTarget:\
-            \ qdrant.NewVectorInput(0.2, 0.1, 0.9, 0.7),\n\t\t\tContext: &qdrant.ContextInput{\n\
-            \t\t\t\tPairs: []*qdrant.ContextInputPair{{\n\t\t\t\t\tPositive: qdrant.NewVectorInputID(qdrant.NewIDNum(100)),\n\
-            \t\t\t\t\tNegative: qdrant.NewVectorInputID(qdrant.NewIDNum(718)),\n\t\
-            \t\t\t}, {\n\t\t\t\t\tPositive: qdrant.NewVectorInputID(qdrant.NewIDNum(200)),\n\
+            \n)\n\nfunc discover() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.Query(context.Background(), &qdrant.QueryPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tQuery: qdrant.NewQueryDiscover(&qdrant.DiscoverInput{\n\
+            \t\t\tTarget: qdrant.NewVectorInput(0.2, 0.1, 0.9, 0.7),\n\t\t\tContext:\
+            \ &qdrant.ContextInput{\n\t\t\t\tPairs: []*qdrant.ContextInputPair{{\n\
+            \t\t\t\t\tPositive: qdrant.NewVectorInputID(qdrant.NewIDNum(100)),\n\t\
+            \t\t\t\tNegative: qdrant.NewVectorInputID(qdrant.NewIDNum(718)),\n\t\t\
+            \t\t}, {\n\t\t\t\t\tPositive: qdrant.NewVectorInputID(qdrant.NewIDNum(200)),\n\
             \t\t\t\t\tNegative: qdrant.NewVectorInputID(qdrant.NewIDNum(300)),\n\t\
             \t\t\t}},\n\t\t\t},\n\t\t}),\n\t})\n}\n"
           language: go
@@ -1353,14 +1367,14 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc discoverBatch() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.QueryBatch(context.Background(),\
-            \ &qdrant.QueryBatchPoints{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tQueryPoints: []*qdrant.QueryPoints{\n\t\t\t{\n\t\t\t\tCollectionName:\
-            \ \"{collection_name}\",\n\t\t\t\tQuery: qdrant.NewQueryDiscover(&qdrant.DiscoverInput{\n\
-            \t\t\t\t\tTarget: qdrant.NewVectorInput(0.2, 0.1, 0.9, 0.7),\n\t\t\t\t\
-            \tContext: &qdrant.ContextInput{\n\t\t\t\t\t\tPairs: []*qdrant.ContextInputPair{{\n\
-            \t\t\t\t\t\t\tPositive: qdrant.NewVectorInputID(qdrant.NewIDNum(100)),\n\
+            \n)\n\nfunc discoverBatch() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.QueryBatch(context.Background(), &qdrant.QueryBatchPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tQueryPoints: []*qdrant.QueryPoints{\n\
+            \t\t\t{\n\t\t\t\tCollectionName: \"{collection_name}\",\n\t\t\t\tQuery:\
+            \ qdrant.NewQueryDiscover(&qdrant.DiscoverInput{\n\t\t\t\t\tTarget: qdrant.NewVectorInput(0.2,\
+            \ 0.1, 0.9, 0.7),\n\t\t\t\t\tContext: &qdrant.ContextInput{\n\t\t\t\t\t\
+            \tPairs: []*qdrant.ContextInputPair{{\n\t\t\t\t\t\t\tPositive: qdrant.NewVectorInputID(qdrant.NewIDNum(100)),\n\
             \t\t\t\t\t\t\tNegative: qdrant.NewVectorInputID(qdrant.NewIDNum(718)),\n\
             \t\t\t\t\t\t}, {\n\t\t\t\t\t\t\tPositive: qdrant.NewVectorInputID(qdrant.NewIDNum(200)),\n\
             \t\t\t\t\t\t\tNegative: qdrant.NewVectorInputID(qdrant.NewIDNum(300)),\n\
@@ -1425,13 +1439,13 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc setPayload() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.SetPayload(context.Background(),\
-            \ &qdrant.SetPayloadPoints{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tPayload: qdrant.NewValueMap(map[string]any{\n\t\t\t\"property1\"\
-            : \"string\",\n\t\t\t\"property2\": \"string\",\n\t\t}),\n\t\tPointsSelector:\
-            \ qdrant.NewPointsSelector(qdrant.NewIDNum(0), qdrant.NewIDNum(3), qdrant.NewIDNum(10)),\n\
-            \t})\n}\n"
+            \n)\n\nfunc setPayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.SetPayload(context.Background(), &qdrant.SetPayloadPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tPayload: qdrant.NewValueMap(map[string]any{\n\
+            \t\t\t\"property1\": \"string\",\n\t\t\t\"property2\": \"string\",\n\t\
+            \t}),\n\t\tPointsSelector: qdrant.NewPointsSelector(qdrant.NewIDNum(0),\
+            \ qdrant.NewIDNum(3), qdrant.NewIDNum(10)),\n\t})\n}\n"
           language: go
     put:
       description: Replaces the entire payload of a specified point with a new payload.
@@ -1483,13 +1497,13 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc overwritePayload() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.OverwritePayload(context.Background(),\
-            \ &qdrant.SetPayloadPoints{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tPayload: qdrant.NewValueMap(map[string]any{\n\t\t\t\"property1\"\
-            : \"string\",\n\t\t\t\"property2\": \"string\",\n\t\t}),\n\t\tPointsSelector:\
-            \ qdrant.NewPointsSelector(qdrant.NewIDNum(0), qdrant.NewIDNum(3), qdrant.NewIDNum(10)),\n\
-            \t})\n}\n"
+            \n)\n\nfunc overwritePayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.OverwritePayload(context.Background(), &qdrant.SetPayloadPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tPayload: qdrant.NewValueMap(map[string]any{\n\
+            \t\t\t\"property1\": \"string\",\n\t\t\t\"property2\": \"string\",\n\t\
+            \t}),\n\t\tPointsSelector: qdrant.NewPointsSelector(qdrant.NewIDNum(0),\
+            \ qdrant.NewIDNum(3), qdrant.NewIDNum(10)),\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/payload/clear:
     post:
@@ -1536,11 +1550,11 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc clearPayload() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.ClearPayload(context.Background(),\
-            \ &qdrant.ClearPayloadPoints{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tPoints:         qdrant.NewPointsSelector(qdrant.NewIDNum(0), qdrant.NewID(\"\
-            3\"), qdrant.NewIDNum(100)),\n\t})\n}\n"
+            \n)\n\nfunc clearPayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.ClearPayload(context.Background(), &qdrant.ClearPayloadPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tPoints:         qdrant.NewPointsSelector(qdrant.NewIDNum(0),\
+            \ qdrant.NewID(\"3\"), qdrant.NewIDNum(100)),\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/payload/delete:
     post:
@@ -1593,12 +1607,12 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc deletePayload() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.DeletePayload(context.Background(),\
-            \ &qdrant.DeletePayloadPoints{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tPointsSelector: qdrant.NewPointsSelector(qdrant.NewIDNum(0), qdrant.NewIDNum(3),\
-            \ qdrant.NewIDNum(100)),\n\t\tKeys:           []string{\"color\", \"price\"\
-            },\n\t})\n}\n"
+            \n)\n\nfunc deletePayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.DeletePayload(context.Background(), &qdrant.DeletePayloadPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tPointsSelector: qdrant.NewPointsSelector(qdrant.NewIDNum(0),\
+            \ qdrant.NewIDNum(3), qdrant.NewIDNum(100)),\n\t\tKeys:           []string{\"\
+            color\", \"price\"},\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/query:
     post:
@@ -1754,14 +1768,15 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc query() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\t// Query nearest\
-            \ by ID\n\tclient.Query(context.Background(), &qdrant.QueryPoints{\n\t\
-            \tCollectionName: \"{collection_name}\",\n\t\tQuery:          qdrant.NewQueryID(qdrant.NewID(\"\
-            43cf51e2-8777-4f52-bc74-c2cbde0c8b04\")),\n\t})\n\n\t// Recommend on the\
-            \ average of these vectors\n\tclient.Query(context.Background(), &qdrant.QueryPoints{\n\
-            \t\tCollectionName: \"{collection_name}\",\n\t\tQuery: qdrant.NewQueryRecommend(&qdrant.RecommendInput{\n\
-            \t\t\tPositive: []*qdrant.VectorInput{\n\t\t\t\tqdrant.NewVectorInputID(qdrant.NewID(\"\
+            \n)\n\nfunc query() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\t// Query nearest by ID\n\tclient.Query(context.Background(),\
+            \ &qdrant.QueryPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\
+            \tQuery:          qdrant.NewQueryID(qdrant.NewID(\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\
+            )),\n\t})\n\n\t// Recommend on the average of these vectors\n\tclient.Query(context.Background(),\
+            \ &qdrant.QueryPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\
+            \tQuery: qdrant.NewQueryRecommend(&qdrant.RecommendInput{\n\t\t\tPositive:\
+            \ []*qdrant.VectorInput{\n\t\t\t\tqdrant.NewVectorInputID(qdrant.NewID(\"\
             43cf51e2-8777-4f52-bc74-c2cbde0c8b04\")),\n\t\t\t\tqdrant.NewVectorInput(0.11,\
             \ 0.35, 0.6),\n\t\t\t},\n\t\t\tNegative: []*qdrant.VectorInput{\n\t\t\t\
             \tqdrant.NewVectorInput(0.01, 0.45, 0.67),\n\t\t\t},\n\t\t}),\n\t})\n\n\
@@ -1832,14 +1847,14 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc queryBatch() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.QueryBatch(context.Background(),\
-            \ &qdrant.QueryBatchPoints{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tQueryPoints: []*qdrant.QueryPoints{\n\t\t\t{\n\t\t\t\tCollectionName:\
-            \ \"{collection_name}\",\n\t\t\t\tQuery:          qdrant.NewQuery(0.01,\
-            \ 0.45, 0.67),\n\t\t\t},\n\t\t\t{\n\t\t\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\t\t\tQuery:          qdrant.NewQuery(0.11, 0.35, 0.6),\n\t\t\t},\n\
-            \t\t},\n\t})\n}\n"
+            \n)\n\nfunc queryBatch() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.QueryBatch(context.Background(), &qdrant.QueryBatchPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tQueryPoints: []*qdrant.QueryPoints{\n\
+            \t\t\t{\n\t\t\t\tCollectionName: \"{collection_name}\",\n\t\t\t\tQuery:\
+            \          qdrant.NewQuery(0.01, 0.45, 0.67),\n\t\t\t},\n\t\t\t{\n\t\t\
+            \t\tCollectionName: \"{collection_name}\",\n\t\t\t\tQuery:          qdrant.NewQuery(0.11,\
+            \ 0.35, 0.6),\n\t\t\t},\n\t\t},\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/query/groups:
     post:
@@ -1888,12 +1903,12 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc queryGroups() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tgroupSize := uint64(5)\n\
-            \tclient.QueryGroups(context.Background(), &qdrant.QueryPointGroups{\n\
-            \t\tCollectionName: \"{collection_name}\",\n\t\tQuery:          qdrant.NewQuery(0.01,\
-            \ 0.45, 0.67),\n\t\tGroupBy:        \"document_id\",\n\t\tGroupSize: \
-            \     &groupSize,\n\t})\n}\n"
+            \n)\n\nfunc queryGroups() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tgroupSize := uint64(5)\n\tclient.QueryGroups(context.Background(),\
+            \ &qdrant.QueryPointGroups{\n\t\tCollectionName: \"{collection_name}\"\
+            ,\n\t\tQuery:          qdrant.NewQuery(0.01, 0.45, 0.67),\n\t\tGroupBy:\
+            \        \"document_id\",\n\t\tGroupSize:      &groupSize,\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/recommend:
     post:
@@ -1960,11 +1975,11 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc recommend() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.Query(context.Background(),\
-            \ &qdrant.QueryPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\
-            \tQuery: qdrant.NewQueryRecommend(&qdrant.RecommendInput{\n\t\t\tPositive:\
-            \ []*qdrant.VectorInput{\n\t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(100)),\n\
+            \n)\n\nfunc recommend() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.Query(context.Background(), &qdrant.QueryPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tQuery: qdrant.NewQueryRecommend(&qdrant.RecommendInput{\n\
+            \t\t\tPositive: []*qdrant.VectorInput{\n\t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(100)),\n\
             \t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(231)),\n\t\t\t},\n\t\t\
             \tNegative: []*qdrant.VectorInput{\n\t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(718)),\n\
             \t\t\t\tqdrant.NewVectorInput(0.2, 0.3, 0.4, 0.5),\n\t\t\t},\n\t\t\tStrategy:\
@@ -2042,12 +2057,13 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc recommendBatch() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.QueryBatch(context.Background(),\
-            \ &qdrant.QueryBatchPoints{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tQueryPoints: []*qdrant.QueryPoints{\n\t\t\t{\n\t\t\t\tCollectionName:\
-            \ \"{collection_name}\",\n\t\t\t\tQuery: qdrant.NewQueryRecommend(&qdrant.RecommendInput{\n\
-            \t\t\t\t\tPositive: []*qdrant.VectorInput{\n\t\t\t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(100)),\n\
+            \n)\n\nfunc recommendBatch() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.QueryBatch(context.Background(), &qdrant.QueryBatchPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tQueryPoints: []*qdrant.QueryPoints{\n\
+            \t\t\t{\n\t\t\t\tCollectionName: \"{collection_name}\",\n\t\t\t\tQuery:\
+            \ qdrant.NewQueryRecommend(&qdrant.RecommendInput{\n\t\t\t\t\tPositive:\
+            \ []*qdrant.VectorInput{\n\t\t\t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(100)),\n\
             \t\t\t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(231)),\n\t\t\t\t\t\
             },\n\t\t\t\t\tNegative: []*qdrant.VectorInput{\n\t\t\t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(718)),\n\
             \t\t\t\t\t},\n\t\t\t\t}),\n\t\t\t},\n\t\t\t{\n\t\t\t\tCollectionName:\
@@ -2109,11 +2125,12 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc recommendGroups() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tgroupSize := uint64(5)\n\
-            \tclient.QueryGroups(context.Background(), &qdrant.QueryPointGroups{\n\
-            \t\tCollectionName: \"{collection_name}\",\n\t\tQuery: qdrant.NewQueryRecommend(&qdrant.RecommendInput{\n\
-            \t\t\tPositive: []*qdrant.VectorInput{\n\t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(100)),\n\
+            \n)\n\nfunc recommendGroups() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tgroupSize := uint64(5)\n\tclient.QueryGroups(context.Background(),\
+            \ &qdrant.QueryPointGroups{\n\t\tCollectionName: \"{collection_name}\"\
+            ,\n\t\tQuery: qdrant.NewQueryRecommend(&qdrant.RecommendInput{\n\t\t\t\
+            Positive: []*qdrant.VectorInput{\n\t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(100)),\n\
             \t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(231)),\n\t\t\t},\n\t\t\
             \tNegative: []*qdrant.VectorInput{\n\t\t\t\tqdrant.NewVectorInputID(qdrant.NewIDNum(718)),\n\
             \t\t\t},\n\t\t}),\n\t\tGroupBy:   \"document_id\",\n\t\tGroupSize: &groupSize,\n\
@@ -2179,13 +2196,14 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc scroll() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tlimit := uint32(1)\n\
-            \tclient.Scroll(context.Background(), &qdrant.ScrollPoints{\n\t\tCollectionName:\
-            \ \"{collection_name}\",\n\t\tFilter: &qdrant.Filter{\n\t\t\tMust: []*qdrant.Condition{\n\
-            \t\t\t\tqdrant.NewMatch(\"color\", \"red\"),\n\t\t\t},\n\t\t},\n\t\tLimit:\
-            \       &limit,\n\t\tWithPayload: qdrant.NewWithPayloadEnable(true),\n\
-            \t\tWithVectors: qdrant.NewWithVectorsEnable(false),\n\t})\n}\n"
+            \n)\n\nfunc scroll() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tlimit := uint32(1)\n\tclient.Scroll(context.Background(),\
+            \ &qdrant.ScrollPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\
+            \tFilter: &qdrant.Filter{\n\t\t\tMust: []*qdrant.Condition{\n\t\t\t\t\
+            qdrant.NewMatch(\"color\", \"red\"),\n\t\t\t},\n\t\t},\n\t\tLimit:   \
+            \    &limit,\n\t\tWithPayload: qdrant.NewWithPayloadEnable(true),\n\t\t\
+            WithVectors: qdrant.NewWithVectorsEnable(false),\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/search:
     post:
@@ -2244,13 +2262,13 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc search() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tlimit := uint64(3)\n\
-            \tclient.Query(context.Background(), &qdrant.QueryPoints{\n\t\tCollectionName:\
-            \ \"{collection_name}\",\n\t\tQuery:          qdrant.NewQuery(0.2, 0.1,\
-            \ 0.9, 0.7),\n\t\tFilter: &qdrant.Filter{\n\t\t\tMust: []*qdrant.Condition{\n\
-            \t\t\t\tqdrant.NewMatch(\"city\", \"London\"),\n\t\t\t},\n\t\t},\n\t\t\
-            Limit: &limit,\n\t})\n}\n"
+            \n)\n\nfunc search() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tlimit := uint64(3)\n\tclient.Query(context.Background(),\
+            \ &qdrant.QueryPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\
+            \tQuery:          qdrant.NewQuery(0.2, 0.1, 0.9, 0.7),\n\t\tFilter: &qdrant.Filter{\n\
+            \t\t\tMust: []*qdrant.Condition{\n\t\t\t\tqdrant.NewMatch(\"city\", \"\
+            London\"),\n\t\t\t},\n\t\t},\n\t\tLimit: &limit,\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/search/batch:
     post:
@@ -2319,18 +2337,18 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc searchBatch() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tfilter := qdrant.Filter{\n\
-            \t\tMust: []*qdrant.Condition{\n\t\t\tqdrant.NewMatch(\"city\", \"London\"\
-            ),\n\t\t},\n\t}\n\tlimit := uint64(3)\n\tclient.QueryBatch(context.Background(),\
-            \ &qdrant.QueryBatchPoints{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tQueryPoints: []*qdrant.QueryPoints{\n\t\t\t{\n\t\t\t\tCollectionName:\
-            \ \"{collection_name}\",\n\t\t\t\tQuery:          qdrant.NewQuery(0.2,\
-            \ 0.1, 0.9, 0.7),\n\t\t\t\tLimit:          &limit,\n\t\t\t\tFilter:  \
-            \       &filter,\n\t\t\t},\n\t\t\t{\n\t\t\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\t\t\tQuery:          qdrant.NewQuery(0.5, 0.3, 0.2, 0.3),\n\t\t\t\
-            \tLimit:          &limit,\n\t\t\t\tFilter:         &filter,\n\t\t\t},\n\
-            \t\t},\n\t})\n}\n"
+            \n)\n\nfunc searchBatch() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tfilter := qdrant.Filter{\n\t\tMust: []*qdrant.Condition{\n\
+            \t\t\tqdrant.NewMatch(\"city\", \"London\"),\n\t\t},\n\t}\n\tlimit :=\
+            \ uint64(3)\n\tclient.QueryBatch(context.Background(), &qdrant.QueryBatchPoints{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tQueryPoints: []*qdrant.QueryPoints{\n\
+            \t\t\t{\n\t\t\t\tCollectionName: \"{collection_name}\",\n\t\t\t\tQuery:\
+            \          qdrant.NewQuery(0.2, 0.1, 0.9, 0.7),\n\t\t\t\tLimit:      \
+            \    &limit,\n\t\t\t\tFilter:         &filter,\n\t\t\t},\n\t\t\t{\n\t\t\
+            \t\tCollectionName: \"{collection_name}\",\n\t\t\t\tQuery:          qdrant.NewQuery(0.5,\
+            \ 0.3, 0.2, 0.3),\n\t\t\t\tLimit:          &limit,\n\t\t\t\tFilter:  \
+            \       &filter,\n\t\t\t},\n\t\t},\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/search/groups:
     post:
@@ -2377,12 +2395,12 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc searchGroups() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tgroupSize := uint64(2)\n\
-            \tclient.QueryGroups(context.Background(), &qdrant.QueryPointGroups{\n\
-            \t\tCollectionName: \"{collection_name}\",\n\t\tQuery:          qdrant.NewQuery(0.01,\
-            \ 0.45, 0.67),\n\t\tGroupBy:        \"document_id\",\n\t\tGroupSize: \
-            \     &groupSize,\n\t})\n}\n"
+            \n)\n\nfunc searchGroups() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tgroupSize := uint64(2)\n\tclient.QueryGroups(context.Background(),\
+            \ &qdrant.QueryPointGroups{\n\t\tCollectionName: \"{collection_name}\"\
+            ,\n\t\tQuery:          qdrant.NewQuery(0.01, 0.45, 0.67),\n\t\tGroupBy:\
+            \        \"document_id\",\n\t\tGroupSize:      &groupSize,\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/vectors:
     put:
@@ -2457,13 +2475,13 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc updateVectors() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.UpdateVectors(context.Background(),\
-            \ &qdrant.UpdatePointVectors{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tPoints: []*qdrant.PointVectors{\n\t\t\t{\n\t\t\t\tId: qdrant.NewIDNum(1),\n\
-            \t\t\t\tVectors: qdrant.NewVectorsMap(map[string]*qdrant.Vector{\n\t\t\
-            \t\t\t\"image\": qdrant.NewVector(0.1, 0.2, 0.3, 0.4),\n\t\t\t\t}),\n\t\
-            \t\t},\n\t\t\t{\n\t\t\t\tId: qdrant.NewIDNum(2),\n\t\t\t\tVectors: qdrant.NewVectorsMap(map[string]*qdrant.Vector{\n\
+            \n)\n\nfunc updateVectors() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.UpdateVectors(context.Background(), &qdrant.UpdatePointVectors{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tPoints: []*qdrant.PointVectors{\n\
+            \t\t\t{\n\t\t\t\tId: qdrant.NewIDNum(1),\n\t\t\t\tVectors: qdrant.NewVectorsMap(map[string]*qdrant.Vector{\n\
+            \t\t\t\t\t\"image\": qdrant.NewVector(0.1, 0.2, 0.3, 0.4),\n\t\t\t\t}),\n\
+            \t\t\t},\n\t\t\t{\n\t\t\t\tId: qdrant.NewIDNum(2),\n\t\t\t\tVectors: qdrant.NewVectorsMap(map[string]*qdrant.Vector{\n\
             \t\t\t\t\t\"text\": qdrant.NewVector(0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3,\
             \ 0.2),\n\t\t\t\t}),\n\t\t\t},\n\t\t},\n\t})\n}\n"
           language: go
@@ -2519,12 +2537,12 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc deleteVectors() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.DeleteVectors(context.Background(),\
-            \ &qdrant.DeletePointVectors{\n\t\tCollectionName: \"{collection_name}\"\
-            ,\n\t\tPointsSelector: qdrant.NewPointsSelector(qdrant.NewIDNum(0), qdrant.NewIDNum(3),\
-            \ qdrant.NewIDNum(100)),\n\t\tVectors: &qdrant.VectorsSelector{\n\t\t\t\
-            Names: []string{\"text\", \"image\"},\n\t\t},\n\t})\n}\n"
+            \n)\n\nfunc deleteVectors() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.DeleteVectors(context.Background(), &qdrant.DeletePointVectors{\n\
+            \t\tCollectionName: \"{collection_name}\",\n\t\tPointsSelector: qdrant.NewPointsSelector(qdrant.NewIDNum(0),\
+            \ qdrant.NewIDNum(3), qdrant.NewIDNum(100)),\n\t\tVectors: &qdrant.VectorsSelector{\n\
+            \t\t\tNames: []string{\"text\", \"image\"},\n\t\t},\n\t})\n}\n"
           language: go
   /collections/{collection_name}/points/{id}:
     get:
@@ -2584,9 +2602,10 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc createShardKey() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.CreateShardKey(context.Background(),\
-            \ \"{collection_name}\", &qdrant.CreateShardKey{\n\t\tShardKey: qdrant.NewShardKey(\"\
+            \n)\n\nfunc createShardKey() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.CreateShardKey(context.Background(), \"\
+            {collection_name}\", &qdrant.CreateShardKey{\n\t\tShardKey: qdrant.NewShardKey(\"\
             {shard_key}\"),\n\t})\n}\n"
           language: go
   /collections/{collection_name}/shards/delete:
@@ -2639,9 +2658,10 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc deleteShardKey() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.DeleteShardKey(context.Background(),\
-            \ \"{collection_name}\", &qdrant.DeleteShardKey{\n\t\tShardKey: qdrant.NewShardKey(\"\
+            \n)\n\nfunc deleteShardKey() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.DeleteShardKey(context.Background(), \"\
+            {collection_name}\", &qdrant.DeleteShardKey{\n\t\tShardKey: qdrant.NewShardKey(\"\
             {shard_key}\"),\n\t})\n}\n"
           language: go
   /collections/{collection_name}/shards/{shard_id}/snapshots:
@@ -2740,9 +2760,10 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc listSnapshots() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.ListSnapshots(context.Background(),\
-            \ \"{collection_name}\")\n}\n"
+            \n)\n\nfunc listSnapshots() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.ListSnapshots(context.Background(), \"{collection_name}\"\
+            )\n}\n"
           language: go
     post:
       description: Creates a new snapshot for a specified collection.
@@ -2802,9 +2823,10 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc createSnapshot() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.CreateSnapshot(context.Background(),\
-            \ \"{collection_name}\")\n}\n"
+            \n)\n\nfunc createSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.CreateSnapshot(context.Background(), \"\
+            {collection_name}\")\n}\n"
           language: go
   /collections/{collection_name}/snapshots/recover:
     put:
@@ -2883,9 +2905,10 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc deleteSnapshot() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.DeleteSnapshot(context.Background(),\
-            \ \"{collection_name}\", \"{snapshot_name}\")\n}\n"
+            \n)\n\nfunc deleteSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.DeleteSnapshot(context.Background(), \"\
+            {collection_name}\", \"{snapshot_name}\")\n}\n"
           language: go
     get:
       description: Downloads the specified snapshot file from a collection.
@@ -2999,8 +3022,9 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc listFullSnapshots() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.ListFullSnapshots(context.Background())\n\
+            \n)\n\nfunc listFullSnapshots() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.ListFullSnapshots(context.Background())\n\
             }\n"
           language: go
     post:
@@ -3060,8 +3084,9 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc createFullSnapshot() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.CreateFullSnapshot(context.Background())\n\
+            \n)\n\nfunc createFullSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.CreateFullSnapshot(context.Background())\n\
             }\n"
           language: go
   /snapshots/{snapshot_name}:
@@ -3123,8 +3148,9 @@ paths:
           language: python
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
-            \n)\n\nfunc deleteFullSnapshot() {\n\tclient, _ := qdrant.NewClient(&qdrant.Config{\n\
-            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\n\tclient.DeleteFullSnapshot(context.Background(),\
+            \n)\n\nfunc deleteFullSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
+            \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
+            \tpanic(err)\n\t}\n\n\tclient.DeleteFullSnapshot(context.Background(),\
             \ \"{snapshot_name}\")\n}\n"
           language: go
     get:
