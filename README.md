@@ -22,7 +22,7 @@ bash -x tools/sync-openapi.sh
 > [!NOTE]  
 > This script requires GNU `grep`, `yq` and `python` to be present in the system.
 
-Or automatically, just create a PR, and preview action will automatically try to sync and re-generate all the docs it can.
+Or automatically, just create a PR, and the Github Action will automatically try to sync and re-generate all the docs it can.
 
 ## How to update snippets?
 
