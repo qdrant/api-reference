@@ -16,7 +16,7 @@ func getCollection() {
 		panic(err)
 	}
 
-	info, err := client.GetCollection(context.Background(), "{collection_name}")
+	info, err := client.GetCollectionInfo(context.Background(), "{collection_name}")
 	if err != nil {
 		panic(err)
 	}
