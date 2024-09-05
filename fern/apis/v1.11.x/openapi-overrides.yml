@@ -334,7 +334,7 @@ paths:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc getCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
-            \tpanic(err)\n\t}\n\n\tinfo, err := client.GetCollection(context.Background(),\
+            \tpanic(err)\n\t}\n\n\tinfo, err := client.GetCollectionInfo(context.Background(),\
             \ \"{collection_name}\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"\
             Collection info: \", info)\n}\n"
           language: go
