@@ -1,8 +1,5 @@
 # Qdrant API Documentation
 
-This repo contains the configuration files for Qdrant's API documentation. 
-The documentation is built using Fern. 
-
 The website is available at [api.qdrant.tech](https://api.qdrant.tech/).
 
 ## What does this repo contain?
@@ -22,7 +19,7 @@ bash -x tools/sync-openapi.sh
 > [!NOTE]  
 > This script requires GNU `grep`, `yq` and `python` to be present in the system.
 
-Or automatically, just create a PR, and preview action will automatically try to sync and re-generate all the docs it can.
+Or automatically by creating a PR. The Github Action will automatically try to sync and re-generate all the docs it can.
 
 ## How to update snippets?
 

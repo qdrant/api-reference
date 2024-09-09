@@ -1,0 +1,49 @@
+package client
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/qdrant/go-client/qdrant"
+)
+
+func upsert() {
+	client, err := qdrant.NewClient(&qdrant.Config{
+		Host: "localhost",
+		Port: 6334,
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	response, err := client.Upsert(context.Background(), &qdrant.UpsertPoints{
+		CollectionName: "{collection_name}",
+		Points: []*qdrant.PointStruct{
+			{
+				Id:      qdrant.NewIDNum(1),
+				Vectors: qdrant.NewVectors(0.9, 0.1, 0.1),
+				Payload: qdrant.NewValueMap(map[string]any{
+					"color": "red",
+				}),
+			},
+			{
+				Id:      qdrant.NewIDNum(2),
+				Vectors: qdrant.NewVectors(0.1, 0.9, 0.1),
+				Payload: qdrant.NewValueMap(map[string]any{
+					"color": "green",
+				}),
+			},
+			{
+				Id:      qdrant.NewIDNum(3),
+				Vectors: qdrant.NewVectors(0.1, 0.1, 0.9),
+				Payload: qdrant.NewValueMap(map[string]any{
+					"color": "blue",
+				}),
+			},
+		},
+	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Upsert status: ", response.GetStatus())
+}
