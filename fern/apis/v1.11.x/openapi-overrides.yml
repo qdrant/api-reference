@@ -1592,15 +1592,15 @@ paths:
         - code: "# Set payload by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
             \ application/json' \\\n  --data-raw '{\n  \"payload\": {\n    \"property1\"\
-            : \"string\",\n    \"property2\": \"string\"\n  },\n  \"points\": [\n\
-            \    0,\n    3,\n    10\n  ]\n}'\n\n# Set payload by filter\ncurl  -X\
-            \ POST \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
+            : \"some_value\",\n    \"property2\": 32,\n    \"property3\": true\n \
+            \ },\n  \"points\": [\n    0,\n    3,\n    10\n  ]\n}'\n\n# Set payload\
+            \ by filter\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
             \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
             : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
             \      \"value\": \"red\"\n        }\n      }\n    ]\n  },\n  \"payload\"\
-            : {\n    \"property1\": \"string\",\n    \"property2\": \"string\"\n \
-            \ }\n}'"
+            : {\n    \"property1\": \"some_value\",\n    \"property2\": 32,\n    \"\
+            property3\": true\n  }\n}'"
           language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
