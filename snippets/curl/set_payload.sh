@@ -5,8 +5,9 @@ curl  -X POST \
   --header 'Content-Type: application/json' \
   --data-raw '{
   "payload": {
-    "property1": "string",
-    "property2": "string"
+    "property1": "some_value",
+    "property2": 32,
+    "property3": true
   },
   "points": [
     0,
@@ -32,7 +33,8 @@ curl  -X POST \
     ]
   },
   "payload": {
-    "property1": "string",
-    "property2": "string"
+    "property1": "some_value",
+    "property2": 32,
+    "property3": true
   }
 }'
