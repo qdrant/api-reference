@@ -59,6 +59,10 @@ paths:
             }\n"
           language: go
       - code-samples:
+        - code: "curl  -X GET \\\n  'http://localhost:6333/aliases' \\\n  --header\
+            \ 'api-key: <api-key-value>'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -143,6 +147,10 @@ paths:
             , collections)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X GET \\\n  'http://localhost:6333/collections' \\\n  --header\
+            \ 'api-key: <api-key-value>'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -208,6 +216,23 @@ paths:
             \n\terr = client.RenameAlias(context.Background(), \"production_collection\"\
             , \"legacy_collection\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
+      - code-samples:
+        - code: "# Create an alias\ncurl  -X POST \\\n  'http://localhost:6333/collections/aliases'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"actions\": [\n    {\n   \
+            \   \"create_alias\": {\n        \"collection_name\": \"{collection_name}\"\
+            ,\n        \"alias_name\": \"{alias_name}\"\n      }\n    }\n  ]\n}'\n\
+            \n# Delete an alias\ncurl  -X POST \\\n  'http://localhost:6333/collections/aliases'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"actions\": [\n    {\n   \
+            \   \"delete_alias\": {\n        \"alias_name\": \"{alias_name}\"\n  \
+            \    }\n    }\n  ]\n}'\n\n# Rename an alias\ncurl  -X POST \\\n  'http://localhost:6333/collections/aliases'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"actions\": [\n    {\n   \
+            \   \"rename_alias\": {\n        \"old_alias_name\": \"{old_alias_name}\"\
+            ,\n        \"new_alias_name\": \"{new_alias_name}\"\n      }\n    }\n\
+            \  ]\n}'\n"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.update_collection_aliases(\n    change_aliases_operations=[\n\
@@ -275,6 +300,10 @@ paths:
             \ \"{collection_name}\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -339,6 +368,10 @@ paths:
             Collection info: \", info)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -390,6 +423,12 @@ paths:
             \ &threshold,\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\
             }\n"
           language: go
+      - code-samples:
+        - code: "curl  -X PATCH \\\n  'http://localhost:6333/collections/collection_name'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"optimizers_config\": {\n\
+            \    \"indexing_threshold\": 10000\n  }\n}'"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.update_collection(\n    collection_name=\"\
@@ -450,19 +489,18 @@ paths:
             \t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
       - code-samples:
-        - code: "# Minimal curl command to create a collection with a vector field\n\
-            \ncurl -X PUT http://localhost:6333/collections/collection_name \\\n \
-            \    -H \"api-key: <apiKey>\" \\\n     -H \"Content-Type: application/json\"\
-            \ \\\n     -d '{\n            \"vectors\": {\n                \"size\"\
-            : 300,\n                \"distance\": \"Cosine\"\n            } \n   \
-            \     }'\n\n# Or with a sparse vector field\n\ncurl -X PUT http://localhost:6333/collections/collection_name\
-            \ \\\n     -H \"api-key: <apiKey>\" \\\n     -H \"Content-Type: application/json\"\
-            \ \\\n     -d '{\n            \"vectors\": {\n                \"size\"\
-            : 1536,\n                \"distance\": \"Cosine\"\n            },\n  \
-            \          \"sparse_vectors\": {\n                \"splade-model-name\"\
-            : {\n                    \"index\": {\n                        \"on_disk\"\
-            : true\n                    }\n                }\n            }\n    \
-            \    }'\n"
+        - code: "# Create a collection with default dense vector\ncurl  -X PUT \\\n\
+            \  'http://localhost:6333/collections/collection_name' \\\n  --header\
+            \ 'api-key: <api-key-value>' \\\n  --header 'Content-Type: application/json'\
+            \ \\\n  --data-raw '{\n  \"vectors\": {\n    \"size\": 384,\n    \"distance\"\
+            : \"Cosine\"\n  }\n}'\n\n# Create a collection with named dense and sparse\
+            \ vectors\ncurl  -X PUT \\\n  'http://localhost:6333/collections/collection_name'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"vectors\": {\n    \"dense-vector-name\"\
+            : {\n      \"size\": 1536,\n      \"distance\": \"Cosine\"\n    },\n \
+            \   \"sparse_vectors\": {\n      \"sparse-vector-name\": {\n        \"\
+            index\": {\n          \"on_disk\": true\n        }\n      }\n    }\n \
+            \ }\n}'\n"
           language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
@@ -533,6 +571,10 @@ paths:
             \ \"{collection_name}\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"\
             Collection aliases: \", aliases)\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/aliases'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -610,6 +652,10 @@ paths:
             Collection exists: \", exists)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/exists'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -674,6 +720,12 @@ paths:
             \ {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/index'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"field_name\": \"field_name\"\
+            ,\n  \"field_schema\": \"keyword\"\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.create_payload_index(\n    collection_name=\"\
             {collection_name}\",\n    field_name=\"name_of_the_field_to_index\",\n\
@@ -728,6 +780,10 @@ paths:
             panic(err)\n\t}\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name/index/field_name'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -778,6 +834,12 @@ paths:
             ), qdrant.NewIDNum(100),\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\
             \t}\n\tfmt.Println(\"Points: \", points)\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"ids\": [\n    0,\n    3,\n\
+            \    100\n  ]\n}'"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.retrieve(\n    collection_name=\"{collection_name}\"\
@@ -856,6 +918,19 @@ paths:
             \ err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Upsert status: \"\
             , response.GetStatus())\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    {\n    \
+            \  \"id\": \"76874cce-1fb9-4e16-9b0b-f085ac06ed6f\",\n      \"payload\"\
+            : {\n        \"color\": \"red\"\n      },\n      \"vector\": [\n     \
+            \   0.9,\n        0.1,\n        0.1\n      ]\n    },\n    {\n      \"\
+            id\": 1,\n      \"payload\": {\n        \"color\": \"green\"\n      },\n\
+            \      \"vector\": [\n        0.1,\n        0.9,\n        0.1\n      ]\n\
+            \    },\n    {\n      \"id\": 2,\n      \"payload\": {\n        \"color\"\
+            : \"blue\"\n      },\n      \"vector\": [\n        0.1,\n        0.1,\n\
+            \        0.9\n      ]\n    }\n  ]\n}'"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.upsert(\n    collection_name=\"{collection_name}\"\
@@ -979,6 +1054,22 @@ paths:
             \t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/batch'\
+            \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'api-key:\
+            \ <api-key-value>' \\\n  --data-raw '{\n  \"operations\": [\n    {\n \
+            \     \"upsert\": {\n        \"points\": [\n          {\n            \"\
+            id\": 1,\n            \"vector\": [\n              0.4,\n            \
+            \  0.3,\n              0.2,\n              0.1\n            ]\n      \
+            \    }\n        ]\n      }\n    },\n    {\n      \"update_vectors\": {\n\
+            \        \"points\": [\n          {\n            \"id\": 1,\n        \
+            \    \"vector\": [\n              0.11,\n              0.22,\n       \
+            \       0.33,\n              0.44\n            ]\n          }\n      \
+            \  ]\n      }\n    },\n    {\n      \"set_payload\": {\n        \"payload\"\
+            : {\n          \"test_payload_2\": 2,\n          \"test_payload_3\": 3\n\
+            \        },\n        \"points\": [\n          1\n        ]\n      }\n\
+            \    }\n  ]\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.batch_update_points(\n    collection_name=\"\
             {collection_name}\",\n    update_operations=[\n        models.UpsertOperation(\n\
@@ -1071,6 +1162,18 @@ paths:
             \ != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Count:\", count)\n}\n"
           language: go
       - code-samples:
+        - code: "# Count total number of points in a collection\ncurl  -X POST \\\n\
+            \  'http://localhost:6333/collections/collection_name/points/count' \\\
+            \n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"exact\": true\n}'\n\n# Count\
+            \ points satisfying a filter condition\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/count'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
+            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
+            \      \"value\": \"red\"\n        }\n      }\n    ]\n  },\n  \"exact\"\
+            : true\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.count(\n    collection_name=\"{collection_name}\"\
             ,\n    count_filter=models.Filter(\n        must=[\n            models.FieldCondition(key=\"\
@@ -1142,6 +1245,17 @@ paths:
             \ []*qdrant.Condition{\n\t\t\t\tqdrant.NewMatch(\"color\", \"red\"),\n\
             \t\t\t},\n\t\t}),\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
+      - code-samples:
+        - code: "# Delete points by IDs\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    0,\n   \
+            \ 3,\n    100\n  ]\n}'\n\n# Delete points satisfying a filter condition\n\
+            curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
+            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
+            \      \"value\": \"red\"\n        }\n      }\n    ]\n  }\n}'\n"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.delete(\n    collection_name=\"{collection_name}\"\
@@ -1234,6 +1348,14 @@ paths:
             \t\t\t}},\n\t\t\t},\n\t\t}),\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\
             \t}\n\tfmt.Println(\"Results: \", results)\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/discover'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"target\": [\n    0.2,\n \
+            \   0.1,\n    0.9,\n    0.7\n  ],\n  \"context\": [\n    {\n      \"positive\"\
+            : \"7f6652c4-89bd-40e0-ab1d-510f7fcddd2b\",\n      \"negative\": \"2c2c9f86-0171-4bd2-9ab0-b4754682cddd\"\
+            \n    }\n  ],\n  \"limit\": 10\n}'"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.discover(\n    \"{collection_name}\"\
@@ -1357,6 +1479,19 @@ paths:
             }\n"
           language: go
       - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/discover/batch'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
+            \    \"target\": [\n        0.2,\n        0.1,\n        0.9,\n       \
+            \ 0.7\n      ],\n      \"context\": [\n        {\n          \"positive\"\
+            : \"7f6652c4-89bd-40e0-ab1d-510f7fcddd2b\",\n          \"negative\": \"\
+            2c2c9f86-0171-4bd2-9ab0-b4754682cddd\"\n        }\n      ],\n      \"\
+            limit\": 1\n    },\n    {\n      \"target\": [\n        0.5,\n       \
+            \ 0.3,\n        0.2,\n        0.3\n      ],\n      \"context\": [\n  \
+            \      {\n          \"positive\": 342,\n          \"negative\": 213\n\
+            \        }\n      ],\n      \"limit\": 1\n    }\n  ]\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\ndiscover_queries = [\n    models.DiscoverRequest(\n\
             \        target=[0.2, 0.1, 0.9, 0.7],\n        context=[\n           \
@@ -1454,6 +1589,20 @@ paths:
             \ \", results)\n}\n"
           language: go
       - code-samples:
+        - code: "# Set payload by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"payload\": {\n    \"property1\"\
+            : \"string\",\n    \"property2\": \"string\"\n  },\n  \"points\": [\n\
+            \    0,\n    3,\n    10\n  ]\n}'\n\n# Set payload by filter\ncurl  -X\
+            \ POST \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
+            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
+            \      \"value\": \"red\"\n        }\n      }\n    ]\n  },\n  \"payload\"\
+            : {\n    \"property1\": \"string\",\n    \"property2\": \"string\"\n \
+            \ }\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.set_payload(\n    collection_name=\"\
             {collection_name}\",\n    payload={\n        \"property1\": \"string\"\
@@ -1513,6 +1662,19 @@ paths:
             \t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
       - code-samples:
+        - code: "# Overwrite payload by ID\ncurl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"payload\": {\n    \"property1\"\
+            : \"string\",\n    \"property2\": \"string\"\n  },\n  \"points\": [\n\
+            \    0,\n    3,\n    10\n  ]\n}'\n\n# Overwrite payload by filter\ncurl\
+            \  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"payload\": {\n    \"property1\"\
+            : \"string\",\n    \"property2\": \"string\"\n  },\n  \"filter\": {\n\
+            \    \"must\": [\n      {\n        \"key\": \"color\",\n        \"match\"\
+            : {\n          \"value\": \"red\"\n        }\n      }\n    ]\n  }\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.overwrite_payload(\n    collection_name=\"\
             {collection_name}\",\n    payload={\n        \"property1\": \"string\"\
@@ -1571,6 +1733,12 @@ paths:
             \t}\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/clear'\
+            \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'api-key:\
+            \ <api-key-value>' \\\n  --data-raw '{\n  \"points\": [\n    0,\n    3,\n\
+            \    100\n  ]\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.clear_payload(\n    collection_name=\"\
             {collection_name}\",\n    points_selector=[0, 3, 100],\n)\n"
@@ -1626,6 +1794,18 @@ paths:
             \ qdrant.NewIDNum(100)),\n\t\tKeys:           []string{\"color\", \"price\"\
             },\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
+      - code-samples:
+        - code: "# Delete payload by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"keys\": [\n    \"color\"\
+            ,\n    \"price\"\n  ],\n  \"points\": [\n    0,\n    3,\n    100\n  ]\n\
+            }'\n\n# Delete payload by filter\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"keys\": [\n    \"color\"\
+            ,\n    \"price\"\n  ],\n  \"filter\": {\n    \"must\": [\n      {\n  \
+            \      \"key\": \"color\",\n        \"match\": {\n          \"value\"\
+            : \"red\"\n        }\n      }\n    ]\n  }\n}'"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.delete_payload(\n    collection_name=\"\
@@ -1762,6 +1942,40 @@ paths:
             \ \", points)\n}\n"
           language: go
       - code-samples:
+        - code: "# Query nearest by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"query\": \"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\
+            \n}'\n\n# Recommend on the average of these vectors\ncurl  -X POST \\\n\
+            \  'http://localhost:6333/collections/collection_name/points/query' \\\
+            \n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"query\": {\n    \"recommend\"\
+            : {\n      \"positive\": [\n        [\n          0.11,\n          0.35,\n\
+            \          0.6\n        ]\n      ],\n      \"negative\": [\n        \"\
+            43cf51e2-8777-4f52-bc74-c2cbde0c8b04\",\n        [\n          0.01,\n\
+            \          0.45,\n          0.67\n        ]\n      ]\n    }\n  }\n}'\n\
+            \n# Fusion query\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"prefetch\": [\n    {\n  \
+            \    \"query\": {\n        \"values\": [\n          0.22,\n          0.8\n\
+            \        ],\n        \"indices\": [\n          1,\n          42\n    \
+            \    ]\n      },\n      \"using\": \"sparse\",\n      \"limit\": 20\n\
+            \    },\n    {\n      \"query\": [\n        0.01,\n        0.45,\n   \
+            \     0.67\n      ],\n      \"using\": \"dense\",\n      \"limit\": 20\n\
+            \    }\n  ],\n  \"query\": {\n    \"fusion\": \"rrf\"\n  }\n}'\n\n# 2-stage\
+            \ query\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"prefetch\": {\n    \"query\"\
+            : [\n      1,\n      23,\n      45,\n      67\n    ],\n    \"limit\":\
+            \ 100\n  },\n  \"query\": [\n    [\n      0.1,\n      0.2,\n      0.3\n\
+            \    ],\n    [\n      0.2,\n      0.1,\n      0.35\n    ],\n    [\n  \
+            \    0.8,\n      0.9,\n      0.53\n    ]\n  ],\n  \"using\": \"colbert\"\
+            ,\n  \"limit\": 10\n}'\n\n# Random sampling (as of 1.11.0)\ncurl  -X POST\
+            \ \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"query\": {\n    \"sample\"\
+            : \"random\"\n  }\n}'\n"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\n# Query nearest by ID\nnearest = client.query_points(\n\
             \    collection_name=\"{collection_name}\",\n    query=\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\
@@ -1875,6 +2089,15 @@ paths:
             Query results: \", results)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query/batch'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
+            \    \"query\": [\n        0.23,\n        0.325,\n        0.623\n    \
+            \  ],\n      \"limit\": 1\n    },\n    {\n      \"query\": [\n       \
+            \ 0.423,\n        0.23,\n        0.623\n      ],\n      \"limit\": 5,\n\
+            \      \"using\": \"image-vector\"\n    }\n  ]\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nnearest = client.query_batch_points(\n   \
             \ collection_name=\"{collection_name}\",\n    requests=[\n        models.QueryRequest(\n\
@@ -1931,6 +2154,13 @@ paths:
             \ err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Query results: \"\
             , results)\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query/groups'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"query\": [\n    0.324,\n\
+            \    0.643,\n    0.423\n  ],\n  \"group_by\": \"document_id\",\n  \"limit\"\
+            : 1,\n  \"group_size\": 5\n}'"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.query_points_groups(\n    collection_name=\"\
@@ -2000,6 +2230,16 @@ paths:
             city\", \"London\"),\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\t\
             panic(err)\n\t}\n\tfmt.Println(\"Results: \", results)\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/recommend'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"positive\": [\n    100,\n\
+            \    231\n  ],\n  \"negative\": [\n    \"3a6e2150-f7b7-496e-92cd-687e63e215fd\"\
+            ,\n    [\n      0.2,\n      0.3,\n      0.4,\n      0.5\n    ]\n  ],\n\
+            \  \"filter\": {\n    \"must\": [\n      {\n        \"key\": \"city\"\
+            ,\n        \"match\": {\n          \"value\": \"London\"\n        }\n\
+            \      }\n    ]\n  },\n  \"limit\": 1\n}'"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.recommend(\n    collection_name=\"\
@@ -2089,6 +2329,16 @@ paths:
             \t\tpanic(err)\n\t}\n\tfmt.Println(\"Results: \", results)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/recommend/batch'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
+            \    \"positive\": [\n        100,\n        231\n      ],\n      \"negative\"\
+            : [\n        \"9ad0884a-7bfe-43c0-b88f-c1d9a588b7e1\"\n      ],\n    \
+            \  \"limit\": 1\n    },\n    {\n      \"positive\": [\n        200,\n\
+            \        67\n      ],\n      \"negative\": [\n        300\n      ],\n\
+            \      \"limit\": 5\n    }\n  ]\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nrecommend_queries = [\n    models.RecommendRequest(\n\
             \        positive=[100, 231], negative=[718], filter=filter_, limit=3\n\
@@ -2160,6 +2410,13 @@ paths:
             \ \", results)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/recommend/groups'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"positive\": [\n    100,\n\
+            \    231\n  ],\n  \"negative\": [\n    718\n  ],\n  \"group_by\": \"document_id\"\
+            ,\n  \"limit\": 3,\n  \"group_size\": 2\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.recommend_groups(\n    collection_name=\"\
             {collection_name}\",\n    positive=[100, 231],\n    negative=[718],\n\
@@ -2229,6 +2486,15 @@ paths:
             \ {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Results: \", results)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/scroll'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"with_payload\": [\n    \"\
+            city\",\n    \"color\"\n  ],\n  \"filter\": {\n    \"must\": [\n     \
+            \ {\n        \"key\": \"color\",\n        \"match\": {\n          \"value\"\
+            : \"red\"\n        }\n      }\n    ]\n  },\n  \"limit\": 2,\n  \"with_vector\"\
+            : false\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.scroll(\n    collection_name=\"{collection_name}\"\
             ,\n    scroll_filter=models.Filter(\n        must=[\n            models.FieldCondition(key=\"\
@@ -2292,6 +2558,15 @@ paths:
             London\"),\n\t\t\t},\n\t\t},\n\t\tLimit: &limit,\n\t})\n\tif err != nil\
             \ {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Results: \", results)\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/search'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"vector\": [\n    0.2,\n \
+            \   0.1,\n    0.9,\n    0.7\n  ],\n  \"limit\": 1,\n  \"filter\": {\n\
+            \    \"must\": [\n      {\n        \"key\": \"city\",\n        \"match\"\
+            : {\n          \"value\": \"London\"\n        }\n      }\n    ]\n  }\n\
+            }'"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.search(\n    collection_name=\"{collection_name}\"\
@@ -2372,6 +2647,18 @@ paths:
             Query results: \", results)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/search/batch'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
+            \    \"vector\": [\n        0.2,\n        0.1,\n        0.9,\n       \
+            \ 0.7\n      ],\n      \"limit\": 3\n    },\n    {\n      \"vector\":\
+            \ [\n        0.5,\n        0.3,\n        0.2,\n        0.3\n      ],\n\
+            \      \"filter\": {\n        \"must\": [\n          {\n            \"\
+            key\": \"city\",\n            \"match\": {\n              \"value\": \"\
+            London\"\n            }\n          }\n        ]\n      },\n      \"limit\"\
+            : 3\n    }\n  ]\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nfilter_ = models.Filter(\n    must=[\n   \
             \     models.FieldCondition(\n            key=\"city\",\n            match=models.MatchValue(\n\
@@ -2433,6 +2720,13 @@ paths:
             \ err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Query results: \"\
             , results)\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/search/groups'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"vector\": [\n    0.2,\n \
+            \   0.1,\n    0.9,\n    0.7\n  ],\n  \"group_by\": \"document_id\",\n\
+            \  \"limit\": 4,\n  \"group_size\": 2\n}'"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.search_groups(\n    collection_name=\"\
@@ -2509,6 +2803,15 @@ paths:
             panic(err)\n\t}\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/vectors?wait=true'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    {\n    \
+            \  \"id\": 1,\n      \"vector\": [\n        0.0984,\n        0.1406,\n\
+            \        0.8973\n      ]\n    },\n    {\n      \"id\": 2,\n      \"vector\"\
+            : {\n        \"vector-name\": [\n          0.9,\n          0.8,\n    \
+            \      0.7,\n          0.6\n        ]\n      }\n    }\n  ]\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.update_vectors(\n    collection_name=\"\
             {collection_name}\",\n    points=[\n        models.PointVectors(\n   \
@@ -2582,6 +2885,18 @@ paths:
             \t\tpanic(err)\n\t}\n}\n"
           language: go
       - code-samples:
+        - code: "# Delete vectors by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/vectors/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    0,\n   \
+            \ 3,\n    10\n  ],\n  \"vectors\": [\n    \"text\",\n    \"image\"\n \
+            \ ]\n}'\n\n# Delete vectors by filter\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/vectors/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
+            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
+            \      \"value\": \"red\"\n        }\n      }\n    ]\n  },\n  \"vectors\"\
+            : [\n    \"text\",\n    \"image\"\n  ]\n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.delete_vectors(\n    collection_name=\"\
             {collection_name}\",\n    points=[0, 3, 100],\n    vectors=[\"text\",\
@@ -2638,6 +2953,12 @@ paths:
             {shard_key}\"),\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/shards'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"shard_key\": \"{shard_key}\"\
+            \n}'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -2693,6 +3014,12 @@ paths:
             \ \"{collection_name}\", &qdrant.DeleteShardKey{\n\t\tShardKey: qdrant.NewShardKey(\"\
             {shard_key}\"),\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/shards/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"shard_key\": \"{shard_key}\"\
+            \n}'"
+          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -2801,6 +3128,10 @@ paths:
             Snapshots: \", snapshots)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/snapshots'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -2865,6 +3196,10 @@ paths:
             Snapshot created: \", snapshot.Name)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/snapshots'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -2897,6 +3232,12 @@ paths:
             ,\n});\n"
           language: typescript
       - code-samples:
+        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/snapshots/recover'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"location\": \"http://example.com/path/to/snapshot.shapshot\"\
+            \n}'"
+          language: curl
+      - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.recover_snapshot(\n    \"{collection_name}\"\
             ,\n    \"http://example.com/path/to/snapshot.shapshot\",\n)\n"
@@ -2909,6 +3250,11 @@ paths:
       summary: Recover from an uploaded snapshot (collection)
       tags:
       - Snapshots
+      x-fern-examples:
+      - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/snapshots/upload'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --form 'snapshot=@/path/to/snapshot.shapshot'"
+          language: curl
   /collections/{collection_name}/snapshots/{snapshot_name}:
     delete:
       description: Deletes the specified snapshot for a collection.
@@ -2953,6 +3299,10 @@ paths:
             \ \"{collection_name}\", \"{snapshot_name}\")\n\tif err != nil {\n\t\t\
             panic(err)\n\t}\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name/snapshots/snapshot_name'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.delete_snapshot(\n    collection_name=\"\
@@ -3067,6 +3417,10 @@ paths:
             \ \", snapshots)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X GET \\\n  'http://localhost:6333/snapshots' \\\n  --header\
+            \ 'api-key: <api-key-value>'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -3130,6 +3484,10 @@ paths:
             \ \", snapshot.Name)\n}\n"
           language: go
       - code-samples:
+        - code: "curl  -X POST \\\n  'http://localhost:6333/snapshots' \\\n  --header\
+            \ 'api-key: <api-key-value>'"
+          language: curl
+      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -3192,6 +3550,10 @@ paths:
             \tpanic(err)\n\t}\n\n\terr = client.DeleteFullSnapshot(context.Background(),\
             \ \"{snapshot_name}\")\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"
           language: go
+      - code-samples:
+        - code: "curl  -X DELETE \\\n  'http://localhost:6333/snapshots/snapshot_name'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
