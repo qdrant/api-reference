@@ -11,7 +11,7 @@ curl  -X POST \
   ]
 }'
 
-# Delete points satisfying a filter condition
+# Delete points by filter 
 curl  -X POST \
   'http://localhost:6333/collections/collection_name/points/delete' \
   --header 'api-key: <api-key-value>' \
