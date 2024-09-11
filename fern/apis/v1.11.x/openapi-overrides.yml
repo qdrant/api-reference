@@ -1249,8 +1249,8 @@ paths:
         - code: "# Delete points by IDs\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/delete'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
             \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    0,\n   \
-            \ 3,\n    100\n  ]\n}'\n\n# Delete points satisfying a filter condition\n\
-            curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/delete'\
+            \ 3,\n    100\n  ]\n}'\n\n# Delete points by filter \ncurl  -X POST \\\
+            \n  'http://localhost:6333/collections/collection_name/points/delete'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
             \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
             : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
