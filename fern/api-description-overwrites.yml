@@ -406,3 +406,21 @@ paths:
       summary: Collect telemetry data
       tags:
       - Service
+  /collections/{collection_name}/points/search/matrix/pairs:
+    post:
+      description: Retrieves sparse matrix of pairwise distances between points sampled from the collection. Output is a list of pairs of points and their distances.
+      summary: Distance matrix pairs
+      tags:
+      - Search
+  /collections/{collection_name}/points/search/matrix/offsets:
+    post:
+      description: Retrieves sparse matrix of pairwise distances between points sampled from the collection. Output is a form of row and column offsets and list of distances.
+      summary: Distance matrix offsets
+      tags:
+      - Search
+  /collections/{collection_name}/facet:
+    post:
+      description: Retrieves facets for the specified payload field.
+      summary: Payload field facets
+      tags:
+      - Points
