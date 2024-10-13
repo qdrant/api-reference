@@ -473,6 +473,31 @@ paths:
       summary: Check collection existence
       tags:
         - Collections
+  /collections/{collection_name}/facet:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.facet(\n    collection_name=\"{collection_name}\",\n    key=\"my-payload-key\",\n    facet_filter=models.Filter(must=[models.Match(\"color\", \"red\")]),\n    limit=10,\n)\n\n"
+              language: python
+        - code-samples:
+            - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\nimport static io.qdrant.client.ConditionFactory.matchKeyword;\nimport io.qdrant.client.grpc.Points;\nimport io.qdrant.client.grpc.Filter;\n\nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"localhost\", 6334, false).build());\n\nclient\n    .facetAsync(\n        Points.FacetCounts.newBuilder()\n            .setCollectionName(collection_name)\n            .setKey(\"my-payload-key\")\n            .setFilter(\n                Filter.newBuilder()\n                    .addMust(matchKeyword(\"color\", \"red\"))\n                    .build())\n            .build())\n        .get();"
+              language: java
+        - code-samples:
+            - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\nclient.facet(\"{collection_name}\", {\n    filter: {\n        must: [\n            {\n                key: \"color\",\n                match: {\n                    value: \"red\",\n                },\n            },\n        ],\n    },\n    key: \"my-payload-key\",\n    limit: 10,\n});\n"
+              language: typescript
+        - code-samples:
+            - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\n)\n\nfunc facet() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tlimit := uint64(10)\n\tresults, err := client.Facet(context.Background(), &qdrant.FacetCounts{\n\t\tCollectionName: \"{collection_name}\",\n\t\tKey:            \"my-payload-key\",\n\t\tLimit:          &limit,\n\t\tFilter: &qdrant.Filter{\n\t\t\tMust: []*qdrant.Condition{\n\t\t\t\tqdrant.NewMatch(\"color\", \"red\"),\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Query results: \", results)\n}\n"
+              language: go
+        - code-samples:
+            - code: "use qdrant_client::qdrant::{Condition, FacetCountsBuilder, Filter};\nuse qdrant_client::Qdrant;\n\nlet client = Qdrant::from_url(\"http://localhost:6334\").build()?;\n\nclient\n    .facet(\n         FacetCountsBuilder::new(\"{collection_name}\", \"my-payload-key\")\n             .limit(10)\n             .filter(Filter::must(vec![Condition::matches(\n                 \"color\",\n                 \"red\".to_string(),\n             )])),\n     )\n     .await?;"
+              language: rust
+        - code-samples:
+            - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new QdrantClient(\"localhost\", 6334);\n\nawait client.FacetAsync(\n\t\"{collection_name}\",\n\tfilter: MatchKeyword(\"color\", \"red\"),\n\tkey: \"my-payload-key\",\n\tlimit: 10\n);"
+              language: csharp
+      description: Retrieves facets for the specified payload field.
+      summary: Payload field facets
+      tags:
+        - Points
   /collections/{collection_name}/index:
     put:
       x-fern-examples:
@@ -1172,6 +1197,56 @@ paths:
       summary: Search point groups
       tags:
         - Search
+  /collections/{collection_name}/points/search/matrix/offsets:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.search_matrix_offsets(\n    collection_name=\"{collection_name}\",\n    sample=100,\n    limit=5,\n    query_filter=models.Filter(\n        must=[\n            models.FieldCondition(\n                key=\"color\", match=models.MatchValue(value=\"red\")\n            ),\n        ]\n    ),\n)"
+              language: python
+        - code-samples:
+            - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\nimport io.qdrant.client.grpc.Points.Filter;\nimport io.qdrant.client.grpc.Points.SearchMatrixPoints;\n\nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"localhost\", 6334, false).build());\n\nclient\n    .searchMatrixOffsetsAsync(\n        SearchMatrixPoints.newBuilder()\n            .setCollectionName(\"{collection_name}\")\n            .setFilter(\n                Filter.newBuilder()\n                    .addMust(matchKeyword(\"color\", \"red\"))\n                    .build()\n            )\n            .setSample(100)\n            .setLimit(5)\n            .build())\n    .get();\n"
+              language: java
+        - code-samples:
+            - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\nclient.searchMatrixOffsets(\"{collection_name}\", {\n    filter: {\n        must: [\n            {\n                key: \"color\",\n                match: {\n                    value: \"red\",\n                },\n            },\n        ],\n    },\n    sample: 100,\n    limit: 5,\n});\n"
+              language: typescript
+        - code-samples:
+            - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\n)\n\nfunc searchMatiOffsets() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tsample := uint64(100)\n\tlimit := uint64(5)\n\tresults, err := client.SearchMatrixOffsets(context.Background(), &qdrant.SearchMatrixPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\tSample:         &sample,\n\t\tLimit:          &limit,\n\t\tFilter: &qdrant.Filter{\n\t\t\tMust: []*qdrant.Condition{\n\t\t\t\tqdrant.NewMatch(\"color\", \"red\"),\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Query results: \", results)\n}\n"
+              language: go
+        - code-samples:
+            - code: "use qdrant_client::qdrant::{Condition, SearchMatrixPointsBuilder, Filter};\nuse qdrant_client::Qdrant;\n\nlet client = Qdrant::from_url(\"http://localhost:6334\").build()?;\n\nclient\n    .search_matrix_offsets(\n        SearchMatrixPointsBuilder::new(\"{collection_name}\")\n           .filter(Filter::must(vec![Condition::matches(\n               \"color\",\n               \"red\".to_string(),\n           )]))\n           .sample(100)\n           .limit(5),\n    )\n    .await?;"
+              language: rust
+        - code-samples:
+            - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new QdrantClient(\"localhost\", 6334);\n\nawait client.SearchMatrixOffsetsAsync(\n    \"{collection_name}\",\n    filter: MatchKeyword(\"color\", \"red\"),\n    sample: 100,\n    limit: 5\n);"
+              language: csharp
+      description: Retrieves sparse matrix of pairwise distances between points sampled from the collection. Output is a form of row and column offsets and list of distances.
+      summary: Distance matrix offsets
+      tags:
+        - Search
+  /collections/{collection_name}/points/search/matrix/pairs:
+    post:
+      x-fern-examples:
+        - code-samples:
+            - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"http://localhost:6333\")\n\nclient.search_matrix_pairs(\n    collection_name=\"{collection_name}\",\n    sample=100,\n    limit=5,\n    query_filter=models.Filter(\n        must=[\n            models.FieldCondition(\n                key=\"color\", match=models.MatchValue(value=\"red\")\n            ),\n        ]\n    ),\n)"
+              language: python
+        - code-samples:
+            - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\nimport io.qdrant.client.grpc.Points.Filter;\nimport io.qdrant.client.grpc.Points.SearchMatrixPoints;\n\nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"localhost\", 6334, false).build());\n\nclient\n    .searchMatrixPairsAsync(\n        SearchMatrixPoints.newBuilder()\n            .setCollectionName(\"{collection_name}\")\n            .setFilter(\n                Filter.newBuilder()\n                    .addMust(matchKeyword(\"color\", \"red\"))\n                    .build()\n            )\n            .setSample(100)\n            .setLimit(5)\n            .build())\n    .get();\n"
+              language: java
+        - code-samples:
+            - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\nclient.searchMatrixPairs(\"{collection_name}\", {\n    filter: {\n        must: [\n            {\n                key: \"color\",\n                match: {\n                    value: \"red\",\n                },\n            },\n        ],\n    },\n    sample: 100,\n    limit: 5,\n});"
+              language: typescript
+        - code-samples:
+            - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\n)\n\nfunc searchMatixPairs() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tsample := uint64(100)\n\tlimit := uint64(5)\n\tresults, err := client.SearchMatrixPairs(context.Background(), &qdrant.SearchMatrixPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\tSample:         &sample,\n\t\tLimit:          &limit,\n\t\tFilter: &qdrant.Filter{\n\t\t\tMust: []*qdrant.Condition{\n\t\t\t\tqdrant.NewMatch(\"color\", \"red\"),\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Query results: \", results)\n}\n"
+              language: go
+        - code-samples:
+            - code: "use qdrant_client::qdrant::{Condition, SearchMatrixPointsBuilder, Filter};\nuse qdrant_client::Qdrant;\n\nlet client = Qdrant::from_url(\"http://localhost:6334\").build()?;\n\nclient\n    .search_matrix_pairs(\n        SearchMatrixPointsBuilder::new(\"{collection_name}\")\n           .filter(Filter::must(vec![Condition::matches(\n               \"color\",\n               \"red\".to_string(),\n           )]))\n           .sample(100)\n           .limit(5),\n    )\n    .await?;\n"
+              language: rust
+        - code-samples:
+            - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\n\nvar client = new QdrantClient(\"localhost\", 6334);\n\nawait client.SearchMatrixPairsAsync(\n    \"{collection_name}\",\n    filter: MatchKeyword(\"color\", \"red\"),\n    sample: 100,\n    limit: 5\n);"
+              language: csharp
+      description: Retrieves sparse matrix of pairwise distances between points sampled from the collection. Output is a list of pairs of points and their distances.
+      summary: Distance matrix pairs
+      tags:
+        - Search
   /collections/{collection_name}/points/vectors:
     put:
       x-fern-examples:
@@ -1813,21 +1888,3 @@ paths:
       summary: Collect telemetry data
       tags:
         - Service
-  /collections/{collection_name}/points/search/matrix/pairs:
-    post:
-      description: Retrieves sparse matrix of pairwise distances between points sampled from the collection. Output is a list of pairs of points and their distances.
-      summary: Distance matrix pairs
-      tags:
-        - Search
-  /collections/{collection_name}/points/search/matrix/offsets:
-    post:
-      description: Retrieves sparse matrix of pairwise distances between points sampled from the collection. Output is a form of row and column offsets and list of distances.
-      summary: Distance matrix offsets
-      tags:
-        - Search
-  /collections/{collection_name}/facet:
-    post:
-      description: Retrieves facets for the specified payload field.
-      summary: Payload field facets
-      tags:
-        - Points
