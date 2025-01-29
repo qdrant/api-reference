@@ -1137,7 +1137,6 @@ paths:
         - code-samples:
             - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\n)\n\nfunc search() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tlimit := uint64(3)\n\tresults, err := client.Query(context.Background(), &qdrant.QueryPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\tQuery:          qdrant.NewQuery(0.2, 0.1, 0.9, 0.7),\n\t\tFilter: &qdrant.Filter{\n\t\t\tMust: []*qdrant.Condition{\n\t\t\t\tqdrant.NewMatch(\"city\", \"London\"),\n\t\t\t},\n\t\t},\n\t\tLimit: &limit,\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Results: \", results)\n}\n"
               language: go
-      deprecated: true
       description: Retrieves the closest points based on vector similarity and given filtering conditions.
       summary: Search points
       tags:
