@@ -1114,6 +1114,7 @@ paths:
       tags:
         - Points
   /collections/{collection_name}/points/search:
+    availability: "deprecated"
     post:
       x-fern-examples:
         - code-samples:
@@ -1142,6 +1143,7 @@ paths:
       tags:
         - Search
   /collections/{collection_name}/points/search/batch:
+    deprecated: true
     post:
       x-fern-examples:
         - code-samples:
