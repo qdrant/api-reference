@@ -1141,6 +1141,7 @@ paths:
       summary: Search points
       tags:
         - Search
+    deprecated: true
   /collections/{collection_name}/points/search/batch:
     post:
       x-fern-examples:
@@ -1169,6 +1170,7 @@ paths:
       summary: Search batch points
       tags:
         - Search
+    availability: deprecated
   /collections/{collection_name}/points/search/groups:
     post:
       x-fern-examples:

@@ -4871,7 +4871,6 @@
       }
     },
     "/collections/{collection_name}/points/search/batch": {
-      "deprecated": true,
       "post": {
         "tags": [
           "Search"
@@ -4986,7 +4985,6 @@
       }
     },
     "/collections/{collection_name}/points/search/groups": {
-      "availability": "deprecated",
       "post": {
         "tags": [
           "Search"
