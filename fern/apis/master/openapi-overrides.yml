@@ -1166,7 +1166,6 @@ paths:
         - code-samples:
             - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\n)\n\nfunc searchBatch() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tfilter := qdrant.Filter{\n\t\tMust: []*qdrant.Condition{\n\t\t\tqdrant.NewMatch(\"city\", \"London\"),\n\t\t},\n\t}\n\tlimit := uint64(3)\n\tresults, err := client.QueryBatch(context.Background(), &qdrant.QueryBatchPoints{\n\t\tCollectionName: \"{collection_name}\",\n\t\tQueryPoints: []*qdrant.QueryPoints{\n\t\t\t{\n\t\t\t\tCollectionName: \"{collection_name}\",\n\t\t\t\tQuery:          qdrant.NewQuery(0.2, 0.1, 0.9, 0.7),\n\t\t\t\tLimit:          &limit,\n\t\t\t\tFilter:         &filter,\n\t\t\t},\n\t\t\t{\n\t\t\t\tCollectionName: \"{collection_name}\",\n\t\t\t\tQuery:          qdrant.NewQuery(0.5, 0.3, 0.2, 0.3),\n\t\t\t\tLimit:          &limit,\n\t\t\t\tFilter:         &filter,\n\t\t\t},\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Query results: \", results)\n}\n"
               language: go
-      x-fern-availability: deprecated
       description: Retrieves the closest points in batches based on vector similarity and given filtering conditions.
       summary: Search batch points
       tags:
@@ -1195,7 +1194,6 @@ paths:
         - code-samples:
             - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\n)\n\nfunc searchGroups() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tgroupSize := uint64(2)\n\tresults, err := client.QueryGroups(context.Background(), &qdrant.QueryPointGroups{\n\t\tCollectionName: \"{collection_name}\",\n\t\tQuery:          qdrant.NewQuery(0.01, 0.45, 0.67),\n\t\tGroupBy:        \"document_id\",\n\t\tGroupSize:      &groupSize,\n\t})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(\"Query results: \", results)\n}\n"
               language: go
-      availability: deprecated
       description: Retrieves the closest points based on vector similarity and given filtering conditions, grouped by a given payload field.
       summary: Search point groups
       tags:
