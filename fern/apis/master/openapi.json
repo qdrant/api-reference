@@ -578,7 +578,6 @@
         "summary": "Search points",
         "description": "Retrieve closest points based on vector similarity and given filtering conditions",
         "operationId": "search_points",
-        "availability": "deprecated",
         "requestBody": {
           "description": "Search request with optional filtering",
           "content": {
@@ -4877,7 +4876,6 @@
           "Search"
         ],
         "summary": "Search batch points",
-        "deprecated": true,
         "description": "Retrieve by batch the closest points based on vector similarity and given filtering conditions",
         "operationId": "search_batch_points",
         "requestBody": {
@@ -7344,6 +7342,64 @@
             "type": "integer",
             "format": "uint",
             "minimum": 0,
+            "nullable": true
+          },
+          "multivector_config": {
+            "description": "Multivector configuration",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StrictModeMultivectorConfig"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "sparse_config": {
+            "description": "Sparse vector configuration",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StrictModeSparseConfig"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          }
+        }
+      },
+      "StrictModeMultivectorConfig": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/StrictModeMultivector"
+        }
+      },
+      "StrictModeMultivector": {
+        "type": "object",
+        "properties": {
+          "max_vectors": {
+            "description": "Max number of vectors in a multivector",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1,
+            "nullable": true
+          }
+        }
+      },
+      "StrictModeSparseConfig": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/StrictModeSparse"
+        }
+      },
+      "StrictModeSparse": {
+        "type": "object",
+        "properties": {
+          "max_length": {
+            "description": "Max length of sparse vector",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1,
             "nullable": true
           }
         }
