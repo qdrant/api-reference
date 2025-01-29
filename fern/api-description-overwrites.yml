@@ -225,14 +225,12 @@ paths:
       - Search
   /collections/{collection_name}/points/search/batch:
     post:
-      x-fern-availability: deprecated
       description: Retrieves the closest points in batches based on vector similarity and given filtering conditions.
       summary: Search batch points
       tags:
       - Search
   /collections/{collection_name}/points/search/groups:
     post:
-      availability: deprecated
       description: Retrieves the closest points based on vector similarity and given filtering conditions, grouped by a given payload field.
       summary: Search point groups
       tags:
