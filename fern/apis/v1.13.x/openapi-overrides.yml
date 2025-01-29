@@ -2576,6 +2576,7 @@ paths:
           language: go
   /collections/{collection_name}/points/search:
     post:
+      deprecated: true
       description: Retrieves the closest points based on vector similarity and given
         filtering conditions.
       summary: Search points
@@ -2656,6 +2657,7 @@ paths:
       summary: Search batch points
       tags:
       - Search
+      x-fern-availability: deprecated
       x-fern-examples:
       - code-samples:
         - code: "using Qdrant.Client;\nusing Qdrant.Client.Grpc;\nusing static Qdrant.Client.Grpc.Conditions;\n\
@@ -2745,6 +2747,7 @@ paths:
           language: go
   /collections/{collection_name}/points/search/groups:
     post:
+      availability: deprecated
       description: Retrieves the closest points based on vector similarity and given
         filtering conditions, grouped by a given payload field.
       summary: Search point groups
