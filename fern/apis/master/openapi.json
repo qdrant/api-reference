@@ -578,6 +578,7 @@
         "summary": "Search points",
         "description": "Retrieve closest points based on vector similarity and given filtering conditions",
         "operationId": "search_points",
+        "availability": "deprecated",
         "requestBody": {
           "description": "Search request with optional filtering",
           "content": {
@@ -4876,6 +4877,7 @@
           "Search"
         ],
         "summary": "Search batch points",
+        "deprecated": true,
         "description": "Retrieve by batch the closest points based on vector similarity and given filtering conditions",
         "operationId": "search_batch_points",
         "requestBody": {
