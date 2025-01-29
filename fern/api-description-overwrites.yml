@@ -217,12 +217,14 @@ paths:
       tags:
       - Points
   /collections/{collection_name}/points/search:
+    deprecated: true
     post:
       description: Retrieves the closest points based on vector similarity and given filtering conditions.
       summary: Search points
       tags:
       - Search
   /collections/{collection_name}/points/search/batch:
+    availability: deprecated
     post:
       description: Retrieves the closest points in batches based on vector similarity and given filtering conditions.
       summary: Search batch points
