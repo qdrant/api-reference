@@ -572,6 +572,7 @@
     },
     "/collections/{collection_name}/points/search": {
       "post": {
+        "deprecated": true,
         "tags": [
           "Search"
         ],
@@ -4872,6 +4873,7 @@
     },
     "/collections/{collection_name}/points/search/batch": {
       "post": {
+        "deprecated": true,
         "tags": [
           "Search"
         ],
@@ -4986,6 +4988,7 @@
     },
     "/collections/{collection_name}/points/search/groups": {
       "post": {
+        "deprecated": true,
         "tags": [
           "Search"
         ],
@@ -5094,6 +5097,7 @@
     },
     "/collections/{collection_name}/points/recommend": {
       "post": {
+        "deprecated": true,
         "tags": [
           "Search"
         ],
@@ -5205,6 +5209,7 @@
     },
     "/collections/{collection_name}/points/recommend/batch": {
       "post": {
+        "deprecated": true,
         "tags": [
           "Search"
         ],
@@ -5319,6 +5324,7 @@
     },
     "/collections/{collection_name}/points/recommend/groups": {
       "post": {
+        "deprecated": true,
         "tags": [
           "Search"
         ],
@@ -5427,6 +5433,7 @@
     },
     "/collections/{collection_name}/points/discover": {
       "post": {
+        "deprecated": true,
         "tags": [
           "Search"
         ],
@@ -5538,6 +5545,7 @@
     },
     "/collections/{collection_name}/points/discover/batch": {
       "post": {
+        "deprecated": true,
         "tags": [
           "Search"
         ],
@@ -6696,7 +6704,7 @@
           "strict_mode_config": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/StrictModeConfig"
+                "$ref": "#/components/schemas/StrictModeConfigOutput"
               },
               {
                 "nullable": true
@@ -7245,7 +7253,7 @@
           }
         }
       },
-      "StrictModeConfig": {
+      "StrictModeConfigOutput": {
         "type": "object",
         "properties": {
           "enabled": {
@@ -7268,12 +7276,12 @@
             "nullable": true
           },
           "unindexed_filtering_retrieve": {
-            "description": "Allow usage of unindexed fields in retrieval based (eg. search) filters.",
+            "description": "Allow usage of unindexed fields in retrieval based (e.g. search) filters.",
             "type": "boolean",
             "nullable": true
           },
           "unindexed_filtering_update": {
-            "description": "Allow usage of unindexed fields in filtered updates (eg. delete by payload).",
+            "description": "Allow usage of unindexed fields in filtered updates (e.g. delete by payload).",
             "type": "boolean",
             "nullable": true
           },
@@ -7313,18 +7321,25 @@
             "description": "Max number of read operations per minute per replica",
             "type": "integer",
             "format": "uint",
-            "minimum": 1,
+            "minimum": 0,
             "nullable": true
           },
           "write_rate_limit": {
             "description": "Max number of write operations per minute per replica",
             "type": "integer",
             "format": "uint",
-            "minimum": 1,
+            "minimum": 0,
             "nullable": true
           },
           "max_collection_payload_size_bytes": {
             "description": "Max size of a collections payload storage in bytes",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "max_points_count": {
+            "description": "Max number of points estimated in a collection",
             "type": "integer",
             "format": "uint",
             "minimum": 0,
@@ -7339,6 +7354,64 @@
           },
           "condition_max_size": {
             "description": "Max size of a condition, eg. items in `MatchAny`.",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "multivector_config": {
+            "description": "Multivector configuration",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StrictModeMultivectorConfigOutput"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "sparse_config": {
+            "description": "Sparse vector configuration",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StrictModeSparseConfigOutput"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          }
+        }
+      },
+      "StrictModeMultivectorConfigOutput": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/StrictModeMultivectorOutput"
+        }
+      },
+      "StrictModeMultivectorOutput": {
+        "type": "object",
+        "properties": {
+          "max_vectors": {
+            "description": "Max number of vectors in a multivector",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          }
+        }
+      },
+      "StrictModeSparseConfigOutput": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/StrictModeSparseOutput"
+        }
+      },
+      "StrictModeSparseOutput": {
+        "type": "object",
+        "properties": {
+          "max_length": {
+            "description": "Max length of sparse vector",
             "type": "integer",
             "format": "uint",
             "minimum": 0,
@@ -8282,7 +8355,7 @@
             ]
           },
           "geo_bounding_box": {
-            "description": "Check if points geo location lies in a given area",
+            "description": "Check if points geolocation lies in a given area",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/GeoBoundingBox"
@@ -8324,6 +8397,16 @@
                 "nullable": true
               }
             ]
+          },
+          "is_empty": {
+            "description": "Check that the field is empty, alternative syntax for `is_empty: \"field_name\"`",
+            "type": "boolean",
+            "nullable": true
+          },
+          "is_null": {
+            "description": "Check that the field is null, alternative syntax for `is_null: \"field_name\"`",
+            "type": "boolean",
+            "nullable": true
           }
         }
       },
@@ -9512,6 +9595,172 @@
         "properties": {
           "collection": {
             "type": "string"
+          }
+        }
+      },
+      "StrictModeConfig": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "description": "Whether strict mode is enabled for a collection or not.",
+            "type": "boolean",
+            "nullable": true
+          },
+          "max_query_limit": {
+            "description": "Max allowed `limit` parameter for all APIs that don't have their own max limit.",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1,
+            "nullable": true
+          },
+          "max_timeout": {
+            "description": "Max allowed `timeout` parameter.",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1,
+            "nullable": true
+          },
+          "unindexed_filtering_retrieve": {
+            "description": "Allow usage of unindexed fields in retrieval based (e.g. search) filters.",
+            "type": "boolean",
+            "nullable": true
+          },
+          "unindexed_filtering_update": {
+            "description": "Allow usage of unindexed fields in filtered updates (e.g. delete by payload).",
+            "type": "boolean",
+            "nullable": true
+          },
+          "search_max_hnsw_ef": {
+            "description": "Max HNSW value allowed in search parameters.",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "search_allow_exact": {
+            "description": "Whether exact search is allowed or not.",
+            "type": "boolean",
+            "nullable": true
+          },
+          "search_max_oversampling": {
+            "description": "Max oversampling value allowed in search.",
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "upsert_max_batchsize": {
+            "description": "Max batchsize when upserting",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "max_collection_vector_size_bytes": {
+            "description": "Max size of a collections vector storage in bytes, ignoring replicas.",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "read_rate_limit": {
+            "description": "Max number of read operations per minute per replica",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1,
+            "nullable": true
+          },
+          "write_rate_limit": {
+            "description": "Max number of write operations per minute per replica",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1,
+            "nullable": true
+          },
+          "max_collection_payload_size_bytes": {
+            "description": "Max size of a collections payload storage in bytes",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "max_points_count": {
+            "description": "Max number of points estimated in a collection",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1,
+            "nullable": true
+          },
+          "filter_max_conditions": {
+            "description": "Max conditions a filter can have.",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "condition_max_size": {
+            "description": "Max size of a condition, eg. items in `MatchAny`.",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "multivector_config": {
+            "description": "Multivector configuration",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StrictModeMultivectorConfig"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "sparse_config": {
+            "description": "Sparse vector configuration",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StrictModeSparseConfig"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          }
+        }
+      },
+      "StrictModeMultivectorConfig": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/StrictModeMultivector"
+        }
+      },
+      "StrictModeMultivector": {
+        "type": "object",
+        "properties": {
+          "max_vectors": {
+            "description": "Max number of vectors in a multivector",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1,
+            "nullable": true
+          }
+        }
+      },
+      "StrictModeSparseConfig": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/StrictModeSparse"
+        }
+      },
+      "StrictModeSparse": {
+        "type": "object",
+        "properties": {
+          "max_length": {
+            "description": "Max length of sparse vector",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1,
+            "nullable": true
           }
         }
       },
@@ -11167,7 +11416,7 @@
             "minimum": 0
           },
           "config": {
-            "$ref": "#/components/schemas/CollectionConfigInternal"
+            "$ref": "#/components/schemas/CollectionConfigTelemetry"
           },
           "shards": {
             "type": "array",
@@ -11195,7 +11444,7 @@
           }
         }
       },
-      "CollectionConfigInternal": {
+      "CollectionConfigTelemetry": {
         "type": "object",
         "required": [
           "hnsw_config",
@@ -11230,7 +11479,7 @@
           "strict_mode_config": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/StrictModeConfig"
+                "$ref": "#/components/schemas/StrictModeConfigOutput"
               },
               {
                 "nullable": true
@@ -12388,8 +12637,12 @@
         "type": "object",
         "required": [
           "cpu",
-          "io_read",
-          "io_write"
+          "payload_index_io_read",
+          "payload_index_io_write",
+          "payload_io_read",
+          "payload_io_write",
+          "vector_io_read",
+          "vector_io_write"
         ],
         "properties": {
           "cpu": {
@@ -12397,12 +12650,32 @@
             "format": "uint",
             "minimum": 0
           },
-          "io_read": {
+          "payload_io_read": {
             "type": "integer",
             "format": "uint",
             "minimum": 0
           },
-          "io_write": {
+          "payload_io_write": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0
+          },
+          "payload_index_io_read": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0
+          },
+          "payload_index_io_write": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0
+          },
+          "vector_io_read": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0
+          },
+          "vector_io_write": {
             "type": "integer",
             "format": "uint",
             "minimum": 0
@@ -13996,6 +14269,9 @@
             "$ref": "#/components/schemas/FusionQuery"
           },
           {
+            "$ref": "#/components/schemas/FormulaQuery"
+          },
+          {
             "$ref": "#/components/schemas/SampleQuery"
           }
         ]
@@ -14165,6 +14441,323 @@
           "rrf",
           "dbsf"
         ]
+      },
+      "FormulaQuery": {
+        "type": "object",
+        "required": [
+          "formula"
+        ],
+        "properties": {
+          "formula": {
+            "$ref": "#/components/schemas/Expression"
+          },
+          "defaults": {
+            "default": {},
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "Expression": {
+        "anyOf": [
+          {
+            "type": "number",
+            "format": "float"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "#/components/schemas/Condition"
+          },
+          {
+            "$ref": "#/components/schemas/MultExpression"
+          },
+          {
+            "$ref": "#/components/schemas/SumExpression"
+          },
+          {
+            "$ref": "#/components/schemas/NegExpression"
+          },
+          {
+            "$ref": "#/components/schemas/AbsExpression"
+          },
+          {
+            "$ref": "#/components/schemas/DivExpression"
+          },
+          {
+            "$ref": "#/components/schemas/SqrtExpression"
+          },
+          {
+            "$ref": "#/components/schemas/PowExpression"
+          },
+          {
+            "$ref": "#/components/schemas/ExpExpression"
+          },
+          {
+            "$ref": "#/components/schemas/Log10Expression"
+          },
+          {
+            "$ref": "#/components/schemas/LnExpression"
+          },
+          {
+            "$ref": "#/components/schemas/GeoDistance"
+          },
+          {
+            "$ref": "#/components/schemas/LinDecayExpression"
+          },
+          {
+            "$ref": "#/components/schemas/ExpDecayExpression"
+          },
+          {
+            "$ref": "#/components/schemas/GaussDecayExpression"
+          }
+        ]
+      },
+      "MultExpression": {
+        "type": "object",
+        "required": [
+          "mult"
+        ],
+        "properties": {
+          "mult": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Expression"
+            }
+          }
+        }
+      },
+      "SumExpression": {
+        "type": "object",
+        "required": [
+          "sum"
+        ],
+        "properties": {
+          "sum": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Expression"
+            }
+          }
+        }
+      },
+      "NegExpression": {
+        "type": "object",
+        "required": [
+          "neg"
+        ],
+        "properties": {
+          "neg": {
+            "$ref": "#/components/schemas/Expression"
+          }
+        }
+      },
+      "AbsExpression": {
+        "type": "object",
+        "required": [
+          "abs"
+        ],
+        "properties": {
+          "abs": {
+            "$ref": "#/components/schemas/Expression"
+          }
+        }
+      },
+      "DivExpression": {
+        "type": "object",
+        "required": [
+          "div"
+        ],
+        "properties": {
+          "div": {
+            "$ref": "#/components/schemas/DivParams"
+          }
+        }
+      },
+      "DivParams": {
+        "type": "object",
+        "required": [
+          "left",
+          "right"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/components/schemas/Expression"
+          },
+          "right": {
+            "$ref": "#/components/schemas/Expression"
+          },
+          "by_zero_default": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          }
+        }
+      },
+      "SqrtExpression": {
+        "type": "object",
+        "required": [
+          "sqrt"
+        ],
+        "properties": {
+          "sqrt": {
+            "$ref": "#/components/schemas/Expression"
+          }
+        }
+      },
+      "PowExpression": {
+        "type": "object",
+        "required": [
+          "pow"
+        ],
+        "properties": {
+          "pow": {
+            "$ref": "#/components/schemas/PowParams"
+          }
+        }
+      },
+      "PowParams": {
+        "type": "object",
+        "required": [
+          "base",
+          "exponent"
+        ],
+        "properties": {
+          "base": {
+            "$ref": "#/components/schemas/Expression"
+          },
+          "exponent": {
+            "$ref": "#/components/schemas/Expression"
+          }
+        }
+      },
+      "ExpExpression": {
+        "type": "object",
+        "required": [
+          "exp"
+        ],
+        "properties": {
+          "exp": {
+            "$ref": "#/components/schemas/Expression"
+          }
+        }
+      },
+      "Log10Expression": {
+        "type": "object",
+        "required": [
+          "log10"
+        ],
+        "properties": {
+          "log10": {
+            "$ref": "#/components/schemas/Expression"
+          }
+        }
+      },
+      "LnExpression": {
+        "type": "object",
+        "required": [
+          "ln"
+        ],
+        "properties": {
+          "ln": {
+            "$ref": "#/components/schemas/Expression"
+          }
+        }
+      },
+      "GeoDistance": {
+        "type": "object",
+        "required": [
+          "geo_distance"
+        ],
+        "properties": {
+          "geo_distance": {
+            "$ref": "#/components/schemas/GeoDistanceParams"
+          }
+        }
+      },
+      "GeoDistanceParams": {
+        "type": "object",
+        "required": [
+          "origin",
+          "to"
+        ],
+        "properties": {
+          "origin": {
+            "$ref": "#/components/schemas/GeoPoint"
+          },
+          "to": {
+            "description": "Payload field with the destination geo point",
+            "type": "string"
+          }
+        }
+      },
+      "LinDecayExpression": {
+        "type": "object",
+        "required": [
+          "lin_decay"
+        ],
+        "properties": {
+          "lin_decay": {
+            "$ref": "#/components/schemas/DecayParamsExpression"
+          }
+        }
+      },
+      "DecayParamsExpression": {
+        "type": "object",
+        "required": [
+          "x"
+        ],
+        "properties": {
+          "x": {
+            "$ref": "#/components/schemas/Expression"
+          },
+          "target": {
+            "description": "The target value to start decaying from. Defaults to 0.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Expression"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "scale": {
+            "description": "The scale factor of the decay, in terms of `x`. Defaults to 1.0. Must be a non-zero positive number.",
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "midpoint": {
+            "description": "The midpoint of the decay. Defaults to 0.5. Output will be this value when `|x - target| == scale`.",
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          }
+        }
+      },
+      "ExpDecayExpression": {
+        "type": "object",
+        "required": [
+          "exp_decay"
+        ],
+        "properties": {
+          "exp_decay": {
+            "$ref": "#/components/schemas/DecayParamsExpression"
+          }
+        }
+      },
+      "GaussDecayExpression": {
+        "type": "object",
+        "required": [
+          "gauss_decay"
+        ],
+        "properties": {
+          "gauss_decay": {
+            "$ref": "#/components/schemas/DecayParamsExpression"
+          }
+        }
       },
       "SampleQuery": {
         "type": "object",
