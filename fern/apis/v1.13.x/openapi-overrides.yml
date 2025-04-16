@@ -1950,10 +1950,10 @@ paths:
             tag\", [\"h1\", \"h2\", \"h3\", \"h4\"])),\n            ]),\n        \
             \    Expression::mult_with([\n                Expression::constant(0.25),\n\
             \                Expression::condition(Condition::matches(\"tag\", [\"\
-            p\", \"li\"])),\n            ]),\n        ])))\n        .limit(10)\n).await?;\n\
-            \n// Score boost geographically closer points (as of 1.14.0)\nlet _geo_boosted\
-            \ = client.query(\n    QueryPointsBuilder::new(\"{collection_name}\")\n\
-            \            .add_prefetch(\n                PrefetchQueryBuilder::default()\n\
+            p\", \"li\"])),\n            ]),\n        ])))\n        .limit(10)\n \
+            \   ).await?;\n\n// Score boost geographically closer points (as of 1.14.0)\n\
+            let _geo_boosted = client.query(\n    QueryPointsBuilder::new(\"{collection_name}\"\
+            )\n            .add_prefetch(\n                PrefetchQueryBuilder::default()\n\
             \                    .query(vec![0.01, 0.45, 0.67])\n                \
             \    .limit(100u64),\n            )\n            .query(\n           \
             \     FormulaBuilder::new(Expression::sum_with([\n                   \
@@ -1968,10 +1968,10 @@ paths:
             \    .await?;\n"
           language: rust
       - code-samples:
-        - code: "# Query nearest by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+        - code: "# Query nearest by ID\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
             \ application/json' \\\n  --data-raw '{\n  \"query\": \"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\
-            \n}'\n\n# Recommend on the average of these vectors\ncurl  -X POST \\\n\
+            \n}'\n\n# Recommend on the average of these vectors\ncurl -X POST \\\n\
             \  'http://localhost:6333/collections/collection_name/points/query' \\\
             \n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
             \ application/json' \\\n  --data-raw '{\n  \"query\": {\n    \"recommend\"\
@@ -1979,7 +1979,7 @@ paths:
             \          0.6\n        ]\n      ],\n      \"negative\": [\n        \"\
             43cf51e2-8777-4f52-bc74-c2cbde0c8b04\",\n        [\n          0.01,\n\
             \          0.45,\n          0.67\n        ]\n      ]\n    }\n  }\n}'\n\
-            \n# Fusion query\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \n# Fusion query\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
             \ application/json' \\\n  --data-raw '{\n  \"prefetch\": [\n    {\n  \
             \    \"query\": {\n        \"values\": [\n          0.22,\n          0.8\n\
@@ -1988,18 +1988,40 @@ paths:
             \    },\n    {\n      \"query\": [\n        0.01,\n        0.45,\n   \
             \     0.67\n      ],\n      \"using\": \"dense\",\n      \"limit\": 20\n\
             \    }\n  ],\n  \"query\": {\n    \"fusion\": \"rrf\"\n  }\n}'\n\n# 2-stage\
-            \ query\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ query\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
             \ application/json' \\\n  --data-raw '{\n  \"prefetch\": {\n    \"query\"\
             : [\n      1,\n      23,\n      45,\n      67\n    ],\n    \"limit\":\
             \ 100\n  },\n  \"query\": [\n    [\n      0.1,\n      0.2,\n      0.3\n\
             \    ],\n    [\n      0.2,\n      0.1,\n      0.35\n    ],\n    [\n  \
             \    0.8,\n      0.9,\n      0.53\n    ]\n  ],\n  \"using\": \"colbert\"\
-            ,\n  \"limit\": 10\n}'\n\n# Random sampling (as of 1.11.0)\ncurl  -X POST\
+            ,\n  \"limit\": 10\n}'\n\n# Random sampling (as of 1.11.0)\ncurl -X POST\
             \ \\\n  'http://localhost:6333/collections/collection_name/points/query'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
             \ application/json' \\\n  --data-raw '{\n  \"query\": {\n    \"sample\"\
-            : \"random\"\n  }\n}'\n"
+            : \"random\"\n  }\n}'\n\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n    \"prefetch\": {\n       \
+            \ \"query\": [0.2, 0.8, ...],  // <-- dense vector\n        \"limit\"\
+            : 50\n    }\n    \"query\": {\n        \"formula\": {\n            \"\
+            sum\": [\n                \"$score,\n                { \"mult\": [ 0.5,\
+            \ { \"key\": \"tag\", \"match\": { \"any\": [\"h1\", \"h2\", \"h3\", \"\
+            h4\"] } } ] },\n                { \"mult\": [ 0.25, { \"key\": \"tag\"\
+            , \"match\": { \"any\": [\"p\", \"li\"] } } ] }\n            ]\n     \
+            \   }\n    }\n}'\n\n# Score boost geographically closer points (as of\
+            \ 1.14.0)\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n    \"prefetch\": { \"query\"\
+            : [0.2, 0.8, ...], \"limit\": 50 },\n    \"query\": {\n        \"formula\"\
+            : {\n            \"sum\": [\n                \"$score\",\n           \
+            \     {\n                    \"gauss_decay\": {\n                    \
+            \    \"x\": {\n                            \"geo_distance\": {\n     \
+            \                           \"origin\": { \"lat\": 52.504043, \"lon\"\
+            : 13.393236 } // Berlin\n                                \"to\": \"geo.location\"\
+            \n                            }\n                        },\n        \
+            \                \"scale\": 5000 // 5km\n                    }\n     \
+            \           }\n            ]\n        },\n        \"defaults\": { \"geo.location\"\
+            : {\"lat\": 48.137154, \"lon\": 11.576124} } // Munich\n    }\n}'\n"
           language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
@@ -2023,8 +2045,30 @@ paths:
             \ 0.1, ...],  # < \u251C\u2500 multi-vector\n        [0.8, 0.9, ...],\
             \  # < \u2518\n    ],\n    using=\"colbert\",\n    limit=10,\n)\n\n# Random\
             \ sampling (as of 1.11.0)\nsampled = client.query_points(\n    collection_name=\"\
-            {collection_name}\",\n    query=models.SampleQuery(sample=models.Sample.Random)\n\
-            )\n"
+            {collection_name}\",\n    query=models.SampleQuery(sample=models.Sample.RANDOM)\n\
+            )\n\n# Score boost depending on payload conditions (as of 1.14.0)\ntag_boosted\
+            \ = client.query_points(\n    collection_name=\"{collection_name}\",\n\
+            \    prefetch=models.Prefetch(\n        query=[0.2, 0.8, ...],  # <--\
+            \ dense vector\n        limit=50\n    ),\n    query=models.FormulaQuery(\n\
+            \        formula=models.SumExpression(sum=[\n            \"$score\",\n\
+            \            models.MultExpression(mult=[0.5, models.FieldCondition(key=\"\
+            tag\", match=models.MatchAny(any=[\"h1\", \"h2\", \"h3\", \"h4\"]))]),\n\
+            \            models.MultExpression(mult=[0.25, models.FieldCondition(key=\"\
+            tag\", match=models.MatchAny(any=[\"p\", \"li\"]))])\n        ]\n    ))\n\
+            )\n\n# Score boost geographically closer points (as of 1.14.0)\ngeo_boosted\
+            \ = client.query_points(\n    collection_name=\"{collection_name}\",\n\
+            \    prefetch=models.Prefetch(\n        query=[0.2, 0.8, ...],  # <--\
+            \ dense vector\n        limit=50\n    ),\n    query=models.FormulaQuery(\n\
+            \        formula=models.SumExpression(sum=[\n            \"$score\",\n\
+            \            models.GaussDecayExpression(\n                gauss_decay=models.DecayParamsExpression(\n\
+            \                    x=models.GeoDistance(\n                        geo_distance=models.GeoDistanceParams(\n\
+            \                            origin=models.GeoPoint(\n               \
+            \                 lat=52.504043,\n                                lon=13.393236\n\
+            \                            ),  # Berlin\n                          \
+            \  to=\"geo.location\"\n                        )\n                  \
+            \  ),\n                    scale=5000  # 5km\n                )\n    \
+            \        )\n        ]),\n        defaults={\"geo.location\": models.GeoPoint(lat=48.137154,\
+            \ lon=11.576124)}  # Munich\n    )\n)\n"
           language: python
       - code-samples:
         - code: "import static io.qdrant.client.QueryFactory.fusion;\nimport static\
