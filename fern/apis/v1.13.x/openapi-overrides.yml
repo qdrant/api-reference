@@ -1915,32 +1915,57 @@ paths:
             );\n"
           language: csharp
       - code-samples:
-        - code: "use qdrant_client::Qdrant;\nuse qdrant_client::qdrant::{Condition,\
-            \ Filter, PointId, PrefetchQueryBuilder, Query, QueryPointsBuilder};\n\
-            \nlet client = Qdrant::from_url(\"http://localhost:6334\").build()?;\n\
-            \n// Query nearest by ID\nlet _nearest = client.query(\n    QueryPointsBuilder::new(\"\
-            {collection_name}\")\n        .query(Query::new_nearest(PointId::new(\"\
-            43cf51e2-8777-4f52-bc74-c2cbde0c8b04\")))\n).await?;\n\n// Recommend on\
+        - code: "use qdrant_client::qdrant::{\n    Condition, DecayParamsExpressionBuilder,\
+            \ Expression, FormulaBuilder, Fusion, GeoPoint,\n    PointId, PrefetchQueryBuilder,\
+            \ Query, QueryPointsBuilder, RecommendInputBuilder,\n    Sample,\n};\n\
+            use qdrant_client::Qdrant;\n\nlet client = Qdrant::from_url(\"http://localhost:6334\"\
+            ).build()?;\n\n// Query nearest by ID\nlet _nearest = client.query(\n\
+            \    QueryPointsBuilder::new(\"{collection_name}\")\n        .query(PointId::from(\"\
+            43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"))\n).await?;\n\n// Recommend on\
             \ the average of these vectors\nlet _recommendations = client.query(\n\
             \    QueryPointsBuilder::new(\"{collection_name}\")\n        .query(Query::new_recommend(\n\
             \            RecommendInputBuilder::default()\n                .add_positive(vec![0.1;\
             \ 8])\n                .add_negative(PointId::from(0))\n        ))\n).await?;\n\
             \n// Fusion query\nlet _hybrid = client.query(\n    QueryPointsBuilder::new(\"\
             {collection_name}\")\n        .add_prefetch(PrefetchQueryBuilder::default()\n\
-            \            .query(Query::new_nearest([(1, 0.22), (42, 0.8)].as_slice()))\n\
-            \            .using(\"sparse\")\n            .limit(20u64)\n        )\n\
-            \        .add_prefetch(PrefetchQueryBuilder::default()\n            .query(Query::new_nearest(vec![0.01,\
-            \ 0.45, 0.67]))\n            .using(\"dense\")\n            .limit(20u64)\n\
-            \        )\n        .query(Query::new_fusion(Fusion::Rrf))\n).await?;\n\
-            \n// 2-stage query\nlet _refined = client.query(\n    QueryPointsBuilder::new(\"\
+            \            .query(vec![(1, 0.22), (42, 0.8)])\n            .using(\"\
+            sparse\")\n            .limit(20u64)\n        )\n        .add_prefetch(PrefetchQueryBuilder::default()\n\
+            \            .query(vec![0.01, 0.45, 0.67])\n            .using(\"dense\"\
+            )\n            .limit(20u64)\n        )\n        .query(Fusion::Rrf)\n\
+            ).await?;\n\n// 2-stage query\nlet _refined = client.query(\n    QueryPointsBuilder::new(\"\
             {collection_name}\")\n        .add_prefetch(PrefetchQueryBuilder::default()\n\
-            \            .query(Query::new_nearest(vec![0.01, 0.45, 0.67]))\n    \
-            \        .limit(100u64)\n        )\n        .query(Query::new_nearest(vec![\n\
-            \            vec![0.1, 0.2],\n            vec![0.2, 0.1],\n          \
-            \  vec![0.8, 0.9],\n        ]))\n        .using(\"colbert\")\n       \
-            \ .limit(10u64)\n).await?;\n\n// Random sampling (as of 1.11.0)\nlet _sampled\
-            \ = client\n    .query(\n        QueryPointsBuilder::new(\"{collection_name}\"\
-            )\n            .query(Query::new_sample(Sample::Random))\n    )\n    .await?;\n"
+            \            .query(vec![0.01, 0.45, 0.67])\n            .limit(100u64)\n\
+            \        )\n        .query(vec![\n            vec![0.1, 0.2],\n      \
+            \      vec![0.2, 0.1],\n            vec![0.8, 0.9],\n        ])\n    \
+            \    .using(\"colbert\")\n        .limit(10u64)\n).await?;\n\n// Random\
+            \ sampling (as of 1.11.0)\nlet _sampled = client\n    .query(\n      \
+            \  QueryPointsBuilder::new(\"{collection_name}\")\n            .query(Query::new_sample(Sample::Random))\n\
+            \    )\n    .await?;\n\n// Score boost depending on payload conditions\
+            \ (as of 1.14.0)\nlet _tag_boosted = client.query(\n    QueryPointsBuilder::new(\"\
+            {collection_name}\")\n        .add_prefetch(PrefetchQueryBuilder::default()\n\
+            \            .query(vec![0.01, 0.45, 0.67])\n            .limit(100u64)\n\
+            \        )\n        .query(FormulaBuilder::new(Expression::sum_with([\n\
+            \            Expression::variable(\"$score\"),\n            Expression::mult_with([\n\
+            \                Expression::constant(0.5),\n                Expression::condition(Condition::matches(\"\
+            tag\", [\"h1\", \"h2\", \"h3\", \"h4\"])),\n            ]),\n        \
+            \    Expression::mult_with([\n                Expression::constant(0.25),\n\
+            \                Expression::condition(Condition::matches(\"tag\", [\"\
+            p\", \"li\"])),\n            ]),\n        ])))\n        .limit(10)\n).await?;\n\
+            \n// Score boost geographically closer points (as of 1.14.0)\nlet _geo_boosted\
+            \ = client.query(\n    QueryPointsBuilder::new(\"{collection_name}\")\n\
+            \            .add_prefetch(\n                PrefetchQueryBuilder::default()\n\
+            \                    .query(vec![0.01, 0.45, 0.67])\n                \
+            \    .limit(100u64),\n            )\n            .query(\n           \
+            \     FormulaBuilder::new(Expression::sum_with([\n                   \
+            \ Expression::variable(\"$score\"),\n                    Expression::exp_decay(\n\
+            \                        DecayParamsExpressionBuilder::new(Expression::geo_distance_with(\n\
+            \                            // Berlin\n                            GeoPoint\
+            \ { lat: 52.504043, lon: 13.393236 },\n                            \"\
+            geo.location\",\n                        ))\n                        .scale(5_000.0),\n\
+            \                    ),\n                ]))\n                // Munich\n\
+            \                .add_default(\"geo.location\", GeoPoint { lat: 48.137154,\
+            \ lon: 11.576124 }),\n            )\n            .limit(10),\n    )\n\
+            \    .await?;\n"
           language: rust
       - code-samples:
         - code: "# Query nearest by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
