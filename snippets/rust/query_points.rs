@@ -82,7 +82,7 @@ let _tag_boosted = client.query(
             ]),
         ])))
         .limit(10)
-).await?;
+    ).await?;
 
 // Score boost geographically closer points (as of 1.14.0)
 let _geo_boosted = client.query(
