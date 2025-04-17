@@ -20,12 +20,12 @@ curl  -X PUT \
     "dense-vector-name": {
       "size": 1536,
       "distance": "Cosine"
-    },
-    "sparse_vectors": {
-      "sparse-vector-name": {
-        "index": {
-          "on_disk": true
-        }
+    }
+  },
+  "sparse_vectors": {
+    "sparse-vector-name": {
+      "index": {
+        "on_disk": true
       }
     }
   }

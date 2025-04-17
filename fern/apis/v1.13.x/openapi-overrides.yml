@@ -478,10 +478,9 @@ paths:
             \ vectors\ncurl  -X PUT \\\n  'http://localhost:6333/collections/collection_name'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
             \ application/json' \\\n  --data-raw '{\n  \"vectors\": {\n    \"dense-vector-name\"\
-            : {\n      \"size\": 1536,\n      \"distance\": \"Cosine\"\n    },\n \
-            \   \"sparse_vectors\": {\n      \"sparse-vector-name\": {\n        \"\
-            index\": {\n          \"on_disk\": true\n        }\n      }\n    }\n \
-            \ }\n}'\n"
+            : {\n      \"size\": 1536,\n      \"distance\": \"Cosine\"\n    }\n  },\n\
+            \  \"sparse_vectors\": {\n    \"sparse-vector-name\": {\n      \"index\"\
+            : {\n        \"on_disk\": true\n      }\n    }\n  }\n}'\n"
           language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
