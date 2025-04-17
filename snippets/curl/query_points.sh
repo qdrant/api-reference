@@ -117,6 +117,7 @@ curl -X POST \
   }
 }'
 
+# Score boost depending on payload conditions (as of 1.14.0)
 curl -X POST \
   'http://localhost:6333/collections/collection_name/points/query' \
   --header 'api-key: <api-key-value>' \
