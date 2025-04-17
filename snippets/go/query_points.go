@@ -93,4 +93,65 @@ func query() {
 		panic(err)
 	}
 	fmt.Println("Query results: ", points)
+
+	// Score boost depending on payload conditions (as of 1.14.0)
+	points, err = client.Query(context.Background(), &qdrant.QueryPoints{
+		CollectionName: "{collection_name}",
+		Prefetch: []*qdrant.PrefetchQuery{
+			{
+				Query: qdrant.NewQuery(0.01, 0.45, 0.67),
+			},
+		},
+		Query: qdrant.NewQueryFormula(&qdrant.Formula{
+			Expression: qdrant.NewExpressionSum(&qdrant.SumExpression{
+				Sum: []*qdrant.Expression{
+					qdrant.NewExpressionVariable("$score"),
+					qdrant.NewExpressionMult(&qdrant.MultExpression{
+						Mult: []*qdrant.Expression{
+							qdrant.NewExpressionConstant(0.5),
+							qdrant.NewExpressionCondition(qdrant.NewMatchKeywords("tag", "h1", "h2", "h3", "h4")),
+						},
+					}),
+					qdrant.NewExpressionMult(&qdrant.MultExpression{
+						Mult: []*qdrant.Expression{
+							qdrant.NewExpressionConstant(0.25),
+							qdrant.NewExpressionCondition(qdrant.NewMatchKeywords("tag", "p", "li")),
+						},
+					}),
+				},
+			}),
+		}),
+	})
+
+	// Score boost geographically closer points (as of 1.14.0)
+	client.Query(context.Background(), &qdrant.QueryPoints{
+		CollectionName: "{collection_name}",
+		Prefetch: []*qdrant.PrefetchQuery{
+			{
+				Query: qdrant.NewQuery(0.2, 0.8),
+			},
+		},
+		Query: qdrant.NewQueryFormula(&qdrant.Formula{
+			Expression: qdrant.NewExpressionSum(&qdrant.SumExpression{
+				Sum: []*qdrant.Expression{
+					qdrant.NewExpressionVariable("$score"),
+					qdrant.NewExpressionExpDecay(&qdrant.DecayParamsExpression{
+						X: qdrant.NewExpressionGeoDistance(&qdrant.GeoDistance{
+							Origin: &qdrant.GeoPoint{
+								Lat: 52.504043,
+								Lon: 13.393236,
+							},
+							To: "geo.location",
+						}),
+					}),
+				},
+			}),
+			Defaults: qdrant.NewValueMap(map[string]any{
+				"geo.location": map[string]any{
+					"lat": 48.137154,
+					"lon": 11.576124,
+				},
+			}),
+		}),
+	})
 }
