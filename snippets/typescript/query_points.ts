@@ -58,3 +58,51 @@ let _refined = client.query("{collection_name}", {
 let _sampled = client.query("{collection_name}", {
   query: { sample: "random" },
 });
+
+// Score boost depending on payload conditions (as of 1.14.0)
+const tag_boosted = await client.query("{collection_name}", {
+  prefetch: {
+    query: [0.2, 0.8, 0.1, 0.9],
+    limit: 50
+  },
+  query: {
+    formula: {
+      sum: [
+        "$score",
+        {
+          mult: [ 0.5, { key: "tag", match: { any: ["h1", "h2", "h3", "h4"] }} ]
+        },
+        {
+          mult: [ 0.25, { key: "tag", match: { any: ["p", "li"] }} ]
+        }
+      ]
+    }
+  }
+});
+
+// Score boost geographically closer points (as of 1.14.0)
+const distance_boosted = await client.query("{collection_name}", {
+  prefetch: {
+    query: [0.2, 0.8, ...],
+    limit: 50
+  },
+  query: {
+    formula: {
+      sum: [
+        "$score",
+        {
+          gauss_decay: {
+            x: {
+              geo_distance: {
+                origin: { lat: 52.504043, lon: 13.393236 }, // Berlin
+                to: "geo.location"
+              }
+            },
+            scale: 5000 // 5km
+          }
+        }
+      ]
+    },
+    defaults: { "geo.location": { lat: 48.137154, lon: 11.576124 } } // Munich
+  }
+});
