@@ -90,3 +90,86 @@ client
             .setQuery(sample(Sample.Random))
             .build())
     .get();
+
+// Score boost depending on payload conditions (as of 1.14.0)
+client
+    .queryAsync(
+        QueryPoints.newBuilder()
+            .setCollectionName("{collection_name}")
+            .addPrefetch(
+                PrefetchQuery.newBuilder()
+                    .setQuery(nearest(0.01f, 0.45f, 0.67f))
+                    .setLimit(100)
+                    .build())
+            .setQuery(
+                formula(
+                    Formula.newBuilder()
+                        .setExpression(
+                            sum(
+                                SumExpression.newBuilder()
+                                    .addSum(variable("$score"))
+                                    .addSum(
+                                        mult(
+                                            MultExpression.newBuilder()
+                                                .addMult(constant(0.5f))
+                                                .addMult(
+                                                    condition(
+                                                        matchKeywords(
+                                                            "tag",
+                                                            List.of("h1", "h2", "h3", "h4"))))
+                                                .build()))
+                                    .addSum(mult(MultExpression.newBuilder()
+                                    .addMult(constant(0.25f))
+                                    .addMult(
+                                        condition(
+                                            matchKeywords(
+                                                "tag",
+                                                List.of("p", "li"))))
+                                    .build()))
+                                    .build()))
+                        .build()))
+            .build())
+    .get();
+
+// Score boost geographically closer points (as of 1.14.0)
+client
+    .queryAsync(
+        QueryPoints.newBuilder()
+            .setCollectionName("{collection_name}")
+            .addPrefetch(
+                PrefetchQuery.newBuilder()
+                    .setQuery(nearest(0.01f, 0.45f, 0.67f))
+                    .setLimit(100)
+                    .build())
+            .setQuery(
+                formula(
+                    Formula.newBuilder()
+                        .setExpression(
+                            sum(
+                                SumExpression.newBuilder()
+                                    .addSum(variable("$score"))
+                                    .addSum(
+                                        expDecay(
+                                            DecayParamsExpression.newBuilder()
+                                                .setX(
+                                                    geoDistance(
+                                                        GeoDistance.newBuilder()
+                                                            .setOrigin(
+                                                                GeoPoint.newBuilder()
+                                                                    .setLat(52.504043)
+                                                                    .setLon(13.393236)
+                                                                    .build())
+                                                            .setTo("geo.location")
+                                                            .build()))
+                                                .setScale(5000)
+                                                .build()))
+                                    .build()))
+                        .putDefaults(
+                            "geo.location",
+                            value(
+                                Map.of(
+                                    "lat", value(48.137154),
+                                    "lon", value(11.576124))))
+                        .build()))
+            .build())
+    .get();

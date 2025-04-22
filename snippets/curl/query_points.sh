@@ -1,5 +1,5 @@
 # Query nearest by ID
-curl  -X POST \
+curl -X POST \
   'http://localhost:6333/collections/collection_name/points/query' \
   --header 'api-key: <api-key-value>' \
   --header 'Content-Type: application/json' \
@@ -8,7 +8,7 @@ curl  -X POST \
 }'
 
 # Recommend on the average of these vectors
-curl  -X POST \
+curl -X POST \
   'http://localhost:6333/collections/collection_name/points/query' \
   --header 'api-key: <api-key-value>' \
   --header 'Content-Type: application/json' \
@@ -35,7 +35,7 @@ curl  -X POST \
 }'
 
 # Fusion query
-curl  -X POST \
+curl -X POST \
   'http://localhost:6333/collections/collection_name/points/query' \
   --header 'api-key: <api-key-value>' \
   --header 'Content-Type: application/json' \
@@ -71,7 +71,7 @@ curl  -X POST \
 }'
 
 # 2-stage query
-curl  -X POST \
+curl -X POST \
   'http://localhost:6333/collections/collection_name/points/query' \
   --header 'api-key: <api-key-value>' \
   --header 'Content-Type: application/json' \
@@ -107,7 +107,7 @@ curl  -X POST \
 }'
 
 # Random sampling (as of 1.11.0)
-curl  -X POST \
+curl -X POST \
   'http://localhost:6333/collections/collection_name/points/query' \
   --header 'api-key: <api-key-value>' \
   --header 'Content-Type: application/json' \
@@ -115,4 +115,53 @@ curl  -X POST \
   "query": {
     "sample": "random"
   }
+}'
+
+# Score boost depending on payload conditions (as of 1.14.0)
+curl -X POST \
+  'http://localhost:6333/collections/collection_name/points/query' \
+  --header 'api-key: <api-key-value>' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "prefetch": {
+        "query": [0.2, 0.8, ...],  // <-- dense vector
+        "limit": 50
+    }
+    "query": {
+        "formula": {
+            "sum": [
+                "$score,
+                { "mult": [ 0.5, { "key": "tag", "match": { "any": ["h1", "h2", "h3", "h4"] } } ] },
+                { "mult": [ 0.25, { "key": "tag", "match": { "any": ["p", "li"] } } ] }
+            ]
+        }
+    }
+}'
+
+# Score boost geographically closer points (as of 1.14.0)
+curl -X POST \
+  'http://localhost:6333/collections/collection_name/points/query' \
+  --header 'api-key: <api-key-value>' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "prefetch": { "query": [0.2, 0.8, ...], "limit": 50 },
+    "query": {
+        "formula": {
+            "sum": [
+                "$score",
+                {
+                    "gauss_decay": {
+                        "x": {
+                            "geo_distance": {
+                                "origin": { "lat": 52.504043, "lon": 13.393236 } // Berlin
+                                "to": "geo.location"
+                            }
+                        },
+                        "scale": 5000 // 5km
+                    }
+                }
+            ]
+        },
+        "defaults": { "geo.location": {"lat": 48.137154, "lon": 11.576124} } // Munich
+    }
 }'

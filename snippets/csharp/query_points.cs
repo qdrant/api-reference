@@ -61,3 +61,66 @@ await client.QueryAsync(
     collectionName: "{collection_name}",
     query: Sample.Random
 );
+
+// Score boost depending on payload conditions (as of 1.14.0)
+await client.QueryAsync(
+	collectionName: "{collection_name}",
+	prefetch:
+	[
+		new PrefetchQuery { Query = new float[] { 0.01f, 0.45f, 0.67f }, Limit = 100 },
+	],
+	query: new Formula
+	{
+		Expression = new SumExpression
+		{
+			Sum =
+			{
+				"$score",
+				new MultExpression
+				{
+					Mult = { 0.5f, Match("tag", ["h1", "h2", "h3", "h4"]) },
+				},
+				new MultExpression { Mult = { 0.25f, Match("tag", ["p", "li"]) } },
+			},
+		},
+	},
+	limit: 10
+);
+
+// Score boost geographically closer points (as of 1.14.0)
+await client.QueryAsync(
+	collectionName: "{collection_name}",
+	prefetch:
+	[
+		new PrefetchQuery { Query = new float[] { 0.01f, 0.45f, 0.67f }, Limit = 100 },
+	],
+	query: new Formula
+	{
+		Expression = new SumExpression
+		{
+			Sum =
+			{
+				"$score",
+				WithExpDecay(
+					new()
+					{
+						X = new GeoDistance
+						{
+							Origin = new GeoPoint { Lat = 52.504043, Lon = 13.393236 },
+							To = "geo.location",
+						},
+						Scale = 5000,
+					}
+				),
+			},
+		},
+		Defaults =
+		{
+			["geo.location"] = new Dictionary<string, Value>
+			{
+				["lat"] = 48.137154,
+				["lon"] = 11.576124,
+			},
+		},
+	}
+);
