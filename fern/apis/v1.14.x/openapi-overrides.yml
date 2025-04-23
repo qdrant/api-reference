@@ -1964,7 +1964,7 @@ paths:
             {collection_name}\")\n        .add_prefetch(PrefetchQueryBuilder::default()\n\
             \            .query(vec![0.01, 0.45, 0.67])\n            .limit(100u64)\n\
             \        )\n        .query(FormulaBuilder::new(Expression::sum_with([\n\
-            \            Expression::variable(\"$score\"),\n            Expression::mult_with([\n\
+            \            Expression::score(),\n            Expression::mult_with([\n\
             \                Expression::constant(0.5),\n                Expression::condition(Condition::matches(\"\
             tag\", [\"h1\", \"h2\", \"h3\", \"h4\"])),\n            ]),\n        \
             \    Expression::mult_with([\n                Expression::constant(0.25),\n\
@@ -1976,8 +1976,8 @@ paths:
             \                    .query(vec![0.01, 0.45, 0.67])\n                \
             \    .limit(100u64),\n            )\n            .query(\n           \
             \     FormulaBuilder::new(Expression::sum_with([\n                   \
-            \ Expression::variable(\"$score\"),\n                    Expression::exp_decay(\n\
-            \                        DecayParamsExpressionBuilder::new(Expression::geo_distance_with(\n\
+            \ Expression::score(),\n                    Expression::exp_decay(\n \
+            \                       DecayParamsExpressionBuilder::new(Expression::geo_distance_with(\n\
             \                            // Berlin\n                            GeoPoint\
             \ { lat: 52.504043, lon: 13.393236 },\n                            \"\
             geo.location\",\n                        ))\n                        .scale(5_000.0),\n\
