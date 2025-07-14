@@ -19,7 +19,7 @@
       }
     </style>
   </defs>
-  <g id="Vectors">
+  <g id="Vectors" shape-rendering="geometricPrecision">
     <g>
       <g>
         <g>
