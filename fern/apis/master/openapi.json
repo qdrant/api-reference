@@ -6546,10 +6546,10 @@
         "example": {
           "collections": [
             {
-              "name": "arivx-title"
+              "name": "arxiv-title"
             },
             {
-              "name": "arivx-abstract"
+              "name": "arxiv-abstract"
             },
             {
               "name": "medium-title"
@@ -11377,6 +11377,12 @@
             "format": "uint",
             "minimum": 0
           },
+          "max_collections": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
           "collections": {
             "type": "array",
             "items": {
@@ -11539,6 +11545,16 @@
             "additionalProperties": {
               "$ref": "#/components/schemas/ReplicaState"
             }
+          },
+          "partial_snapshot": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PartialSnapshotTelemetry"
+              },
+              {
+                "nullable": true
+              }
+            ]
           }
         }
       },
@@ -12009,14 +12025,14 @@
       "SparseVectorStorageType": {
         "oneOf": [
           {
-            "description": "Storage on disk",
+            "description": "Storage on disk (rocksdb storage)",
             "type": "string",
             "enum": [
               "on_disk"
             ]
           },
           {
-            "description": "Storage in memory maps",
+            "description": "Storage in memory maps (gridstore storage)",
             "type": "string",
             "enum": [
               "mmap"
@@ -12323,6 +12339,25 @@
           },
           "updates": {
             "$ref": "#/components/schemas/OperationDurationStatistics"
+          }
+        }
+      },
+      "PartialSnapshotTelemetry": {
+        "type": "object",
+        "required": [
+          "ongoing_create_snapshot_requests",
+          "recovery_timestamp"
+        ],
+        "properties": {
+          "ongoing_create_snapshot_requests": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0
+          },
+          "recovery_timestamp": {
+            "type": "integer",
+            "format": "uint64",
+            "minimum": 0
           }
         }
       },
@@ -15225,6 +15260,22 @@
             "type": "boolean"
           }
         ]
+      },
+      "Usage": {
+        "description": "Usage of the hardware resources, spent to process the request",
+        "type": "object",
+        "properties": {
+          "hardware": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HardwareUsage"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          }
+        }
       }
     }
   }
