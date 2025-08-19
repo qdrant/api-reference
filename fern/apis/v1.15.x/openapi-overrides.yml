@@ -10,7 +10,7 @@ components:
           anyOf:
             - $ref: "#/components/schemas/Prefetch"
             - type: array
-              title: Prefetch List
+              title: Prefetch
               items:
                 $ref: "#/components/schemas/Prefetch"
             - nullable: true
