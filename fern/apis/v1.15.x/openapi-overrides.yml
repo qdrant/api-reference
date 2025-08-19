@@ -3,17 +3,6 @@ components:
     BearerAuth:
       scheme: bearer
       type: http
-  schemas:
-    QueryRequest:
-      properties:
-        prefetch:
-          anyOf:
-            - $ref: "#/components/schemas/Prefetch"
-            - type: array
-              title: Prefetch
-              items:
-                $ref: "#/components/schemas/Prefetch"
-            - nullable: true
 paths:
   /:
     get:
