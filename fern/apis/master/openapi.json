@@ -51,7 +51,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -146,7 +146,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -241,7 +241,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -326,7 +326,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -434,7 +434,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -542,7 +542,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -651,7 +651,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -761,7 +761,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -840,7 +840,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -1025,7 +1025,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -1093,7 +1093,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -1182,7 +1182,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -1278,7 +1278,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -1374,7 +1374,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -1515,7 +1515,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -1582,7 +1582,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -1775,7 +1775,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -1863,7 +1863,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -1931,7 +1931,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -2010,7 +2010,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -2116,7 +2116,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -2195,7 +2195,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -2289,7 +2289,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -2368,7 +2368,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -2436,7 +2436,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -2909,7 +2909,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -3491,7 +3491,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -3880,7 +3880,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -3987,7 +3987,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -4094,7 +4094,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -4201,7 +4201,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -4308,7 +4308,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -4413,7 +4413,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -4520,7 +4520,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -4627,7 +4627,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -4734,7 +4734,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -4845,7 +4845,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -4954,7 +4954,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -5069,7 +5069,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -5178,7 +5178,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -5290,7 +5290,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -5405,7 +5405,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -5514,7 +5514,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -5626,7 +5626,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -5731,7 +5731,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -5839,7 +5839,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -5947,7 +5947,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -6055,7 +6055,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -6166,7 +6166,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -6274,7 +6274,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -6382,7 +6382,7 @@
                       "default": null,
                       "anyOf": [
                         {
-                          "$ref": "#/components/schemas/HardwareUsage"
+                          "$ref": "#/components/schemas/Usage"
                         },
                         {
                           "nullable": true
@@ -6884,7 +6884,7 @@
             "nullable": true
           },
           "full_scan_threshold": {
-            "description": "Minimal size (in kilobytes) of vectors for additional payload-based indexing. If payload chunk is smaller than `full_scan_threshold_kb` additional indexing won't be used - in this case full-scan search should be preferred by query planner and additional indexing is not required. Note: 1Kb = 1 vector of size 256",
+            "description": "Minimal size threshold (in KiloBytes) below which full-scan is preferred over HNSW search. This measures the total size of vectors being queried against. When the maximum estimated amount of points that a condition satisfies is smaller than `full_scan_threshold_kb`, the query planner will use full-scan search instead of HNSW index traversal for better performance. Note: 1Kb = 1 vector of size 256",
             "type": "integer",
             "format": "uint",
             "minimum": 10,
@@ -7178,7 +7178,7 @@
             "minimum": 4
           },
           "full_scan_threshold": {
-            "description": "Minimal size (in KiloBytes) of vectors for additional payload-based indexing. If payload chunk is smaller than `full_scan_threshold_kb` additional indexing won't be used - in this case full-scan search should be preferred by query planner and additional indexing is not required. Note: 1Kb = 1 vector of size 256",
+            "description": "Minimal size threshold (in KiloBytes) below which full-scan is preferred over HNSW search. This measures the total size of vectors being queried against. When the maximum estimated amount of points that a condition satisfies is smaller than `full_scan_threshold_kb`, the query planner will use full-scan search instead of HNSW index traversal for better performance. Note: 1Kb = 1 vector of size 256",
             "type": "integer",
             "format": "uint",
             "minimum": 0
@@ -7291,6 +7291,13 @@
             "type": "integer",
             "format": "uint",
             "minimum": 0
+          },
+          "wal_retain_closed": {
+            "description": "Number of closed WAL segments to keep",
+            "default": 1,
+            "type": "integer",
+            "format": "uint",
+            "minimum": 1
           }
         }
       },
@@ -7774,6 +7781,7 @@
         "type": "object",
         "properties": {
           "languages": {
+            "description": "Set of languages to use for stopwords. Multiple pre-defined lists of stopwords can be combined.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Language"
@@ -7782,6 +7790,7 @@
             "nullable": true
           },
           "custom": {
+            "description": "Custom stopwords set. Will be merged with the languages set.",
             "type": "array",
             "items": {
               "type": "string"
@@ -9706,6 +9715,13 @@
             "format": "uint",
             "minimum": 0,
             "nullable": true
+          },
+          "wal_retain_closed": {
+            "description": "Number of closed WAL segments to retain",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
           }
         }
       },
@@ -10506,20 +10522,110 @@
         ],
         "properties": {
           "text": {
-            "description": "Text of the document This field will be used as input for the embedding model",
+            "description": "Text of the document. This field will be used as input for the embedding model.",
             "type": "string",
             "example": "This is a document text"
           },
           "model": {
-            "description": "Name of the model used to generate the vector List of available models depends on a provider",
+            "description": "Name of the model used to generate the vector. List of available models depends on a provider.",
             "type": "string",
             "minLength": 1,
             "example": "jinaai/jina-embeddings-v2-base-en"
           },
           "options": {
-            "description": "Parameters for the model Values of the parameters are model-specific",
+            "description": "Additional options for the model, will be passed to the inference service as-is. See model cards for available options.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocumentOptions"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          }
+        }
+      },
+      "DocumentOptions": {
+        "description": "Option variants for text documents. Ether general-purpose options or BM25-specific options. BM25-specific will only take effect if the `qdrant/bm25` is specified as a model.",
+        "anyOf": [
+          {
             "type": "object",
-            "additionalProperties": true,
+            "additionalProperties": true
+          },
+          {
+            "$ref": "#/components/schemas/Bm25Config"
+          }
+        ]
+      },
+      "Bm25Config": {
+        "description": "Configuration of the local bm25 models.",
+        "type": "object",
+        "properties": {
+          "k": {
+            "description": "Controls term frequency saturation. Higher values mean term frequency has more impact. Default is 1.2",
+            "default": 1.2,
+            "type": "number",
+            "format": "double"
+          },
+          "b": {
+            "description": "Controls document length normalization. Ranges from 0 (no normalization) to 1 (full normalization). Higher values mean longer documents have less impact. Default is 0.75.",
+            "default": 0.75,
+            "type": "number",
+            "format": "double"
+          },
+          "avg_len": {
+            "description": "Expected average document length in the collection. Default is 256.",
+            "default": 256,
+            "type": "number",
+            "format": "double"
+          },
+          "tokenizer": {
+            "$ref": "#/components/schemas/TokenizerType"
+          },
+          "language": {
+            "description": "Defines which language to use for text preprocessing. This parameter is used to construct default stopwords filter and stemmer. To disable language-specific processing, set this to `\"language\": \"none\"`. If not specified, English is assumed.",
+            "type": "string",
+            "nullable": true
+          },
+          "lowercase": {
+            "description": "Lowercase the text before tokenization. Default is `true`.",
+            "type": "boolean",
+            "nullable": true
+          },
+          "stopwords": {
+            "description": "Configuration of the stopwords filter. Supports list of pre-defined languages and custom stopwords. Default: initialized for specified `language` or English if not specified.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StopwordsInterface"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "stemmer": {
+            "description": "Configuration of the stemmer. Processes tokens to their root form. Default: initialized Snowball stemmer for specified `language` or English if not specified.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StemmingAlgorithm"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "min_token_len": {
+            "description": "Minimum token length to keep. If token is shorter than this, it will be discarded. Default is `None`, which means no minimum length.",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "max_token_len": {
+            "description": "Maximum token length to keep. If token is longer than this, it will be discarded. Default is `None`, which means no maximum length.",
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
             "nullable": true
           }
         }
@@ -10537,7 +10643,7 @@
             "example": "https://example.com/image.jpg"
           },
           "model": {
-            "description": "Name of the model used to generate the vector List of available models depends on a provider",
+            "description": "Name of the model used to generate the vector. List of available models depends on a provider.",
             "type": "string",
             "minLength": 1,
             "example": "Qdrant/clip-ViT-B-32-vision"
@@ -10559,10 +10665,10 @@
         ],
         "properties": {
           "object": {
-            "description": "Arbitrary data, used as input for the embedding model Used if the model requires more than one input or a custom input"
+            "description": "Arbitrary data, used as input for the embedding model. Used if the model requires more than one input or a custom input."
           },
           "model": {
-            "description": "Name of the model used to generate the vector List of available models depends on a provider",
+            "description": "Name of the model used to generate the vector. List of available models depends on a provider.",
             "type": "string",
             "minLength": 1,
             "example": "jinaai/jina-embeddings-v2-base-en"
@@ -12784,6 +12890,13 @@
             },
             "nullable": true
           },
+          "peer_metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PeerMetadata"
+            },
+            "nullable": true
+          },
           "metadata": {
             "type": "object",
             "additionalProperties": true,
@@ -12902,6 +13015,19 @@
             "type": "integer",
             "format": "uint64",
             "minimum": 0
+          }
+        }
+      },
+      "PeerMetadata": {
+        "description": "Metadata describing extra properties for each peer",
+        "type": "object",
+        "required": [
+          "version"
+        ],
+        "properties": {
+          "version": {
+            "description": "Peer Qdrant version",
+            "type": "string"
           }
         }
       },
@@ -15166,7 +15292,7 @@
             "nullable": true
           },
           "midpoint": {
-            "description": "The midpoint of the decay. Defaults to 0.5. Output will be this value when `|x - target| == scale`.",
+            "description": "The midpoint of the decay. Should be between 0 and 1.Defaults to 0.5. Output will be this value when `|x - target| == scale`.",
             "type": "number",
             "format": "float",
             "nullable": true
