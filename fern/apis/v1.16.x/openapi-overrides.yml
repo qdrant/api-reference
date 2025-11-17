@@ -638,9 +638,6 @@ paths:
             import io.qdrant.client.QdrantGrpcClient;
 
 
-            import io.qdrant.client.grpc.Points.Filter;
-
-
             QdrantClient client = new QdrantClient(QdrantGrpcClient.newBuilder("localhost",
             6334, false).build());
 
@@ -1207,7 +1204,7 @@ paths:
       - code-samples:
         - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\n\
             import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Points.Filter;\n\nQdrantClient client =\
+            \nimport io.qdrant.client.grpc.Common.Filter;\n\nQdrantClient client =\
             \ new QdrantClient(QdrantGrpcClient.newBuilder(\"localhost\", 6334, false).build());\n\
             \nclient\n    .countAsync(\n        \"{collection_name}\",\n        Filter.newBuilder().addMust(matchKeyword(\"\
             color\", \"red\")).build(),\n        true)\n    .get();\n"
@@ -1281,7 +1278,7 @@ paths:
         - code: "import static io.qdrant.client.PointIdFactory.id;\nimport static\
             \ io.qdrant.client.ConditionFactory.matchKeyword;\n\nimport java.util.List;\n\
             \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Points.Filter;\n\nQdrantClient client =\
+            \nimport io.qdrant.client.grpc.Common.Filter;\n\nQdrantClient client =\
             \ new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"localhost\"\
             , 6334, false).build());\n\nclient.deleteAsync(\"{collection_name}\",\
             \ List.of(id(0), id(3), id(100)));\n\nclient\n    .deleteAsync(\n    \
@@ -2458,7 +2455,7 @@ paths:
         - code: "import java.util.List;\n\nimport static io.qdrant.client.ConditionFactory.matchKeyword;\n\
             import static io.qdrant.client.PointIdFactory.id;\nimport static io.qdrant.client.VectorFactory.vector;\n\
             \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Points.Filter;\nimport io.qdrant.client.grpc.Points.RecommendPoints;\n\
+            \nimport io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.RecommendPoints;\n\
             import io.qdrant.client.grpc.Points.RecommendStrategy;\n\nQdrantClient\
             \ client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"localhost\"\
             , 6334, false).build());\n\nclient\n    .recommendAsync(\n        RecommendPoints.newBuilder()\n\
@@ -2546,7 +2543,7 @@ paths:
       - code-samples:
         - code: "import java.util.List;\n\nimport static io.qdrant.client.ConditionFactory.matchKeyword;\n\
             import static io.qdrant.client.PointIdFactory.id;\n\nimport io.qdrant.client.QdrantClient;\n\
-            import io.qdrant.client.QdrantGrpcClient;\n\nimport io.qdrant.client.grpc.Points.Filter;\n\
+            import io.qdrant.client.QdrantGrpcClient;\n\nimport io.qdrant.client.grpc.Common.Filter;\n\
             import io.qdrant.client.grpc.Points.RecommendPoints;\n\nQdrantClient client\
             \ =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"localhost\", 6334,\
             \ false).build());\n\nFilter filter = Filter.newBuilder().addMust(matchKeyword(\"\
@@ -2716,7 +2713,7 @@ paths:
         - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\nimport\
             \ static io.qdrant.client.WithPayloadSelectorFactory.enable;\n\nimport\
             \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Points.Filter;\nimport io.qdrant.client.grpc.Points.ScrollPoints;\n\
+            \nimport io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.ScrollPoints;\n\
             \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
             localhost\", 6334, false).build());\n\nclient\n    .scrollAsync(\n   \
             \     ScrollPoints.newBuilder()\n            .setCollectionName(\"{collection_name}\"\
@@ -2790,7 +2787,7 @@ paths:
       - code-samples:
         - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\n\
             import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Points.Filter;\nimport io.qdrant.client.grpc.Points.SearchPoints;\n\
+            \nimport io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.SearchPoints;\n\
             \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
             localhost\", 6334, false).build());\n\nclient\n    .searchAsync(\n   \
             \     SearchPoints.newBuilder()\n            .setCollectionName(\"{collection_name}\"\
@@ -2868,7 +2865,7 @@ paths:
       - code-samples:
         - code: "import java.util.List;\n\nimport static io.qdrant.client.ConditionFactory.matchKeyword;\n\
             \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Points.Filter;\nimport io.qdrant.client.grpc.Points.SearchPoints;\n\
+            \nimport io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.SearchPoints;\n\
             \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
             localhost\", 6334, false).build());\n\nFilter filter = Filter.newBuilder().addMust(matchKeyword(\"\
             city\", \"London\")).build();\nList<SearchPoints> searches =\n    List.of(\n\
@@ -3019,7 +3016,7 @@ paths:
       - code-samples:
         - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\n\
             import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            import io.qdrant.client.grpc.Points.Filter;\nimport io.qdrant.client.grpc.Points.SearchMatrixPoints;\n\
+            import io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.SearchMatrixPoints;\n\
             \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
             localhost\", 6334, false).build());\n\nclient\n    .searchMatrixOffsetsAsync(\n\
             \        SearchMatrixPoints.newBuilder()\n            .setCollectionName(\"\
@@ -3083,7 +3080,7 @@ paths:
       - code-samples:
         - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\n\
             import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            import io.qdrant.client.grpc.Points.Filter;\nimport io.qdrant.client.grpc.Points.SearchMatrixPoints;\n\
+            import io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.SearchMatrixPoints;\n\
             \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
             localhost\", 6334, false).build());\n\nclient\n    .searchMatrixPairsAsync(\n\
             \        SearchMatrixPoints.newBuilder()\n            .setCollectionName(\"\

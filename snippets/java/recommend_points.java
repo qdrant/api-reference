@@ -7,7 +7,7 @@ import static io.qdrant.client.VectorFactory.vector;
 import io.qdrant.client.QdrantClient;
 import io.qdrant.client.QdrantGrpcClient;
 
-import io.qdrant.client.grpc.Points.Filter;
+import io.qdrant.client.grpc.Common.Filter;
 import io.qdrant.client.grpc.Points.RecommendPoints;
 import io.qdrant.client.grpc.Points.RecommendStrategy;
 
