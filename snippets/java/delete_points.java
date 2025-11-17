@@ -6,7 +6,7 @@ import java.util.List;
 import io.qdrant.client.QdrantClient;
 import io.qdrant.client.QdrantGrpcClient;
 
-import io.qdrant.client.grpc.Points.Filter;
+import io.qdrant.client.grpc.Common.Filter;
 
 QdrantClient client = new QdrantClient(
                 QdrantGrpcClient.newBuilder("localhost", 6334, false).build());
