@@ -18,10 +18,6 @@ paths:
       - Aliases
       x-fern-examples:
       - code-samples:
-        - code: "curl  -X GET \\\n  'http://localhost:6333/aliases' \\\n  --header\
-            \ 'api-key: <api-key-value>'"
-          language: curl
-      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -49,6 +45,17 @@ paths:
             localhost\", 6334, false).build());\n\nclient.listAliasesAsync().get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.getAliases();
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc listAliases() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -68,16 +75,9 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.getAliases();
-
-            '
-          language: typescript
+        - code: "curl  -X GET \\\n  'http://localhost:6333/aliases' \\\n  --header\
+            \ 'api-key: <api-key-value>'"
+          language: curl
   /cluster:
     get:
       description: Returns information about the cluster's current state and composition.
@@ -106,10 +106,6 @@ paths:
       - Collections
       x-fern-examples:
       - code-samples:
-        - code: "curl  -X GET \\\n  'http://localhost:6333/collections' \\\n  --header\
-            \ 'api-key: <api-key-value>'"
-          language: curl
-      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -137,6 +133,17 @@ paths:
             localhost\", 6334, false).build());\n\nclient.listCollectionsAsync().get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.getCollections();
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc listCollections() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -156,16 +163,9 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.getCollections();
-
-            '
-          language: typescript
+        - code: "curl  -X GET \\\n  'http://localhost:6333/collections' \\\n  --header\
+            \ 'api-key: <api-key-value>'"
+          language: curl
   /collections/aliases:
     post:
       description: Updates aliases for the specified collections.
@@ -173,23 +173,6 @@ paths:
       tags:
       - Aliases
       x-fern-examples:
-      - code-samples:
-        - code: "# Create an alias\ncurl  -X POST \\\n  'http://localhost:6333/collections/aliases'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"actions\": [\n    {\n   \
-            \   \"create_alias\": {\n        \"collection_name\": \"{collection_name}\"\
-            ,\n        \"alias_name\": \"{alias_name}\"\n      }\n    }\n  ]\n}'\n\
-            \n# Delete an alias\ncurl  -X POST \\\n  'http://localhost:6333/collections/aliases'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"actions\": [\n    {\n   \
-            \   \"delete_alias\": {\n        \"alias_name\": \"{alias_name}\"\n  \
-            \    }\n    }\n  ]\n}'\n\n# Rename an alias\ncurl  -X POST \\\n  'http://localhost:6333/collections/aliases'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"actions\": [\n    {\n   \
-            \   \"rename_alias\": {\n        \"old_alias_name\": \"{old_alias_name}\"\
-            ,\n        \"new_alias_name\": \"{new_alias_name}\"\n      }\n    }\n\
-            \  ]\n}'\n"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.update_collection_aliases(\n    change_aliases_operations=[\n\
@@ -218,6 +201,15 @@ paths:
             ).get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.updateCollectionAliases({\n  actions: [\n    {\n      create_alias:\
+            \ {\n        collection_name: \"example_collection\",\n        alias_name:\
+            \ \"production_collection\",\n      },\n    },\n  ],\n});\n\nclient.updateCollectionAliases({\n\
+            \  actions: [\n    {\n      delete_alias: {\n        alias_name: \"production_collection\"\
+            ,\n      },\n    },\n  ],\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc updateAlias() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -244,14 +236,22 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.updateCollectionAliases({\n  actions: [\n    {\n      create_alias:\
-            \ {\n        collection_name: \"example_collection\",\n        alias_name:\
-            \ \"production_collection\",\n      },\n    },\n  ],\n});\n\nclient.updateCollectionAliases({\n\
-            \  actions: [\n    {\n      delete_alias: {\n        alias_name: \"production_collection\"\
-            ,\n      },\n    },\n  ],\n});\n"
-          language: typescript
+        - code: "# Create an alias\ncurl  -X POST \\\n  'http://localhost:6333/collections/aliases'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"actions\": [\n    {\n   \
+            \   \"create_alias\": {\n        \"collection_name\": \"{collection_name}\"\
+            ,\n        \"alias_name\": \"{alias_name}\"\n      }\n    }\n  ]\n}'\n\
+            \n# Delete an alias\ncurl  -X POST \\\n  'http://localhost:6333/collections/aliases'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"actions\": [\n    {\n   \
+            \   \"delete_alias\": {\n        \"alias_name\": \"{alias_name}\"\n  \
+            \    }\n    }\n  ]\n}'\n\n# Rename an alias\ncurl  -X POST \\\n  'http://localhost:6333/collections/aliases'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"actions\": [\n    {\n   \
+            \   \"rename_alias\": {\n        \"old_alias_name\": \"{old_alias_name}\"\
+            ,\n        \"new_alias_name\": \"{new_alias_name}\"\n      }\n    }\n\
+            \  ]\n}'\n"
+          language: curl
   /collections/{collection_name}:
     delete:
       description: Drops the specified collection and all associated data in it.
@@ -259,10 +259,6 @@ paths:
       tags:
       - Collections
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name'\
-            \ \\\n  --header 'api-key: <api-key-value>'"
-          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -292,6 +288,17 @@ paths:
             {collection_name}\").get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from ''@qdrant/qdrant-js'';
+
+
+            const client = new QdrantClient({url: ''http://127.0.0.1:6333''});
+
+
+            client.deleteCollection("{collection_name}");
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -310,26 +317,15 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from ''@qdrant/qdrant-js'';
-
-
-            const client = new QdrantClient({url: ''http://127.0.0.1:6333''});
-
-
-            client.deleteCollection("{collection_name}");
-
-            '
-          language: typescript
+        - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
     get:
       description: Retrieves parameters from the specified collection.
       summary: Get collection details
       tags:
       - Collections
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name'\
-            \ \\\n  --header 'api-key: <api-key-value>'"
-          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -359,6 +355,17 @@ paths:
             {collection_name}\").get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.getCollection("{collection_name}");
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc getCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -378,28 +385,15 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.getCollection("{collection_name}");
-
-            '
-          language: typescript
+        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
     patch:
       description: Updates the parameters of the specified collection.
       summary: Update collection parameters
       tags:
       - Collections
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X PATCH \\\n  'http://localhost:6333/collections/collection_name'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"optimizers_config\": {\n\
-            \    \"indexing_threshold\": 10000\n  }\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.update_collection(\n    collection_name=\"\
@@ -425,6 +419,12 @@ paths:
             \        .build());\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.updateCollection(\"{collection_name}\", {\n  optimizers_config:\
+            \ {\n    indexing_threshold: 10000,\n  },\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc updateCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -441,30 +441,17 @@ paths:
             \ { IndexingThreshold = 10000 }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.updateCollection(\"{collection_name}\", {\n  optimizers_config:\
-            \ {\n    indexing_threshold: 10000,\n  },\n});\n"
-          language: typescript
+        - code: "curl  -X PATCH \\\n  'http://localhost:6333/collections/collection_name'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"optimizers_config\": {\n\
+            \    \"indexing_threshold\": 10000\n  }\n}'"
+          language: curl
     put:
       description: Creates a new collection with the given parameters.
       summary: Create a collection
       tags:
       - Collections
       x-fern-examples:
-      - code-samples:
-        - code: "# Create a collection with default dense vector\ncurl  -X PUT \\\n\
-            \  'http://localhost:6333/collections/collection_name' \\\n  --header\
-            \ 'api-key: <api-key-value>' \\\n  --header 'Content-Type: application/json'\
-            \ \\\n  --data-raw '{\n  \"vectors\": {\n    \"size\": 384,\n    \"distance\"\
-            : \"Cosine\"\n  }\n}'\n\n# Create a collection with named dense and sparse\
-            \ vectors\ncurl  -X PUT \\\n  'http://localhost:6333/collections/collection_name'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"vectors\": {\n    \"dense-vector-name\"\
-            : {\n      \"size\": 1536,\n      \"distance\": \"Cosine\"\n    }\n  },\n\
-            \  \"sparse_vectors\": {\n    \"sparse-vector-name\": {\n      \"index\"\
-            : {\n        \"on_disk\": true\n      }\n    }\n  }\n}'\n"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.create_collection(\n    collection_name=\"\
@@ -494,6 +481,15 @@ paths:
             \            ).build()\n            ).build()\n        ).build()\n).get();"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.createCollection(\"{collection_name}\", {\n  vectors: { size: 100,\
+            \ distance: \"Cosine\" },\n});\n\n// or with sparse vectors\n\nclient.createCollection(\"\
+            {collection_name}\", {\n  vectors: { size: 100, distance: \"Cosine\" },\n\
+            \  sparse_vectors: {\n    \"splade-model-name\": {\n      index: {\n \
+            \       on_disk: false\n      }\n    }\n  }\n});"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc createCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -514,14 +510,18 @@ paths:
             \       OnDisk = false,\n        }\n    })\n);"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.createCollection(\"{collection_name}\", {\n  vectors: { size: 100,\
-            \ distance: \"Cosine\" },\n});\n\n// or with sparse vectors\n\nclient.createCollection(\"\
-            {collection_name}\", {\n  vectors: { size: 100, distance: \"Cosine\" },\n\
-            \  sparse_vectors: {\n    \"splade-model-name\": {\n      index: {\n \
-            \       on_disk: false\n      }\n    }\n  }\n});"
-          language: typescript
+        - code: "# Create a collection with default dense vector\ncurl  -X PUT \\\n\
+            \  'http://localhost:6333/collections/collection_name' \\\n  --header\
+            \ 'api-key: <api-key-value>' \\\n  --header 'Content-Type: application/json'\
+            \ \\\n  --data-raw '{\n  \"vectors\": {\n    \"size\": 384,\n    \"distance\"\
+            : \"Cosine\"\n  }\n}'\n\n# Create a collection with named dense and sparse\
+            \ vectors\ncurl  -X PUT \\\n  'http://localhost:6333/collections/collection_name'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"vectors\": {\n    \"dense-vector-name\"\
+            : {\n      \"size\": 1536,\n      \"distance\": \"Cosine\"\n    }\n  },\n\
+            \  \"sparse_vectors\": {\n    \"sparse-vector-name\": {\n      \"index\"\
+            : {\n        \"on_disk\": true\n      }\n    }\n  }\n}'\n"
+          language: curl
   /collections/{collection_name}/aliases:
     get:
       description: Retrieves a list of all aliases for the specified collection.
@@ -529,10 +529,6 @@ paths:
       tags:
       - Aliases
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/aliases'\
-            \ \\\n  --header 'api-key: <api-key-value>'"
-          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -562,6 +558,17 @@ paths:
             {collection_name}\").get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.getCollectionAliases("{collection_name}");
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc listCollectionAliases() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -581,16 +588,9 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.getCollectionAliases("{collection_name}");
-
-            '
-          language: typescript
+        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/aliases'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
   /collections/{collection_name}/cluster:
     get:
       description: Retrieves cluster details for a specified collection.
@@ -609,10 +609,6 @@ paths:
       tags:
       - Collections
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/exists'\
-            \ \\\n  --header 'api-key: <api-key-value>'"
-          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -651,6 +647,17 @@ paths:
             '
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.collectionExists("{collection_name}");
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc collectionExists() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -670,16 +677,9 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.collectionExists("{collection_name}");
-
-            '
-          language: typescript
+        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/exists'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
   /collections/{collection_name}/facet:
     post:
       description: Retrieves facets for the specified payload field.
@@ -715,6 +715,15 @@ paths:
             \        .get();"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.facet(\"{collection_name}\", {\n    filter: {\n        must: [\n\
+            \            {\n                key: \"color\",\n                match:\
+            \ {\n                    value: \"red\",\n                },\n       \
+            \     },\n        ],\n    },\n    key: \"my-payload-key\",\n    limit:\
+            \ 10,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc facet() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -732,15 +741,6 @@ paths:
             {collection_name}\",\n\tfilter: MatchKeyword(\"color\", \"red\"),\n\t\
             key: \"my-payload-key\",\n\tlimit: 10\n);"
           language: csharp
-      - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.facet(\"{collection_name}\", {\n    filter: {\n        must: [\n\
-            \            {\n                key: \"color\",\n                match:\
-            \ {\n                    value: \"red\",\n                },\n       \
-            \     },\n        ],\n    },\n    key: \"my-payload-key\",\n    limit:\
-            \ 10,\n});\n"
-          language: typescript
   /collections/{collection_name}/index:
     put:
       description: Creates a payload index for a field in the specified collection.
@@ -748,12 +748,6 @@ paths:
       tags:
       - Indexes
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/index'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"field_name\": \"field_name\"\
-            ,\n  \"field_schema\": \"keyword\"\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.create_payload_index(\n    collection_name=\"\
@@ -777,6 +771,12 @@ paths:
             \                true,\n                null,\n                null);\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.createPayloadIndex(\"{collection_name}\", {\n  field_name: \"{field_name}\"\
+            ,\n  field_schema: \"keyword\",\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc createFieldIndex() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -792,11 +792,11 @@ paths:
             {collection_name}\",\n  fieldName: \"name_of_the_field_to_index\"\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.createPayloadIndex(\"{collection_name}\", {\n  field_name: \"{field_name}\"\
-            ,\n  field_schema: \"keyword\",\n});\n"
-          language: typescript
+        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/index'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"field_name\": \"field_name\"\
+            ,\n  \"field_schema\": \"keyword\"\n}'"
+          language: curl
   /collections/{collection_name}/index/{field_name}:
     delete:
       description: Deletes a payload index for a field in the specified collection.
@@ -804,10 +804,6 @@ paths:
       tags:
       - Indexes
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name/index/field_name'\
-            \ \\\n  --header 'api-key: <api-key-value>'"
-          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -833,6 +829,17 @@ paths:
             {collection_name}\", \"{field_name}\", true, null, null).get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.deletePayloadIndex("{collection_name}", "{field_name}");
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteFieldIndex() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -847,16 +854,9 @@ paths:
             {collection_name}\",\n  fieldName: \"name_of_the_field_to_index\"\n);\n"
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.deletePayloadIndex("{collection_name}", "{field_name}");
-
-            '
-          language: typescript
+        - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name/index/field_name'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
   /collections/{collection_name}/points:
     post:
       description: Retrieves all details from multiple points.
@@ -864,12 +864,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"ids\": [\n    0,\n    3,\n\
-            \    100\n  ]\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.retrieve(\n    collection_name=\"{collection_name}\"\
@@ -889,6 +883,11 @@ paths:
             , List.of(id(0), id(30), id(100)), false, false, null)\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.retrieve(\"{collection_name}\", {\n  ids: [0, 3, 100],\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc getPoints() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -905,10 +904,11 @@ paths:
             );\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.retrieve(\"{collection_name}\", {\n  ids: [0, 3, 100],\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"ids\": [\n    0,\n    3,\n\
+            \    100\n  ]\n}'"
+          language: curl
     put:
       description: Performs the insert + update action on specified points. Any point
         with an existing {id} will be overwritten.
@@ -916,19 +916,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    {\n    \
-            \  \"id\": \"76874cce-1fb9-4e16-9b0b-f085ac06ed6f\",\n      \"payload\"\
-            : {\n        \"color\": \"red\"\n      },\n      \"vector\": [\n     \
-            \   0.9,\n        0.1,\n        0.1\n      ]\n    },\n    {\n      \"\
-            id\": 1,\n      \"payload\": {\n        \"color\": \"green\"\n      },\n\
-            \      \"vector\": [\n        0.1,\n        0.9,\n        0.1\n      ]\n\
-            \    },\n    {\n      \"id\": 2,\n      \"payload\": {\n        \"color\"\
-            : \"blue\"\n      },\n      \"vector\": [\n        0.1,\n        0.1,\n\
-            \        0.9\n      ]\n    }\n  ]\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.upsert(\n    collection_name=\"{collection_name}\"\
@@ -983,6 +970,16 @@ paths:
             \ 0.9f))))\n                .build()))\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.upsert(\"{collection_name}\", {\n  points: [\n    {\n      id:\
+            \ 1,\n      payload: { color: \"red\" },\n      vector: [0.9, 0.1, 0.1],\n\
+            \    },\n    {\n      id: 2,\n      payload: { color: \"green\" },\n \
+            \     vector: [0.1, 0.9, 0.1],\n    },\n    {\n      id: 3,\n      payload:\
+            \ { color: \"blue\" },\n      vector: [0.1, 0.1, 0.9],\n    },\n  ],\n\
+            });\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc upsert() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -1012,15 +1009,18 @@ paths:
             ] = \"blue\" }\n    }\n  }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.upsert(\"{collection_name}\", {\n  points: [\n    {\n      id:\
-            \ 1,\n      payload: { color: \"red\" },\n      vector: [0.9, 0.1, 0.1],\n\
-            \    },\n    {\n      id: 2,\n      payload: { color: \"green\" },\n \
-            \     vector: [0.1, 0.9, 0.1],\n    },\n    {\n      id: 3,\n      payload:\
-            \ { color: \"blue\" },\n      vector: [0.1, 0.1, 0.9],\n    },\n  ],\n\
-            });\n"
-          language: typescript
+        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    {\n    \
+            \  \"id\": \"76874cce-1fb9-4e16-9b0b-f085ac06ed6f\",\n      \"payload\"\
+            : {\n        \"color\": \"red\"\n      },\n      \"vector\": [\n     \
+            \   0.9,\n        0.1,\n        0.1\n      ]\n    },\n    {\n      \"\
+            id\": 1,\n      \"payload\": {\n        \"color\": \"green\"\n      },\n\
+            \      \"vector\": [\n        0.1,\n        0.9,\n        0.1\n      ]\n\
+            \    },\n    {\n      \"id\": 2,\n      \"payload\": {\n        \"color\"\
+            : \"blue\"\n      },\n      \"vector\": [\n        0.1,\n        0.1,\n\
+            \        0.9\n      ]\n    }\n  ]\n}'"
+          language: curl
   /collections/{collection_name}/points/batch:
     post:
       description: Batch updates points, including their respective vectors and payloads.
@@ -1028,22 +1028,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/batch'\
-            \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'api-key:\
-            \ <api-key-value>' \\\n  --data-raw '{\n  \"operations\": [\n    {\n \
-            \     \"upsert\": {\n        \"points\": [\n          {\n            \"\
-            id\": 1,\n            \"vector\": [\n              0.4,\n            \
-            \  0.3,\n              0.2,\n              0.1\n            ]\n      \
-            \    }\n        ]\n      }\n    },\n    {\n      \"update_vectors\": {\n\
-            \        \"points\": [\n          {\n            \"id\": 1,\n        \
-            \    \"vector\": [\n              0.11,\n              0.22,\n       \
-            \       0.33,\n              0.44\n            ]\n          }\n      \
-            \  ]\n      }\n    },\n    {\n      \"set_payload\": {\n        \"payload\"\
-            : {\n          \"test_payload_2\": 2,\n          \"test_payload_3\": 3\n\
-            \        },\n        \"points\": [\n          1\n        ]\n      }\n\
-            \    }\n  ]\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.batch_update_points(\n    collection_name=\"\
@@ -1130,6 +1114,22 @@ paths:
             \         .build()))\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.batchUpdate(\"{collection_name}\", {\n    operations: [\n     \
+            \   {\n            upsert: {\n                points: [\n            \
+            \        {\n                        id: 1,\n                        vector:\
+            \ [1.0, 2.0, 3.0, 4.0],\n                        payload: {},\n      \
+            \              },\n                ],\n            },\n        },\n  \
+            \      {\n            update_vectors: {\n                points: [\n \
+            \                   {\n                        id: 1,\n              \
+            \          vector: [1.0, 2.0, 3.0, 4.0],\n                    },\n   \
+            \             ],\n            },\n        },\n        {\n            set_payload:\
+            \ {\n                payload: {\n                    test_payload_2: 2,\n\
+            \                    test_payload_3: 3,\n                },\n        \
+            \        points: [1],\n            },\n        },\n    ],\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc batchUpdate() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -1164,21 +1164,21 @@ paths:
             ] = 2, [\"test_payload_3\"] = 3 }\n            }\n        }\n    ]\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.batchUpdate(\"{collection_name}\", {\n    operations: [\n     \
-            \   {\n            upsert: {\n                points: [\n            \
-            \        {\n                        id: 1,\n                        vector:\
-            \ [1.0, 2.0, 3.0, 4.0],\n                        payload: {},\n      \
-            \              },\n                ],\n            },\n        },\n  \
-            \      {\n            update_vectors: {\n                points: [\n \
-            \                   {\n                        id: 1,\n              \
-            \          vector: [1.0, 2.0, 3.0, 4.0],\n                    },\n   \
-            \             ],\n            },\n        },\n        {\n            set_payload:\
-            \ {\n                payload: {\n                    test_payload_2: 2,\n\
-            \                    test_payload_3: 3,\n                },\n        \
-            \        points: [1],\n            },\n        },\n    ],\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/batch'\
+            \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'api-key:\
+            \ <api-key-value>' \\\n  --data-raw '{\n  \"operations\": [\n    {\n \
+            \     \"upsert\": {\n        \"points\": [\n          {\n            \"\
+            id\": 1,\n            \"vector\": [\n              0.4,\n            \
+            \  0.3,\n              0.2,\n              0.1\n            ]\n      \
+            \    }\n        ]\n      }\n    },\n    {\n      \"update_vectors\": {\n\
+            \        \"points\": [\n          {\n            \"id\": 1,\n        \
+            \    \"vector\": [\n              0.11,\n              0.22,\n       \
+            \       0.33,\n              0.44\n            ]\n          }\n      \
+            \  ]\n      }\n    },\n    {\n      \"set_payload\": {\n        \"payload\"\
+            : {\n          \"test_payload_2\": 2,\n          \"test_payload_3\": 3\n\
+            \        },\n        \"points\": [\n          1\n        ]\n      }\n\
+            \    }\n  ]\n}'"
+          language: curl
   /collections/{collection_name}/points/count:
     post:
       description: Counts the number of points that match a specified filtering condition.
@@ -1186,18 +1186,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "# Count total number of points in a collection\ncurl  -X POST \\\n\
-            \  'http://localhost:6333/collections/collection_name/points/count' \\\
-            \n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"exact\": true\n}'\n\n# Count\
-            \ points satisfying a filter condition\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/count'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
-            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
-            \      \"value\": \"red\"\n        }\n      }\n    ]\n  },\n  \"exact\"\
-            : true\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.count(\n    collection_name=\"{collection_name}\"\
@@ -1222,6 +1210,14 @@ paths:
             color\", \"red\")).build(),\n        true)\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.count(\"{collection_name}\", {\n    filter: {\n        must: [\n\
+            \            {\n                key: \"color\",\n                match:\
+            \ {\n                    value: \"red\",\n                },\n       \
+            \     },\n        ],\n    },\n    exact: true,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc count() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -1238,13 +1234,17 @@ paths:
             , \"red\"),\n  exact: true\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.count(\"{collection_name}\", {\n    filter: {\n        must: [\n\
-            \            {\n                key: \"color\",\n                match:\
-            \ {\n                    value: \"red\",\n                },\n       \
-            \     },\n        ],\n    },\n    exact: true,\n});\n"
-          language: typescript
+        - code: "# Count total number of points in a collection\ncurl  -X POST \\\n\
+            \  'http://localhost:6333/collections/collection_name/points/count' \\\
+            \n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"exact\": true\n}'\n\n# Count\
+            \ points satisfying a filter condition\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/count'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
+            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
+            \      \"value\": \"red\"\n        }\n      }\n    ]\n  },\n  \"exact\"\
+            : true\n}'"
+          language: curl
   /collections/{collection_name}/points/delete:
     post:
       description: Deletes specified points from the collection.
@@ -1252,17 +1252,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "# Delete points by IDs\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/delete'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    0,\n   \
-            \ 3,\n    100\n  ]\n}'\n\n# Delete points by filter \ncurl  -X POST \\\
-            \n  'http://localhost:6333/collections/collection_name/points/delete'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
-            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
-            \      \"value\": \"red\"\n        }\n      }\n    ]\n  }\n}'\n"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.delete(\n    collection_name=\"{collection_name}\"\
@@ -1297,6 +1286,15 @@ paths:
             color\", \"red\")).build())\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.delete(\"{collection_name}\", {\n  points: [0, 3, 100],\n});\n\n\
+            client.delete(\"{collection_name}\", {\n    filter: {\n        must: [\n\
+            \            {\n                key: \"color\",\n                match:\
+            \ {\n                    value: \"red\",\n                },\n       \
+            \     },\n        ],\n    },\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc delete() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -1326,14 +1324,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.delete(\"{collection_name}\", {\n  points: [0, 3, 100],\n});\n\n\
-            client.delete(\"{collection_name}\", {\n    filter: {\n        must: [\n\
-            \            {\n                key: \"color\",\n                match:\
-            \ {\n                    value: \"red\",\n                },\n       \
-            \     },\n        ],\n    },\n});\n"
-          language: typescript
+        - code: "# Delete points by IDs\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    0,\n   \
+            \ 3,\n    100\n  ]\n}'\n\n# Delete points by filter \ncurl  -X POST \\\
+            \n  'http://localhost:6333/collections/collection_name/points/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
+            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
+            \      \"value\": \"red\"\n        }\n      }\n    ]\n  }\n}'\n"
+          language: curl
   /collections/{collection_name}/points/discover:
     post:
       description: 'Retrieves the most similar points to a given target, constrained
@@ -1356,14 +1356,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/discover'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"target\": [\n    0.2,\n \
-            \   0.1,\n    0.9,\n    0.7\n  ],\n  \"context\": [\n    {\n      \"positive\"\
-            : \"7f6652c4-89bd-40e0-ab1d-510f7fcddd2b\",\n      \"negative\": \"2c2c9f86-0171-4bd2-9ab0-b4754682cddd\"\
-            \n    }\n  ],\n  \"limit\": 10\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.discover(\n    \"{collection_name}\"\
@@ -1409,6 +1401,14 @@ paths:
             \       .build())\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.discover(\"{collection_name}\", {\n    target: [0.2, 0.1, 0.9,\
+            \ 0.7],\n    context: [\n        {\n            positive: 100,\n     \
+            \       negative: 718,\n        },\n        {\n            positive: 200,\n\
+            \            negative: 300,\n        },\n    ],\n    limit: 10,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc discover() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -1435,13 +1435,13 @@ paths:
             \ }\n  ],\n  limit: 10\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.discover(\"{collection_name}\", {\n    target: [0.2, 0.1, 0.9,\
-            \ 0.7],\n    context: [\n        {\n            positive: 100,\n     \
-            \       negative: 718,\n        },\n        {\n            positive: 200,\n\
-            \            negative: 300,\n        },\n    ],\n    limit: 10,\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/discover'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"target\": [\n    0.2,\n \
+            \   0.1,\n    0.9,\n    0.7\n  ],\n  \"context\": [\n    {\n      \"positive\"\
+            : \"7f6652c4-89bd-40e0-ab1d-510f7fcddd2b\",\n      \"negative\": \"2c2c9f86-0171-4bd2-9ab0-b4754682cddd\"\
+            \n    }\n  ],\n  \"limit\": 10\n}'"
+          language: curl
   /collections/{collection_name}/points/discover/batch:
     post:
       description: Retrieves points in batches based on the target and/or positive
@@ -1450,19 +1450,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/discover/batch'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
-            \    \"target\": [\n        0.2,\n        0.1,\n        0.9,\n       \
-            \ 0.7\n      ],\n      \"context\": [\n        {\n          \"positive\"\
-            : \"7f6652c4-89bd-40e0-ab1d-510f7fcddd2b\",\n          \"negative\": \"\
-            2c2c9f86-0171-4bd2-9ab0-b4754682cddd\"\n        }\n      ],\n      \"\
-            limit\": 1\n    },\n    {\n      \"target\": [\n        0.5,\n       \
-            \ 0.3,\n        0.2,\n        0.3\n      ],\n      \"context\": [\n  \
-            \      {\n          \"positive\": 342,\n          \"negative\": 213\n\
-            \        }\n      ],\n      \"limit\": 1\n    }\n  ]\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\ndiscover_queries = [\n    models.DiscoverRequest(\n\
@@ -1538,6 +1525,20 @@ paths:
             \ null);\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            const searches = [\n    {\n        target: [0.2, 0.1, 0.9, 0.7],\n   \
+            \     context: [\n            {\n                positive: 100,\n    \
+            \            negative: 718,\n            },\n            {\n         \
+            \       positive: 200,\n                negative: 300,\n            },\n\
+            \        ],\n        limit: 10,\n    },\n    {\n        target: [0.5,\
+            \ 0.3, 0.2, 0.3],\n        context: [\n            {\n               \
+            \ positive: 342,\n                negative: 213,\n            },\n   \
+            \         {\n                positive: 100,\n                negative:\
+            \ 200,\n            },\n        ],\n        limit: 5,\n    },\n];\n\n\
+            client.discoverBatchPoints(\"{collection_name}\", {\n    searches,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc discoverBatch() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -1588,19 +1589,18 @@ paths:
             {collection_name}\", discoverPoints);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            const searches = [\n    {\n        target: [0.2, 0.1, 0.9, 0.7],\n   \
-            \     context: [\n            {\n                positive: 100,\n    \
-            \            negative: 718,\n            },\n            {\n         \
-            \       positive: 200,\n                negative: 300,\n            },\n\
-            \        ],\n        limit: 10,\n    },\n    {\n        target: [0.5,\
-            \ 0.3, 0.2, 0.3],\n        context: [\n            {\n               \
-            \ positive: 342,\n                negative: 213,\n            },\n   \
-            \         {\n                positive: 100,\n                negative:\
-            \ 200,\n            },\n        ],\n        limit: 5,\n    },\n];\n\n\
-            client.discoverBatchPoints(\"{collection_name}\", {\n    searches,\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/discover/batch'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
+            \    \"target\": [\n        0.2,\n        0.1,\n        0.9,\n       \
+            \ 0.7\n      ],\n      \"context\": [\n        {\n          \"positive\"\
+            : \"7f6652c4-89bd-40e0-ab1d-510f7fcddd2b\",\n          \"negative\": \"\
+            2c2c9f86-0171-4bd2-9ab0-b4754682cddd\"\n        }\n      ],\n      \"\
+            limit\": 1\n    },\n    {\n      \"target\": [\n        0.5,\n       \
+            \ 0.3,\n        0.2,\n        0.3\n      ],\n      \"context\": [\n  \
+            \      {\n          \"positive\": 342,\n          \"negative\": 213\n\
+            \        }\n      ],\n      \"limit\": 1\n    }\n  ]\n}'"
+          language: curl
   /collections/{collection_name}/points/payload:
     post:
       description: Sets payload values for specified points.
@@ -1608,20 +1608,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "# Set payload by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"payload\": {\n    \"property1\"\
-            : \"some_value\",\n    \"property2\": 32,\n    \"property3\": true\n \
-            \ },\n  \"points\": [\n    0,\n    3,\n    10\n  ]\n}'\n\n# Set payload\
-            \ by filter\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
-            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
-            \      \"value\": \"red\"\n        }\n      }\n    ]\n  },\n  \"payload\"\
-            : {\n    \"property1\": \"some_value\",\n    \"property2\": 32,\n    \"\
-            property3\": true\n  }\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.set_payload(\n    collection_name=\"\
@@ -1651,6 +1637,13 @@ paths:
             \ id(3), id(10)),\n        true,\n        null,\n        null)\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.setPayload(\"{collection_name}\", {\n  payload: {\n    property1:\
+            \ \"string\",\n    property2: \"string\",\n  },\n  points: [0, 3, 10],\n\
+            });\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc setPayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -1670,31 +1663,25 @@ paths:
             \ } },\n  ids: new ulong[] { 0, 3, 10 }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.setPayload(\"{collection_name}\", {\n  payload: {\n    property1:\
-            \ \"string\",\n    property2: \"string\",\n  },\n  points: [0, 3, 10],\n\
-            });\n"
-          language: typescript
+        - code: "# Set payload by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"payload\": {\n    \"property1\"\
+            : \"some_value\",\n    \"property2\": 32,\n    \"property3\": true\n \
+            \ },\n  \"points\": [\n    0,\n    3,\n    10\n  ]\n}'\n\n# Set payload\
+            \ by filter\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
+            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
+            \      \"value\": \"red\"\n        }\n      }\n    ]\n  },\n  \"payload\"\
+            : {\n    \"property1\": \"some_value\",\n    \"property2\": 32,\n    \"\
+            property3\": true\n  }\n}'"
+          language: curl
     put:
       description: Replaces the entire payload of a specified point with a new payload.
       summary: Overwrite payload
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "# Overwrite payload by ID\ncurl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"payload\": {\n    \"property1\"\
-            : \"string\",\n    \"property2\": \"string\"\n  },\n  \"points\": [\n\
-            \    0,\n    3,\n    10\n  ]\n}'\n\n# Overwrite payload by filter\ncurl\
-            \  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"payload\": {\n    \"property1\"\
-            : \"string\",\n    \"property2\": \"string\"\n  },\n  \"filter\": {\n\
-            \    \"must\": [\n      {\n        \"key\": \"color\",\n        \"match\"\
-            : {\n          \"value\": \"red\"\n        }\n      }\n    ]\n  }\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.overwrite_payload(\n    collection_name=\"\
@@ -1724,6 +1711,13 @@ paths:
             \        true,\n        null,\n        null)\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.overwritePayload(\"{collection_name}\", {\n  payload: {\n    property1:\
+            \ \"string\",\n    property2: \"string\",\n  },\n  points: [0, 3, 10],\n\
+            });\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc overwritePayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -1742,12 +1736,18 @@ paths:
             \ } },\n  ids: new ulong[] { 0, 3, 10 }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.overwritePayload(\"{collection_name}\", {\n  payload: {\n    property1:\
-            \ \"string\",\n    property2: \"string\",\n  },\n  points: [0, 3, 10],\n\
-            });\n"
-          language: typescript
+        - code: "# Overwrite payload by ID\ncurl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"payload\": {\n    \"property1\"\
+            : \"string\",\n    \"property2\": \"string\"\n  },\n  \"points\": [\n\
+            \    0,\n    3,\n    10\n  ]\n}'\n\n# Overwrite payload by filter\ncurl\
+            \  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"payload\": {\n    \"property1\"\
+            : \"string\",\n    \"property2\": \"string\"\n  },\n  \"filter\": {\n\
+            \    \"must\": [\n      {\n        \"key\": \"color\",\n        \"match\"\
+            : {\n          \"value\": \"red\"\n        }\n      }\n    ]\n  }\n}'"
+          language: curl
   /collections/{collection_name}/points/payload/clear:
     post:
       description: Removes the entire payload for specified points.
@@ -1755,12 +1755,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/clear'\
-            \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'api-key:\
-            \ <api-key-value>' \\\n  --data-raw '{\n  \"points\": [\n    0,\n    3,\n\
-            \    100\n  ]\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.clear_payload(\n    collection_name=\"\
@@ -1780,6 +1774,12 @@ paths:
             localhost\", 6334, false).build());\n\nclient.clearPayloadAsync(\"{collection_name}\"\
             , List.of(id(0), id(3), id(100)), null, null, null)\n                .get();\n"
           language: java
+      - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.clearPayload(\"{collection_name}\", {\n  points: [0, 3, 100],\n\
+            });\n"
+          language: typescript
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc clearPayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -1802,11 +1802,11 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.clearPayload(\"{collection_name}\", {\n  points: [0, 3, 100],\n\
-            });\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/clear'\
+            \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'api-key:\
+            \ <api-key-value>' \\\n  --data-raw '{\n  \"points\": [\n    0,\n    3,\n\
+            \    100\n  ]\n}'"
+          language: curl
   /collections/{collection_name}/points/payload/delete:
     post:
       description: Deletes a specified key payload for points.
@@ -1814,18 +1814,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "# Delete payload by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/delete'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"keys\": [\n    \"color\"\
-            ,\n    \"price\"\n  ],\n  \"points\": [\n    0,\n    3,\n    100\n  ]\n\
-            }'\n\n# Delete payload by filter\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/delete'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"keys\": [\n    \"color\"\
-            ,\n    \"price\"\n  ],\n  \"filter\": {\n    \"must\": [\n      {\n  \
-            \      \"key\": \"color\",\n        \"match\": {\n          \"value\"\
-            : \"red\"\n        }\n      }\n    ]\n  }\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.delete_payload(\n    collection_name=\"\
@@ -1851,6 +1839,12 @@ paths:
             \        null)\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.deletePayload(\"{collection_name}\", {\n  keys: [\"color\", \"\
+            price\"],\n  points: [0, 3, 100],\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deletePayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -1873,11 +1867,17 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.deletePayload(\"{collection_name}\", {\n  keys: [\"color\", \"\
-            price\"],\n  points: [0, 3, 100],\n});\n"
-          language: typescript
+        - code: "# Delete payload by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"keys\": [\n    \"color\"\
+            ,\n    \"price\"\n  ],\n  \"points\": [\n    0,\n    3,\n    100\n  ]\n\
+            }'\n\n# Delete payload by filter\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"keys\": [\n    \"color\"\
+            ,\n    \"price\"\n  ],\n  \"filter\": {\n    \"must\": [\n      {\n  \
+            \      \"key\": \"color\",\n        \"match\": {\n          \"value\"\
+            : \"red\"\n        }\n      }\n    ]\n  }\n}'"
+          language: curl
   /collections/{collection_name}/points/query:
     post:
       description: Universally query points. This endpoint covers all capabilities
@@ -1887,63 +1887,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "# Query nearest by ID\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"query\": \"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\
-            \n}'\n\n# Recommend on the average of these vectors\ncurl -X POST \\\n\
-            \  'http://localhost:6333/collections/collection_name/points/query' \\\
-            \n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"query\": {\n    \"recommend\"\
-            : {\n      \"positive\": [\n        [\n          0.11,\n          0.35,\n\
-            \          0.6\n        ]\n      ],\n      \"negative\": [\n        \"\
-            43cf51e2-8777-4f52-bc74-c2cbde0c8b04\",\n        [\n          0.01,\n\
-            \          0.45,\n          0.67\n        ]\n      ]\n    }\n  }\n}'\n\
-            \n# Fusion query\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"prefetch\": [\n    {\n  \
-            \    \"query\": {\n        \"values\": [\n          0.22,\n          0.8\n\
-            \        ],\n        \"indices\": [\n          1,\n          42\n    \
-            \    ]\n      },\n      \"using\": \"sparse\",\n      \"limit\": 20\n\
-            \    },\n    {\n      \"query\": [\n        0.01,\n        0.45,\n   \
-            \     0.67\n      ],\n      \"using\": \"dense\",\n      \"limit\": 20\n\
-            \    }\n  ],\n  \"query\": {\n    \"fusion\": \"rrf\"\n  }\n}'\n\n# 2-stage\
-            \ query\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"prefetch\": {\n    \"query\"\
-            : [\n      1,\n      23,\n      45,\n      67\n    ],\n    \"limit\":\
-            \ 100\n  },\n  \"query\": [\n    [\n      0.1,\n      0.2,\n      0.3\n\
-            \    ],\n    [\n      0.2,\n      0.1,\n      0.35\n    ],\n    [\n  \
-            \    0.8,\n      0.9,\n      0.53\n    ]\n  ],\n  \"using\": \"colbert\"\
-            ,\n  \"limit\": 10\n}'\n\n# Random sampling (as of 1.11.0)\ncurl -X POST\
-            \ \\\n  'http://localhost:6333/collections/collection_name/points/query'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"query\": {\n    \"sample\"\
-            : \"random\"\n  }\n}'\n\n# Score boost depending on payload conditions\
-            \ (as of 1.14.0)\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n    \"prefetch\": {\n       \
-            \ \"query\": [0.2, 0.8, ...],  // <-- dense vector\n        \"limit\"\
-            : 50\n    }\n    \"query\": {\n        \"formula\": {\n            \"\
-            sum\": [\n                \"$score,\n                { \"mult\": [ 0.5,\
-            \ { \"key\": \"tag\", \"match\": { \"any\": [\"h1\", \"h2\", \"h3\", \"\
-            h4\"] } } ] },\n                { \"mult\": [ 0.25, { \"key\": \"tag\"\
-            , \"match\": { \"any\": [\"p\", \"li\"] } } ] }\n            ]\n     \
-            \   }\n    }\n}'\n\n# Score boost geographically closer points (as of\
-            \ 1.14.0)\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n    \"prefetch\": { \"query\"\
-            : [0.2, 0.8, ...], \"limit\": 50 },\n    \"query\": {\n        \"formula\"\
-            : {\n            \"sum\": [\n                \"$score\",\n           \
-            \     {\n                    \"gauss_decay\": {\n                    \
-            \    \"x\": {\n                            \"geo_distance\": {\n     \
-            \                           \"origin\": { \"lat\": 52.504043, \"lon\"\
-            : 13.393236 } // Berlin\n                                \"to\": \"geo.location\"\
-            \n                            }\n                        },\n        \
-            \                \"scale\": 5000 // 5km\n                    }\n     \
-            \           }\n            ]\n        },\n        \"defaults\": { \"geo.location\"\
-            : {\"lat\": 48.137154, \"lon\": 11.576124} } // Munich\n    }\n}'\n"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\n# Query nearest by ID\nnearest = client.query_points(\n\
@@ -2143,6 +2086,45 @@ paths:
             \      .build()))\n            .build())\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            // Query nearest by ID\nlet _nearest = client.query(\"{collection_name\"\
+            , {\n    query: \"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\n});\n\n// Recommend\
+            \ on the average of these vectors\nlet _recommendations = client.query(\"\
+            {collection_name}\", {\n    query: {\n        recommend: {\n         \
+            \   positive: [\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\", [0.11, 0.35,\
+            \ 0.6]],\n            negative: [0.01, 0.45, 0.67]\n        }\n    }\n\
+            });\n\n// Fusion query\nlet _hybrid = client.query(\"{collection_name}\"\
+            , {\n    prefetch: [\n        {\n            query: {\n              \
+            \  values: [0.22, 0.8],\n                indices: [1, 42],\n         \
+            \   },\n            using: 'sparse',\n            limit: 20,\n       \
+            \ },\n        {\n            query: [0.01, 0.45, 0.67],\n            using:\
+            \ 'dense',\n            limit: 20,\n        },\n    ],\n    query: {\n\
+            \        fusion: 'rrf',\n    },\n});\n\n// 2-stage query\nlet _refined\
+            \ = client.query(\"{collection_name}\", {\n    prefetch: {\n        query:\
+            \ [1, 23, 45, 67],\n        limit: 100,\n    },\n    query: [\n      \
+            \  [0.1, 0.2],\n        [0.2, 0.1],\n        [0.8, 0.9],\n    ],\n   \
+            \ using: 'colbert',\n    limit: 10,\n});\n\n// Random sampling (as of\
+            \ 1.11.0)\nlet _sampled = client.query(\"{collection_name}\", {\n  query:\
+            \ { sample: \"random\" },\n});\n\n// Score boost depending on payload\
+            \ conditions (as of 1.14.0)\nconst tag_boosted = await client.query(\"\
+            {collection_name}\", {\n  prefetch: {\n    query: [0.2, 0.8, 0.1, 0.9],\n\
+            \    limit: 50\n  },\n  query: {\n    formula: {\n      sum: [\n     \
+            \   \"$score\",\n        {\n          mult: [ 0.5, { key: \"tag\", match:\
+            \ { any: [\"h1\", \"h2\", \"h3\", \"h4\"] }} ]\n        },\n        {\n\
+            \          mult: [ 0.25, { key: \"tag\", match: { any: [\"p\", \"li\"\
+            ] }} ]\n        }\n      ]\n    }\n  }\n});\n\n// Score boost geographically\
+            \ closer points (as of 1.14.0)\nconst distance_boosted = await client.query(\"\
+            {collection_name}\", {\n  prefetch: {\n    query: [0.2, 0.8, ...],\n \
+            \   limit: 50\n  },\n  query: {\n    formula: {\n      sum: [\n      \
+            \  \"$score\",\n        {\n          gauss_decay: {\n            x: {\n\
+            \              geo_distance: {\n                origin: { lat: 52.504043,\
+            \ lon: 13.393236 }, // Berlin\n                to: \"geo.location\"\n\
+            \              }\n            },\n            scale: 5000 // 5km\n   \
+            \       }\n        }\n      ]\n    },\n    defaults: { \"geo.location\"\
+            : { lat: 48.137154, lon: 11.576124 } } // Munich\n  }\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc query() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2249,44 +2231,62 @@ paths:
             \t\t\t\t[\"lon\"] = 11.576124,\n\t\t\t},\n\t\t},\n\t}\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            // Query nearest by ID\nlet _nearest = client.query(\"{collection_name\"\
-            , {\n    query: \"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\n});\n\n// Recommend\
-            \ on the average of these vectors\nlet _recommendations = client.query(\"\
-            {collection_name}\", {\n    query: {\n        recommend: {\n         \
-            \   positive: [\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\", [0.11, 0.35,\
-            \ 0.6]],\n            negative: [0.01, 0.45, 0.67]\n        }\n    }\n\
-            });\n\n// Fusion query\nlet _hybrid = client.query(\"{collection_name}\"\
-            , {\n    prefetch: [\n        {\n            query: {\n              \
-            \  values: [0.22, 0.8],\n                indices: [1, 42],\n         \
-            \   },\n            using: 'sparse',\n            limit: 20,\n       \
-            \ },\n        {\n            query: [0.01, 0.45, 0.67],\n            using:\
-            \ 'dense',\n            limit: 20,\n        },\n    ],\n    query: {\n\
-            \        fusion: 'rrf',\n    },\n});\n\n// 2-stage query\nlet _refined\
-            \ = client.query(\"{collection_name}\", {\n    prefetch: {\n        query:\
-            \ [1, 23, 45, 67],\n        limit: 100,\n    },\n    query: [\n      \
-            \  [0.1, 0.2],\n        [0.2, 0.1],\n        [0.8, 0.9],\n    ],\n   \
-            \ using: 'colbert',\n    limit: 10,\n});\n\n// Random sampling (as of\
-            \ 1.11.0)\nlet _sampled = client.query(\"{collection_name}\", {\n  query:\
-            \ { sample: \"random\" },\n});\n\n// Score boost depending on payload\
-            \ conditions (as of 1.14.0)\nconst tag_boosted = await client.query(\"\
-            {collection_name}\", {\n  prefetch: {\n    query: [0.2, 0.8, 0.1, 0.9],\n\
-            \    limit: 50\n  },\n  query: {\n    formula: {\n      sum: [\n     \
-            \   \"$score\",\n        {\n          mult: [ 0.5, { key: \"tag\", match:\
-            \ { any: [\"h1\", \"h2\", \"h3\", \"h4\"] }} ]\n        },\n        {\n\
-            \          mult: [ 0.25, { key: \"tag\", match: { any: [\"p\", \"li\"\
-            ] }} ]\n        }\n      ]\n    }\n  }\n});\n\n// Score boost geographically\
-            \ closer points (as of 1.14.0)\nconst distance_boosted = await client.query(\"\
-            {collection_name}\", {\n  prefetch: {\n    query: [0.2, 0.8, ...],\n \
-            \   limit: 50\n  },\n  query: {\n    formula: {\n      sum: [\n      \
-            \  \"$score\",\n        {\n          gauss_decay: {\n            x: {\n\
-            \              geo_distance: {\n                origin: { lat: 52.504043,\
-            \ lon: 13.393236 }, // Berlin\n                to: \"geo.location\"\n\
-            \              }\n            },\n            scale: 5000 // 5km\n   \
-            \       }\n        }\n      ]\n    },\n    defaults: { \"geo.location\"\
-            : { lat: 48.137154, lon: 11.576124 } } // Munich\n  }\n});\n"
-          language: typescript
+        - code: "# Query nearest by ID\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"query\": \"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\
+            \n}'\n\n# Recommend on the average of these vectors\ncurl -X POST \\\n\
+            \  'http://localhost:6333/collections/collection_name/points/query' \\\
+            \n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"query\": {\n    \"recommend\"\
+            : {\n      \"positive\": [\n        [\n          0.11,\n          0.35,\n\
+            \          0.6\n        ]\n      ],\n      \"negative\": [\n        \"\
+            43cf51e2-8777-4f52-bc74-c2cbde0c8b04\",\n        [\n          0.01,\n\
+            \          0.45,\n          0.67\n        ]\n      ]\n    }\n  }\n}'\n\
+            \n# Fusion query\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"prefetch\": [\n    {\n  \
+            \    \"query\": {\n        \"values\": [\n          0.22,\n          0.8\n\
+            \        ],\n        \"indices\": [\n          1,\n          42\n    \
+            \    ]\n      },\n      \"using\": \"sparse\",\n      \"limit\": 20\n\
+            \    },\n    {\n      \"query\": [\n        0.01,\n        0.45,\n   \
+            \     0.67\n      ],\n      \"using\": \"dense\",\n      \"limit\": 20\n\
+            \    }\n  ],\n  \"query\": {\n    \"fusion\": \"rrf\"\n  }\n}'\n\n# 2-stage\
+            \ query\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"prefetch\": {\n    \"query\"\
+            : [\n      1,\n      23,\n      45,\n      67\n    ],\n    \"limit\":\
+            \ 100\n  },\n  \"query\": [\n    [\n      0.1,\n      0.2,\n      0.3\n\
+            \    ],\n    [\n      0.2,\n      0.1,\n      0.35\n    ],\n    [\n  \
+            \    0.8,\n      0.9,\n      0.53\n    ]\n  ],\n  \"using\": \"colbert\"\
+            ,\n  \"limit\": 10\n}'\n\n# Random sampling (as of 1.11.0)\ncurl -X POST\
+            \ \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"query\": {\n    \"sample\"\
+            : \"random\"\n  }\n}'\n\n# Score boost depending on payload conditions\
+            \ (as of 1.14.0)\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n    \"prefetch\": {\n       \
+            \ \"query\": [0.2, 0.8, ...],  // <-- dense vector\n        \"limit\"\
+            : 50\n    }\n    \"query\": {\n        \"formula\": {\n            \"\
+            sum\": [\n                \"$score,\n                { \"mult\": [ 0.5,\
+            \ { \"key\": \"tag\", \"match\": { \"any\": [\"h1\", \"h2\", \"h3\", \"\
+            h4\"] } } ] },\n                { \"mult\": [ 0.25, { \"key\": \"tag\"\
+            , \"match\": { \"any\": [\"p\", \"li\"] } } ] }\n            ]\n     \
+            \   }\n    }\n}'\n\n# Score boost geographically closer points (as of\
+            \ 1.14.0)\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n    \"prefetch\": { \"query\"\
+            : [0.2, 0.8, ...], \"limit\": 50 },\n    \"query\": {\n        \"formula\"\
+            : {\n            \"sum\": [\n                \"$score\",\n           \
+            \     {\n                    \"gauss_decay\": {\n                    \
+            \    \"x\": {\n                            \"geo_distance\": {\n     \
+            \                           \"origin\": { \"lat\": 52.504043, \"lon\"\
+            : 13.393236 } // Berlin\n                                \"to\": \"geo.location\"\
+            \n                            }\n                        },\n        \
+            \                \"scale\": 5000 // 5km\n                    }\n     \
+            \           }\n            ]\n        },\n        \"defaults\": { \"geo.location\"\
+            : {\"lat\": 48.137154, \"lon\": 11.576124} } // Munich\n    }\n}'\n"
+          language: curl
   /collections/{collection_name}/points/query/batch:
     post:
       description: Universally query points in batch. This endpoint covers all capabilities
@@ -2296,15 +2296,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query/batch'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
-            \    \"query\": [\n        0.23,\n        0.325,\n        0.623\n    \
-            \  ],\n      \"limit\": 1\n    },\n    {\n      \"query\": [\n       \
-            \ 0.423,\n        0.23,\n        0.623\n      ],\n      \"limit\": 5,\n\
-            \      \"using\": \"image-vector\"\n    }\n  ]\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nnearest = client.query_batch_points(\n   \
@@ -2332,6 +2323,13 @@ paths:
             \ 0.5f, 0.6f)).build()))\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.queryBatch(\"{collection_name\", {\n    searches: [{\n        query:\
+            \ [0.01, 0.45, 0.67]\n    },\n    {\n        query: [0.11, 0.35, 0.6]\n\
+            \    }]\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc queryBatch() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2352,12 +2350,14 @@ paths:
             \ { Query = new float[] { 0.4f, 0.5f, 0.6f }, }\n\t}\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.queryBatch(\"{collection_name\", {\n    searches: [{\n        query:\
-            \ [0.01, 0.45, 0.67]\n    },\n    {\n        query: [0.11, 0.35, 0.6]\n\
-            \    }]\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query/batch'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
+            \    \"query\": [\n        0.23,\n        0.325,\n        0.623\n    \
+            \  ],\n      \"limit\": 1\n    },\n    {\n      \"query\": [\n       \
+            \ 0.423,\n        0.23,\n        0.623\n      ],\n      \"limit\": 5,\n\
+            \      \"using\": \"image-vector\"\n    }\n  ]\n}'"
+          language: curl
   /collections/{collection_name}/points/query/groups:
     post:
       description: Universally query points and group results by a specified payload
@@ -2367,13 +2367,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query/groups'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"query\": [\n    0.324,\n\
-            \    0.643,\n    0.423\n  ],\n  \"group_by\": \"document_id\",\n  \"limit\"\
-            : 1,\n  \"group_size\": 5\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.query_points_groups(\n    collection_name=\"\
@@ -2398,6 +2391,13 @@ paths:
             \ 0.45f, 0.67f)))\n            .build())\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.queryGroups(\"{collection_name}\", {\n    query: [0.01, 0.45, 0.67],\n\
+            \    group_by: \"document_id\",\n    limit: 10,\n    group_size: 5,\n\
+            });\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc queryGroups() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2415,12 +2415,12 @@ paths:
             \ new float[] {\n    0.01f, 0.45f, 0.67f\n  }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.queryGroups(\"{collection_name}\", {\n    query: [0.01, 0.45, 0.67],\n\
-            \    group_by: \"document_id\",\n    limit: 10,\n    group_size: 5,\n\
-            });\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query/groups'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"query\": [\n    0.324,\n\
+            \    0.643,\n    0.423\n  ],\n  \"group_by\": \"document_id\",\n  \"limit\"\
+            : 1,\n  \"group_size\": 5\n}'"
+          language: curl
   /collections/{collection_name}/points/recommend:
     post:
       description: Retrieves points that are closer to stored positive examples and
@@ -2429,16 +2429,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/recommend'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"positive\": [\n    100,\n\
-            \    231\n  ],\n  \"negative\": [\n    \"3a6e2150-f7b7-496e-92cd-687e63e215fd\"\
-            ,\n    [\n      0.2,\n      0.3,\n      0.4,\n      0.5\n    ]\n  ],\n\
-            \  \"filter\": {\n    \"must\": [\n      {\n        \"key\": \"city\"\
-            ,\n        \"match\": {\n          \"value\": \"London\"\n        }\n\
-            \      }\n    ]\n  },\n  \"limit\": 1\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.recommend(\n    collection_name=\"\
@@ -2478,6 +2468,16 @@ paths:
             )))\n            .setLimit(3)\n            .build())\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.recommend(\"{collection_name}\", {\n    positive: [100, 231],\n\
+            \    negative: [718, [0.2, 0.3, 0.4, 0.5]],\n    strategy: \"average_vector\"\
+            ,\n    filter: {\n        must: [\n            {\n                key:\
+            \ \"city\",\n                match: {\n                    value: \"London\"\
+            ,\n                },\n            },\n        ],\n    },\n    limit:\
+            \ 3,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc recommend() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2501,15 +2501,15 @@ paths:
             , \"London\"),\n    limit: 3\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.recommend(\"{collection_name}\", {\n    positive: [100, 231],\n\
-            \    negative: [718, [0.2, 0.3, 0.4, 0.5]],\n    strategy: \"average_vector\"\
-            ,\n    filter: {\n        must: [\n            {\n                key:\
-            \ \"city\",\n                match: {\n                    value: \"London\"\
-            ,\n                },\n            },\n        ],\n    },\n    limit:\
-            \ 3,\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/recommend'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"positive\": [\n    100,\n\
+            \    231\n  ],\n  \"negative\": [\n    \"3a6e2150-f7b7-496e-92cd-687e63e215fd\"\
+            ,\n    [\n      0.2,\n      0.3,\n      0.4,\n      0.5\n    ]\n  ],\n\
+            \  \"filter\": {\n    \"must\": [\n      {\n        \"key\": \"city\"\
+            ,\n        \"match\": {\n          \"value\": \"London\"\n        }\n\
+            \      }\n    ]\n  },\n  \"limit\": 1\n}'"
+          language: curl
   /collections/{collection_name}/points/recommend/batch:
     post:
       description: Retrieves points in batches that are closer to stored positive
@@ -2518,16 +2518,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/recommend/batch'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
-            \    \"positive\": [\n        100,\n        231\n      ],\n      \"negative\"\
-            : [\n        \"9ad0884a-7bfe-43c0-b88f-c1d9a588b7e1\"\n      ],\n    \
-            \  \"limit\": 1\n    },\n    {\n      \"positive\": [\n        200,\n\
-            \        67\n      ],\n      \"negative\": [\n        300\n      ],\n\
-            \      \"limit\": 5\n    }\n  ]\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nrecommend_queries = [\n    models.RecommendRequest(\n\
@@ -2568,6 +2558,14 @@ paths:
             \ null).get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            const searches = [\n    {\n        positive: [100, 231],\n        negative:\
+            \ [718],\n        limit: 3,\n    },\n    {\n        positive: [200, 67],\n\
+            \        negative: [300],\n        limit: 3,\n    },\n];\n\nclient.recommend_batch(\"\
+            {collection_name}\", {\n    searches,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc recommendBatch() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2600,13 +2598,15 @@ paths:
             \ }\n  ]\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            const searches = [\n    {\n        positive: [100, 231],\n        negative:\
-            \ [718],\n        limit: 3,\n    },\n    {\n        positive: [200, 67],\n\
-            \        negative: [300],\n        limit: 3,\n    },\n];\n\nclient.recommend_batch(\"\
-            {collection_name}\", {\n    searches,\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/recommend/batch'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
+            \    \"positive\": [\n        100,\n        231\n      ],\n      \"negative\"\
+            : [\n        \"9ad0884a-7bfe-43c0-b88f-c1d9a588b7e1\"\n      ],\n    \
+            \  \"limit\": 1\n    },\n    {\n      \"positive\": [\n        200,\n\
+            \        67\n      ],\n      \"negative\": [\n        300\n      ],\n\
+            \      \"limit\": 5\n    }\n  ]\n}'"
+          language: curl
   /collections/{collection_name}/points/recommend/groups:
     post:
       description: Retrieves points that are closer to stored positive examples and
@@ -2616,13 +2616,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/recommend/groups'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"positive\": [\n    100,\n\
-            \    231\n  ],\n  \"negative\": [\n    718\n  ],\n  \"group_by\": \"document_id\"\
-            ,\n  \"limit\": 3,\n  \"group_size\": 2\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.recommend_groups(\n    collection_name=\"\
@@ -2650,6 +2643,13 @@ paths:
             \                .setLimit(3)\n                .build());\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.recommendPointGroups(\"{collection_name}\", {\n    positive: [100,\
+            \ 231],\n    negative: [718],\n    group_by: \"document_id\",\n    limit:\
+            \ 3,\n    group_size: 2,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc recommendGroups() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2672,12 +2672,12 @@ paths:
             \ 3\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.recommendPointGroups(\"{collection_name}\", {\n    positive: [100,\
-            \ 231],\n    negative: [718],\n    group_by: \"document_id\",\n    limit:\
-            \ 3,\n    group_size: 2,\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/recommend/groups'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"positive\": [\n    100,\n\
+            \    231\n  ],\n  \"negative\": [\n    718\n  ],\n  \"group_by\": \"document_id\"\
+            ,\n  \"limit\": 3,\n  \"group_size\": 2\n}'"
+          language: curl
   /collections/{collection_name}/points/scroll:
     post:
       description: 'Returns all points in a page-by-page manner.
@@ -2693,15 +2693,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/scroll'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"with_payload\": [\n    \"\
-            city\",\n    \"color\"\n  ],\n  \"filter\": {\n    \"must\": [\n     \
-            \ {\n        \"key\": \"color\",\n        \"match\": {\n          \"value\"\
-            : \"red\"\n        }\n      }\n    ]\n  },\n  \"limit\": 2,\n  \"with_vector\"\
-            : false\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.scroll(\n    collection_name=\"{collection_name}\"\
@@ -2731,6 +2722,15 @@ paths:
             \            .build())\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.scroll(\"{collection_name}\", {\n    filter: {\n        must: [\n\
+            \            {\n                key: \"color\",\n                match:\
+            \ {\n                    value: \"red\",\n                },\n       \
+            \     },\n        ],\n    },\n    limit: 1,\n    with_payload: true,\n\
+            \    with_vector: false,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc scroll() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2749,14 +2749,14 @@ paths:
             , \"red\"),\n  limit: 1,\n  payloadSelector: true\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.scroll(\"{collection_name}\", {\n    filter: {\n        must: [\n\
-            \            {\n                key: \"color\",\n                match:\
-            \ {\n                    value: \"red\",\n                },\n       \
-            \     },\n        ],\n    },\n    limit: 1,\n    with_payload: true,\n\
-            \    with_vector: false,\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/scroll'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"with_payload\": [\n    \"\
+            city\",\n    \"color\"\n  ],\n  \"filter\": {\n    \"must\": [\n     \
+            \ {\n        \"key\": \"color\",\n        \"match\": {\n          \"value\"\
+            : \"red\"\n        }\n      }\n    ]\n  },\n  \"limit\": 2,\n  \"with_vector\"\
+            : false\n}'"
+          language: curl
   /collections/{collection_name}/points/search:
     post:
       description: Retrieves the closest points based on vector similarity and given
@@ -2765,15 +2765,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/search'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"vector\": [\n    0.2,\n \
-            \   0.1,\n    0.9,\n    0.7\n  ],\n  \"limit\": 1,\n  \"filter\": {\n\
-            \    \"must\": [\n      {\n        \"key\": \"city\",\n        \"match\"\
-            : {\n          \"value\": \"London\"\n        }\n      }\n    ]\n  }\n\
-            }'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.search(\n    collection_name=\"{collection_name}\"\
@@ -2806,6 +2797,15 @@ paths:
             \    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.search(\"{collection_name}\", {\n    filter: {\n        must: [\n\
+            \            {\n                key: \"city\",\n                match:\
+            \ {\n                    value: \"London\",\n                },\n    \
+            \        },\n        ],\n    },\n    vector: [0.2, 0.1, 0.9, 0.7],\n \
+            \   limit: 3,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc search() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2824,14 +2824,14 @@ paths:
             \  limit: 3\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.search(\"{collection_name}\", {\n    filter: {\n        must: [\n\
-            \            {\n                key: \"city\",\n                match:\
-            \ {\n                    value: \"London\",\n                },\n    \
-            \        },\n        ],\n    },\n    vector: [0.2, 0.1, 0.9, 0.7],\n \
-            \   limit: 3,\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/search'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"vector\": [\n    0.2,\n \
+            \   0.1,\n    0.9,\n    0.7\n  ],\n  \"limit\": 1,\n  \"filter\": {\n\
+            \    \"must\": [\n      {\n        \"key\": \"city\",\n        \"match\"\
+            : {\n          \"value\": \"London\"\n        }\n      }\n    ]\n  }\n\
+            }'"
+          language: curl
   /collections/{collection_name}/points/search/batch:
     post:
       description: Retrieves the closest points in batches based on vector similarity
@@ -2840,18 +2840,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/search/batch'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
-            \    \"vector\": [\n        0.2,\n        0.1,\n        0.9,\n       \
-            \ 0.7\n      ],\n      \"limit\": 3\n    },\n    {\n      \"vector\":\
-            \ [\n        0.5,\n        0.3,\n        0.2,\n        0.3\n      ],\n\
-            \      \"filter\": {\n        \"must\": [\n          {\n            \"\
-            key\": \"city\",\n            \"match\": {\n              \"value\": \"\
-            London\"\n            }\n          }\n        ]\n      },\n      \"limit\"\
-            : 3\n    }\n  ]\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nfilter_ = models.Filter(\n    must=[\n   \
@@ -2889,6 +2877,17 @@ paths:
             {collection_name}\", searches, null).get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            const filter = {\n    must: [\n        {\n            key: \"city\",\n\
+            \            match: {\n                value: \"London\",\n          \
+            \  },\n        },\n    ],\n};\n\nconst searches = [\n    {\n        vector:\
+            \ [0.2, 0.1, 0.9, 0.7],\n        filter,\n        limit: 3,\n    },\n\
+            \    {\n        vector: [0.5, 0.3, 0.2, 0.3],\n        filter,\n     \
+            \   limit: 3,\n    },\n];\n\nclient.searchBatch(\"{collection_name}\"\
+            , {\n    searches,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc searchBatch() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2916,16 +2915,17 @@ paths:
             \ \"{collection_name}\", searches: searches);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            const filter = {\n    must: [\n        {\n            key: \"city\",\n\
-            \            match: {\n                value: \"London\",\n          \
-            \  },\n        },\n    ],\n};\n\nconst searches = [\n    {\n        vector:\
-            \ [0.2, 0.1, 0.9, 0.7],\n        filter,\n        limit: 3,\n    },\n\
-            \    {\n        vector: [0.5, 0.3, 0.2, 0.3],\n        filter,\n     \
-            \   limit: 3,\n    },\n];\n\nclient.searchBatch(\"{collection_name}\"\
-            , {\n    searches,\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/search/batch'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"searches\": [\n    {\n  \
+            \    \"vector\": [\n        0.2,\n        0.1,\n        0.9,\n       \
+            \ 0.7\n      ],\n      \"limit\": 3\n    },\n    {\n      \"vector\":\
+            \ [\n        0.5,\n        0.3,\n        0.2,\n        0.3\n      ],\n\
+            \      \"filter\": {\n        \"must\": [\n          {\n            \"\
+            key\": \"city\",\n            \"match\": {\n              \"value\": \"\
+            London\"\n            }\n          }\n        ]\n      },\n      \"limit\"\
+            : 3\n    }\n  ]\n}'"
+          language: curl
   /collections/{collection_name}/points/search/groups:
     post:
       description: Retrieves the closest points based on vector similarity and given
@@ -2934,13 +2934,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/search/groups'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"vector\": [\n    0.2,\n \
-            \   0.1,\n    0.9,\n    0.7\n  ],\n  \"group_by\": \"document_id\",\n\
-            \  \"limit\": 4,\n  \"group_size\": 2\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.search_groups(\n    collection_name=\"\
@@ -2965,6 +2958,12 @@ paths:
             \       .setGroupSize(2)\n            .build())\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.searchPointGroups(\"{collection_name}\", {\n    vector: [1.1],\n\
+            \    group_by: \"document_id\",\n    limit: 4,\n    group_size: 2,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc searchGroups() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2982,11 +2981,12 @@ paths:
             \ 4,\n  groupSize: 2\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.searchPointGroups(\"{collection_name}\", {\n    vector: [1.1],\n\
-            \    group_by: \"document_id\",\n    limit: 4,\n    group_size: 2,\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/search/groups'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"vector\": [\n    0.2,\n \
+            \   0.1,\n    0.9,\n    0.7\n  ],\n  \"group_by\": \"document_id\",\n\
+            \  \"limit\": 4,\n  \"group_size\": 2\n}'"
+          language: curl
   /collections/{collection_name}/points/search/matrix/offsets:
     post:
       description: Retrieves sparse matrix of pairwise distances between points sampled
@@ -3026,6 +3026,15 @@ paths:
             \            .setLimit(5)\n            .build())\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.searchMatrixOffsets(\"{collection_name}\", {\n    filter: {\n \
+            \       must: [\n            {\n                key: \"color\",\n    \
+            \            match: {\n                    value: \"red\",\n         \
+            \       },\n            },\n        ],\n    },\n    sample: 100,\n   \
+            \ limit: 5,\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc searchMatiOffsets() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3043,15 +3052,6 @@ paths:
             \    \"{collection_name}\",\n    filter: MatchKeyword(\"color\", \"red\"\
             ),\n    sample: 100,\n    limit: 5\n);"
           language: csharp
-      - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.searchMatrixOffsets(\"{collection_name}\", {\n    filter: {\n \
-            \       must: [\n            {\n                key: \"color\",\n    \
-            \            match: {\n                    value: \"red\",\n         \
-            \       },\n            },\n        ],\n    },\n    sample: 100,\n   \
-            \ limit: 5,\n});\n"
-          language: typescript
   /collections/{collection_name}/points/search/matrix/pairs:
     post:
       description: Retrieves sparse matrix of pairwise distances between points sampled
@@ -3090,6 +3090,15 @@ paths:
             \            .setLimit(5)\n            .build())\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.searchMatrixPairs(\"{collection_name}\", {\n    filter: {\n   \
+            \     must: [\n            {\n                key: \"color\",\n      \
+            \          match: {\n                    value: \"red\",\n           \
+            \     },\n            },\n        ],\n    },\n    sample: 100,\n    limit:\
+            \ 5,\n});"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc searchMatixPairs() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3107,15 +3116,6 @@ paths:
             \    \"{collection_name}\",\n    filter: MatchKeyword(\"color\", \"red\"\
             ),\n    sample: 100,\n    limit: 5\n);"
           language: csharp
-      - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.searchMatrixPairs(\"{collection_name}\", {\n    filter: {\n   \
-            \     must: [\n            {\n                key: \"color\",\n      \
-            \          match: {\n                    value: \"red\",\n           \
-            \     },\n            },\n        ],\n    },\n    sample: 100,\n    limit:\
-            \ 5,\n});"
-          language: typescript
   /collections/{collection_name}/points/vectors:
     put:
       description: Updates specified vectors on points. All other unspecified vectors
@@ -3124,15 +3124,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/vectors?wait=true'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    {\n    \
-            \  \"id\": 1,\n      \"vector\": [\n        0.0984,\n        0.1406,\n\
-            \        0.8973\n      ]\n    },\n    {\n      \"id\": 2,\n      \"vector\"\
-            : {\n        \"vector-name\": [\n          0.9,\n          0.8,\n    \
-            \      0.7,\n          0.6\n        ]\n      }\n    }\n  ]\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.update_vectors(\n    collection_name=\"\
@@ -3178,6 +3169,16 @@ paths:
             \    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.updateVectors(\"{collection_name}\", {\n    points: [\n       \
+            \ {\n            id: 1,\n            vector: {\n                image:\
+            \ [0.1, 0.2, 0.3, 0.4],\n            },\n        },\n        {\n     \
+            \       id: 2,\n            vector: {\n                text: [0.9, 0.8,\
+            \ 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],\n            },\n        },\n    ],\n\
+            });\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc updateVectors() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3201,15 +3202,14 @@ paths:
             \    }\n  }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.updateVectors(\"{collection_name}\", {\n    points: [\n       \
-            \ {\n            id: 1,\n            vector: {\n                image:\
-            \ [0.1, 0.2, 0.3, 0.4],\n            },\n        },\n        {\n     \
-            \       id: 2,\n            vector: {\n                text: [0.9, 0.8,\
-            \ 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],\n            },\n        },\n    ],\n\
-            });\n"
-          language: typescript
+        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/vectors?wait=true'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    {\n    \
+            \  \"id\": 1,\n      \"vector\": [\n        0.0984,\n        0.1406,\n\
+            \        0.8973\n      ]\n    },\n    {\n      \"id\": 2,\n      \"vector\"\
+            : {\n        \"vector-name\": [\n          0.9,\n          0.8,\n    \
+            \      0.7,\n          0.6\n        ]\n      }\n    }\n  ]\n}'"
+          language: curl
   /collections/{collection_name}/points/vectors/delete:
     post:
       description: Deletes specified vectors from points. All other unspecified vectors
@@ -3218,18 +3218,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "# Delete vectors by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/vectors/delete'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    0,\n   \
-            \ 3,\n    10\n  ],\n  \"vectors\": [\n    \"text\",\n    \"image\"\n \
-            \ ]\n}'\n\n# Delete vectors by filter\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/vectors/delete'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
-            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
-            \      \"value\": \"red\"\n        }\n      }\n    ]\n  },\n  \"vectors\"\
-            : [\n    \"text\",\n    \"image\"\n  ]\n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.delete_vectors(\n    collection_name=\"\
@@ -3255,6 +3243,12 @@ paths:
             \ id(3), id(10)))\n    .get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.deleteVectors(\"{collection_name}\", {\n  points: [0, 3, 10],\n\
+            \  vectors: [\"text\", \"image\"],\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteVectors() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3278,11 +3272,17 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.deleteVectors(\"{collection_name}\", {\n  points: [0, 3, 10],\n\
-            \  vectors: [\"text\", \"image\"],\n});\n"
-          language: typescript
+        - code: "# Delete vectors by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/vectors/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"points\": [\n    0,\n   \
+            \ 3,\n    10\n  ],\n  \"vectors\": [\n    \"text\",\n    \"image\"\n \
+            \ ]\n}'\n\n# Delete vectors by filter\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/vectors/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"filter\": {\n    \"must\"\
+            : [\n      {\n        \"key\": \"color\",\n        \"match\": {\n    \
+            \      \"value\": \"red\"\n        }\n      }\n    ]\n  },\n  \"vectors\"\
+            : [\n    \"text\",\n    \"image\"\n  ]\n}'"
+          language: curl
   /collections/{collection_name}/points/{id}:
     get:
       description: Retrieves all details from a single point.
@@ -3296,12 +3296,6 @@ paths:
       tags:
       - Distributed
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/shards'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"shard_key\": \"{shard_key}\"\
-            \n}'"
-          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -3334,6 +3328,12 @@ paths:
             \                 .build())\n                .build()).get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({\n    host: \"localhost\",\n    port: 6333\n\
+            });\n\nclient.createShardKey(\"{collection_name}\", {\n    shard_key:\
+            \ \"{shard_key}\"\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc createShardKey() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3348,11 +3348,11 @@ paths:
             \ { Keyword = \"{shard_key}\", } }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({\n    host: \"localhost\",\n    port: 6333\n\
-            });\n\nclient.createShardKey(\"{collection_name}\", {\n    shard_key:\
-            \ \"{shard_key}\"\n});\n"
-          language: typescript
+        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/shards'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"shard_key\": \"{shard_key}\"\
+            \n}'"
+          language: curl
   /collections/{collection_name}/shards/delete:
     post:
       description: Deletes one or more shard keys for a specified collection.
@@ -3360,12 +3360,6 @@ paths:
       tags:
       - Distributed
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/shards/delete'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"shard_key\": \"{shard_key}\"\
-            \n}'"
-          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -3396,6 +3390,12 @@ paths:
             \                 .build())\n                .build()).get();\n"
           language: java
       - code-samples:
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({\n    host: \"localhost\",\n    port: 6333\n\
+            });\n\nclient.deleteShardKey(\"{collection_name}\", {\n    shard_key:\
+            \ \"{shard_key}\"\n});\n"
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteShardKey() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3410,11 +3410,11 @@ paths:
             \ { Keyword = \"shard_key\", } }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({\n    host: \"localhost\",\n    port: 6333\n\
-            });\n\nclient.deleteShardKey(\"{collection_name}\", {\n    shard_key:\
-            \ \"{shard_key}\"\n});\n"
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/shards/delete'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"shard_key\": \"{shard_key}\"\
+            \n}'"
+          language: curl
   /collections/{collection_name}/shards/{shard_id}/snapshots:
     get:
       description: Returns a list of all snapshots for a shard from a collection.
@@ -3460,10 +3460,6 @@ paths:
       - Snapshots
       x-fern-examples:
       - code-samples:
-        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/snapshots'\
-            \ \\\n  --header 'api-key: <api-key-value>'"
-          language: curl
-      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -3492,6 +3488,17 @@ paths:
             ).get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.listSnapshots("{collection_name}");
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc listSnapshots() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3511,26 +3518,15 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.listSnapshots("{collection_name}");
-
-            '
-          language: typescript
+        - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/snapshots'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
     post:
       description: Creates a new snapshot for a specified collection.
       summary: Create a snapshot (collection)
       tags:
       - Snapshots
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/snapshots'\
-            \ \\\n  --header 'api-key: <api-key-value>'"
-          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -3560,6 +3556,17 @@ paths:
             ).get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.createSnapshot("{collection_name}");
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc createSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3579,16 +3586,9 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.createSnapshot("{collection_name}");
-
-            '
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/snapshots'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
   /collections/{collection_name}/snapshots/recover:
     put:
       description: Recovers local collection data from a snapshot. This will overwrite
@@ -3598,12 +3598,6 @@ paths:
       tags:
       - Snapshots
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/snapshots/recover'\
-            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
-            \ application/json' \\\n  --data-raw '{\n  \"location\": \"http://example.com/path/to/snapshot.shapshot\"\
-            \n}'"
-          language: curl
       - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.recover_snapshot(\n    \"{collection_name}\"\
@@ -3615,6 +3609,12 @@ paths:
             client.recoverSnapshot(\"{collection_name}\", {\n  location: \"http://example.com/path/to/snapshot.shapshot\"\
             ,\n});\n"
           language: typescript
+      - code-samples:
+        - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/snapshots/recover'\
+            \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
+            \ application/json' \\\n  --data-raw '{\n  \"location\": \"http://example.com/path/to/snapshot.shapshot\"\
+            \n}'"
+          language: curl
   /collections/{collection_name}/snapshots/upload:
     post:
       description: Recovers local collection data from an uploaded snapshot. This
@@ -3636,10 +3636,6 @@ paths:
       - Snapshots
       x-fern-examples:
       - code-samples:
-        - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name/snapshots/snapshot_name'\
-            \ \\\n  --header 'api-key: <api-key-value>'"
-          language: curl
-      - code-samples:
         - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
             http://localhost:6333\")\n\nclient.delete_snapshot(\n    collection_name=\"\
             {collection_name}\", snapshot_name=\"{snapshot_name}\"\n)\n"
@@ -3657,6 +3653,17 @@ paths:
             localhost\", 6334, false).build());\n\nclient.deleteSnapshotAsync(\"{collection_name}\"\
             , \"{snapshot_name}\").get();\n"
           language: java
+      - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.deleteSnapshot("{collection_name}", "{snapshot_name}");
+
+            '
+          language: typescript
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -3677,16 +3684,9 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.deleteSnapshot("{collection_name}", "{snapshot_name}");
-
-            '
-          language: typescript
+        - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name/snapshots/snapshot_name'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
     get:
       description: Downloads the specified snapshot file from a collection.
       summary: Download a snapshot (collection)
@@ -3737,10 +3737,6 @@ paths:
       - Snapshots
       x-fern-examples:
       - code-samples:
-        - code: "curl  -X GET \\\n  'http://localhost:6333/snapshots' \\\n  --header\
-            \ 'api-key: <api-key-value>'"
-          language: curl
-      - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
 
@@ -3768,6 +3764,17 @@ paths:
             localhost\", 6334, false).build());\n\nclient.listFullSnapshotAsync().get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.listFullSnapshots();
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc listFullSnapshots() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3787,26 +3794,15 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.listFullSnapshots();
-
-            '
-          language: typescript
+        - code: "curl  -X GET \\\n  'http://localhost:6333/snapshots' \\\n  --header\
+            \ 'api-key: <api-key-value>'"
+          language: curl
     post:
       description: Creates a new snapshot of the entire storage.
       summary: Create a snapshot (storage)
       tags:
       - Snapshots
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X POST \\\n  'http://localhost:6333/snapshots' \\\n  --header\
-            \ 'api-key: <api-key-value>'"
-          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -3835,6 +3831,17 @@ paths:
             localhost\", 6334, false).build());\n\nclient.createFullSnapshotAsync().get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.createFullSnapshot();
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc createFullSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3854,16 +3861,9 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.createFullSnapshot();
-
-            '
-          language: typescript
+        - code: "curl  -X POST \\\n  'http://localhost:6333/snapshots' \\\n  --header\
+            \ 'api-key: <api-key-value>'"
+          language: curl
   /snapshots/{snapshot_name}:
     delete:
       description: Deletes the specified snapshot of the entire storage.
@@ -3871,10 +3871,6 @@ paths:
       tags:
       - Snapshots
       x-fern-examples:
-      - code-samples:
-        - code: "curl  -X DELETE \\\n  'http://localhost:6333/snapshots/snapshot_name'\
-            \ \\\n  --header 'api-key: <api-key-value>'"
-          language: curl
       - code-samples:
         - code: 'from qdrant_client import QdrantClient
 
@@ -3904,6 +3900,17 @@ paths:
             {snapshot_name}\").get();\n"
           language: java
       - code-samples:
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.deleteFullSnapshot("{snapshot_name}");
+
+            '
+          language: typescript
+      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteFullSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3922,16 +3929,9 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.deleteFullSnapshot("{snapshot_name}");
-
-            '
-          language: typescript
+        - code: "curl  -X DELETE \\\n  'http://localhost:6333/snapshots/snapshot_name'\
+            \ \\\n  --header 'api-key: <api-key-value>'"
+          language: curl
     get:
       description: Downloads the specified snapshot of the entire storage as a file.
       summary: Download a snapshot (storage)
