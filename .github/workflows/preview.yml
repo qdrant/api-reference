@@ -10,17 +10,17 @@ jobs:
     permissions: write-all
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - name: Comment Generation Update in PR
-        uses: thollander/actions-comment-pull-request@v2.4.3
+        uses: thollander/actions-comment-pull-request@1d3973dc4b8e1399c0620d3f2b1aa5e795465308 # v2.4.3
         with:
           message: |
             Generating preview for the latest commit ⌛
           comment_tag: execution
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@e9aba2c848f5ebd159c070c61ea2c4e2b122355e # v2.3.4
         with:
           python-version: '3.10.x'
       - name: Install dependencies
@@ -36,7 +36,7 @@ jobs:
       - name: Sync Docs
         run: |
           bash -x tools/sync-openapi.sh
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5.2.0
         with:
           commit_message: "Sync OpenAPI"
           commit_user_name: "GitHub Actions"
@@ -57,7 +57,7 @@ jobs:
           echo "🌿 Preview your docs: $URL" > preview_url.txt
 
       - name: Comment URL in PR
-        uses: thollander/actions-comment-pull-request@v2.4.3
+        uses: thollander/actions-comment-pull-request@1d3973dc4b8e1399c0620d3f2b1aa5e795465308 # v2.4.3
         with:
           filePath: preview_url.txt
           comment_tag: execution
