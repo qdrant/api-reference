@@ -18,11 +18,6 @@ paths:
       - Aliases
       x-fern-examples:
       - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.listAliasesAsync().get();\n"
-          language: java
-      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc listAliases() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -42,16 +37,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.getAliases();
+            client.get_aliases()
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X GET \\\n  'http://localhost:6333/aliases' \\\n  --header\
             \ 'api-key: <api-key-value>'"
@@ -68,16 +63,21 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.get_aliases()
+            client.getAliases();
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.listAliasesAsync().get();\n"
+          language: java
   /cluster:
     get:
       description: Returns information about the cluster's current state and composition.
@@ -106,11 +106,6 @@ paths:
       - Collections
       x-fern-examples:
       - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.listCollectionsAsync().get();\n"
-          language: java
-      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc listCollections() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -130,16 +125,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.getCollections();
+            client.get_collections()
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X GET \\\n  'http://localhost:6333/collections' \\\n  --header\
             \ 'api-key: <api-key-value>'"
@@ -156,16 +151,21 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.get_collections()
+            client.getCollections();
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.listCollectionsAsync().get();\n"
+          language: java
   /collections/aliases:
     post:
       description: Updates aliases for the specified collections.
@@ -173,15 +173,6 @@ paths:
       tags:
       - Aliases
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.ShardKeyFactory.shardKey;\n\nimport\
-            \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Collections.DeleteShardKey;\nimport io.qdrant.client.grpc.Collections.DeleteShardKeyRequest;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.createAliasAsync(\"production_collection\"\
-            , \"example_collection\").get();\n\nclient.deleteAliasAsync(\"production_collection\"\
-            ).get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc updateAlias() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -209,14 +200,15 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.updateCollectionAliases({\n  actions: [\n    {\n      create_alias:\
-            \ {\n        collection_name: \"example_collection\",\n        alias_name:\
-            \ \"production_collection\",\n      },\n    },\n  ],\n});\n\nclient.updateCollectionAliases({\n\
-            \  actions: [\n    {\n      delete_alias: {\n        alias_name: \"production_collection\"\
-            ,\n      },\n    },\n  ],\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.update_collection_aliases(\n    change_aliases_operations=[\n\
+            \        models.CreateAliasOperation(\n            create_alias=models.CreateAlias(\n\
+            \                collection_name=\"example_collection\", alias_name=\"\
+            production_collection\"\n            )\n        )\n    ]\n)\n\nclient.update_collection_aliases(\n\
+            \    change_aliases_operations=[\n        models.DeleteAliasOperation(\n\
+            \            delete_alias=models.DeleteAlias(alias_name=\"production_collection\"\
+            )\n        ),\n    ]\n)\n"
+          language: python
       - code-samples:
         - code: "# Create an alias\ncurl  -X POST \\\n  'http://localhost:6333/collections/aliases'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -243,15 +235,23 @@ paths:
             \    alias_name: \"production_collection\".to_string(),\n    })\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.update_collection_aliases(\n    change_aliases_operations=[\n\
-            \        models.CreateAliasOperation(\n            create_alias=models.CreateAlias(\n\
-            \                collection_name=\"example_collection\", alias_name=\"\
-            production_collection\"\n            )\n        )\n    ]\n)\n\nclient.update_collection_aliases(\n\
-            \    change_aliases_operations=[\n        models.DeleteAliasOperation(\n\
-            \            delete_alias=models.DeleteAlias(alias_name=\"production_collection\"\
-            )\n        ),\n    ]\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.updateCollectionAliases({\n  actions: [\n    {\n      create_alias:\
+            \ {\n        collection_name: \"example_collection\",\n        alias_name:\
+            \ \"production_collection\",\n      },\n    },\n  ],\n});\n\nclient.updateCollectionAliases({\n\
+            \  actions: [\n    {\n      delete_alias: {\n        alias_name: \"production_collection\"\
+            ,\n      },\n    },\n  ],\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.ShardKeyFactory.shardKey;\n\nimport\
+            \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport io.qdrant.client.grpc.Collections.DeleteShardKey;\nimport io.qdrant.client.grpc.Collections.DeleteShardKeyRequest;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.createAliasAsync(\"production_collection\"\
+            , \"example_collection\").get();\n\nclient.deleteAliasAsync(\"production_collection\"\
+            ).get();\n"
+          language: java
   /collections/{collection_name}:
     delete:
       description: Drops the specified collection and all associated data in it.
@@ -259,12 +259,6 @@ paths:
       tags:
       - Collections
       x-fern-examples:
-      - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.deleteCollectionAsync(\"\
-            {collection_name}\").get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -284,16 +278,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from ''@qdrant/qdrant-js'';
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({url: ''http://127.0.0.1:6333''});
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.deleteCollection("{collection_name}");
+            client.delete_collection(collection_name="{collection_name}")
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name'\
             \ \\\n  --header 'api-key: <api-key-value>'"
@@ -310,28 +304,28 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from ''@qdrant/qdrant-js'';
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({url: ''http://127.0.0.1:6333''});
 
 
-            client.delete_collection(collection_name="{collection_name}")
+            client.deleteCollection("{collection_name}");
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.deleteCollectionAsync(\"\
+            {collection_name}\").get();\n"
+          language: java
     get:
       description: Retrieves parameters from the specified collection.
       summary: Get collection details
       tags:
       - Collections
       x-fern-examples:
-      - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.getCollectionInfoAsync(\"\
-            {collection_name}\").get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc getCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -352,16 +346,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.getCollection("{collection_name}");
+            client.get_collection("{collection_name}")
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name'\
             \ \\\n  --header 'api-key: <api-key-value>'"
@@ -378,33 +372,28 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.get_collection("{collection_name}")
+            client.getCollection("{collection_name}");
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.getCollectionInfoAsync(\"\
+            {collection_name}\").get();\n"
+          language: java
     patch:
       description: Updates the parameters of the specified collection.
       summary: Update collection parameters
       tags:
       - Collections
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.ShardKeyFactory.shardKey;\n\nimport\
-            \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Collections.OptimizersConfigDiff;\nimport\
-            \ io.qdrant.client.grpc.Collections.UpdateCollection;\n\nQdrantClient\
-            \ client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.updateCollectionAsync(\n\
-            \    UpdateCollection.newBuilder()\n        .setCollectionName(\"{collection_name}\"\
-            )\n        .setOptimizersConfig(\n            OptimizersConfigDiff.newBuilder().setIndexingThreshold(10000).build())\n\
-            \        .build());\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc updateCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -422,11 +411,11 @@ paths:
             \ { IndexingThreshold = 10000 }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.updateCollection(\"{collection_name}\", {\n  optimizers_config:\
-            \ {\n    indexing_threshold: 10000,\n  },\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.update_collection(\n    collection_name=\"\
+            {collection_name}\",\n    optimizer_config=models.OptimizersConfigDiff(indexing_threshold=10000),\n\
+            )\n"
+          language: python
       - code-samples:
         - code: "curl  -X PATCH \\\n  'http://localhost:6333/collections/collection_name'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -441,32 +430,28 @@ paths:
             \        ),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.update_collection(\n    collection_name=\"\
-            {collection_name}\",\n    optimizer_config=models.OptimizersConfigDiff(indexing_threshold=10000),\n\
-            )\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.updateCollection(\"{collection_name}\", {\n  optimizers_config:\
+            \ {\n    indexing_threshold: 10000,\n  },\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.ShardKeyFactory.shardKey;\n\nimport\
+            \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport io.qdrant.client.grpc.Collections.OptimizersConfigDiff;\nimport\
+            \ io.qdrant.client.grpc.Collections.UpdateCollection;\n\nQdrantClient\
+            \ client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.updateCollectionAsync(\n\
+            \    UpdateCollection.newBuilder()\n        .setCollectionName(\"{collection_name}\"\
+            )\n        .setOptimizersConfig(\n            OptimizersConfigDiff.newBuilder().setIndexingThreshold(10000).build())\n\
+            \        .build());\n"
+          language: java
     put:
       description: Creates a new collection with the given parameters.
       summary: Create a collection
       tags:
       - Collections
       x-fern-examples:
-      - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Collections.Distance;\nimport io.qdrant.client.grpc.Collections.VectorParams;\n\
-            \nQdrantClient client = new QdrantClient(\n    QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.createCollectionAsync(\"\
-            {collection_name}\",\n        VectorParams.newBuilder().setDistance(Distance.Cosine).setSize(100).build()).get();\n\
-            \n// Or with sparse vectors\n\nclient.createCollectionAsync(\n    CreateCollection.newBuilder()\n\
-            \        .setCollectionName(\"{collection_name}\")\n        .setSparseVectorsConfig(\n\
-            \            Collections.SparseVectorConfig.newBuilder().putMap(\n   \
-            \             \"splade-model-name\",\n                Collections.SparseVectorParams.newBuilder()\n\
-            \                    .setIndex(\n                        Collections.SparseIndexConfig\n\
-            \                            .newBuilder()\n                         \
-            \   .setOnDisk(false)\n                            .build()\n        \
-            \            ).build()\n            ).build()\n        ).build()\n).get();"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc createCollection() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -488,14 +473,11 @@ paths:
             \       OnDisk = false,\n        }\n    })\n);"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.createCollection(\"{collection_name}\", {\n  vectors: { size: 100,\
-            \ distance: \"Cosine\" },\n});\n\n// or with sparse vectors\n\nclient.createCollection(\"\
-            {collection_name}\", {\n  vectors: { size: 100, distance: \"Cosine\" },\n\
-            \  sparse_vectors: {\n    \"splade-model-name\": {\n      index: {\n \
-            \       on_disk: false\n      }\n    }\n  }\n});"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.create_collection(\n    collection_name=\"\
+            {collection_name}\",\n    vectors_config=models.VectorParams(size=100,\
+            \ distance=models.Distance.COSINE),\n)\n"
+          language: python
       - code-samples:
         - code: "# Create a collection with default dense vector\ncurl  -X PUT \\\n\
             \  'http://localhost:6333/collections/collection_name' \\\n  --header\
@@ -517,11 +499,29 @@ paths:
             \ Distance::Cosine)),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.create_collection(\n    collection_name=\"\
-            {collection_name}\",\n    vectors_config=models.VectorParams(size=100,\
-            \ distance=models.Distance.COSINE),\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.createCollection(\"{collection_name}\", {\n  vectors: { size: 100,\
+            \ distance: \"Cosine\" },\n});\n\n// or with sparse vectors\n\nclient.createCollection(\"\
+            {collection_name}\", {\n  vectors: { size: 100, distance: \"Cosine\" },\n\
+            \  sparse_vectors: {\n    \"splade-model-name\": {\n      index: {\n \
+            \       on_disk: false\n      }\n    }\n  }\n});"
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport io.qdrant.client.grpc.Collections.Distance;\nimport io.qdrant.client.grpc.Collections.VectorParams;\n\
+            \nQdrantClient client = new QdrantClient(\n    QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.createCollectionAsync(\"\
+            {collection_name}\",\n        VectorParams.newBuilder().setDistance(Distance.Cosine).setSize(100).build()).get();\n\
+            \n// Or with sparse vectors\n\nclient.createCollectionAsync(\n    CreateCollection.newBuilder()\n\
+            \        .setCollectionName(\"{collection_name}\")\n        .setSparseVectorsConfig(\n\
+            \            Collections.SparseVectorConfig.newBuilder().putMap(\n   \
+            \             \"splade-model-name\",\n                Collections.SparseVectorParams.newBuilder()\n\
+            \                    .setIndex(\n                        Collections.SparseIndexConfig\n\
+            \                            .newBuilder()\n                         \
+            \   .setOnDisk(false)\n                            .build()\n        \
+            \            ).build()\n            ).build()\n        ).build()\n).get();"
+          language: java
   /collections/{collection_name}/aliases:
     get:
       description: Retrieves a list of all aliases for the specified collection.
@@ -529,12 +529,6 @@ paths:
       tags:
       - Aliases
       x-fern-examples:
-      - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.listCollectionAliasesAsync(\"\
-            {collection_name}\").get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc listCollectionAliases() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -555,16 +549,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.getCollectionAliases("{collection_name}");
+            client.get_collection_aliases("{collection_name}")
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/aliases'\
             \ \\\n  --header 'api-key: <api-key-value>'"
@@ -581,16 +575,22 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.get_collection_aliases("{collection_name}")
+            client.getCollectionAliases("{collection_name}");
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.listCollectionAliasesAsync(\"\
+            {collection_name}\").get();\n"
+          language: java
   /collections/{collection_name}/cluster:
     get:
       description: Retrieves cluster details for a specified collection.
@@ -609,23 +609,6 @@ paths:
       tags:
       - Collections
       x-fern-examples:
-      - code-samples:
-        - code: 'import static io.qdrant.client.ConditionFactory.matchKeyword;
-
-
-            import io.qdrant.client.QdrantClient;
-
-            import io.qdrant.client.QdrantGrpcClient;
-
-
-            QdrantClient client = new QdrantClient(QdrantGrpcClient.newBuilder("localhost",
-            6334, false).build());
-
-
-            client.collectionExistsAsync("{collection_name}").get();
-
-            '
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc collectionExists() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -646,16 +629,14 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.collectionExists("{collection_name}");
-
-            '
-          language: typescript
+            client.collection_exists(collection_name="{collection_name}")'
+          language: python
       - code-samples:
         - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/exists'\
             \ \\\n  --header 'api-key: <api-key-value>'"
@@ -672,14 +653,33 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.collection_exists(collection_name="{collection_name}")'
-          language: python
+            client.collectionExists("{collection_name}");
+
+            '
+          language: typescript
+      - code-samples:
+        - code: 'import static io.qdrant.client.ConditionFactory.matchKeyword;
+
+
+            import io.qdrant.client.QdrantClient;
+
+            import io.qdrant.client.QdrantGrpcClient;
+
+
+            QdrantClient client = new QdrantClient(QdrantGrpcClient.newBuilder("localhost",
+            6334, false).build());
+
+
+            client.collectionExistsAsync("{collection_name}").get();
+
+            '
+          language: java
   /collections/{collection_name}/facet:
     post:
       description: Retrieves facets for the specified payload field.
@@ -687,18 +687,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport static io.qdrant.client.ConditionFactory.matchKeyword;\nimport\
-            \ io.qdrant.client.grpc.Points;\nimport io.qdrant.client.grpc.Filter;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .facetAsync(\n    \
-            \    Points.FacetCounts.newBuilder()\n            .setCollectionName(collection_name)\n\
-            \            .setKey(\"my-payload-key\")\n            .setFilter(\n  \
-            \              Filter.newBuilder()\n                    .addMust(matchKeyword(\"\
-            color\", \"red\"))\n                    .build())\n            .build())\n\
-            \        .get();"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc facet() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -718,14 +706,11 @@ paths:
             key: \"my-payload-key\",\n\tlimit: 10\n);"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.facet(\"{collection_name}\", {\n    filter: {\n        must: [\n\
-            \            {\n                key: \"color\",\n                match:\
-            \ {\n                    value: \"red\",\n                },\n       \
-            \     },\n        ],\n    },\n    key: \"my-payload-key\",\n    limit:\
-            \ 10,\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.facet(\n    collection_name=\"{collection_name}\"\
+            ,\n    key=\"my-payload-key\",\n    facet_filter=models.Filter(must=[models.Match(\"\
+            color\", \"red\")]),\n    limit=10,\n)\n\n"
+          language: python
       - code-samples:
         - code: "use qdrant_client::qdrant::{Condition, FacetCountsBuilder, Filter};\n\
             use qdrant_client::Qdrant;\n\nlet client = Qdrant::from_url(\"http://localhost:6334\"\
@@ -736,11 +721,26 @@ paths:
             \   )])),\n     )\n     .await?;"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.facet(\n    collection_name=\"{collection_name}\"\
-            ,\n    key=\"my-payload-key\",\n    facet_filter=models.Filter(must=[models.Match(\"\
-            color\", \"red\")]),\n    limit=10,\n)\n\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.facet(\"{collection_name}\", {\n    filter: {\n        must: [\n\
+            \            {\n                key: \"color\",\n                match:\
+            \ {\n                    value: \"red\",\n                },\n       \
+            \     },\n        ],\n    },\n    key: \"my-payload-key\",\n    limit:\
+            \ 10,\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport static io.qdrant.client.ConditionFactory.matchKeyword;\nimport\
+            \ io.qdrant.client.grpc.Points;\nimport io.qdrant.client.grpc.Filter;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .facetAsync(\n    \
+            \    Points.FacetCounts.newBuilder()\n            .setCollectionName(collection_name)\n\
+            \            .setKey(\"my-payload-key\")\n            .setFilter(\n  \
+            \              Filter.newBuilder()\n                    .addMust(matchKeyword(\"\
+            color\", \"red\"))\n                    .build())\n            .build())\n\
+            \        .get();"
+          language: java
   /collections/{collection_name}/index:
     put:
       description: Creates a payload index for a field in the specified collection.
@@ -748,15 +748,6 @@ paths:
       tags:
       - Indexes
       x-fern-examples:
-      - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Collections.PayloadSchemaType;\n\nQdrantClient\
-            \ client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.createPayloadIndexAsync(\n\
-            \                \"{collection_name}\",\n                \"{field_name}\"\
-            ,\n                PayloadSchemaType.Keyword,\n                null,\n\
-            \                true,\n                null,\n                null);\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc createFieldIndex() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -773,11 +764,11 @@ paths:
             {collection_name}\",\n  fieldName: \"name_of_the_field_to_index\"\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.createPayloadIndex(\"{collection_name}\", {\n  field_name: \"{field_name}\"\
-            ,\n  field_schema: \"keyword\",\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.create_payload_index(\n    collection_name=\"\
+            {collection_name}\",\n    field_name=\"name_of_the_field_to_index\",\n\
+            \    field_schema=\"keyword\",\n)\n"
+          language: python
       - code-samples:
         - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/index'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -792,11 +783,20 @@ paths:
             \           FieldType::Keyword,\n        ),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.create_payload_index(\n    collection_name=\"\
-            {collection_name}\",\n    field_name=\"name_of_the_field_to_index\",\n\
-            \    field_schema=\"keyword\",\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.createPayloadIndex(\"{collection_name}\", {\n  field_name: \"{field_name}\"\
+            ,\n  field_schema: \"keyword\",\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport io.qdrant.client.grpc.Collections.PayloadSchemaType;\n\nQdrantClient\
+            \ client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.createPayloadIndexAsync(\n\
+            \                \"{collection_name}\",\n                \"{field_name}\"\
+            ,\n                PayloadSchemaType.Keyword,\n                null,\n\
+            \                true,\n                null,\n                null);\n"
+          language: java
   /collections/{collection_name}/index/{field_name}:
     delete:
       description: Deletes a payload index for a field in the specified collection.
@@ -804,12 +804,6 @@ paths:
       tags:
       - Indexes
       x-fern-examples:
-      - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.deletePayloadIndexAsync(\"\
-            {collection_name}\", \"{field_name}\", true, null, null).get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteFieldIndex() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -825,16 +819,16 @@ paths:
             {collection_name}\",\n  fieldName: \"name_of_the_field_to_index\"\n);\n"
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.deletePayloadIndex("{collection_name}", "{field_name}");
+            client.delete_payload_index("{collection_name}", "{field_name}");
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name/index/field_name'\
             \ \\\n  --header 'api-key: <api-key-value>'"
@@ -847,16 +841,22 @@ paths:
             \   .await?;\n"
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.delete_payload_index("{collection_name}", "{field_name}");
+            client.deletePayloadIndex("{collection_name}", "{field_name}");
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.deletePayloadIndexAsync(\"\
+            {collection_name}\", \"{field_name}\", true, null, null).get();\n"
+          language: java
   /collections/{collection_name}/points:
     post:
       description: Retrieves all details from multiple points.
@@ -864,13 +864,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.PointIdFactory.id;\n\nimport java.util.List;\n\
-            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .retrieveAsync(\"{collection_name}\"\
-            , List.of(id(0), id(30), id(100)), false, false, null)\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc getPoints() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -888,10 +881,10 @@ paths:
             );\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.retrieve(\"{collection_name}\", {\n  ids: [0, 3, 100],\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.retrieve(\n    collection_name=\"{collection_name}\"\
+            ,\n    ids=[0, 3, 100],\n)\n"
+          language: python
       - code-samples:
         - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -905,10 +898,17 @@ paths:
             ,\n        vec![0.into(), 30.into(), 100.into()],\n    ))\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.retrieve(\n    collection_name=\"{collection_name}\"\
-            ,\n    ids=[0, 3, 100],\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.retrieve(\"{collection_name}\", {\n  ids: [0, 3, 100],\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.PointIdFactory.id;\n\nimport java.util.List;\n\
+            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .retrieveAsync(\"{collection_name}\"\
+            , List.of(id(0), id(30), id(100)), false, false, null)\n    .get();\n"
+          language: java
     put:
       description: Performs the insert + update action on specified points. Any point
         with an existing {id} will be overwritten.
@@ -916,27 +916,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.PointIdFactory.id;\nimport static\
-            \ io.qdrant.client.VectorFactory.vector;\nimport static io.qdrant.client.VectorsFactory.namedVectors;\n\
-            \nimport java.util.List;\nimport java.util.Map;\n\nimport io.qdrant.client.QdrantClient;\n\
-            import io.qdrant.client.QdrantGrpcClient;\n\nimport io.qdrant.client.grpc.Points.PointStruct;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .upsertAsync(\n   \
-            \     \"{collection_name}\",\n        List.of(\n            PointStruct.newBuilder()\n\
-            \                .setId(id(1))\n                .setVectors(\n       \
-            \             namedVectors(\n                        Map.of(\n       \
-            \                     \"image\",\n                            vector(List.of(0.9f,\
-            \ 0.1f, 0.1f, 0.2f)),\n                            \"text\",\n       \
-            \                     vector(List.of(0.4f, 0.7f, 0.1f, 0.8f, 0.1f, 0.1f,\
-            \ 0.9f, 0.2f)))))\n                .build(),\n            PointStruct.newBuilder()\n\
-            \                .setId(id(2))\n                .setVectors(\n       \
-            \             namedVectors(\n                        Map.of(\n       \
-            \                     \"image\",\n                            List.of(0.2f,\
-            \ 0.1f, 0.3f, 0.9f),\n                            \"text\",\n        \
-            \                    List.of(0.5f, 0.2f, 0.7f, 0.4f, 0.7f, 0.2f, 0.3f,\
-            \ 0.9f))))\n                .build()))\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc upsert() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -967,15 +946,17 @@ paths:
             ] = \"blue\" }\n    }\n  }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.upsert(\"{collection_name}\", {\n  points: [\n    {\n      id:\
-            \ 1,\n      payload: { color: \"red\" },\n      vector: [0.9, 0.1, 0.1],\n\
-            \    },\n    {\n      id: 2,\n      payload: { color: \"green\" },\n \
-            \     vector: [0.1, 0.9, 0.1],\n    },\n    {\n      id: 3,\n      payload:\
-            \ { color: \"blue\" },\n      vector: [0.1, 0.1, 0.9],\n    },\n  ],\n\
-            });\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.upsert(\n    collection_name=\"{collection_name}\"\
+            ,\n    points=[\n        models.PointStruct(\n            id=1,\n    \
+            \        payload={\n                \"color\": \"red\",\n            },\n\
+            \            vector=[0.9, 0.1, 0.1],\n        ),\n        models.PointStruct(\n\
+            \            id=2,\n            payload={\n                \"color\":\
+            \ \"green\",\n            },\n            vector=[0.1, 0.9, 0.1],\n  \
+            \      ),\n        models.PointStruct(\n            id=3,\n          \
+            \  payload={\n                \"color\": \"blue\",\n            },\n \
+            \           vector=[0.1, 0.1, 0.9],\n        ),\n    ],\n)\n"
+          language: python
       - code-samples:
         - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -1010,17 +991,36 @@ paths:
             \  .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.upsert(\n    collection_name=\"{collection_name}\"\
-            ,\n    points=[\n        models.PointStruct(\n            id=1,\n    \
-            \        payload={\n                \"color\": \"red\",\n            },\n\
-            \            vector=[0.9, 0.1, 0.1],\n        ),\n        models.PointStruct(\n\
-            \            id=2,\n            payload={\n                \"color\":\
-            \ \"green\",\n            },\n            vector=[0.1, 0.9, 0.1],\n  \
-            \      ),\n        models.PointStruct(\n            id=3,\n          \
-            \  payload={\n                \"color\": \"blue\",\n            },\n \
-            \           vector=[0.1, 0.1, 0.9],\n        ),\n    ],\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.upsert(\"{collection_name}\", {\n  points: [\n    {\n      id:\
+            \ 1,\n      payload: { color: \"red\" },\n      vector: [0.9, 0.1, 0.1],\n\
+            \    },\n    {\n      id: 2,\n      payload: { color: \"green\" },\n \
+            \     vector: [0.1, 0.9, 0.1],\n    },\n    {\n      id: 3,\n      payload:\
+            \ { color: \"blue\" },\n      vector: [0.1, 0.1, 0.9],\n    },\n  ],\n\
+            });\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.PointIdFactory.id;\nimport static\
+            \ io.qdrant.client.VectorFactory.vector;\nimport static io.qdrant.client.VectorsFactory.namedVectors;\n\
+            \nimport java.util.List;\nimport java.util.Map;\n\nimport io.qdrant.client.QdrantClient;\n\
+            import io.qdrant.client.QdrantGrpcClient;\n\nimport io.qdrant.client.grpc.Points.PointStruct;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .upsertAsync(\n   \
+            \     \"{collection_name}\",\n        List.of(\n            PointStruct.newBuilder()\n\
+            \                .setId(id(1))\n                .setVectors(\n       \
+            \             namedVectors(\n                        Map.of(\n       \
+            \                     \"image\",\n                            vector(List.of(0.9f,\
+            \ 0.1f, 0.1f, 0.2f)),\n                            \"text\",\n       \
+            \                     vector(List.of(0.4f, 0.7f, 0.1f, 0.8f, 0.1f, 0.1f,\
+            \ 0.9f, 0.2f)))))\n                .build(),\n            PointStruct.newBuilder()\n\
+            \                .setId(id(2))\n                .setVectors(\n       \
+            \             namedVectors(\n                        Map.of(\n       \
+            \                     \"image\",\n                            List.of(0.2f,\
+            \ 0.1f, 0.3f, 0.9f),\n                            \"text\",\n        \
+            \                    List.of(0.5f, 0.2f, 0.7f, 0.4f, 0.7f, 0.2f, 0.3f,\
+            \ 0.9f))))\n                .build()))\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/batch:
     post:
       description: Batch updates points, including their respective vectors and payloads.
@@ -1028,41 +1028,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import java.util.List;\nimport java.util.Map;\n\nimport static io.qdrant.client.PointIdFactory.id;\n\
-            import static io.qdrant.client.ValueFactory.value;\nimport static io.qdrant.client.VectorsFactory.vectors;\n\
-            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Points.PointStruct;\nimport io.qdrant.client.grpc.Points.PointVectors;\n\
-            import io.qdrant.client.grpc.Points.PointsIdsList;\nimport io.qdrant.client.grpc.Points.PointsSelector;\n\
-            import io.qdrant.client.grpc.Points.PointsUpdateOperation;\nimport io.qdrant.client.grpc.Points.PointsUpdateOperation.PointStructList;\n\
-            import io.qdrant.client.grpc.Points.PointsUpdateOperation.SetPayload;\n\
-            import io.qdrant.client.grpc.Points.PointsUpdateOperation.UpdateVectors;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .batchUpdateAsync(\n\
-            \        \"{collection_name}\",\n        List.of(\n            PointsUpdateOperation.newBuilder()\n\
-            \            .setUpsert(\n                PointStructList.newBuilder()\n\
-            \                .addPoints(\n                    PointStruct.newBuilder()\n\
-            \                    .setId(id(1))\n                    .setVectors(vectors(\n\
-            \                        1.0 f,\n                        2.0 f,\n    \
-            \                    3.0 f,\n                        4.0 f))\n       \
-            \             .build())\n                .build())\n            .build(),\n\
-            \            PointsUpdateOperation.newBuilder()\n            .setUpdateVectors(\n\
-            \                UpdateVectors.newBuilder()\n                .addPoints(\n\
-            \                    PointVectors.newBuilder()\n                    .setId(id(1))\n\
-            \                    .setVectors(vectors(\n                        1.0\
-            \ f,\n                        2.0 f,\n                        3.0 f,\n\
-            \                        4.0 f))\n                    .build())\n    \
-            \            .build())\n            .build(),\n            PointsUpdateOperation.newBuilder()\n\
-            \            .setSetPayload(\n                SetPayload.newBuilder()\n\
-            \                .setPointsSelector(\n                    PointsSelector.newBuilder()\n\
-            \                    .setPoints(PointsIdsList\n                      \
-            \  .newBuilder()\n                        .addIds(id(1))\n           \
-            \             .build())\n                    .build())\n             \
-            \   .putAllPayload(\n                    Map.of(\"test_payload_2\",\n\
-            \                        value(2),\n                        \"test_payload_3\"\
-            ,\n                        value(3)))\n                .build())\n   \
-            \         .build()))\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc batchUpdate() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -1098,21 +1063,23 @@ paths:
             ] = 2, [\"test_payload_3\"] = 3 }\n            }\n        }\n    ]\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.batchUpdate(\"{collection_name}\", {\n    operations: [\n     \
-            \   {\n            upsert: {\n                points: [\n            \
-            \        {\n                        id: 1,\n                        vector:\
-            \ [1.0, 2.0, 3.0, 4.0],\n                        payload: {},\n      \
-            \              },\n                ],\n            },\n        },\n  \
-            \      {\n            update_vectors: {\n                points: [\n \
-            \                   {\n                        id: 1,\n              \
-            \          vector: [1.0, 2.0, 3.0, 4.0],\n                    },\n   \
-            \             ],\n            },\n        },\n        {\n            set_payload:\
-            \ {\n                payload: {\n                    test_payload_2: 2,\n\
-            \                    test_payload_3: 3,\n                },\n        \
-            \        points: [1],\n            },\n        },\n    ],\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.batch_update_points(\n    collection_name=\"\
+            {collection_name}\",\n    update_operations=[\n        models.UpsertOperation(\n\
+            \            upsert=models.PointsList(\n                points=[\n   \
+            \                 models.PointStruct(\n                        id=1,\n\
+            \                        vector=[1.0, 2.0, 3.0, 4.0],\n              \
+            \          payload={},\n                    ),\n                ]\n  \
+            \          )\n        ),\n        models.UpdateVectorsOperation(\n   \
+            \         update_vectors=models.UpdateVectors(\n                points=[\n\
+            \                    models.PointVectors(\n                        id=1,\n\
+            \                        vector=[1.0, 2.0, 3.0, 4.0],\n              \
+            \      )\n                ]\n            )\n        ),\n        models.SetPayloadOperation(\n\
+            \            set_payload=models.SetPayload(\n                payload={\n\
+            \                    \"test_payload_2\": 2,\n                    \"test_payload_3\"\
+            : 3,\n                },\n                points=[1],\n            )\n\
+            \        ),\n    ],\n)\n"
+          language: python
       - code-samples:
         - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/batch'\
             \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'api-key:\
@@ -1162,23 +1129,56 @@ paths:
             \      .wait(true),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.batch_update_points(\n    collection_name=\"\
-            {collection_name}\",\n    update_operations=[\n        models.UpsertOperation(\n\
-            \            upsert=models.PointsList(\n                points=[\n   \
-            \                 models.PointStruct(\n                        id=1,\n\
-            \                        vector=[1.0, 2.0, 3.0, 4.0],\n              \
-            \          payload={},\n                    ),\n                ]\n  \
-            \          )\n        ),\n        models.UpdateVectorsOperation(\n   \
-            \         update_vectors=models.UpdateVectors(\n                points=[\n\
-            \                    models.PointVectors(\n                        id=1,\n\
-            \                        vector=[1.0, 2.0, 3.0, 4.0],\n              \
-            \      )\n                ]\n            )\n        ),\n        models.SetPayloadOperation(\n\
-            \            set_payload=models.SetPayload(\n                payload={\n\
-            \                    \"test_payload_2\": 2,\n                    \"test_payload_3\"\
-            : 3,\n                },\n                points=[1],\n            )\n\
-            \        ),\n    ],\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.batchUpdate(\"{collection_name}\", {\n    operations: [\n     \
+            \   {\n            upsert: {\n                points: [\n            \
+            \        {\n                        id: 1,\n                        vector:\
+            \ [1.0, 2.0, 3.0, 4.0],\n                        payload: {},\n      \
+            \              },\n                ],\n            },\n        },\n  \
+            \      {\n            update_vectors: {\n                points: [\n \
+            \                   {\n                        id: 1,\n              \
+            \          vector: [1.0, 2.0, 3.0, 4.0],\n                    },\n   \
+            \             ],\n            },\n        },\n        {\n            set_payload:\
+            \ {\n                payload: {\n                    test_payload_2: 2,\n\
+            \                    test_payload_3: 3,\n                },\n        \
+            \        points: [1],\n            },\n        },\n    ],\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import java.util.List;\nimport java.util.Map;\n\nimport static io.qdrant.client.PointIdFactory.id;\n\
+            import static io.qdrant.client.ValueFactory.value;\nimport static io.qdrant.client.VectorsFactory.vectors;\n\
+            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport io.qdrant.client.grpc.Points.PointStruct;\nimport io.qdrant.client.grpc.Points.PointVectors;\n\
+            import io.qdrant.client.grpc.Points.PointsIdsList;\nimport io.qdrant.client.grpc.Points.PointsSelector;\n\
+            import io.qdrant.client.grpc.Points.PointsUpdateOperation;\nimport io.qdrant.client.grpc.Points.PointsUpdateOperation.PointStructList;\n\
+            import io.qdrant.client.grpc.Points.PointsUpdateOperation.SetPayload;\n\
+            import io.qdrant.client.grpc.Points.PointsUpdateOperation.UpdateVectors;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .batchUpdateAsync(\n\
+            \        \"{collection_name}\",\n        List.of(\n            PointsUpdateOperation.newBuilder()\n\
+            \            .setUpsert(\n                PointStructList.newBuilder()\n\
+            \                .addPoints(\n                    PointStruct.newBuilder()\n\
+            \                    .setId(id(1))\n                    .setVectors(vectors(\n\
+            \                        1.0 f,\n                        2.0 f,\n    \
+            \                    3.0 f,\n                        4.0 f))\n       \
+            \             .build())\n                .build())\n            .build(),\n\
+            \            PointsUpdateOperation.newBuilder()\n            .setUpdateVectors(\n\
+            \                UpdateVectors.newBuilder()\n                .addPoints(\n\
+            \                    PointVectors.newBuilder()\n                    .setId(id(1))\n\
+            \                    .setVectors(vectors(\n                        1.0\
+            \ f,\n                        2.0 f,\n                        3.0 f,\n\
+            \                        4.0 f))\n                    .build())\n    \
+            \            .build())\n            .build(),\n            PointsUpdateOperation.newBuilder()\n\
+            \            .setSetPayload(\n                SetPayload.newBuilder()\n\
+            \                .setPointsSelector(\n                    PointsSelector.newBuilder()\n\
+            \                    .setPoints(PointsIdsList\n                      \
+            \  .newBuilder()\n                        .addIds(id(1))\n           \
+            \             .build())\n                    .build())\n             \
+            \   .putAllPayload(\n                    Map.of(\"test_payload_2\",\n\
+            \                        value(2),\n                        \"test_payload_3\"\
+            ,\n                        value(3)))\n                .build())\n   \
+            \         .build()))\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/count:
     post:
       description: Counts the number of points that match a specified filtering condition.
@@ -1186,14 +1186,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\n\
-            import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Common.Filter;\n\nQdrantClient client =\
-            \ new QdrantClient(QdrantGrpcClient.newBuilder(\"localhost\", 6334, false).build());\n\
-            \nclient\n    .countAsync(\n        \"{collection_name}\",\n        Filter.newBuilder().addMust(matchKeyword(\"\
-            color\", \"red\")).build(),\n        true)\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc count() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -1211,13 +1203,12 @@ paths:
             , \"red\"),\n  exact: true\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.count(\"{collection_name}\", {\n    filter: {\n        must: [\n\
-            \            {\n                key: \"color\",\n                match:\
-            \ {\n                    value: \"red\",\n                },\n       \
-            \     },\n        ],\n    },\n    exact: true,\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.count(\n    collection_name=\"{collection_name}\"\
+            ,\n    count_filter=models.Filter(\n        must=[\n            models.FieldCondition(key=\"\
+            color\", match=models.MatchValue(value=\"red\")),\n        ]\n    ),\n\
+            \    exact=True,\n)\n"
+          language: python
       - code-samples:
         - code: "# Count total number of points in a collection\ncurl  -X POST \\\n\
             \  'http://localhost:6333/collections/collection_name/points/count' \\\
@@ -1239,12 +1230,21 @@ paths:
             \          )]))\n            .exact(true),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.count(\n    collection_name=\"{collection_name}\"\
-            ,\n    count_filter=models.Filter(\n        must=[\n            models.FieldCondition(key=\"\
-            color\", match=models.MatchValue(value=\"red\")),\n        ]\n    ),\n\
-            \    exact=True,\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.count(\"{collection_name}\", {\n    filter: {\n        must: [\n\
+            \            {\n                key: \"color\",\n                match:\
+            \ {\n                    value: \"red\",\n                },\n       \
+            \     },\n        ],\n    },\n    exact: true,\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\n\
+            import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport io.qdrant.client.grpc.Common.Filter;\n\nQdrantClient client =\
+            \ new QdrantClient(QdrantGrpcClient.newBuilder(\"localhost\", 6334, false).build());\n\
+            \nclient\n    .countAsync(\n        \"{collection_name}\",\n        Filter.newBuilder().addMust(matchKeyword(\"\
+            color\", \"red\")).build(),\n        true)\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/delete:
     post:
       description: Deletes specified points from the collection.
@@ -1252,17 +1252,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.PointIdFactory.id;\nimport static\
-            \ io.qdrant.client.ConditionFactory.matchKeyword;\n\nimport java.util.List;\n\
-            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Common.Filter;\n\nQdrantClient client =\
-            \ new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"localhost\"\
-            , 6334, false).build());\n\nclient.deleteAsync(\"{collection_name}\",\
-            \ List.of(id(0), id(3), id(100)));\n\nclient\n    .deleteAsync(\n    \
-            \    \"{collection_name}\",\n        Filter.newBuilder().addMust(matchKeyword(\"\
-            color\", \"red\")).build())\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc delete() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -1293,14 +1282,15 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.delete(\"{collection_name}\", {\n  points: [0, 3, 100],\n});\n\n\
-            client.delete(\"{collection_name}\", {\n    filter: {\n        must: [\n\
-            \            {\n                key: \"color\",\n                match:\
-            \ {\n                    value: \"red\",\n                },\n       \
-            \     },\n        ],\n    },\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.delete(\n    collection_name=\"{collection_name}\"\
+            ,\n    points_selector=models.PointIdsList(\n        points=[0, 3, 100],\n\
+            \    ),\n)\n\nclient.delete(\n    collection_name=\"{collection_name}\"\
+            ,\n    points_selector=models.FilterSelector(\n        filter=models.Filter(\n\
+            \            must=[\n                models.FieldCondition(\n        \
+            \            key=\"color\",\n                    match=models.MatchValue(value=\"\
+            red\"),\n                ),\n            ],\n        )\n    ),\n)\n"
+          language: python
       - code-samples:
         - code: "# Delete points by IDs\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/delete'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -1325,15 +1315,25 @@ paths:
             \            .wait(true),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.delete(\n    collection_name=\"{collection_name}\"\
-            ,\n    points_selector=models.PointIdsList(\n        points=[0, 3, 100],\n\
-            \    ),\n)\n\nclient.delete(\n    collection_name=\"{collection_name}\"\
-            ,\n    points_selector=models.FilterSelector(\n        filter=models.Filter(\n\
-            \            must=[\n                models.FieldCondition(\n        \
-            \            key=\"color\",\n                    match=models.MatchValue(value=\"\
-            red\"),\n                ),\n            ],\n        )\n    ),\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.delete(\"{collection_name}\", {\n  points: [0, 3, 100],\n});\n\n\
+            client.delete(\"{collection_name}\", {\n    filter: {\n        must: [\n\
+            \            {\n                key: \"color\",\n                match:\
+            \ {\n                    value: \"red\",\n                },\n       \
+            \     },\n        ],\n    },\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.PointIdFactory.id;\nimport static\
+            \ io.qdrant.client.ConditionFactory.matchKeyword;\n\nimport java.util.List;\n\
+            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport io.qdrant.client.grpc.Common.Filter;\n\nQdrantClient client =\
+            \ new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"localhost\"\
+            , 6334, false).build());\n\nclient.deleteAsync(\"{collection_name}\",\
+            \ List.of(id(0), id(3), id(100)));\n\nclient\n    .deleteAsync(\n    \
+            \    \"{collection_name}\",\n        Filter.newBuilder().addMust(matchKeyword(\"\
+            color\", \"red\")).build())\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/discover: {}
   /collections/{collection_name}/points/discover/batch: {}
   /collections/{collection_name}/points/payload:
@@ -1343,16 +1343,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.PointIdFactory.id;\nimport static\
-            \ io.qdrant.client.ValueFactory.value;\n\nimport java.util.List;\nimport\
-            \ java.util.Map;\n\nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .setPayloadAsync(\n\
-            \        \"{collection_name}\",\n        Map.of(\"property1\", value(\"\
-            string\"), \"property2\", value(\"string\")),\n        List.of(id(0),\
-            \ id(3), id(10)),\n        true,\n        null,\n        null)\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc setPayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -1373,12 +1363,12 @@ paths:
             \ } },\n  ids: new ulong[] { 0, 3, 10 }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.setPayload(\"{collection_name}\", {\n  payload: {\n    property1:\
-            \ \"string\",\n    property2: \"string\",\n  },\n  points: [0, 3, 10],\n\
-            });\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.set_payload(\n    collection_name=\"\
+            {collection_name}\",\n    payload={\n        \"property1\": \"string\"\
+            ,\n        \"property2\": \"string\",\n    },\n    points=[0, 3, 10],\n\
+            )\n"
+          language: python
       - code-samples:
         - code: "# Set payload by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -1405,28 +1395,28 @@ paths:
             \  )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.set_payload(\n    collection_name=\"\
-            {collection_name}\",\n    payload={\n        \"property1\": \"string\"\
-            ,\n        \"property2\": \"string\",\n    },\n    points=[0, 3, 10],\n\
-            )\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.setPayload(\"{collection_name}\", {\n  payload: {\n    property1:\
+            \ \"string\",\n    property2: \"string\",\n  },\n  points: [0, 3, 10],\n\
+            });\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.PointIdFactory.id;\nimport static\
+            \ io.qdrant.client.ValueFactory.value;\n\nimport java.util.List;\nimport\
+            \ java.util.Map;\n\nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .setPayloadAsync(\n\
+            \        \"{collection_name}\",\n        Map.of(\"property1\", value(\"\
+            string\"), \"property2\", value(\"string\")),\n        List.of(id(0),\
+            \ id(3), id(10)),\n        true,\n        null,\n        null)\n    .get();\n"
+          language: java
     put:
       description: Replaces the entire payload of a specified point with a new payload.
       summary: Overwrite payload
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import java.util.List;\n\nimport static io.qdrant.client.PointIdFactory.id;\n\
-            import static io.qdrant.client.ValueFactory.value;\n\nimport io.qdrant.client.QdrantClient;\n\
-            import io.qdrant.client.QdrantGrpcClient;\n\nQdrantClient client = new\
-            \ QdrantClient(\n                QdrantGrpcClient.newBuilder(\"localhost\"\
-            , 6334, false).build());\n\nclient\n    .overwritePayloadAsync(\n    \
-            \    \"{collection_name}\",\n        Map.of(\"property1\", value(\"string\"\
-            ), \"property2\", value(\"string\")),\n        List.of(id(0), id(3), id(10)),\n\
-            \        true,\n        null,\n        null)\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc overwritePayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -1446,12 +1436,12 @@ paths:
             \ } },\n  ids: new ulong[] { 0, 3, 10 }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.overwritePayload(\"{collection_name}\", {\n  payload: {\n    property1:\
-            \ \"string\",\n    property2: \"string\",\n  },\n  points: [0, 3, 10],\n\
-            });\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.overwrite_payload(\n    collection_name=\"\
+            {collection_name}\",\n    payload={\n        \"property1\": \"string\"\
+            ,\n        \"property2\": \"string\",\n    },\n    points=[0, 3, 10],\n\
+            )\n"
+          language: python
       - code-samples:
         - code: "# Overwrite payload by ID\ncurl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/payload'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -1477,12 +1467,22 @@ paths:
             \       }))\n            .wait(true),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.overwrite_payload(\n    collection_name=\"\
-            {collection_name}\",\n    payload={\n        \"property1\": \"string\"\
-            ,\n        \"property2\": \"string\",\n    },\n    points=[0, 3, 10],\n\
-            )\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.overwritePayload(\"{collection_name}\", {\n  payload: {\n    property1:\
+            \ \"string\",\n    property2: \"string\",\n  },\n  points: [0, 3, 10],\n\
+            });\n"
+          language: typescript
+      - code-samples:
+        - code: "import java.util.List;\n\nimport static io.qdrant.client.PointIdFactory.id;\n\
+            import static io.qdrant.client.ValueFactory.value;\n\nimport io.qdrant.client.QdrantClient;\n\
+            import io.qdrant.client.QdrantGrpcClient;\n\nQdrantClient client = new\
+            \ QdrantClient(\n                QdrantGrpcClient.newBuilder(\"localhost\"\
+            , 6334, false).build());\n\nclient\n    .overwritePayloadAsync(\n    \
+            \    \"{collection_name}\",\n        Map.of(\"property1\", value(\"string\"\
+            ), \"property2\", value(\"string\")),\n        List.of(id(0), id(3), id(10)),\n\
+            \        true,\n        null,\n        null)\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/payload/clear:
     post:
       description: Removes the entire payload for specified points.
@@ -1490,13 +1490,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import java.util.List;\n\nimport static io.qdrant.client.PointIdFactory.id;\n\
-            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.clearPayloadAsync(\"{collection_name}\"\
-            , List.of(id(0), id(3), id(100)), null, null, null)\n                .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc clearPayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -1519,11 +1512,10 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.clearPayload(\"{collection_name}\", {\n  points: [0, 3, 100],\n\
-            });\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.clear_payload(\n    collection_name=\"\
+            {collection_name}\",\n    points_selector=[0, 3, 100],\n)\n"
+          language: python
       - code-samples:
         - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/clear'\
             \ \\\n  --header 'Content-Type: application/json' \\\n  --header 'api-key:\
@@ -1538,10 +1530,18 @@ paths:
             \ vec![0.into(), 3.into(), 100.into()],\n        },\n    ))\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.clear_payload(\n    collection_name=\"\
-            {collection_name}\",\n    points_selector=[0, 3, 100],\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.clearPayload(\"{collection_name}\", {\n  points: [0, 3, 100],\n\
+            });\n"
+          language: typescript
+      - code-samples:
+        - code: "import java.util.List;\n\nimport static io.qdrant.client.PointIdFactory.id;\n\
+            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.clearPayloadAsync(\"{collection_name}\"\
+            , List.of(id(0), id(3), id(100)), null, null, null)\n                .get();\n"
+          language: java
   /collections/{collection_name}/points/payload/delete:
     post:
       description: Deletes a specified key payload for points.
@@ -1549,15 +1549,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import java.util.List;\n\nimport static io.qdrant.client.PointIdFactory.id;\n\
-            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .deletePayloadAsync(\n\
-            \        \"{collection_name}\",\n        List.of(\"color\", \"price\"\
-            ),\n        List.of(id(0), id(3), id(100)),\n        true,\n        null,\n\
-            \        null)\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deletePayload() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -1581,11 +1572,11 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.deletePayload(\"{collection_name}\", {\n  keys: [\"color\", \"\
-            price\"],\n  points: [0, 3, 100],\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.delete_payload(\n    collection_name=\"\
+            {collection_name}\",\n    keys=[\"color\", \"price\"],\n    points=[0,\
+            \ 3, 100],\n)\n"
+          language: python
       - code-samples:
         - code: "# Delete payload by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/payload/delete'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -1608,11 +1599,20 @@ paths:
             \        .wait(true),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.delete_payload(\n    collection_name=\"\
-            {collection_name}\",\n    keys=[\"color\", \"price\"],\n    points=[0,\
-            \ 3, 100],\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.deletePayload(\"{collection_name}\", {\n  keys: [\"color\", \"\
+            price\"],\n  points: [0, 3, 100],\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import java.util.List;\n\nimport static io.qdrant.client.PointIdFactory.id;\n\
+            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .deletePayloadAsync(\n\
+            \        \"{collection_name}\",\n        List.of(\"color\", \"price\"\
+            ),\n        List.of(id(0), id(3), id(100)),\n        true,\n        null,\n\
+            \        null)\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/query:
     post:
       description: Universally query points. This endpoint covers all capabilities
@@ -1622,104 +1622,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.QueryFactory.fusion;\nimport static\
-            \ io.qdrant.client.QueryFactory.nearest;\nimport static io.qdrant.client.QueryFactory.recommend;\n\
-            import static io.qdrant.client.VectorInputFactory.vectorInput;\n\nimport\
-            \ java.util.UUID;\n\nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            import io.qdrant.client.grpc.Points.Fusion;\nimport io.qdrant.client.grpc.Points.PrefetchQuery;\n\
-            import io.qdrant.client.grpc.Points.QueryPoints;\nimport io.qdrant.client.grpc.Points.RecommendInput;\n\
-            \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\n// Query nearest by ID\nclient\n\
-            \    .queryAsync(\n        QueryPoints.newBuilder()\n            .setCollectionName(\"\
-            {collection_name}\")\n            .setQuery(nearest(UUID.fromString(\"\
-            43cf51e2-8777-4f52-bc74-c2cbde0c8b04\")))\n            .build())\n   \
-            \ .get();\n\n// Recommend on the average of these vectors\nclient\n  \
-            \  .queryAsync(\n        QueryPoints.newBuilder()\n            .setCollectionName(\"\
-            {collection_name}\")\n            .setQuery(\n                recommend(\n\
-            \                    RecommendInput.newBuilder()\n                   \
-            \     .addPositive(vectorInput(UUID.fromString(\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\
-            )))\n                        .addPositive(vectorInput(0.11f, 0.35f, 0.6f))\n\
-            \                        .addNegative(vectorInput(0.01f, 0.45f, 0.67f))\n\
-            \                        .build()))\n            .build())\n    .get();\n\
-            \n// Fusion query\nclient\n    .queryAsync(\n        QueryPoints.newBuilder()\n\
-            \            .setCollectionName(\"{collection_name}\")\n            .addPrefetch(\n\
-            \                PrefetchQuery.newBuilder()\n                    .setQuery(nearest(List.of(0.22f,\
-            \ 0.8f), List.of(1, 42)))\n                    .setUsing(\"sparse\")\n\
-            \                    .setLimit(20)\n                    .build())\n  \
-            \          .addPrefetch(\n                PrefetchQuery.newBuilder()\n\
-            \                    .setQuery(nearest(List.of(0.01f, 0.45f, 0.67f)))\n\
-            \                    .setUsing(\"dense\")\n                    .setLimit(20)\n\
-            \                    .build())\n            .setQuery(fusion(Fusion.RRF))\n\
-            \            .build())\n    .get();\n\n// 2-stage query\nclient\n    .queryAsync(\n\
-            \        QueryPoints.newBuilder()\n            .setCollectionName(\"{collection_name}\"\
-            )\n            .addPrefetch(\n                PrefetchQuery.newBuilder()\n\
-            \                    .setQuery(nearest(0.01f, 0.45f, 0.67f))\n       \
-            \             .setLimit(100)\n                    .build())\n        \
-            \    .setQuery(\n                nearest(\n                    new float[][]\
-            \ {\n                      {0.1f, 0.2f},\n                      {0.2f,\
-            \ 0.1f},\n                      {0.8f, 0.9f}\n                    }))\n\
-            \            .setUsing(\"colbert\")\n            .setLimit(10)\n     \
-            \       .build())\n    .get();\n\n// Random sampling (as of 1.11.0)\n\
-            client\n    .queryAsync(\n        QueryPoints.newBuilder()\n         \
-            \   .setCollectionName(\"{collection_name}\")\n            .setQuery(sample(Sample.Random))\n\
-            \            .build())\n    .get();\n\n// Score boost depending on payload\
-            \ conditions (as of 1.14.0)\nclient\n    .queryAsync(\n        QueryPoints.newBuilder()\n\
-            \            .setCollectionName(\"{collection_name}\")\n            .addPrefetch(\n\
-            \                PrefetchQuery.newBuilder()\n                    .setQuery(nearest(0.01f,\
-            \ 0.45f, 0.67f))\n                    .setLimit(100)\n               \
-            \     .build())\n            .setQuery(\n                formula(\n  \
-            \                  Formula.newBuilder()\n                        .setExpression(\n\
-            \                            sum(\n                                SumExpression.newBuilder()\n\
-            \                                    .addSum(variable(\"$score\"))\n \
-            \                                   .addSum(\n                       \
-            \                 mult(\n                                            MultExpression.newBuilder()\n\
-            \                                                .addMult(constant(0.5f))\n\
-            \                                                .addMult(\n         \
-            \                                           condition(\n             \
-            \                                           matchKeywords(\n         \
-            \                                                   \"tag\",\n       \
-            \                                                     List.of(\"h1\",\
-            \ \"h2\", \"h3\", \"h4\"))))\n                                       \
-            \         .build()))\n                                    .addSum(mult(MultExpression.newBuilder()\n\
-            \                                    .addMult(constant(0.25f))\n     \
-            \                               .addMult(\n                          \
-            \              condition(\n                                          \
-            \  matchKeywords(\n                                                \"\
-            tag\",\n                                                List.of(\"p\"\
-            , \"li\"))))\n                                    .build()))\n       \
-            \                             .build()))\n                        .build()))\n\
-            \            .build())\n    .get();\n\n// Score boost geographically closer\
-            \ points (as of 1.14.0)\nclient\n    .queryAsync(\n        QueryPoints.newBuilder()\n\
-            \            .setCollectionName(\"{collection_name}\")\n            .addPrefetch(\n\
-            \                PrefetchQuery.newBuilder()\n                    .setQuery(nearest(0.01f,\
-            \ 0.45f, 0.67f))\n                    .setLimit(100)\n               \
-            \     .build())\n            .setQuery(\n                formula(\n  \
-            \                  Formula.newBuilder()\n                        .setExpression(\n\
-            \                            sum(\n                                SumExpression.newBuilder()\n\
-            \                                    .addSum(variable(\"$score\"))\n \
-            \                                   .addSum(\n                       \
-            \                 expDecay(\n                                        \
-            \    DecayParamsExpression.newBuilder()\n                            \
-            \                    .setX(\n                                        \
-            \            geoDistance(\n                                          \
-            \              GeoDistance.newBuilder()\n                            \
-            \                                .setOrigin(\n                       \
-            \                                         GeoPoint.newBuilder()\n    \
-            \                                                                .setLat(52.504043)\n\
-            \                                                                    .setLon(13.393236)\n\
-            \                                                                    .build())\n\
-            \                                                            .setTo(\"\
-            geo.location\")\n                                                    \
-            \        .build()))\n                                                .setScale(5000)\n\
-            \                                                .build()))\n        \
-            \                            .build()))\n                        .putDefaults(\n\
-            \                            \"geo.location\",\n                     \
-            \       value(\n                                Map.of(\n            \
-            \                        \"lat\", value(48.137154),\n                \
-            \                    \"lon\", value(11.576124))))\n                  \
-            \      .build()))\n            .build())\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc query() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -1827,44 +1729,52 @@ paths:
             \t\t\t\t[\"lon\"] = 11.576124,\n\t\t\t},\n\t\t},\n\t}\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            // Query nearest by ID\nlet _nearest = client.query(\"{collection_name\"\
-            , {\n    query: \"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\n});\n\n// Recommend\
-            \ on the average of these vectors\nlet _recommendations = client.query(\"\
-            {collection_name}\", {\n    query: {\n        recommend: {\n         \
-            \   positive: [\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\", [0.11, 0.35,\
-            \ 0.6]],\n            negative: [0.01, 0.45, 0.67]\n        }\n    }\n\
-            });\n\n// Fusion query\nlet _hybrid = client.query(\"{collection_name}\"\
-            , {\n    prefetch: [\n        {\n            query: {\n              \
-            \  values: [0.22, 0.8],\n                indices: [1, 42],\n         \
-            \   },\n            using: 'sparse',\n            limit: 20,\n       \
-            \ },\n        {\n            query: [0.01, 0.45, 0.67],\n            using:\
-            \ 'dense',\n            limit: 20,\n        },\n    ],\n    query: {\n\
-            \        fusion: 'rrf',\n    },\n});\n\n// 2-stage query\nlet _refined\
-            \ = client.query(\"{collection_name}\", {\n    prefetch: {\n        query:\
-            \ [1, 23, 45, 67],\n        limit: 100,\n    },\n    query: [\n      \
-            \  [0.1, 0.2],\n        [0.2, 0.1],\n        [0.8, 0.9],\n    ],\n   \
-            \ using: 'colbert',\n    limit: 10,\n});\n\n// Random sampling (as of\
-            \ 1.11.0)\nlet _sampled = client.query(\"{collection_name}\", {\n  query:\
-            \ { sample: \"random\" },\n});\n\n// Score boost depending on payload\
-            \ conditions (as of 1.14.0)\nconst tag_boosted = await client.query(\"\
-            {collection_name}\", {\n  prefetch: {\n    query: [0.2, 0.8, 0.1, 0.9],\n\
-            \    limit: 50\n  },\n  query: {\n    formula: {\n      sum: [\n     \
-            \   \"$score\",\n        {\n          mult: [ 0.5, { key: \"tag\", match:\
-            \ { any: [\"h1\", \"h2\", \"h3\", \"h4\"] }} ]\n        },\n        {\n\
-            \          mult: [ 0.25, { key: \"tag\", match: { any: [\"p\", \"li\"\
-            ] }} ]\n        }\n      ]\n    }\n  }\n});\n\n// Score boost geographically\
-            \ closer points (as of 1.14.0)\nconst distance_boosted = await client.query(\"\
-            {collection_name}\", {\n  prefetch: {\n    query: [0.2, 0.8, ...],\n \
-            \   limit: 50\n  },\n  query: {\n    formula: {\n      sum: [\n      \
-            \  \"$score\",\n        {\n          gauss_decay: {\n            x: {\n\
-            \              geo_distance: {\n                origin: { lat: 52.504043,\
-            \ lon: 13.393236 }, // Berlin\n                to: \"geo.location\"\n\
-            \              }\n            },\n            scale: 5000 // 5km\n   \
-            \       }\n        }\n      ]\n    },\n    defaults: { \"geo.location\"\
-            : { lat: 48.137154, lon: 11.576124 } } // Munich\n  }\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\n# Query nearest by ID\nnearest = client.query_points(\n\
+            \    collection_name=\"{collection_name}\",\n    query=\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\
+            ,\n)\n\n# Recommend on the average of these vectors\nrecommended = client.query_points(\n\
+            \    collection_name=\"{collection_name}\",\n    query=models.RecommendQuery(recommend=models.RecommendInput(\n\
+            \        positive=[\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\", [0.11, 0.35,\
+            \ 0.6, ...]],\n        negative=[[0.01, 0.45, 0.67, ...]]\n    ))\n)\n\
+            \n# Fusion query\nhybrid = client.query_points(\n    collection_name=\"\
+            {collection_name}\",\n    prefetch=[\n        models.Prefetch(\n     \
+            \       query=models.SparseVector(indices=[1, 42], values=[0.22, 0.8]),\n\
+            \            using=\"sparse\",\n            limit=20,\n        ),\n  \
+            \      models.Prefetch(\n            query=[0.01, 0.45, 0.67, ...],  #\
+            \ <-- dense vector\n            using=\"dense\",\n            limit=20,\n\
+            \        ),\n    ],\n    query=models.FusionQuery(fusion=models.Fusion.RRF),\n\
+            )\n\n# 2-stage query\nrefined = client.query_points(\n    collection_name=\"\
+            {collection_name}\",\n    prefetch=models.Prefetch(\n        query=[0.01,\
+            \ 0.45, 0.67, ...],  # <-- dense vector\n        limit=100,\n    ),\n\
+            \    query=[\n        [0.1, 0.2, ...],  # <\u2500\u2510\n        [0.2,\
+            \ 0.1, ...],  # < \u251C\u2500 multi-vector\n        [0.8, 0.9, ...],\
+            \  # < \u2518\n    ],\n    using=\"colbert\",\n    limit=10,\n)\n\n# Random\
+            \ sampling (as of 1.11.0)\nsampled = client.query_points(\n    collection_name=\"\
+            {collection_name}\",\n    query=models.SampleQuery(sample=models.Sample.RANDOM)\n\
+            )\n\n# Score boost depending on payload conditions (as of 1.14.0)\ntag_boosted\
+            \ = client.query_points(\n    collection_name=\"{collection_name}\",\n\
+            \    prefetch=models.Prefetch(\n        query=[0.2, 0.8, ...],  # <--\
+            \ dense vector\n        limit=50\n    ),\n    query=models.FormulaQuery(\n\
+            \        formula=models.SumExpression(sum=[\n            \"$score\",\n\
+            \            models.MultExpression(mult=[0.5, models.FieldCondition(key=\"\
+            tag\", match=models.MatchAny(any=[\"h1\", \"h2\", \"h3\", \"h4\"]))]),\n\
+            \            models.MultExpression(mult=[0.25, models.FieldCondition(key=\"\
+            tag\", match=models.MatchAny(any=[\"p\", \"li\"]))])\n        ]\n    ))\n\
+            )\n\n# Score boost geographically closer points (as of 1.14.0)\ngeo_boosted\
+            \ = client.query_points(\n    collection_name=\"{collection_name}\",\n\
+            \    prefetch=models.Prefetch(\n        query=[0.2, 0.8, ...],  # <--\
+            \ dense vector\n        limit=50\n    ),\n    query=models.FormulaQuery(\n\
+            \        formula=models.SumExpression(sum=[\n            \"$score\",\n\
+            \            models.GaussDecayExpression(\n                gauss_decay=models.DecayParamsExpression(\n\
+            \                    x=models.GeoDistance(\n                        geo_distance=models.GeoDistanceParams(\n\
+            \                            origin=models.GeoPoint(\n               \
+            \                 lat=52.504043,\n                                lon=13.393236\n\
+            \                            ),  # Berlin\n                          \
+            \  to=\"geo.location\"\n                        )\n                  \
+            \  ),\n                    scale=5000  # 5km\n                )\n    \
+            \        )\n        ]),\n        defaults={\"geo.location\": models.GeoPoint(lat=48.137154,\
+            \ lon=11.576124)}  # Munich\n    )\n)\n"
+          language: python
       - code-samples:
         - code: "# Query nearest by ID\ncurl -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -1976,52 +1886,142 @@ paths:
             \    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\n# Query nearest by ID\nnearest = client.query_points(\n\
-            \    collection_name=\"{collection_name}\",\n    query=\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\
-            ,\n)\n\n# Recommend on the average of these vectors\nrecommended = client.query_points(\n\
-            \    collection_name=\"{collection_name}\",\n    query=models.RecommendQuery(recommend=models.RecommendInput(\n\
-            \        positive=[\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\", [0.11, 0.35,\
-            \ 0.6, ...]],\n        negative=[[0.01, 0.45, 0.67, ...]]\n    ))\n)\n\
-            \n# Fusion query\nhybrid = client.query_points(\n    collection_name=\"\
-            {collection_name}\",\n    prefetch=[\n        models.Prefetch(\n     \
-            \       query=models.SparseVector(indices=[1, 42], values=[0.22, 0.8]),\n\
-            \            using=\"sparse\",\n            limit=20,\n        ),\n  \
-            \      models.Prefetch(\n            query=[0.01, 0.45, 0.67, ...],  #\
-            \ <-- dense vector\n            using=\"dense\",\n            limit=20,\n\
-            \        ),\n    ],\n    query=models.FusionQuery(fusion=models.Fusion.RRF),\n\
-            )\n\n# 2-stage query\nrefined = client.query_points(\n    collection_name=\"\
-            {collection_name}\",\n    prefetch=models.Prefetch(\n        query=[0.01,\
-            \ 0.45, 0.67, ...],  # <-- dense vector\n        limit=100,\n    ),\n\
-            \    query=[\n        [0.1, 0.2, ...],  # <\u2500\u2510\n        [0.2,\
-            \ 0.1, ...],  # < \u251C\u2500 multi-vector\n        [0.8, 0.9, ...],\
-            \  # < \u2518\n    ],\n    using=\"colbert\",\n    limit=10,\n)\n\n# Random\
-            \ sampling (as of 1.11.0)\nsampled = client.query_points(\n    collection_name=\"\
-            {collection_name}\",\n    query=models.SampleQuery(sample=models.Sample.RANDOM)\n\
-            )\n\n# Score boost depending on payload conditions (as of 1.14.0)\ntag_boosted\
-            \ = client.query_points(\n    collection_name=\"{collection_name}\",\n\
-            \    prefetch=models.Prefetch(\n        query=[0.2, 0.8, ...],  # <--\
-            \ dense vector\n        limit=50\n    ),\n    query=models.FormulaQuery(\n\
-            \        formula=models.SumExpression(sum=[\n            \"$score\",\n\
-            \            models.MultExpression(mult=[0.5, models.FieldCondition(key=\"\
-            tag\", match=models.MatchAny(any=[\"h1\", \"h2\", \"h3\", \"h4\"]))]),\n\
-            \            models.MultExpression(mult=[0.25, models.FieldCondition(key=\"\
-            tag\", match=models.MatchAny(any=[\"p\", \"li\"]))])\n        ]\n    ))\n\
-            )\n\n# Score boost geographically closer points (as of 1.14.0)\ngeo_boosted\
-            \ = client.query_points(\n    collection_name=\"{collection_name}\",\n\
-            \    prefetch=models.Prefetch(\n        query=[0.2, 0.8, ...],  # <--\
-            \ dense vector\n        limit=50\n    ),\n    query=models.FormulaQuery(\n\
-            \        formula=models.SumExpression(sum=[\n            \"$score\",\n\
-            \            models.GaussDecayExpression(\n                gauss_decay=models.DecayParamsExpression(\n\
-            \                    x=models.GeoDistance(\n                        geo_distance=models.GeoDistanceParams(\n\
-            \                            origin=models.GeoPoint(\n               \
-            \                 lat=52.504043,\n                                lon=13.393236\n\
-            \                            ),  # Berlin\n                          \
-            \  to=\"geo.location\"\n                        )\n                  \
-            \  ),\n                    scale=5000  # 5km\n                )\n    \
-            \        )\n        ]),\n        defaults={\"geo.location\": models.GeoPoint(lat=48.137154,\
-            \ lon=11.576124)}  # Munich\n    )\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            // Query nearest by ID\nlet _nearest = client.query(\"{collection_name\"\
+            , {\n    query: \"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\n});\n\n// Recommend\
+            \ on the average of these vectors\nlet _recommendations = client.query(\"\
+            {collection_name}\", {\n    query: {\n        recommend: {\n         \
+            \   positive: [\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\", [0.11, 0.35,\
+            \ 0.6]],\n            negative: [0.01, 0.45, 0.67]\n        }\n    }\n\
+            });\n\n// Fusion query\nlet _hybrid = client.query(\"{collection_name}\"\
+            , {\n    prefetch: [\n        {\n            query: {\n              \
+            \  values: [0.22, 0.8],\n                indices: [1, 42],\n         \
+            \   },\n            using: 'sparse',\n            limit: 20,\n       \
+            \ },\n        {\n            query: [0.01, 0.45, 0.67],\n            using:\
+            \ 'dense',\n            limit: 20,\n        },\n    ],\n    query: {\n\
+            \        fusion: 'rrf',\n    },\n});\n\n// 2-stage query\nlet _refined\
+            \ = client.query(\"{collection_name}\", {\n    prefetch: {\n        query:\
+            \ [1, 23, 45, 67],\n        limit: 100,\n    },\n    query: [\n      \
+            \  [0.1, 0.2],\n        [0.2, 0.1],\n        [0.8, 0.9],\n    ],\n   \
+            \ using: 'colbert',\n    limit: 10,\n});\n\n// Random sampling (as of\
+            \ 1.11.0)\nlet _sampled = client.query(\"{collection_name}\", {\n  query:\
+            \ { sample: \"random\" },\n});\n\n// Score boost depending on payload\
+            \ conditions (as of 1.14.0)\nconst tag_boosted = await client.query(\"\
+            {collection_name}\", {\n  prefetch: {\n    query: [0.2, 0.8, 0.1, 0.9],\n\
+            \    limit: 50\n  },\n  query: {\n    formula: {\n      sum: [\n     \
+            \   \"$score\",\n        {\n          mult: [ 0.5, { key: \"tag\", match:\
+            \ { any: [\"h1\", \"h2\", \"h3\", \"h4\"] }} ]\n        },\n        {\n\
+            \          mult: [ 0.25, { key: \"tag\", match: { any: [\"p\", \"li\"\
+            ] }} ]\n        }\n      ]\n    }\n  }\n});\n\n// Score boost geographically\
+            \ closer points (as of 1.14.0)\nconst distance_boosted = await client.query(\"\
+            {collection_name}\", {\n  prefetch: {\n    query: [0.2, 0.8, ...],\n \
+            \   limit: 50\n  },\n  query: {\n    formula: {\n      sum: [\n      \
+            \  \"$score\",\n        {\n          gauss_decay: {\n            x: {\n\
+            \              geo_distance: {\n                origin: { lat: 52.504043,\
+            \ lon: 13.393236 }, // Berlin\n                to: \"geo.location\"\n\
+            \              }\n            },\n            scale: 5000 // 5km\n   \
+            \       }\n        }\n      ]\n    },\n    defaults: { \"geo.location\"\
+            : { lat: 48.137154, lon: 11.576124 } } // Munich\n  }\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.QueryFactory.fusion;\nimport static\
+            \ io.qdrant.client.QueryFactory.nearest;\nimport static io.qdrant.client.QueryFactory.recommend;\n\
+            import static io.qdrant.client.VectorInputFactory.vectorInput;\n\nimport\
+            \ java.util.UUID;\n\nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            import io.qdrant.client.grpc.Points.Fusion;\nimport io.qdrant.client.grpc.Points.PrefetchQuery;\n\
+            import io.qdrant.client.grpc.Points.QueryPoints;\nimport io.qdrant.client.grpc.Points.RecommendInput;\n\
+            \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\n// Query nearest by ID\nclient\n\
+            \    .queryAsync(\n        QueryPoints.newBuilder()\n            .setCollectionName(\"\
+            {collection_name}\")\n            .setQuery(nearest(UUID.fromString(\"\
+            43cf51e2-8777-4f52-bc74-c2cbde0c8b04\")))\n            .build())\n   \
+            \ .get();\n\n// Recommend on the average of these vectors\nclient\n  \
+            \  .queryAsync(\n        QueryPoints.newBuilder()\n            .setCollectionName(\"\
+            {collection_name}\")\n            .setQuery(\n                recommend(\n\
+            \                    RecommendInput.newBuilder()\n                   \
+            \     .addPositive(vectorInput(UUID.fromString(\"43cf51e2-8777-4f52-bc74-c2cbde0c8b04\"\
+            )))\n                        .addPositive(vectorInput(0.11f, 0.35f, 0.6f))\n\
+            \                        .addNegative(vectorInput(0.01f, 0.45f, 0.67f))\n\
+            \                        .build()))\n            .build())\n    .get();\n\
+            \n// Fusion query\nclient\n    .queryAsync(\n        QueryPoints.newBuilder()\n\
+            \            .setCollectionName(\"{collection_name}\")\n            .addPrefetch(\n\
+            \                PrefetchQuery.newBuilder()\n                    .setQuery(nearest(List.of(0.22f,\
+            \ 0.8f), List.of(1, 42)))\n                    .setUsing(\"sparse\")\n\
+            \                    .setLimit(20)\n                    .build())\n  \
+            \          .addPrefetch(\n                PrefetchQuery.newBuilder()\n\
+            \                    .setQuery(nearest(List.of(0.01f, 0.45f, 0.67f)))\n\
+            \                    .setUsing(\"dense\")\n                    .setLimit(20)\n\
+            \                    .build())\n            .setQuery(fusion(Fusion.RRF))\n\
+            \            .build())\n    .get();\n\n// 2-stage query\nclient\n    .queryAsync(\n\
+            \        QueryPoints.newBuilder()\n            .setCollectionName(\"{collection_name}\"\
+            )\n            .addPrefetch(\n                PrefetchQuery.newBuilder()\n\
+            \                    .setQuery(nearest(0.01f, 0.45f, 0.67f))\n       \
+            \             .setLimit(100)\n                    .build())\n        \
+            \    .setQuery(\n                nearest(\n                    new float[][]\
+            \ {\n                      {0.1f, 0.2f},\n                      {0.2f,\
+            \ 0.1f},\n                      {0.8f, 0.9f}\n                    }))\n\
+            \            .setUsing(\"colbert\")\n            .setLimit(10)\n     \
+            \       .build())\n    .get();\n\n// Random sampling (as of 1.11.0)\n\
+            client\n    .queryAsync(\n        QueryPoints.newBuilder()\n         \
+            \   .setCollectionName(\"{collection_name}\")\n            .setQuery(sample(Sample.Random))\n\
+            \            .build())\n    .get();\n\n// Score boost depending on payload\
+            \ conditions (as of 1.14.0)\nclient\n    .queryAsync(\n        QueryPoints.newBuilder()\n\
+            \            .setCollectionName(\"{collection_name}\")\n            .addPrefetch(\n\
+            \                PrefetchQuery.newBuilder()\n                    .setQuery(nearest(0.01f,\
+            \ 0.45f, 0.67f))\n                    .setLimit(100)\n               \
+            \     .build())\n            .setQuery(\n                formula(\n  \
+            \                  Formula.newBuilder()\n                        .setExpression(\n\
+            \                            sum(\n                                SumExpression.newBuilder()\n\
+            \                                    .addSum(variable(\"$score\"))\n \
+            \                                   .addSum(\n                       \
+            \                 mult(\n                                            MultExpression.newBuilder()\n\
+            \                                                .addMult(constant(0.5f))\n\
+            \                                                .addMult(\n         \
+            \                                           condition(\n             \
+            \                                           matchKeywords(\n         \
+            \                                                   \"tag\",\n       \
+            \                                                     List.of(\"h1\",\
+            \ \"h2\", \"h3\", \"h4\"))))\n                                       \
+            \         .build()))\n                                    .addSum(mult(MultExpression.newBuilder()\n\
+            \                                    .addMult(constant(0.25f))\n     \
+            \                               .addMult(\n                          \
+            \              condition(\n                                          \
+            \  matchKeywords(\n                                                \"\
+            tag\",\n                                                List.of(\"p\"\
+            , \"li\"))))\n                                    .build()))\n       \
+            \                             .build()))\n                        .build()))\n\
+            \            .build())\n    .get();\n\n// Score boost geographically closer\
+            \ points (as of 1.14.0)\nclient\n    .queryAsync(\n        QueryPoints.newBuilder()\n\
+            \            .setCollectionName(\"{collection_name}\")\n            .addPrefetch(\n\
+            \                PrefetchQuery.newBuilder()\n                    .setQuery(nearest(0.01f,\
+            \ 0.45f, 0.67f))\n                    .setLimit(100)\n               \
+            \     .build())\n            .setQuery(\n                formula(\n  \
+            \                  Formula.newBuilder()\n                        .setExpression(\n\
+            \                            sum(\n                                SumExpression.newBuilder()\n\
+            \                                    .addSum(variable(\"$score\"))\n \
+            \                                   .addSum(\n                       \
+            \                 expDecay(\n                                        \
+            \    DecayParamsExpression.newBuilder()\n                            \
+            \                    .setX(\n                                        \
+            \            geoDistance(\n                                          \
+            \              GeoDistance.newBuilder()\n                            \
+            \                                .setOrigin(\n                       \
+            \                                         GeoPoint.newBuilder()\n    \
+            \                                                                .setLat(52.504043)\n\
+            \                                                                    .setLon(13.393236)\n\
+            \                                                                    .build())\n\
+            \                                                            .setTo(\"\
+            geo.location\")\n                                                    \
+            \        .build()))\n                                                .setScale(5000)\n\
+            \                                                .build()))\n        \
+            \                            .build()))\n                        .putDefaults(\n\
+            \                            \"geo.location\",\n                     \
+            \       value(\n                                Map.of(\n            \
+            \                        \"lat\", value(48.137154),\n                \
+            \                    \"lon\", value(11.576124))))\n                  \
+            \      .build()))\n            .build())\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/query/batch:
     post:
       description: Universally query points in batch. This endpoint covers all capabilities
@@ -2031,16 +2031,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.QueryFactory.nearest;\n\nimport java.util.List;\n\
-            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            import io.qdrant.client.grpc.Points.QueryPoints;\n\nQdrantClient client\
-            \ =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"localhost\", 6334,\
-            \ false).build());\n\nclient\n    .queryBatchAsync(\n        \"{collection_name}\"\
-            ,\n        List.of(\n            QueryPoints.newBuilder().setQuery(nearest(0.1f,\
-            \ 0.2f, 0.3f)).build(),\n            QueryPoints.newBuilder().setQuery(nearest(0.4f,\
-            \ 0.5f, 0.6f)).build()))\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc queryBatch() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -2062,12 +2052,12 @@ paths:
             \ { Query = new float[] { 0.4f, 0.5f, 0.6f }, }\n\t}\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.queryBatch(\"{collection_name\", {\n    searches: [{\n        query:\
-            \ [0.01, 0.45, 0.67]\n    },\n    {\n        query: [0.11, 0.35, 0.6]\n\
-            \    }]\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nnearest = client.query_batch_points(\n   \
+            \ collection_name=\"{collection_name}\",\n    requests=[\n        models.QueryRequest(\n\
+            \            query=[0.01, 0.45, 0.67, ...],\n        ),\n        models.QueryRequest(\n\
+            \            query=[0.11, 0.35, 0.6, ...],\n        ),\n    ]\n)"
+          language: python
       - code-samples:
         - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query/batch'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -2087,12 +2077,22 @@ paths:
             \ client.query_batch(request).await?;"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nnearest = client.query_batch_points(\n   \
-            \ collection_name=\"{collection_name}\",\n    requests=[\n        models.QueryRequest(\n\
-            \            query=[0.01, 0.45, 0.67, ...],\n        ),\n        models.QueryRequest(\n\
-            \            query=[0.11, 0.35, 0.6, ...],\n        ),\n    ]\n)"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.queryBatch(\"{collection_name\", {\n    searches: [{\n        query:\
+            \ [0.01, 0.45, 0.67]\n    },\n    {\n        query: [0.11, 0.35, 0.6]\n\
+            \    }]\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.QueryFactory.nearest;\n\nimport java.util.List;\n\
+            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            import io.qdrant.client.grpc.Points.QueryPoints;\n\nQdrantClient client\
+            \ =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"localhost\", 6334,\
+            \ false).build());\n\nclient\n    .queryBatchAsync(\n        \"{collection_name}\"\
+            ,\n        List.of(\n            QueryPoints.newBuilder().setQuery(nearest(0.1f,\
+            \ 0.2f, 0.3f)).build(),\n            QueryPoints.newBuilder().setQuery(nearest(0.4f,\
+            \ 0.5f, 0.6f)).build()))\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/query/groups:
     post:
       description: Universally query points and group results by a specified payload
@@ -2102,16 +2102,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "import java.util.List;\n\nimport static io.qdrant.client.QueryFactory.nearest;\n\
-            \nimport io.qdrant.client.grpc.Points.QueryPointGroups;\nimport io.qdrant.client.grpc.Points.QueryPoints;\n\
-            \n\nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .queryGroupsAsync(\n\
-            \        QueryPointGroups.newBuilder()\n            .setCollectionName(\"\
-            {collection_name}\")\n            .setGroupBy(\"document_id\")\n     \
-            \       .setGroupSize(5)\n            .setLimit(10)\n            .setQuery(nearest(List.of(0.01f,\
-            \ 0.45f, 0.67f)))\n            .build())\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc queryGroups() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -2130,12 +2120,11 @@ paths:
             \ new float[] {\n    0.01f, 0.45f, 0.67f\n  }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.queryGroups(\"{collection_name}\", {\n    query: [0.01, 0.45, 0.67],\n\
-            \    group_by: \"document_id\",\n    limit: 10,\n    group_size: 5,\n\
-            });\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.query_points_groups(\n    collection_name=\"\
+            {collection_name}\",\n    query=[0.01, 0.45, 0.67],\n    group_by=\"document_id\"\
+            ,\n    limit=10,\n    group_size=5,\n)"
+          language: python
       - code-samples:
         - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/query/groups'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -2151,11 +2140,22 @@ paths:
             \        .limit(10u64)\n        .group_size(5u64)\n).await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.query_points_groups(\n    collection_name=\"\
-            {collection_name}\",\n    query=[0.01, 0.45, 0.67],\n    group_by=\"document_id\"\
-            ,\n    limit=10,\n    group_size=5,\n)"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.queryGroups(\"{collection_name}\", {\n    query: [0.01, 0.45, 0.67],\n\
+            \    group_by: \"document_id\",\n    limit: 10,\n    group_size: 5,\n\
+            });\n"
+          language: typescript
+      - code-samples:
+        - code: "import java.util.List;\n\nimport static io.qdrant.client.QueryFactory.nearest;\n\
+            \nimport io.qdrant.client.grpc.Points.QueryPointGroups;\nimport io.qdrant.client.grpc.Points.QueryPoints;\n\
+            \n\nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .queryGroupsAsync(\n\
+            \        QueryPointGroups.newBuilder()\n            .setCollectionName(\"\
+            {collection_name}\")\n            .setGroupBy(\"document_id\")\n     \
+            \       .setGroupSize(5)\n            .setLimit(10)\n            .setQuery(nearest(List.of(0.01f,\
+            \ 0.45f, 0.67f)))\n            .build())\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/recommend: {}
   /collections/{collection_name}/points/recommend/batch: {}
   /collections/{collection_name}/points/recommend/groups: {}
@@ -2175,18 +2175,6 @@ paths:
       - Points
       x-fern-examples:
       - code-samples:
-        - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\nimport\
-            \ static io.qdrant.client.WithPayloadSelectorFactory.enable;\n\nimport\
-            \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.ScrollPoints;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .scrollAsync(\n   \
-            \     ScrollPoints.newBuilder()\n            .setCollectionName(\"{collection_name}\"\
-            )\n            .setFilter(Filter.newBuilder().addMust(matchKeyword(\"\
-            color\", \"red\")).build())\n            .setLimit(1)\n            .setWithPayload(enable(true))\n\
-            \            .build())\n    .get();\n"
-          language: java
-      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc scroll() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2205,14 +2193,12 @@ paths:
             , \"red\"),\n  limit: 1,\n  payloadSelector: true\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.scroll(\"{collection_name}\", {\n    filter: {\n        must: [\n\
-            \            {\n                key: \"color\",\n                match:\
-            \ {\n                    value: \"red\",\n                },\n       \
-            \     },\n        ],\n    },\n    limit: 1,\n    with_payload: true,\n\
-            \    with_vector: false,\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.scroll(\n    collection_name=\"{collection_name}\"\
+            ,\n    scroll_filter=models.Filter(\n        must=[\n            models.FieldCondition(key=\"\
+            color\", match=models.MatchValue(value=\"red\")),\n        ]\n    ),\n\
+            \    limit=1,\n    with_payload=True,\n    with_vectors=False,\n)\n"
+          language: python
       - code-samples:
         - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/scroll'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -2232,12 +2218,26 @@ paths:
             \            .with_vectors(false),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.scroll(\n    collection_name=\"{collection_name}\"\
-            ,\n    scroll_filter=models.Filter(\n        must=[\n            models.FieldCondition(key=\"\
-            color\", match=models.MatchValue(value=\"red\")),\n        ]\n    ),\n\
-            \    limit=1,\n    with_payload=True,\n    with_vectors=False,\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.scroll(\"{collection_name}\", {\n    filter: {\n        must: [\n\
+            \            {\n                key: \"color\",\n                match:\
+            \ {\n                    value: \"red\",\n                },\n       \
+            \     },\n        ],\n    },\n    limit: 1,\n    with_payload: true,\n\
+            \    with_vector: false,\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\nimport\
+            \ static io.qdrant.client.WithPayloadSelectorFactory.enable;\n\nimport\
+            \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.ScrollPoints;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .scrollAsync(\n   \
+            \     ScrollPoints.newBuilder()\n            .setCollectionName(\"{collection_name}\"\
+            )\n            .setFilter(Filter.newBuilder().addMust(matchKeyword(\"\
+            color\", \"red\")).build())\n            .setLimit(1)\n            .setWithPayload(enable(true))\n\
+            \            .build())\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/search: {}
   /collections/{collection_name}/points/search/batch: {}
   /collections/{collection_name}/points/search/groups: {}
@@ -2250,18 +2250,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\n\
-            import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            import io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.SearchMatrixPoints;\n\
-            \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .searchMatrixOffsetsAsync(\n\
-            \        SearchMatrixPoints.newBuilder()\n            .setCollectionName(\"\
-            {collection_name}\")\n            .setFilter(\n                Filter.newBuilder()\n\
-            \                    .addMust(matchKeyword(\"color\", \"red\"))\n    \
-            \                .build()\n            )\n            .setSample(100)\n\
-            \            .setLimit(5)\n            .build())\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc searchMatiOffsets() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -2281,14 +2269,13 @@ paths:
             ),\n    sample: 100,\n    limit: 5\n);"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.searchMatrixOffsets(\"{collection_name}\", {\n    filter: {\n \
-            \       must: [\n            {\n                key: \"color\",\n    \
-            \            match: {\n                    value: \"red\",\n         \
-            \       },\n            },\n        ],\n    },\n    sample: 100,\n   \
-            \ limit: 5,\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.search_matrix_offsets(\n    collection_name=\"\
+            {collection_name}\",\n    sample=100,\n    limit=5,\n    query_filter=models.Filter(\n\
+            \        must=[\n            models.FieldCondition(\n                key=\"\
+            color\", match=models.MatchValue(value=\"red\")\n            ),\n    \
+            \    ]\n    ),\n)"
+          language: python
       - code-samples:
         - code: "use qdrant_client::qdrant::{Condition, SearchMatrixPointsBuilder,\
             \ Filter};\nuse qdrant_client::Qdrant;\n\nlet client = Qdrant::from_url(\"\
@@ -2299,13 +2286,26 @@ paths:
             \      .sample(100)\n           .limit(5),\n    )\n    .await?;"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.search_matrix_offsets(\n    collection_name=\"\
-            {collection_name}\",\n    sample=100,\n    limit=5,\n    query_filter=models.Filter(\n\
-            \        must=[\n            models.FieldCondition(\n                key=\"\
-            color\", match=models.MatchValue(value=\"red\")\n            ),\n    \
-            \    ]\n    ),\n)"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.searchMatrixOffsets(\"{collection_name}\", {\n    filter: {\n \
+            \       must: [\n            {\n                key: \"color\",\n    \
+            \            match: {\n                    value: \"red\",\n         \
+            \       },\n            },\n        ],\n    },\n    sample: 100,\n   \
+            \ limit: 5,\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\n\
+            import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            import io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.SearchMatrixPoints;\n\
+            \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .searchMatrixOffsetsAsync(\n\
+            \        SearchMatrixPoints.newBuilder()\n            .setCollectionName(\"\
+            {collection_name}\")\n            .setFilter(\n                Filter.newBuilder()\n\
+            \                    .addMust(matchKeyword(\"color\", \"red\"))\n    \
+            \                .build()\n            )\n            .setSample(100)\n\
+            \            .setLimit(5)\n            .build())\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/search/matrix/pairs:
     post:
       description: Retrieves sparse matrix of pairwise distances between points sampled
@@ -2314,18 +2314,6 @@ paths:
       tags:
       - Search
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\n\
-            import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            import io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.SearchMatrixPoints;\n\
-            \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .searchMatrixPairsAsync(\n\
-            \        SearchMatrixPoints.newBuilder()\n            .setCollectionName(\"\
-            {collection_name}\")\n            .setFilter(\n                Filter.newBuilder()\n\
-            \                    .addMust(matchKeyword(\"color\", \"red\"))\n    \
-            \                .build()\n            )\n            .setSample(100)\n\
-            \            .setLimit(5)\n            .build())\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc searchMatixPairs() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -2345,14 +2333,13 @@ paths:
             ),\n    sample: 100,\n    limit: 5\n);"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.searchMatrixPairs(\"{collection_name}\", {\n    filter: {\n   \
-            \     must: [\n            {\n                key: \"color\",\n      \
-            \          match: {\n                    value: \"red\",\n           \
-            \     },\n            },\n        ],\n    },\n    sample: 100,\n    limit:\
-            \ 5,\n});"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.search_matrix_pairs(\n    collection_name=\"\
+            {collection_name}\",\n    sample=100,\n    limit=5,\n    query_filter=models.Filter(\n\
+            \        must=[\n            models.FieldCondition(\n                key=\"\
+            color\", match=models.MatchValue(value=\"red\")\n            ),\n    \
+            \    ]\n    ),\n)"
+          language: python
       - code-samples:
         - code: "use qdrant_client::qdrant::{Condition, SearchMatrixPointsBuilder,\
             \ Filter};\nuse qdrant_client::Qdrant;\n\nlet client = Qdrant::from_url(\"\
@@ -2363,13 +2350,26 @@ paths:
             \      .sample(100)\n           .limit(5),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.search_matrix_pairs(\n    collection_name=\"\
-            {collection_name}\",\n    sample=100,\n    limit=5,\n    query_filter=models.Filter(\n\
-            \        must=[\n            models.FieldCondition(\n                key=\"\
-            color\", match=models.MatchValue(value=\"red\")\n            ),\n    \
-            \    ]\n    ),\n)"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.searchMatrixPairs(\"{collection_name}\", {\n    filter: {\n   \
+            \     must: [\n            {\n                key: \"color\",\n      \
+            \          match: {\n                    value: \"red\",\n           \
+            \     },\n            },\n        ],\n    },\n    sample: 100,\n    limit:\
+            \ 5,\n});"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.ConditionFactory.matchKeyword;\n\n\
+            import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            import io.qdrant.client.grpc.Common.Filter;\nimport io.qdrant.client.grpc.Points.SearchMatrixPoints;\n\
+            \nQdrantClient client =\n    new QdrantClient(QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .searchMatrixPairsAsync(\n\
+            \        SearchMatrixPoints.newBuilder()\n            .setCollectionName(\"\
+            {collection_name}\")\n            .setFilter(\n                Filter.newBuilder()\n\
+            \                    .addMust(matchKeyword(\"color\", \"red\"))\n    \
+            \                .build()\n            )\n            .setSample(100)\n\
+            \            .setLimit(5)\n            .build())\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/vectors:
     put:
       description: Updates specified vectors on points. All other unspecified vectors
@@ -2378,22 +2378,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.PointIdFactory.id;\nimport static\
-            \ io.qdrant.client.VectorFactory.vector;\nimport static io.qdrant.client.VectorsFactory.namedVectors;\n\
-            \nimport java.util.List;\nimport java.util.Map;\n\nimport io.qdrant.client.QdrantClient;\n\
-            import io.qdrant.client.QdrantGrpcClient;\n\nQdrantClient client = new\
-            \ QdrantClient(\n                QdrantGrpcClient.newBuilder(\"localhost\"\
-            , 6334, false).build());\n\nclient\n    .updateVectorsAsync(\n       \
-            \ \"{collection_name}\",\n        List.of(\n            PointVectors.newBuilder()\n\
-            \                .setId(id(1))\n                .setVectors(namedVectors(Map.of(\"\
-            image\", vector(List.of(0.1f, 0.2f, 0.3f, 0.4f)))))\n                .build(),\n\
-            \            PointVectors.newBuilder()\n                .setId(id(2))\n\
-            \                .setVectors(\n                    namedVectors(\n   \
-            \                     Map.of(\n                            \"text\", vector(List.of(0.9f,\
-            \ 0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.3f, 0.2f)))))\n                .build()))\n\
-            \    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc updateVectors() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -2418,15 +2402,15 @@ paths:
             \    }\n  }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.updateVectors(\"{collection_name}\", {\n    points: [\n       \
-            \ {\n            id: 1,\n            vector: {\n                image:\
-            \ [0.1, 0.2, 0.3, 0.4],\n            },\n        },\n        {\n     \
-            \       id: 2,\n            vector: {\n                text: [0.9, 0.8,\
-            \ 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],\n            },\n        },\n    ],\n\
-            });\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.update_vectors(\n    collection_name=\"\
+            {collection_name}\",\n    points=[\n        models.PointVectors(\n   \
+            \         id=1,\n            vector={\n                \"image\": [0.1,\
+            \ 0.2, 0.3, 0.4],\n            },\n        ),\n        models.PointVectors(\n\
+            \            id=2,\n            vector={\n                \"text\": [0.9,\
+            \ 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],\n            },\n        ),\n  \
+            \  ],\n)\n"
+          language: python
       - code-samples:
         - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/points/vectors?wait=true'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -2455,15 +2439,31 @@ paths:
             \ .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient, models\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.update_vectors(\n    collection_name=\"\
-            {collection_name}\",\n    points=[\n        models.PointVectors(\n   \
-            \         id=1,\n            vector={\n                \"image\": [0.1,\
-            \ 0.2, 0.3, 0.4],\n            },\n        ),\n        models.PointVectors(\n\
-            \            id=2,\n            vector={\n                \"text\": [0.9,\
-            \ 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],\n            },\n        ),\n  \
-            \  ],\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.updateVectors(\"{collection_name}\", {\n    points: [\n       \
+            \ {\n            id: 1,\n            vector: {\n                image:\
+            \ [0.1, 0.2, 0.3, 0.4],\n            },\n        },\n        {\n     \
+            \       id: 2,\n            vector: {\n                text: [0.9, 0.8,\
+            \ 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],\n            },\n        },\n    ],\n\
+            });\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.PointIdFactory.id;\nimport static\
+            \ io.qdrant.client.VectorFactory.vector;\nimport static io.qdrant.client.VectorsFactory.namedVectors;\n\
+            \nimport java.util.List;\nimport java.util.Map;\n\nimport io.qdrant.client.QdrantClient;\n\
+            import io.qdrant.client.QdrantGrpcClient;\n\nQdrantClient client = new\
+            \ QdrantClient(\n                QdrantGrpcClient.newBuilder(\"localhost\"\
+            , 6334, false).build());\n\nclient\n    .updateVectorsAsync(\n       \
+            \ \"{collection_name}\",\n        List.of(\n            PointVectors.newBuilder()\n\
+            \                .setId(id(1))\n                .setVectors(namedVectors(Map.of(\"\
+            image\", vector(List.of(0.1f, 0.2f, 0.3f, 0.4f)))))\n                .build(),\n\
+            \            PointVectors.newBuilder()\n                .setId(id(2))\n\
+            \                .setVectors(\n                    namedVectors(\n   \
+            \                     Map.of(\n                            \"text\", vector(List.of(0.9f,\
+            \ 0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.3f, 0.2f)))))\n                .build()))\n\
+            \    .get();\n"
+          language: java
   /collections/{collection_name}/points/vectors/delete:
     post:
       description: Deletes specified vectors from points. All other unspecified vectors
@@ -2472,14 +2472,6 @@ paths:
       tags:
       - Points
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.PointIdFactory.id;\n\nimport java.util.List;\n\
-            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient\n    .deleteVectorsAsync(\n\
-            \        \"{collection_name}\", List.of(\"text\", \"image\"), List.of(id(0),\
-            \ id(3), id(10)))\n    .get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteVectors() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -2504,11 +2496,11 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.deleteVectors(\"{collection_name}\", {\n  points: [0, 3, 10],\n\
-            \  vectors: [\"text\", \"image\"],\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.delete_vectors(\n    collection_name=\"\
+            {collection_name}\",\n    points=[0, 3, 100],\n    vectors=[\"text\",\
+            \ \"image\"],\n)\n"
+          language: python
       - code-samples:
         - code: "# Delete vectors by ID\ncurl  -X POST \\\n  'http://localhost:6333/collections/collection_name/points/vectors/delete'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -2532,11 +2524,19 @@ paths:
             \            })\n            .wait(true),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.delete_vectors(\n    collection_name=\"\
-            {collection_name}\",\n    points=[0, 3, 100],\n    vectors=[\"text\",\
-            \ \"image\"],\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.deleteVectors(\"{collection_name}\", {\n  points: [0, 3, 10],\n\
+            \  vectors: [\"text\", \"image\"],\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.PointIdFactory.id;\n\nimport java.util.List;\n\
+            \nimport io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient\n    .deleteVectorsAsync(\n\
+            \        \"{collection_name}\", List.of(\"text\", \"image\"), List.of(id(0),\
+            \ id(3), id(10)))\n    .get();\n"
+          language: java
   /collections/{collection_name}/points/{id}:
     get:
       description: Retrieves all details from a single point.
@@ -2550,17 +2550,6 @@ paths:
       tags:
       - Distributed
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.ShardKeyFactory.shardKey;\n\nimport\
-            \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Collections.CreateShardKey;\nimport io.qdrant.client.grpc.Collections.CreateShardKeyRequest;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.createShardKeyAsync(CreateShardKeyRequest.newBuilder()\n\
-            \                .setCollectionName(\"{collection_name}\")\n         \
-            \       .setRequest(CreateShardKey.newBuilder()\n                    \
-            \            .setShardKey(shardKey(\"{shard_key}\"))\n               \
-            \                 .build())\n                .build()).get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc createShardKey() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -2576,11 +2565,16 @@ paths:
             \ { Keyword = \"{shard_key}\", } }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({\n    host: \"localhost\",\n    port: 6333\n\
-            });\n\nclient.createShardKey(\"{collection_name}\", {\n    shard_key:\
-            \ \"{shard_key}\"\n});\n"
-          language: typescript
+        - code: 'from qdrant_client import QdrantClient
+
+
+            client = QdrantClient(url="http://localhost:6333")
+
+
+            client.create_shard_key("{collection_name}", "{shard_key}")
+
+            '
+          language: python
       - code-samples:
         - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/shards'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -2597,16 +2591,22 @@ paths:
             \        ),\n    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
-
-
-            client = QdrantClient(url="http://localhost:6333")
-
-
-            client.create_shard_key("{collection_name}", "{shard_key}")
-
-            '
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({\n    host: \"localhost\",\n    port: 6333\n\
+            });\n\nclient.createShardKey(\"{collection_name}\", {\n    shard_key:\
+            \ \"{shard_key}\"\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.ShardKeyFactory.shardKey;\n\nimport\
+            \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport io.qdrant.client.grpc.Collections.CreateShardKey;\nimport io.qdrant.client.grpc.Collections.CreateShardKeyRequest;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.createShardKeyAsync(CreateShardKeyRequest.newBuilder()\n\
+            \                .setCollectionName(\"{collection_name}\")\n         \
+            \       .setRequest(CreateShardKey.newBuilder()\n                    \
+            \            .setShardKey(shardKey(\"{shard_key}\"))\n               \
+            \                 .build())\n                .build()).get();\n"
+          language: java
   /collections/{collection_name}/shards/delete:
     post:
       description: Deletes one or more shard keys for a specified collection.
@@ -2614,17 +2614,6 @@ paths:
       tags:
       - Distributed
       x-fern-examples:
-      - code-samples:
-        - code: "import static io.qdrant.client.ShardKeyFactory.shardKey;\n\nimport\
-            \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nimport io.qdrant.client.grpc.Collections.DeleteShardKey;\nimport io.qdrant.client.grpc.Collections.DeleteShardKeyRequest;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.deleteShardKeyAsync(DeleteShardKeyRequest.newBuilder()\n\
-            \                .setCollectionName(\"{collection_name}\")\n         \
-            \       .setRequest(DeleteShardKey.newBuilder()\n                    \
-            \            .setShardKey(shardKey(\"{shard_key}\"))\n               \
-            \                 .build())\n                .build()).get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteShardKey() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -2640,11 +2629,16 @@ paths:
             \ { Keyword = \"shard_key\", } }\n);\n"
           language: csharp
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({\n    host: \"localhost\",\n    port: 6333\n\
-            });\n\nclient.deleteShardKey(\"{collection_name}\", {\n    shard_key:\
-            \ \"{shard_key}\"\n});\n"
-          language: typescript
+        - code: 'from qdrant_client import QdrantClient
+
+
+            client = QdrantClient(url="http://localhost:6333")
+
+
+            client.delete_shard_key("{collection_name}", "{shard_key}")
+
+            '
+          language: python
       - code-samples:
         - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/shards/delete'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -2659,16 +2653,22 @@ paths:
             \    )\n    .await?;\n"
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
-
-
-            client = QdrantClient(url="http://localhost:6333")
-
-
-            client.delete_shard_key("{collection_name}", "{shard_key}")
-
-            '
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({\n    host: \"localhost\",\n    port: 6333\n\
+            });\n\nclient.deleteShardKey(\"{collection_name}\", {\n    shard_key:\
+            \ \"{shard_key}\"\n});\n"
+          language: typescript
+      - code-samples:
+        - code: "import static io.qdrant.client.ShardKeyFactory.shardKey;\n\nimport\
+            \ io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nimport io.qdrant.client.grpc.Collections.DeleteShardKey;\nimport io.qdrant.client.grpc.Collections.DeleteShardKeyRequest;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.deleteShardKeyAsync(DeleteShardKeyRequest.newBuilder()\n\
+            \                .setCollectionName(\"{collection_name}\")\n         \
+            \       .setRequest(DeleteShardKey.newBuilder()\n                    \
+            \            .setShardKey(shardKey(\"{shard_key}\"))\n               \
+            \                 .build())\n                .build()).get();\n"
+          language: java
   /collections/{collection_name}/shards/{shard_id}/snapshots:
     get:
       description: Returns a list of all snapshots for a shard from a collection.
@@ -2714,12 +2714,6 @@ paths:
       - Snapshots
       x-fern-examples:
       - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.listSnapshotAsync(\"{collection_name}\"\
-            ).get();\n"
-          language: java
-      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc listSnapshots() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2739,16 +2733,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.listSnapshots("{collection_name}");
+            client.list_snapshots(collection_name="{collection_name}")
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X GET \\\n  'http://localhost:6333/collections/collection_name/snapshots'\
             \ \\\n  --header 'api-key: <api-key-value>'"
@@ -2765,28 +2759,28 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.list_snapshots(collection_name="{collection_name}")
+            client.listSnapshots("{collection_name}");
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.listSnapshotAsync(\"{collection_name}\"\
+            ).get();\n"
+          language: java
     post:
       description: Creates a new snapshot for a specified collection.
       summary: Create a snapshot (collection)
       tags:
       - Snapshots
       x-fern-examples:
-      - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.createSnapshotAsync(\"{collection_name}\"\
-            ).get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc createSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -2807,16 +2801,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.createSnapshot("{collection_name}");
+            client.create_snapshot(collection_name="{collection_name}")
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X POST \\\n  'http://localhost:6333/collections/collection_name/snapshots'\
             \ \\\n  --header 'api-key: <api-key-value>'"
@@ -2833,16 +2827,22 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.create_snapshot(collection_name="{collection_name}")
+            client.createSnapshot("{collection_name}");
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.createSnapshotAsync(\"{collection_name}\"\
+            ).get();\n"
+          language: java
   /collections/{collection_name}/snapshots/recover:
     put:
       description: Recovers local collection data from a snapshot. This will overwrite
@@ -2853,11 +2853,10 @@ paths:
       - Snapshots
       x-fern-examples:
       - code-samples:
-        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
-            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
-            client.recoverSnapshot(\"{collection_name}\", {\n  location: \"http://example.com/path/to/snapshot.shapshot\"\
-            ,\n});\n"
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.recover_snapshot(\n    \"{collection_name}\"\
+            ,\n    \"http://example.com/path/to/snapshot.shapshot\",\n)\n"
+          language: python
       - code-samples:
         - code: "curl  -X PUT \\\n  'http://localhost:6333/collections/collection_name/snapshots/recover'\
             \ \\\n  --header 'api-key: <api-key-value>' \\\n  --header 'Content-Type:\
@@ -2865,10 +2864,11 @@ paths:
             \n}'"
           language: curl
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.recover_snapshot(\n    \"{collection_name}\"\
-            ,\n    \"http://example.com/path/to/snapshot.shapshot\",\n)\n"
-          language: python
+        - code: "import { QdrantClient } from \"@qdrant/js-client-rest\";\n\nconst\
+            \ client = new QdrantClient({ host: \"localhost\", port: 6333 });\n\n\
+            client.recoverSnapshot(\"{collection_name}\", {\n  location: \"http://example.com/path/to/snapshot.shapshot\"\
+            ,\n});\n"
+          language: typescript
   /collections/{collection_name}/snapshots/upload:
     post:
       description: Recovers local collection data from an uploaded snapshot. This
@@ -2890,12 +2890,6 @@ paths:
       - Snapshots
       x-fern-examples:
       - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.deleteSnapshotAsync(\"{collection_name}\"\
-            , \"{snapshot_name}\").get();\n"
-          language: java
-      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -2915,16 +2909,10 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
-
-
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
-
-
-            client.deleteSnapshot("{collection_name}", "{snapshot_name}");
-
-            '
-          language: typescript
+        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
+            http://localhost:6333\")\n\nclient.delete_snapshot(\n    collection_name=\"\
+            {collection_name}\", snapshot_name=\"{snapshot_name}\"\n)\n"
+          language: python
       - code-samples:
         - code: "curl  -X DELETE \\\n  'http://localhost:6333/collections/collection_name/snapshots/snapshot_name'\
             \ \\\n  --header 'api-key: <api-key-value>'"
@@ -2937,10 +2925,22 @@ paths:
             \    .await?;\n"
           language: rust
       - code-samples:
-        - code: "from qdrant_client import QdrantClient\n\nclient = QdrantClient(url=\"\
-            http://localhost:6333\")\n\nclient.delete_snapshot(\n    collection_name=\"\
-            {collection_name}\", snapshot_name=\"{snapshot_name}\"\n)\n"
-          language: python
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+
+
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
+
+
+            client.deleteSnapshot("{collection_name}", "{snapshot_name}");
+
+            '
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.deleteSnapshotAsync(\"{collection_name}\"\
+            , \"{snapshot_name}\").get();\n"
+          language: java
     get:
       description: Downloads the specified snapshot file from a collection.
       summary: Download a snapshot (collection)
@@ -2991,11 +2991,6 @@ paths:
       - Snapshots
       x-fern-examples:
       - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.listFullSnapshotAsync().get();\n"
-          language: java
-      - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc listFullSnapshots() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
             \t\tHost: \"localhost\",\n\t\tPort: 6334,\n\t})\n\tif err != nil {\n\t\
@@ -3015,16 +3010,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.listFullSnapshots();
+            client.list_full_snapshots()
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X GET \\\n  'http://localhost:6333/snapshots' \\\n  --header\
             \ 'api-key: <api-key-value>'"
@@ -3041,27 +3036,27 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.list_full_snapshots()
+            client.listFullSnapshots();
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.listFullSnapshotAsync().get();\n"
+          language: java
     post:
       description: Creates a new snapshot of the entire storage.
       summary: Create a snapshot (storage)
       tags:
       - Snapshots
       x-fern-examples:
-      - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.createFullSnapshotAsync().get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc createFullSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -3082,16 +3077,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.createFullSnapshot();
+            client.create_full_snapshot()
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X POST \\\n  'http://localhost:6333/snapshots' \\\n  --header\
             \ 'api-key: <api-key-value>'"
@@ -3108,16 +3103,21 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.create_full_snapshot()
+            client.createFullSnapshot();
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.createFullSnapshotAsync().get();\n"
+          language: java
   /snapshots/{snapshot_name}:
     delete:
       description: Deletes the specified snapshot of the entire storage.
@@ -3125,12 +3125,6 @@ paths:
       tags:
       - Snapshots
       x-fern-examples:
-      - code-samples:
-        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
-            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
-            localhost\", 6334, false).build());\n\nclient.deleteFullSnapshotAsync(\"\
-            {snapshot_name}\").get();\n"
-          language: java
       - code-samples:
         - code: "package client\n\nimport (\n\t\"context\"\n\n\t\"github.com/qdrant/go-client/qdrant\"\
             \n)\n\nfunc deleteFullSnapshot() {\n\tclient, err := qdrant.NewClient(&qdrant.Config{\n\
@@ -3150,16 +3144,16 @@ paths:
             '
           language: csharp
       - code-samples:
-        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
+        - code: 'from qdrant_client import QdrantClient
 
 
-            const client = new QdrantClient({ host: "localhost", port: 6333 });
+            client = QdrantClient(url="http://localhost:6333")
 
 
-            client.deleteFullSnapshot("{snapshot_name}");
+            client.delete_full_snapshot(snapshot_name="{snapshot_name}")
 
             '
-          language: typescript
+          language: python
       - code-samples:
         - code: "curl  -X DELETE \\\n  'http://localhost:6333/snapshots/snapshot_name'\
             \ \\\n  --header 'api-key: <api-key-value>'"
@@ -3176,16 +3170,22 @@ paths:
             '
           language: rust
       - code-samples:
-        - code: 'from qdrant_client import QdrantClient
+        - code: 'import { QdrantClient } from "@qdrant/js-client-rest";
 
 
-            client = QdrantClient(url="http://localhost:6333")
+            const client = new QdrantClient({ host: "localhost", port: 6333 });
 
 
-            client.delete_full_snapshot(snapshot_name="{snapshot_name}")
+            client.deleteFullSnapshot("{snapshot_name}");
 
             '
-          language: python
+          language: typescript
+      - code-samples:
+        - code: "import io.qdrant.client.QdrantClient;\nimport io.qdrant.client.QdrantGrpcClient;\n\
+            \nQdrantClient client = new QdrantClient(\n                QdrantGrpcClient.newBuilder(\"\
+            localhost\", 6334, false).build());\n\nclient.deleteFullSnapshotAsync(\"\
+            {snapshot_name}\").get();\n"
+          language: java
     get:
       description: Downloads the specified snapshot of the entire storage as a file.
       summary: Download a snapshot (storage)
