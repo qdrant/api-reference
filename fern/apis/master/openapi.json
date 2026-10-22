@@ -6558,6 +6558,12 @@
                 "nullable": true
               }
             ]
+          },
+          "created_at": {
+            "description": "Time of the collection creation. Absent for collections created before Qdrant started recording it.",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
       },
@@ -6740,6 +6746,17 @@
               }
             ]
           },
+          "id_tracker": {
+            "description": "Configuration of the point id tracker",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IdTrackerParams"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
           "sparse_vectors": {
             "description": "Configuration of the sparse vector storage",
             "type": "object",
@@ -6822,7 +6839,7 @@
             ]
           },
           "datatype": {
-            "description": "Defines which datatype should be used to represent vectors in the storage. Choosing different datatypes allows to optimize memory usage and performance vs accuracy.\n\n- For `float32` datatype - vectors are stored as single-precision floating point numbers, 4 bytes. - For `float16` datatype - vectors are stored as half-precision floating point numbers, 2 bytes. - For `uint8` datatype - vectors are stored as unsigned 8-bit integers, 1 byte. It expects vector elements to be in range `[0, 255]`. - For `turbo4` datatype - vectors are quantized to 4 bits per element using the TurboQuant algorithm.",
+            "description": "Defines which datatype should be used to represent vectors in the storage. Choosing different datatypes allows to optimize memory usage and performance vs accuracy.\n\n- For `float32` datatype - vectors are stored as single-precision floating point numbers, 4 bytes. - For `float16` datatype - vectors are stored as half-precision floating point numbers, 2 bytes. - For `uint8` datatype - vectors are stored as unsigned 8-bit integers, 1 byte. It expects vector elements to be in range `[0, 255]`. - For `turbo4` datatype - vectors are quantized to 4 bits per element using the TurboQuant algorithm. - For `turbo8` datatype - vectors are quantized to 8 bits per element using the TurboQuant algorithm. - For `turbo16` datatype - vectors are quantized to 16 bits per element using the TurboQuant algorithm.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/Datatype"
@@ -6858,7 +6875,7 @@
         "type": "object",
         "properties": {
           "m": {
-            "description": "Number of edges per node in the index graph. Larger the value - more accurate the search, more space required.",
+            "description": "Number of edges per node in the index graph. Larger the value - more accurate the search, more space required. Set to 0 to disable the main HNSW graph. Additional payload-aware links may still be built when the effective payload M is positive (see payload_m). This setting alone does not guarantee exact search.",
             "type": "integer",
             "format": "uint",
             "minimum": 0,
@@ -6903,7 +6920,7 @@
             ]
           },
           "payload_m": {
-            "description": "Custom M param for additional payload-aware HNSW links. If not set, default M will be used.",
+            "description": "Number of additional payload-aware links per node. If unset, the value of m is used. An effective value of 0 disables these additional links. A positive value allows them for indexed payload fields with HNSW enabled, even when m is 0.",
             "type": "integer",
             "format": "uint",
             "minimum": 0,
@@ -7163,7 +7180,8 @@
           "bits1",
           "bits1_5",
           "bits2",
-          "bits4"
+          "bits4",
+          "bits8"
         ]
       },
       "Datatype": {
@@ -7172,7 +7190,9 @@
           "float32",
           "uint8",
           "float16",
-          "turbo4"
+          "turbo4",
+          "turbo8",
+          "turbo16"
         ]
       },
       "MultiVectorConfig": {
@@ -7205,6 +7225,23 @@
         "properties": {
           "memory": {
             "description": "Memory placement of the payload storage. Overrides the deprecated `on_disk_payload` flag if both are set. `pinned` is not supported for payload storage. Default: `cold` (`cached` if `on_disk_payload` is set to false).",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Memory"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          }
+        }
+      },
+      "IdTrackerParams": {
+        "description": "Params of the point id tracker",
+        "type": "object",
+        "properties": {
+          "memory": {
+            "description": "Memory placement of the point id mapping in indexed segments: `cold` keeps it on disk and reads it on demand, `cached` keeps it on disk but primes the page cache with it on load, `pinned` keeps it in RAM. Default: `pinned`.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/Memory"
@@ -7303,7 +7340,7 @@
         ],
         "properties": {
           "m": {
-            "description": "Number of edges per node in the index graph. Larger the value - more accurate the search, more space required.",
+            "description": "Number of edges per node in the index graph. Larger the value - more accurate the search, more space required. Set to 0 to disable the main HNSW graph. Additional payload-aware links may still be built when the effective payload M is positive (see payload_m). This setting alone does not guarantee exact search.",
             "type": "integer",
             "format": "uint",
             "minimum": 0
@@ -7345,7 +7382,7 @@
             ]
           },
           "payload_m": {
-            "description": "Custom M param for hnsw graph built for payload index. If not set, default M will be used.",
+            "description": "Number of additional payload-aware links per node. If unset, the value of m is used. An effective value of 0 disables these additional links. A positive value allows them for indexed payload fields with HNSW enabled, even when m is 0.",
             "type": "integer",
             "format": "uint",
             "minimum": 0,
@@ -7387,7 +7424,7 @@
             "minimum": 0
           },
           "max_segment_size": {
-            "description": "Do not create segments larger this size (in kilobytes). Large segments might require disproportionately long indexation times, therefore it makes sense to limit the size of segments.\n\nIf indexing speed is more important - make this parameter lower. If search speed is more important - make this parameter higher. Note: 1Kb = 1 vector of size 256 If not set, will be automatically selected considering the number of available CPUs.",
+            "description": "Do not create segments larger than this size (in kilobytes). Large segments might require disproportionately long indexation times, therefore it makes sense to limit the size of segments.\n\nIf indexing speed is more important - make this parameter lower. If search speed is more important - make this parameter higher. Note: 1Kb = 1 vector of size 256 If not set, will be automatically selected considering the number of available CPUs.",
             "default": null,
             "type": "integer",
             "format": "uint",
@@ -7769,6 +7806,11 @@
             "description": "If true, enable prefix matching (`match: { \"prefix\": ... }`) on this field. Default: false.",
             "type": "boolean",
             "nullable": true
+          },
+          "nested": {
+            "description": "Index every object of this array as a separate entry, e.g. `offers` for the field `offers[].price`. The field must be inside the array's elements. `is_empty` on the field matches a point when one of its elements lacks the field, and never a point without elements. Default: disabled.",
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -7823,6 +7865,11 @@
             "description": "Enable HNSW graph building for this payload field. If true, builds additional HNSW links (Need payload_m > 0). Default: true.",
             "type": "boolean",
             "nullable": true
+          },
+          "nested": {
+            "description": "Index every object of this array as a separate entry, e.g. `offers` for the field `offers[].price`. The field must be inside the array's elements. `is_empty` on the field matches a point when one of its elements lacks the field, and never a point without elements. Default: disabled.",
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -7867,6 +7914,11 @@
             "description": "Enable HNSW graph building for this payload field. If true, builds additional HNSW links (Need payload_m > 0). Default: true.",
             "type": "boolean",
             "nullable": true
+          },
+          "nested": {
+            "description": "Index every object of this array as a separate entry, e.g. `offers` for the field `offers[].price`. The field must be inside the array's elements. `is_empty` on the field matches a point when one of its elements lacks the field, and never a point without elements. Default: disabled.",
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -7905,6 +7957,11 @@
           "enable_hnsw": {
             "description": "Enable HNSW graph building for this payload field. If true, builds additional HNSW links (Need payload_m > 0). Default: true.",
             "type": "boolean",
+            "nullable": true
+          },
+          "nested": {
+            "description": "Index every object of this array as a separate entry, e.g. `offers` for the field `offers[].price`. The field must be inside the array's elements. `is_empty` on the field matches a point when one of its elements lacks the field, and never a point without elements. Default: disabled.",
+            "type": "string",
             "nullable": true
           }
         }
@@ -7999,6 +8056,22 @@
             "description": "Enable HNSW graph building for this payload field. If true, builds additional HNSW links (Need payload_m > 0). Default: true.",
             "type": "boolean",
             "nullable": true
+          },
+          "scoring": {
+            "description": "Enable ranking points by BM25 over this field; `true` for the defaults. Changing it rebuilds the index. Default: disabled.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TextScoringInterface"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "nested": {
+            "description": "Index every object of this array as a separate entry, e.g. `offers` for the field `offers[].title`. The field must be inside the array's elements. Every query on the field, not only nested filters, treats each element as its own document: a condition matches a point when a single element matches it, and BM25 scores elements separately. `is_empty` on the field matches a point when one of its elements lacks the field, and never a point without elements. Default: disabled.",
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -8014,7 +8087,8 @@
           "prefix",
           "whitespace",
           "word",
-          "multilingual"
+          "multilingual",
+          "code"
         ]
       },
       "StopwordsInterface": {
@@ -8160,6 +8234,36 @@
           "none"
         ]
       },
+      "TextScoringInterface": {
+        "description": "BM25 scoring for a text index: `true` for the default parameters, `false` to disable it, or the parameters themselves.",
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "$ref": "#/components/schemas/TextScoringParams"
+          }
+        ]
+      },
+      "TextScoringParams": {
+        "description": "Parameters of ranking over a text index. The index records the length of each document, which BM25 normalizes by. `k1` and `b` are set per query.",
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/TextScoringType"
+          }
+        }
+      },
+      "TextScoringType": {
+        "description": "How a text index ranks documents.",
+        "type": "string",
+        "enum": [
+          "bm25"
+        ]
+      },
       "BoolIndexParams": {
         "type": "object",
         "required": [
@@ -8189,6 +8293,11 @@
           "enable_hnsw": {
             "description": "Enable HNSW graph building for this payload field. If true, builds additional HNSW links (Need payload_m > 0). Default: true.",
             "type": "boolean",
+            "nullable": true
+          },
+          "nested": {
+            "description": "Index every object of this array as a separate entry, e.g. `offers` for the field `offers[].price`. The field must be inside the array's elements. `is_empty` on the field matches a point when one of its elements lacks the field, and never a point without elements. Default: disabled.",
+            "type": "string",
             "nullable": true
           }
         }
@@ -8234,6 +8343,11 @@
             "description": "Enable HNSW graph building for this payload field. If true, builds additional HNSW links (Need payload_m > 0). Default: true.",
             "type": "boolean",
             "nullable": true
+          },
+          "nested": {
+            "description": "Index every object of this array as a separate entry, e.g. `offers` for the field `offers[].price`. The field must be inside the array's elements. `is_empty` on the field matches a point when one of its elements lacks the field, and never a point without elements. Default: disabled.",
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -8277,6 +8391,11 @@
           "enable_hnsw": {
             "description": "Enable HNSW graph building for this payload field. If true, builds additional HNSW links (Need payload_m > 0). Default: true.",
             "type": "boolean",
+            "nullable": true
+          },
+          "nested": {
+            "description": "Index every object of this array as a separate entry, e.g. `offers` for the field `offers[].price`. The field must be inside the array's elements. `is_empty` on the field matches a point when one of its elements lacks the field, and never a point without elements. Default: disabled.",
+            "type": "string",
             "nullable": true
           }
         }
@@ -9038,6 +9157,9 @@
             "$ref": "#/components/schemas/MatchPrefix"
           },
           {
+            "$ref": "#/components/schemas/MatchSubstring"
+          },
+          {
             "$ref": "#/components/schemas/MatchAny"
           },
           {
@@ -9115,6 +9237,18 @@
         ],
         "properties": {
           "prefix": {
+            "type": "string"
+          }
+        }
+      },
+      "MatchSubstring": {
+        "description": "Match keyword values that contain the given string.\n\nByte-wise (hence, for valid UTF-8, character-wise) and case-sensitive, consistent with exact keyword and prefix matching. Served by a keyword index with the `prefix` option, through a scan of its key dictionary; without one, falls back to reading the payload.",
+        "type": "object",
+        "required": [
+          "substring"
+        ],
+        "properties": {
+          "substring": {
             "type": "string"
           }
         }
@@ -9629,7 +9763,7 @@
             "$ref": "#/components/schemas/VectorsConfig"
           },
           "shard_number": {
-            "description": "For auto sharding: Number of shards in collection. - Default is 1 for standalone, otherwise equal to the number of nodes - Minimum is 1\n\nFor custom sharding: Number of shards in collection per shard group. - Default is 1, meaning that each shard key will be mapped to a single shard - Minimum is 1",
+            "description": "For auto sharding: Number of shards in collection. - If not specified, selected automatically - Minimum is 1\n\nFor custom sharding: Number of shards in collection per shard group. - Default is 1, meaning that each shard key will be mapped to a single shard - Minimum is 1",
             "default": null,
             "type": "integer",
             "format": "uint32",
@@ -9677,6 +9811,18 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/PayloadStorageParams"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "id_tracker": {
+            "description": "Configuration of the point id tracker",
+            "default": null,
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IdTrackerParams"
               },
               {
                 "nullable": true
@@ -9812,7 +9958,7 @@
             "nullable": true
           },
           "max_segment_size": {
-            "description": "Do not create segments larger this size (in kilobytes). Large segments might require disproportionately long indexation times, therefore it makes sense to limit the size of segments.\n\nIf indexation speed have more priority for your - make this parameter lower. If search speed is more important - make this parameter higher. Note: 1Kb = 1 vector of size 256",
+            "description": "Do not create segments larger than this size (in kilobytes). Large segments might require disproportionately long indexation times, therefore it makes sense to limit the size of segments.\n\nIf indexation speed have more priority for your - make this parameter lower. If search speed is more important - make this parameter higher. Note: 1Kb = 1 vector of size 256",
             "type": "integer",
             "format": "uint",
             "minimum": 1,
@@ -10279,6 +10425,17 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/PayloadStorageParams"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "id_tracker": {
+            "description": "Update params of the point id tracker. If none - it is left unchanged.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IdTrackerParams"
               },
               {
                 "nullable": true
@@ -11560,7 +11717,7 @@
             ]
           },
           "comment": {
-            "description": "A human-readable report of the transfer progress. Available only on the source peer.",
+            "description": "A human-readable report of the transfer progress. Available only on the source peer, and on the target peer during snapshot recovery.",
             "type": "string",
             "nullable": true
           }
@@ -11875,18 +12032,33 @@
             "default": false,
             "type": "boolean"
           },
+          "compact_logstore_tracker": {
+            "description": "In non-appendable segments built by the optimizer, store the tracker of an append-only payload storage in the compacted format: read into RAM whole on open instead of one lookup per value. Only has an effect together with [`Self::append_only_storages`]. Gates creation only: both formats are always readable.",
+            "default": false,
+            "type": "boolean"
+          },
           "transfer_raw_points": {
             "description": "Transfer points as storage-native bytes (raw points), for every collection rather than only those whose vector storage would lose precision in a decode-encode round-trip (TurboQuant).\n\nRead on the sending side only, where the transfer batch is prepared: nodes accept raw points regardless.",
-            "default": false,
+            "default": true,
             "type": "boolean"
           },
           "transfer_raw_payloads": {
             "description": "Send the payload of a raw point as the byte blob it is stored as, so the sending node does not parse it and neither node builds a protobuf value tree for it. The receiving node still parses the blob, once, when the operation is applied. Only has an effect on points transferred raw, see [`Self::transfer_raw_points`].\n\nRead on the sending side only: nodes accept raw payloads regardless.",
+            "default": true,
+            "type": "boolean"
+          },
+          "persist_proxy_segments": {
+            "description": "Persist proxy segment changes on disk. Prevents pinning the WAL while proxy segments are open. Replays the persisted changes on startup to guarantee data consistency. Required for serverless deployments where storage and compute is separated.",
             "default": false,
             "type": "boolean"
           },
+          "combined_vector_storage": {
+            "description": "When `hnsw_config.inline_storage` enabled, use the `GraphInline` vector storage (aka inline-storage without standalone vector storage) for new segments.\n\nExisting `GraphInline` segments are always readable, regardless of this flag.",
+            "default": true,
+            "type": "boolean"
+          },
           "serverless_compatible": {
-            "description": "Serverless-compatible deployment mode. Automatically enables [`Self::write_segment_manifest`], [`Self::append_only_mutations`], [`Self::compact_bitmask`] and [`Self::append_only_storages`].\n\nNote that this will only be applied when passed into [`init_feature_flags`].",
+            "description": "Serverless-compatible deployment mode. Implies [`Self::write_segment_manifest`], [`Self::append_only_mutations`], [`Self::compact_bitmask`], [`Self::append_only_storages`], [`Self::compact_logstore_tracker`] and [`Self::persist_proxy_segments`].\n\nNote that this will only be applied when passed into [`init_feature_flags`].",
             "default": false,
             "type": "boolean"
           }
@@ -12036,6 +12208,7 @@
           "dir",
           "log_api",
           "max_log_files",
+          "output",
           "rotation",
           "trust_forwarded_headers"
         ],
@@ -12056,6 +12229,9 @@
           },
           "log_api": {
             "type": "boolean"
+          },
+          "output": {
+            "type": "string"
           },
           "dir_size_bytes": {
             "type": "integer",
@@ -12150,7 +12326,7 @@
           "resharding": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ReshardingInfo"
+              "$ref": "#/components/schemas/ReshardingTelemetry"
             },
             "nullable": true
           },
@@ -12616,6 +12792,17 @@
           },
           "payload_storage_type": {
             "$ref": "#/components/schemas/PayloadStorageType"
+          },
+          "id_tracker_memory": {
+            "description": "Memory placement of the id tracker in non-appendable segments. Unset means the deployment default: `cold` in serverless-compatible mode, `pinned` otherwise.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Memory"
+              },
+              {
+                "nullable": true
+              }
+            ]
           }
         }
       },
@@ -12704,7 +12891,7 @@
             ]
           },
           {
-            "description": "Same as `ChunkedMmap`, but vectors are forced to be locked in RAM In this way we avoid cold requests to disk, but risk to run out of memory\n\nDesigned as a replacement for `Memory`, which doesn't depend on RocksDB",
+            "description": "Same as `ChunkedMmap`, but vectors are forced to be locked in RAM In this way we avoid cold requests to disk, but risk to run out of memory",
             "type": "string",
             "enum": [
               "InRamChunkedMmap"
@@ -12718,10 +12905,10 @@
             ]
           },
           {
-            "description": "Placeholder storage: contains no data, all vectors reported as deleted. Used for newly created named vectors on immutable segments. No files on disk, reconstructed from config on load.",
+            "description": "Vectors are inlined in the HNSW links file, not in a dedicated storage. Not appendable.",
             "type": "string",
             "enum": [
-              "Empty"
+              "GraphInline"
             ]
           }
         ]
@@ -12776,7 +12963,9 @@
           "float32",
           "float16",
           "uint8",
-          "turbo4"
+          "turbo4",
+          "turbo8",
+          "turbo16"
         ]
       },
       "SparseVectorDataConfig": {
@@ -12880,13 +13069,6 @@
             "enum": [
               "mmap"
             ]
-          },
-          {
-            "description": "Placeholder storage: contains no data, all vectors reported as deleted. Used for newly created sparse named vectors on immutable segments.",
-            "type": "string",
-            "enum": [
-              "empty"
-            ]
           }
         ]
       },
@@ -12957,6 +13139,9 @@
             "$ref": "#/components/schemas/OperationDurationStatistics"
           },
           "filtered_large_cardinality": {
+            "$ref": "#/components/schemas/OperationDurationStatistics"
+          },
+          "filtered_acorn": {
             "$ref": "#/components/schemas/OperationDurationStatistics"
           },
           "filtered_exact": {
@@ -13255,6 +13440,57 @@
             "minimum": 0
           }
         }
+      },
+      "ReshardingTelemetry": {
+        "type": "object",
+        "required": [
+          "direction",
+          "peer_id",
+          "shard_id",
+          "stage",
+          "uuid"
+        ],
+        "properties": {
+          "stage": {
+            "$ref": "#/components/schemas/ReshardingStage"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/ReshardingDirection"
+          },
+          "shard_id": {
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0
+          },
+          "peer_id": {
+            "type": "integer",
+            "format": "uint64",
+            "minimum": 0
+          },
+          "shard_key": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ShardKey"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          },
+          "uuid": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "ReshardingStage": {
+        "description": "Resharding stages",
+        "type": "string",
+        "enum": [
+          "migrating_points",
+          "read_hash_ring_committed",
+          "write_hash_ring_committed"
+        ]
       },
       "ShardCleanStatusTelemetry": {
         "oneOf": [
@@ -14738,7 +14974,7 @@
             ]
           },
           "using": {
-            "description": "Define which vector name to use for querying. If missing, the default vector is used.",
+            "description": "Define which vector name to use for querying. If missing, the default vector is used. For a `text` query, the payload field whose text index to search.",
             "type": "string",
             "nullable": true
           },
@@ -14853,7 +15089,7 @@
             ]
           },
           "using": {
-            "description": "Define which vector name to use for querying. If missing, the default vector is used.",
+            "description": "Define which vector name to use for querying. If missing, the default vector is used. For a `text` query, the payload field whose text index to search.",
             "type": "string",
             "nullable": true
           },
@@ -14983,6 +15219,9 @@
           },
           {
             "$ref": "#/components/schemas/RelevanceFeedbackQuery"
+          },
+          {
+            "$ref": "#/components/schemas/TextQuery"
           }
         ]
       },
@@ -15730,6 +15969,91 @@
           }
         }
       },
+      "TextQuery": {
+        "description": "Rank by BM25 over the text index of the payload field named by `using`, which must have `scoring` set. A point scores when it holds any of the query's terms: required or excluded terms belong in the request's `filter`.",
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "$ref": "#/components/schemas/TextInterface"
+          }
+        }
+      },
+      "TextInterface": {
+        "description": "The text to search for, or the text with scorer parameters.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "#/components/schemas/TextQueryInput"
+          }
+        ]
+      },
+      "TextQueryInput": {
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "properties": {
+          "query": {
+            "description": "Text to search for, tokenized by the field's text index.",
+            "type": "string"
+          },
+          "scoring": {
+            "description": "Parameters of the scorer, keyed by its name. They must match the `scoring` type of the field's text index. If absent, the scorer runs with its defaults.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TextQueryScoring"
+              },
+              {
+                "nullable": true
+              }
+            ]
+          }
+        }
+      },
+      "TextQueryScoring": {
+        "description": "Parameters of one scorer, keyed by its name.",
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/Bm25Scoring"
+          }
+        ]
+      },
+      "Bm25Scoring": {
+        "type": "object",
+        "required": [
+          "bm25"
+        ],
+        "properties": {
+          "bm25": {
+            "$ref": "#/components/schemas/Bm25Params"
+          }
+        }
+      },
+      "Bm25Params": {
+        "type": "object",
+        "properties": {
+          "k": {
+            "description": "Term frequency saturation. Default is 1.2.",
+            "type": "number",
+            "format": "float",
+            "minimum": 0,
+            "nullable": true
+          },
+          "b": {
+            "description": "Document length normalization, from 0 (none) to 1 (full). Default is 0.75.",
+            "type": "number",
+            "format": "float",
+            "maximum": 1,
+            "minimum": 0,
+            "nullable": true
+          }
+        }
+      },
       "SearchParams": {
         "description": "Additional parameters of the search",
         "type": "object",
@@ -15774,7 +16098,7 @@
             ]
           },
           "idf": {
-            "description": "Which population sparse vector IDF statistics are computed over. By default (or with explicit `\"global\"`) statistics are collection-wide. Only applicable to sparse vectors with the IDF modifier enabled.",
+            "description": "Which population IDF statistics are computed over. By default (or with explicit `\"global\"`) statistics are collection-wide. Only applicable to sparse vectors with the IDF modifier enabled, and to BM25 over a text index.",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/IdfParams"
@@ -15829,7 +16153,7 @@
         }
       },
       "IdfParams": {
-        "description": "Population over which sparse vector IDF statistics are computed for scoring \u2014 the *IDF corpus*.\n\n- `\"global\"` \u2014 collection-wide statistics, same as omitting the parameter. - `{ \"corpus\": <filter> }` \u2014 document count and per-term document frequencies are computed over the points matching the corpus filter only. The corpus is independent of the retrieval filter and is usually broader than it.",
+        "description": "Population over which IDF statistics are computed for scoring \u2014 the *IDF corpus*.\n\n- `\"global\"` \u2014 collection-wide statistics, same as omitting the parameter. - `{ \"corpus\": <filter> }` \u2014 document count and per-term document frequencies (and, for BM25 over a text index, the average document length) are computed over the points matching the corpus filter only. The corpus is independent of the retrieval filter and is usually broader than it.",
         "anyOf": [
           {
             "$ref": "#/components/schemas/IdfScope"
@@ -15962,7 +16286,7 @@
             ]
           },
           "using": {
-            "description": "Define which vector name to use for querying. If missing, the default vector is used.",
+            "description": "Define which vector name to use for querying. If missing, the default vector is used. For a `text` query, the payload field whose text index to search.",
             "type": "string",
             "nullable": true
           },
@@ -16950,7 +17274,7 @@
             ]
           },
           "datatype": {
-            "description": "Element storage type (Float32, Float16, Uint8, Turbo4)",
+            "description": "Element storage type (Float32, Float16, Uint8, Turbo4, Turbo8, Turbo16)",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/VectorStorageDatatype"
