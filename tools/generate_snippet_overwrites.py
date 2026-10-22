@@ -131,7 +131,7 @@ def main():
 
     
 
-    all_sdks = [sdk.split('/')[-1] for sdk in glob.glob("snippets/*")]
+    all_sdks = sorted(sdk.split("/")[-1] for sdk in glob.glob("snippets/*"))
 
     overwrites = defaultdict(lambda: defaultdict(dict))
 
