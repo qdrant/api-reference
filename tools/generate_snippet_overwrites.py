@@ -27,6 +27,8 @@ FILE_EXTENSION_BY_SDK = {
     'curl': '.sh',
 }
 
+SDK_ORDER = ['java', 'python', 'typescript', 'curl', 'csharp', 'go', 'rust']
+
 
 def parse_openapi_spec(path: str):
     """
@@ -131,7 +133,11 @@ def main():
 
     
 
-    all_sdks = [sdk.split('/')[-1] for sdk in glob.glob("snippets/*")]
+    # Fixed order matches the committed overrides; glob order is filesystem-dependent.
+    all_sdks = sorted(
+        (sdk.split('/')[-1] for sdk in glob.glob("snippets/*")),
+        key=lambda sdk: (SDK_ORDER.index(sdk) if sdk in SDK_ORDER else len(SDK_ORDER), sdk),
+    )
 
     overwrites = defaultdict(lambda: defaultdict(dict))
 
