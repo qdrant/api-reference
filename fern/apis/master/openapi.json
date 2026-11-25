@@ -7530,6 +7530,11 @@
             "type": "boolean",
             "nullable": true
           },
+          "require_tenant_filter": {
+            "description": "Require filter-based reads (e.g. search, scroll, count, facet) to restrict results to tenants. Applies only when the collection has a payload index with `is_tenant: true`: the top-level `must` of the request filter must then contain a `match` (`value` or `any`) condition on one of the tenant keys. Reads by point id are not affected.",
+            "type": "boolean",
+            "nullable": true
+          },
           "search_max_hnsw_ef": {
             "description": "Max HNSW value allowed in search parameters.",
             "type": "integer",
@@ -10055,6 +10060,11 @@
             "type": "boolean",
             "nullable": true
           },
+          "require_tenant_filter": {
+            "description": "Require filter-based reads (e.g. search, scroll, count, facet) to restrict results to tenants. Applies only when the collection has a payload index with `is_tenant: true`: the top-level `must` of the request filter must then contain a `match` (`value` or `any`) condition on one of the tenant keys. Reads by point id are not affected.",
+            "type": "boolean",
+            "nullable": true
+          },
           "search_max_hnsw_ef": {
             "description": "Max HNSW ef value allowed in search parameters.",
             "type": "integer",
@@ -12057,8 +12067,18 @@
             "default": true,
             "type": "boolean"
           },
+          "versioned_deletes": {
+            "description": "Record the version of every delete, in formats older readers cannot parse: versioned delete entries in appendable mappings logs, and a delete log next to the deleted mask of immutable segments, which takes their deletes in place of the mask. Followers use the versions to never apply the delete of a moved point before they see its new copy. Gates writing only: both formats are always read, and the deletes of an immutable segment are the union of its mask and its log.",
+            "default": false,
+            "type": "boolean"
+          },
+          "pipnn_graph_building": {
+            "description": "Build the main HNSW graph of large segments with PiPNN instead of inserting point by point. When disabled, PiPNN is *never* used and graphs are built with HNSW. When enabled, PiPNN is used where it applies: segments that are large enough, have no older graph to build from, and whose vectors support it. Only changes how graphs are built: the resulting graph has the same format either way.\n\nDisabled by default: PiPNN ignores `ef_construct`, so with it the graph quality of large segments can only be tuned through `m`.",
+            "default": false,
+            "type": "boolean"
+          },
           "serverless_compatible": {
-            "description": "Serverless-compatible deployment mode. Implies [`Self::write_segment_manifest`], [`Self::append_only_mutations`], [`Self::compact_bitmask`], [`Self::append_only_storages`], [`Self::compact_logstore_tracker`] and [`Self::persist_proxy_segments`].\n\nNote that this will only be applied when passed into [`init_feature_flags`].",
+            "description": "Serverless-compatible deployment mode. Implies [`Self::write_segment_manifest`], [`Self::append_only_mutations`], [`Self::compact_bitmask`], [`Self::append_only_storages`], [`Self::compact_logstore_tracker`], [`Self::persist_proxy_segments`] and [`Self::versioned_deletes`].\n\nNote that this will only be applied when passed into [`init_feature_flags`].",
             "default": false,
             "type": "boolean"
           }
@@ -13915,50 +13935,72 @@
       "HardwareUsage": {
         "description": "Usage of the hardware resources, spent to process the request",
         "type": "object",
-        "required": [
-          "cpu",
-          "payload_index_io_read",
-          "payload_index_io_write",
-          "payload_io_read",
-          "payload_io_write",
-          "vector_io_read",
-          "vector_io_write"
-        ],
         "properties": {
           "cpu": {
             "type": "integer",
             "format": "uint",
-            "minimum": 0
+            "minimum": 0,
+            "nullable": true
           },
           "payload_io_read": {
             "type": "integer",
             "format": "uint",
-            "minimum": 0
+            "minimum": 0,
+            "nullable": true
           },
           "payload_io_write": {
             "type": "integer",
             "format": "uint",
-            "minimum": 0
+            "minimum": 0,
+            "nullable": true
           },
           "payload_index_io_read": {
             "type": "integer",
             "format": "uint",
-            "minimum": 0
+            "minimum": 0,
+            "nullable": true
           },
           "payload_index_io_write": {
             "type": "integer",
             "format": "uint",
-            "minimum": 0
+            "minimum": 0,
+            "nullable": true
           },
           "vector_io_read": {
             "type": "integer",
             "format": "uint",
-            "minimum": 0
+            "minimum": 0,
+            "nullable": true
           },
           "vector_io_write": {
             "type": "integer",
             "format": "uint",
-            "minimum": 0
+            "minimum": 0,
+            "nullable": true
+          },
+          "remote_io_cached_read": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "remote_io_non_cached_read": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "updated_bytes": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
+          },
+          "updated_indexed_bytes": {
+            "type": "integer",
+            "format": "uint",
+            "minimum": 0,
+            "nullable": true
           }
         }
       },
@@ -15576,7 +15618,7 @@
             "$ref": "#/components/schemas/GeoPoint"
           },
           "to": {
-            "description": "Payload field with the destination geo point",
+            "description": "Payload field with the destination geo point. If the field holds several geo points, the distance to the nearest one is used",
             "type": "string"
           }
         }

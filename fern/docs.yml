@@ -2,33 +2,40 @@ instances:
   - url: https://qdrant.docs.buildwithfern.com
     custom-domain: api.qdrant.tech
 title: Qdrant | API Reference
-versions:
-  - display-name: v1.20.x
+products:
+  - display-name: Qdrant
+    slug: qdrant
     path: ./versions/v1.20.x.yml
-  - display-name: v1.19.x
-    path: ./versions/v1.19.x.yml
-  - display-name: v1.18.x
-    path: ./versions/v1.18.x.yml
-  - display-name: v1.17.x
-    path: ./versions/v1.17.x.yml
-  - display-name: v1.16.x
-    path: ./versions/v1.16.x.yml
-  - display-name: v1.15.x
-    path: ./versions/v1.15.x.yml
-  - display-name: v1.14.x
-    path: ./versions/v1.14.x.yml
-  - display-name: v1.13.x
-    path: ./versions/v1.13.x.yml
-  - display-name: v1.12.x
-    path: ./versions/v1.12.x.yml
-  - display-name: v1.11.x
-    path: ./versions/v1.11.x.yml
-  - display-name: v1.10.x
-    path: ./versions/v1.10.x.yml
-  - display-name: v1.9.x
-    path: ./versions/v1.9.x.yml
-  - display-name: master
-    path: ./versions/master.yml
+    versions:
+      - display-name: v1.20.x
+        path: ./versions/v1.20.x.yml
+      - display-name: v1.19.x
+        path: ./versions/v1.19.x.yml
+      - display-name: v1.18.x
+        path: ./versions/v1.18.x.yml
+      - display-name: v1.17.x
+        path: ./versions/v1.17.x.yml
+      - display-name: v1.16.x
+        path: ./versions/v1.16.x.yml
+      - display-name: v1.15.x
+        path: ./versions/v1.15.x.yml
+      - display-name: v1.14.x
+        path: ./versions/v1.14.x.yml
+      - display-name: v1.13.x
+        path: ./versions/v1.13.x.yml
+      - display-name: v1.12.x
+        path: ./versions/v1.12.x.yml
+      - display-name: v1.11.x
+        path: ./versions/v1.11.x.yml
+      - display-name: v1.10.x
+        path: ./versions/v1.10.x.yml
+      - display-name: v1.9.x
+        path: ./versions/v1.9.x.yml
+      - display-name: master
+        path: ./versions/master.yml
+  - display-name: Serverless
+    slug: serverless
+    path: ./products/serverless.yml
 colors:
   accentPrimary:
     light: '#DC244C'
