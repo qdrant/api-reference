@@ -92,6 +92,13 @@ echo "    path: ./versions/master.yml" >> $VERSIONS_TMP_YAML
 
 # Join the versions with the existing docs.yml using `yq`
 
-yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' $PROJECT_ROOT/fern/docs.yml $VERSIONS_TMP_YAML > $PROJECT_ROOT/fern/docs.tmp.yml
+# Versions live under the `qdrant` product (other products, e.g. Serverless, are unversioned).
+# The default product path points to the latest released version.
+
+LATEST_RELEASED=$(ls $PROJECT_ROOT/fern/versions | grep -oP 'v\d.*(?=\.yml)' | sort -rV | head -n 1)
+
+VERSIONS_FILE=$VERSIONS_TMP_YAML LATEST_RELEASED=$LATEST_RELEASED yq eval \
+    '(.products[] | select(.slug == "qdrant")) |= (.versions = load(strenv(VERSIONS_FILE)).versions | .path = "./versions/" + strenv(LATEST_RELEASED) + ".yml")' \
+    $PROJECT_ROOT/fern/docs.yml > $PROJECT_ROOT/fern/docs.tmp.yml
 
 mv $PROJECT_ROOT/fern/docs.tmp.yml $PROJECT_ROOT/fern/docs.yml

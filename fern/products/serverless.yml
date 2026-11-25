@@ -1,0 +1,4 @@
+navigation:
+  - api: API Reference
+    api-name: serverless
+    paginated: true
